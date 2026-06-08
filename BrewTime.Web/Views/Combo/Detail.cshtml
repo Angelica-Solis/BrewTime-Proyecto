@@ -1,0 +1,72 @@
+﻿@model BrewTime.Application.DTOs.ComboDetalleDTO
+
+<div class="container mt-4">
+
+    <a asp-action="Index" class="btn btn-secondary mb-3">← Volver al listado</a>
+
+    <h1>@Model.Nombre</h1>
+    <hr />
+
+    <dl class="row">
+
+        <dt class="col-sm-3">Categoría</dt>
+        <dd class="col-sm-9">
+            <span class="badge bg-info text-dark">@Model.CategoriaNombre</span>
+        </dd>
+
+        <dt class="col-sm-3">Descripción</dt>
+        <dd class="col-sm-9">@Model.Descripcion</dd>
+
+        <dt class="col-sm-3">Precio especial</dt>
+        <dd class="col-sm-9">
+            <strong>
+                @Model.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))
+            </strong>
+        </dd>
+
+        <dt class="col-sm-3">Estado</dt>
+        <dd class="col-sm-9">
+            @if (Model.Activo)
+            {
+                <span class="badge bg-success">Activo</span>
+            }
+            else
+            {
+                <span class="badge bg-secondary">Inactivo</span>
+            }
+        </dd>
+
+        <dt class="col-sm-3">Fecha de creación</dt>
+        <dd class="col-sm-9">@Model.FechaCreacion.ToString("dd/MM/yyyy")</dd>
+
+        <dt class="col-sm-3">Productos del combo</dt>
+        <dd class="col-sm-9">
+            @if (Model.Productos.Any())
+            {
+                <table class="table table-sm table-bordered w-auto">
+                    <thead class="table-light">
+                        <tr>
+                            <th>Producto</th>
+                            <th>Cantidad</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var p in Model.Productos)
+                        {
+                            <tr>
+                                <td>@p.NombreProducto</td>
+                                <td>@p.Cantidad</td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            }
+            else
+            {
+                <span class="text-muted">Sin productos asignados</span>
+            }
+        </dd>
+
+    </dl>
+
+</div>
