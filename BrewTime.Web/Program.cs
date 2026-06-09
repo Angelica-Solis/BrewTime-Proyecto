@@ -18,16 +18,19 @@ builder.Services.AddControllersWithViews();
 //Configurar D.I. //Repository 
 builder.Services.AddTransient<IRepositoryProducto, RepositoryProducto>();
 builder.Services.AddTransient<IRepositoryCombo, RepositoryCombo>();
+builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPreparacion>();
 
 //Services 
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
 builder.Services.AddTransient<IServiceCombo, ServiceCombo>();
+builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparacion>();
 
 //Configurar Automapper 
 builder.Services.AddAutoMapper(config =>
 {
     config.AddProfile<ProductoProfile>();
     config.AddProfile<ComboProfile>();
+    config.AddProfile<ProcesoPreparacionProfile>();
 });
 
 // Configuar Conexión a la Base de Datos SQL 
