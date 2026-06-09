@@ -32,6 +32,10 @@ public partial class BrewTimeContext : DbContext
 
     public virtual DbSet<MenuDiaSemana> MenuDiaSemana { get; set; }
 
+    public virtual DbSet<MenuCombo> MenuCombo { get; set; }
+
+    public virtual DbSet<MenuProducto> MenuProducto { get; set; }
+
     public virtual DbSet<MetodoEntrega> MetodoEntrega { get; set; }
 
     public virtual DbSet<MetodoPago> MetodoPago { get; set; }
@@ -226,51 +230,64 @@ public partial class BrewTimeContext : DbContext
 
             entity.Property(e => e.MenuId).HasColumnName("MenuID");
             entity.Property(e => e.Activo).HasDefaultValue(true);
+
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(300)
                 .IsUnicode(false);
+
             entity.Property(e => e.FechaCreacion)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");
+
             entity.Property(e => e.Nombre)
                 .HasMaxLength(100)
                 .IsUnicode(false);
+        });
 
-            entity.HasMany(d => d.Combo).WithMany(p => p.Menu)
-                .UsingEntity<Dictionary<string, object>>(
-                    "MenuCombo",
-                    r => r.HasOne<Combo>().WithMany()
-                        .HasForeignKey("ComboId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__MenuCombo__Combo__66603565"),
-                    l => l.HasOne<Menu>().WithMany()
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__MenuCombo__MenuI__656C112C"),
-                    j =>
-                    {
-                        j.HasKey("MenuId", "ComboId").HasName("PK__MenuComb__344AF7D050C1CBC9");
-                        j.IndexerProperty<int>("MenuId").HasColumnName("MenuID");
-                        j.IndexerProperty<int>("ComboId").HasColumnName("ComboID");
-                    });
+        modelBuilder.Entity<MenuCombo>(entity =>
+        {
+            entity.ToTable("MenuCombo");
 
-            entity.HasMany(d => d.Producto).WithMany(p => p.Menu)
-                .UsingEntity<Dictionary<string, object>>(
-                    "MenuProducto",
-                    r => r.HasOne<Producto>().WithMany()
-                        .HasForeignKey("ProductoId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__MenuProdu__Produ__628FA481"),
-                    l => l.HasOne<Menu>().WithMany()
-                        .HasForeignKey("MenuId")
-                        .OnDelete(DeleteBehavior.ClientSetNull)
-                        .HasConstraintName("FK__MenuProdu__MenuI__619B8048"),
-                    j =>
-                    {
-                        j.HasKey("MenuId", "ProductoId").HasName("PK__MenuProd__E3DDD8B8887A4DB9");
-                        j.IndexerProperty<int>("MenuId").HasColumnName("MenuID");
-                        j.IndexerProperty<int>("ProductoId").HasColumnName("ProductoID");
-                    });
+            entity.HasKey(e => new { e.MenuId, e.ComboId })
+                .HasName("PK__MenuComb__344AF7D050C1CBC9");
+
+            entity.Property(e => e.MenuId).HasColumnName("MenuID");
+            entity.Property(e => e.ComboId).HasColumnName("ComboID");
+
+            entity.HasOne(d => d.Menu)
+                .WithMany(p => p.MenuCombo)
+                .HasForeignKey(d => d.MenuId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__MenuCombo__MenuI__656C112C");
+
+            entity.HasOne(d => d.Combo)
+                .WithMany(p => p.MenuCombo)
+                .HasForeignKey(d => d.ComboId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__MenuCombo__Combo__66603565");
+        });
+
+        modelBuilder.Entity<MenuProducto>(entity =>
+        {
+            entity.ToTable("MenuProducto");
+
+            entity.HasKey(e => new { e.MenuId, e.ProductoId })
+                .HasName("PK__MenuProd__E3DDD8B8887A4DB9");
+
+            entity.Property(e => e.MenuId).HasColumnName("MenuID");
+            entity.Property(e => e.ProductoId).HasColumnName("ProductoID");
+
+            entity.HasOne(d => d.Menu)
+                .WithMany(p => p.MenuProducto)
+                .HasForeignKey(d => d.MenuId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__MenuProdu__MenuI__619B8048");
+
+            entity.HasOne(d => d.Producto)
+                .WithMany(p => p.MenuProducto)
+                .HasForeignKey(d => d.ProductoId)
+                .OnDelete(DeleteBehavior.ClientSetNull)
+                .HasConstraintName("FK__MenuProdu__Produ__628FA481");
         });
 
         modelBuilder.Entity<MenuDiaSemana>(entity =>

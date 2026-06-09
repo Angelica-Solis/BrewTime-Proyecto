@@ -25,7 +25,7 @@ public partial class Menu
 
     public virtual ICollection<MenuDiaSemana> MenuDiaSemana { get; set; } = new List<MenuDiaSemana>();
 
-    public virtual ICollection<Combo> Combo { get; set; } = new List<Combo>();
+    public virtual ICollection<MenuCombo> MenuCombo { get; set; } = new List<MenuCombo>();
 
-    public virtual ICollection<Producto> Producto { get; set; } = new List<Producto>();
+    public virtual ICollection<MenuProducto> MenuProducto { get; set; } = new List<MenuProducto>();
 }

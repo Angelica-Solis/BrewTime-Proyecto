@@ -35,5 +35,5 @@ public partial class Producto
 
     public virtual ICollection<Ingrediente> Ingrediente { get; set; } = new List<Ingrediente>();
 
-    public virtual ICollection<Menu> Menu { get; set; } = new List<Menu>();
+    public virtual ICollection<MenuProducto> MenuProducto { get; set; } = new List<MenuProducto>();
 }

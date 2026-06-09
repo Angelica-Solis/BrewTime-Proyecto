@@ -25,5 +25,5 @@ public partial class Combo
 
     public virtual ICollection<PedidoDetalle> PedidoDetalle { get; set; } = new List<PedidoDetalle>();
 
-    public virtual ICollection<Menu> Menu { get; set; } = new List<Menu>();
+    public virtual ICollection<MenuCombo> MenuCombo { get; set; } = new List<MenuCombo>();
 }

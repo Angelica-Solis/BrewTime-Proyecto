@@ -1,0 +1,55 @@
+﻿@model IEnumerable<BrewTime.Application.DTOs.MenuDTO>
+
+@{
+    ViewData["Title"] = "Listado de Menús";
+}
+
+<h1>Listado de Menús</h1>
+
+<p>
+    Esta pantalla muestra todos los menús registrados en el sistema, ordenados desde el más reciente hasta el más antiguo.
+</p>
+
+<table class="table table-bordered table-striped">
+    <thead class="table-dark">
+        <tr>
+            <th>Nombre</th>
+            <th>Descripción</th>
+            <th>Hora Inicio</th>
+            <th>Hora Fin</th>
+            <th>Fecha Creación</th>
+            <th>Activo</th>
+            <th>Acción</th>
+        </tr>
+    </thead>
+
+    <tbody>
+        @foreach (var item in Model)
+        {
+            <tr>
+                <td>@item.Nombre</td>
+                <td>@item.Descripcion</td>
+                <td>@item.HoraInicio</td>
+                <td>@item.HoraFin</td>
+                <td>@item.FechaCreacion.ToString("dd/MM/yyyy")</td>
+                <td>
+                    @if (item.Activo)
+                    {
+                        <span class="badge bg-success">Disponible</span>
+                    }
+                    else
+                    {
+                        <span class="badge bg-danger">Inactivo</span>
+                    }
+                </td>
+                <td>
+                    <a asp-action="Details"
+                       asp-route-id="@item.MenuId"
+                       class="btn btn-info btn-sm">
+                        Detalle
+                    </a>
+                </td>
+            </tr>
+        }
+    </tbody>
+</table>
