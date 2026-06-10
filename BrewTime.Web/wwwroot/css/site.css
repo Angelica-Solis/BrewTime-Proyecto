@@ -1,31 +1,148 @@
+@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600&family=Inter:wght@400;500;600&display=swap');
+
+/* Bootstrap base */
 html {
-  font-size: 14px;
+    font-size: 14px;
+    position: relative;
+    min-height: 100%;
 }
 
 @media (min-width: 768px) {
-  html {
-    font-size: 16px;
-  }
-}
-
-.btn:focus, .btn:active:focus, .btn-link.nav-link:focus, .form-control:focus, .form-check-input:focus {
-  box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
-}
-
-html {
-  position: relative;
-  min-height: 100%;
+    html {
+        font-size: 16px;
+    }
 }
 
 body {
-  margin-bottom: 60px;
+    margin: 0;
 }
 
-.form-floating > .form-control-plaintext::placeholder, .form-floating > .form-control::placeholder {
-  color: var(--bs-secondary-color);
-  text-align: end;
+.btn:focus, .btn:active:focus, .btn-link.nav-link:focus,
+.form-control:focus, .form-check-input:focus {
+    box-shadow: 0 0 0 0.1rem white, 0 0 0 0.25rem #258cfb;
 }
 
-.form-floating > .form-control-plaintext:focus::placeholder, .form-floating > .form-control:focus::placeholder {
-  text-align: start;
+.form-floating > .form-control-plaintext::placeholder,
+.form-floating > .form-control::placeholder {
+    color: var(--bs-secondary-color);
+    text-align: end;
 }
+
+.form-floating > .form-control-plaintext:focus::placeholder,
+.form-floating > .form-control:focus::placeholder {
+    text-align: start;
+}
+
+/* BrewTime — Layout global */
+
+.brew-body {
+    background-color: #f7f0e6;
+    margin: 0;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+}
+
+.brew-main {
+    flex: 1;
+}
+
+/* Navbar */
+.brew-navbar {
+    background-color: #1a2712;
+    border-bottom: 1px solid rgba(201,149,106,0.20);
+    padding: 0.7rem 1.5rem;
+    box-shadow: 0 2px 16px rgba(30,40,20,0.25);
+}
+
+.brew-brand {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.3rem;
+    font-weight: 600;
+    color: #f0e0c0 !important;
+    letter-spacing: 0.02em;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    text-decoration: none;
+    transition: color 0.18s ease;
+}
+
+    .brew-brand:hover {
+        color: #fff8ee !important;
+    }
+
+.brew-logo-img {
+    width: 36px;
+    height: 36px;
+    object-fit: contain;
+    border-radius: 8px;
+}
+
+.brew-nav-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: rgba(230,210,180,0.65) !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.35rem 0.85rem !important;
+    border-radius: 7px;
+    transition: color 0.18s ease, background 0.18s ease;
+    text-decoration: none;
+}
+
+    .brew-nav-link:hover {
+        color: #f0e0c0 !important;
+        background: rgba(201,149,106,0.12);
+    }
+
+    .brew-nav-link.active,
+    .brew-nav-link:focus {
+        color: #f0e0c0 !important;
+        background: rgba(201,149,106,0.15);
+        outline: none;
+    }
+
+.brew-toggler {
+    border-color: rgba(201,149,106,0.35) !important;
+    filter: invert(0.8);
+}
+
+    .brew-toggler:focus {
+        box-shadow: none !important;
+    }
+
+/* Footer */
+.brew-footer {
+    background-color: #1a2712;
+    border-top: 2px solid rgba(201,149,106,0.15);
+    padding: 1.25rem 0;
+}
+
+    .brew-footer .container {
+        display: flex;
+        align-items: center;
+        justify-content: space-between;
+        flex-wrap: wrap;
+        gap: 0.5rem;
+    }
+
+.brew-footer-copy {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: rgba(230,210,180,0.50);
+    letter-spacing: 0.02em;
+}
+
+.brew-footer-link {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.8rem;
+    color: rgba(230,210,180,0.55);
+    text-decoration: none;
+    transition: color 0.18s ease;
+}
+
+    .brew-footer-link:hover {
+        color: #e8cba6;
+    }

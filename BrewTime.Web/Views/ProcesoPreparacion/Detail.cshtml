@@ -1,0 +1,83 @@
+﻿@model ProcesoPreparacionDTO
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/procesoPreparacion.css" asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = "Detalle del Proceso";
+}
+
+<div class="brew-page">
+
+    @* Hero banner *@
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">Brew Time · Cafetería</p>
+            <h1 class="brew-titulo">Detalle del <em>Proceso</em></h1>
+            <p class="brew-subtitulo">Información completa de preparación</p>
+            <div class="brew-hero-line">
+                <span></span>
+                <i>@Model.Producto.Nombre</i>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    @* Contenido *@
+    <div class="brew-content">
+        <div class="brew-detalle-wrapper">
+
+            <div class="brew-card">
+                <div class="brew-card-stripe"></div>
+                <div class="brew-card-body">
+
+                    @* Chip de estacion *@
+                    <span class="brew-card-chip">@Model.Estacion.Nombre</span>
+
+                    @* Nombre del producto *@
+                    <p class="brew-card-producto">@Model.Producto.Nombre</p>
+
+                    <hr class="brew-detalle-divider" />
+
+                    @* Filas de detalle *@
+                    <div class="brew-detalle-grid">
+
+                        <div class="brew-detalle-item">
+                            <span class="brew-detalle-label">Producto</span>
+                            <span class="brew-detalle-value">@Model.Producto.Nombre</span>
+                        </div>
+
+                        <div class="brew-detalle-item">
+                            <span class="brew-detalle-label">Estación</span>
+                            <span class="brew-detalle-value">@Model.Estacion.Nombre</span>
+                        </div>
+
+                        <div class="brew-detalle-item">
+                            <span class="brew-detalle-label">Orden</span>
+                            <span class="brew-detalle-value">Paso #@Model.Orden</span>
+                        </div>
+
+                        <div class="brew-detalle-item">
+                            <span class="brew-detalle-label">Tiempo estimado</span>
+                            <span class="brew-detalle-value brew-detalle-tiempo">
+                                ⏱ @Model.TiempoEstimadoMin minutos
+                            </span>
+                        </div>
+
+                    </div>
+
+                    @* Boton regresar *@
+                    <div class="brew-detalle-actions">
+                        <a asp-action="Index" class="brew-btn-secondary">
+                            ← Regresar
+                        </a>
+                    </div>
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
