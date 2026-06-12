@@ -1,0 +1,106 @@
+﻿@model IEnumerable<BrewTime.Application.DTOs.MenuDTO>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Menu.css" asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = "Menús Disponibles";
+}
+
+<div class="menu-page">
+
+    <div class="menu-hero">
+        <div class="menu-hero-inner">
+            <p class="menu-eyebrow">Brew Time · Cafetería</p>
+            <h1 class="menu-title">Menús <em>Disponibles</em></h1>
+            <p class="menu-subtitle">
+                Menús activos según fecha, hora y día configurado.
+            </p>
+        </div>
+    </div>
+
+    <div class="menu-content">
+
+        <p>
+            Esta pantalla muestra únicamente los menús que se encuentran disponibles
+            según su fecha, hora y día configurado.
+        </p>
+
+        @foreach (var menu in Model)
+        {
+            <div class="menu-card">
+                <div class="menu-card-header text-center">
+                    <h2>@menu.Nombre</h2>
+                    <p>@menu.Descripcion</p>
+                </div>
+
+                <div class="menu-card-body">
+
+                    <div class="text-center mb-4">
+                        <strong>Horario:</strong> @menu.HoraInicio - @menu.HoraFin <br />
+                        <strong>Fechas:</strong> @menu.FechaInicio - @menu.FechaFin
+                    </div>
+
+                    <h3 class="menu-section-title">Productos</h3>
+
+                    @if (menu.MenuProducto != null && menu.MenuProducto.Any())
+                    {
+                        var productosAgrupados = menu.MenuProducto
+                        .GroupBy(x => x.Producto.CategoriaNombre);
+
+                        foreach (var grupo in productosAgrupados)
+                        {
+                            <h4 class="menu-section-title">@grupo.Key</h4>
+
+                            <div class="menu-grid">
+                                @foreach (var item in grupo)
+                                {
+                                    <div class="menu-product-card">
+                                        <h5>@item.Producto.Nombre</h5>
+                                        <p>@item.Producto.Descripcion</p>
+                                        <strong class="menu-price">₡@item.Producto.Precio</strong>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="menu-empty">No hay productos disponibles.</p>
+                    }
+
+                    <h3 class="menu-section-title">Combos</h3>
+
+                    @if (menu.MenuCombo != null && menu.MenuCombo.Any())
+                    {
+                        var combosAgrupados = menu.MenuCombo
+                        .GroupBy(x => x.Combo.CategoriaNombre);
+
+                        foreach (var grupo in combosAgrupados)
+                        {
+                            <h4 class="menu-section-title">@grupo.Key</h4>
+
+                            <div class="menu-grid">
+                                @foreach (var item in grupo)
+                                {
+                                    <div class="menu-product-card">
+                                        <h5>@item.Combo.Nombre</h5>
+                                        <p>@item.Combo.Descripcion</p>
+                                        <strong class="menu-price">₡@item.Combo.PrecioEspecial</strong>
+                                    </div>
+                                }
+                            </div>
+                        }
+                    }
+                    else
+                    {
+                        <p class="menu-empty">No hay combos disponibles.</p>
+                    }
+
+                </div>
+            </div>
+        }
+
+    </div>
+</div>

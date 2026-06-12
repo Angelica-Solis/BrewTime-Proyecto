@@ -19,10 +19,10 @@ namespace BrewTime.Application.DTOs
         public string? Descripcion { get; set; }
 
         [Display(Name = "Hora Inicio")]
-        public TimeSpan HoraInicio { get; set; }
+        public TimeOnly HoraInicio { get; set; }
 
         [Display(Name = "Hora Fin")]
-        public TimeSpan HoraFin { get; set; }
+        public TimeOnly HoraFin { get; set; }
 
         [Display(Name = "Fecha Inicio")]
         public DateOnly? FechaInicio { get; set; }

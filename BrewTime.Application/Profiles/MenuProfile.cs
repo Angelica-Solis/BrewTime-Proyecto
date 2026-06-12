@@ -13,7 +13,7 @@ namespace BrewTime.Application.Profiles
     {
         public MenuProfile()
         {
-            CreateMap<MenuDTO, Menu>().ReverseMap();
+            CreateMap<Menu, MenuDTO>().ReverseMap();
         }
     }
 }

@@ -19,10 +19,21 @@ namespace BrewTime.Web.Controllers
             return View(collection);
         }
 
-        public async Task<ActionResult> Details(int id)
+        public async Task<ActionResult> Detail(int id)
         {
             var menu = await _serviceMenu.FindByIdAsync(id);
             return View(menu);
+        }
+
+        public async Task<IActionResult> Disponible()
+        {
+            var collection = await _serviceMenu.ListAsync();
+
+            var menusDisponibles = collection
+                .Where(x => x.Activo)
+                .ToList();
+
+            return View(menusDisponibles);
         }
     }
 }
