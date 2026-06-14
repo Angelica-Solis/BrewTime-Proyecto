@@ -1,72 +1,96 @@
 ﻿@model BrewTime.Application.DTOs.ComboDetalleDTO
 
-<div class="container mt-4">
+@section Styles {
+    <link rel="stylesheet" href="~/css/combo.css" asp-append-version="true" />
+}
 
-    <a asp-action="Index" class="btn btn-secondary mb-3">← Volver al listado</a>
+@{
+    ViewData["Title"] = Model.Nombre;
+}
 
-    <h1>@Model.Nombre</h1>
-    <hr />
+<div class="brew-page">
 
-    <dl class="row">
+    @* Hero banner *@
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">Brew Time · Cafetería</p>
+            <h1 class="brew-titulo">Detalle del <em>Combo</em></h1>
+            <p class="brew-subtitulo">Todo lo que incluye esta combinación especial.</p>
+            <div class="brew-hero-line">
+                <span></span>
+                <i>Productos &amp; precio especial</i>
+                <span></span>
+            </div>
+        </div>
+    </div>
 
-        <dt class="col-sm-3">Categoría</dt>
-        <dd class="col-sm-9">
-            <span class="badge bg-info text-dark">@Model.CategoriaNombre</span>
-        </dd>
+    @* Contenido *@
+    <div class="brew-content">
 
-        <dt class="col-sm-3">Descripción</dt>
-        <dd class="col-sm-9">@Model.Descripcion</dd>
+        <a asp-action="Index" class="brew-btn-volver">← Volver al listado</a>
 
-        <dt class="col-sm-3">Precio especial</dt>
-        <dd class="col-sm-9">
-            <strong>
-                @Model.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))
-            </strong>
-        </dd>
+        <div class="brew-detail-card">
 
-        <dt class="col-sm-3">Estado</dt>
-        <dd class="col-sm-9">
-            @if (Model.Activo)
-            {
-                <span class="badge bg-success">Activo</span>
-            }
-            else
-            {
-                <span class="badge bg-secondary">Inactivo</span>
-            }
-        </dd>
+            @* Panel izquierdo: info principal *@
+            <div class="brew-detail-info">
 
-        <dt class="col-sm-3">Fecha de creación</dt>
-        <dd class="col-sm-9">@Model.FechaCreacion.ToString("dd/MM/yyyy")</dd>
+                <h2 class="brew-detail-nombre">@Model.Nombre</h2>
 
-        <dt class="col-sm-3">Productos del combo</dt>
-        <dd class="col-sm-9">
-            @if (Model.Productos.Any())
-            {
-                <table class="table table-sm table-bordered w-auto">
-                    <thead class="table-light">
-                        <tr>
-                            <th>Producto</th>
-                            <th>Cantidad</th>
-                        </tr>
-                    </thead>
-                    <tbody>
+                <span class="brew-card-chip">@Model.CategoriaNombre</span>
+
+                <p class="brew-detail-desc">@Model.Descripcion</p>
+
+                @* Meta: precio, estado, fecha *@
+                <div class="brew-detail-meta">
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">Precio especial</span>
+                        <span class="brew-badge-tiempo">
+                            @Model.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))
+                        </span>
+                    </div>
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">Estado</span>
+                        @if (Model.Activo)
+                        {
+                            <span class="brew-badge-activo">Activo</span>
+                        }
+                        else
+                        {
+                            <span class="brew-badge-inactivo">Inactivo</span>
+                        }
+                    </div>
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">Fecha de creación</span>
+                        <span class="brew-meta-valor">@Model.FechaCreacion.ToString("dd/MM/yyyy")</span>
+                    </div>
+                </div>
+
+            </div>
+
+            @* Panel derecho: productos del combo *@
+            <div class="brew-detail-productos">
+
+                <p class="brew-productos-titulo">Productos incluidos</p>
+
+                @if (Model.Productos.Any())
+                {
+                    <div class="brew-productos-list">
                         @foreach (var p in Model.Productos)
                         {
-                            <tr>
-                                <td>@p.NombreProducto</td>
-                                <td>@p.Cantidad</td>
-                            </tr>
+                            <div class="brew-producto-item">
+                                <span class="brew-producto-nombre">@p.NombreProducto</span>
+                                <span class="brew-producto-cantidad">x@(p.Cantidad)</span>
+                            </div>
                         }
-                    </tbody>
-                </table>
-            }
-            else
-            {
-                <span class="text-muted">Sin productos asignados</span>
-            }
-        </dd>
+                    </div>
+                }
+                else
+                {
+                    <p class="brew-detail-empty">Sin productos asignados.</p>
+                }
 
-    </dl>
+            </div>
 
+        </div>
+    </div>
 </div>

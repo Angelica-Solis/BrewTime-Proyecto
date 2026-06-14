@@ -18,40 +18,40 @@ builder.Services.AddControllersWithViews();
 //Configurar D.I. //Repository 
 builder.Services.AddTransient<IRepositoryProducto, RepositoryProducto>();
 builder.Services.AddTransient<IRepositoryCombo, RepositoryCombo>();
-<<<<<<< HEAD
+//<<<<<<< HEAD
 builder.Services.AddTransient<IRepositoryMenu, RepositoryMenu>();
 builder.Services.AddTransient<IRepositoryMenuDiaSemana, RepositoryMenuDiaSemana>();
 builder.Services.AddTransient<IRepositoryMenuProducto, RepositoryMenuProducto>();
 builder.Services.AddTransient<IRepositoryMenuCombo, RepositoryMenuCombo>();
-=======
+//=======
 builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPreparacion>();
->>>>>>> Angelica
+//>>>>>>> Angelica
 
 //Services 
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
 builder.Services.AddTransient<IServiceCombo, ServiceCombo>();
-<<<<<<< HEAD
+//<<<<<<< HEAD
 builder.Services.AddTransient<IServiceMenu, ServiceMenu>();
 builder.Services.AddTransient<IServiceMenuDiaSemana, ServiceMenuDiaSemana>();
 builder.Services.AddTransient<IServiceMenuProducto, ServiceMenuProducto>();
 builder.Services.AddTransient<IServiceMenuCombo, ServiceMenuCombo>();
-=======
+//=======
 builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparacion>();
->>>>>>> Angelica
+//>>>>>>> Angelica
 
 //Configurar Automapper 
 builder.Services.AddAutoMapper(config =>
 {
     config.AddProfile<ProductoProfile>();
     config.AddProfile<ComboProfile>();
-<<<<<<< HEAD
+//<<<<<<< HEAD
     config.AddProfile<MenuProfile>();
     config.AddProfile<MenuDiaSemanaProfile>();
     config.AddProfile<MenuProductoProfile>();
     config.AddProfile<MenuComboProfile>();
-=======
+//=======
     config.AddProfile<ProcesoPreparacionProfile>();
->>>>>>> Angelica
+//>>>>>>> Angelica
 });
 
 // Configuar Conexión a la Base de Datos SQL 
