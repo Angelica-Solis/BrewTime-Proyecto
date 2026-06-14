@@ -1,86 +1,115 @@
 ﻿@model BrewTime.Application.DTOs.ProductoDetalleDTO
 
-<div class="container mt-4">
+@section Styles {
+    <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
+}
 
-    <a asp-action="Index" class="btn btn-secondary mb-3">← Volver al listado</a>
+@{
+    ViewData["Title"] = Model.Nombre;
+}
 
-    <h1>@Model.Nombre</h1>
-    <hr />
+<div class="brew-page">
 
-    <div class="row">
-
-        <!-- Imagen -->
-        <div class="col-md-4">
-            @if (!string.IsNullOrEmpty(Model.ImagenPrincipal))
-            {
-                <img src="@Model.ImagenPrincipal"
-                     alt="@Model.Nombre"
-                     class="img-fluid rounded shadow" />
-            }
-            else
-            {
-                <div class="bg-light border rounded d-flex align-items-center
-                            justify-content-center"
-                     style="height:250px;">
-                    <span class="text-muted">Sin imagen disponible</span>
-                </div>
-            }
+    @* Hero banner *@
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">Brew Time · Cafetería</p>
+            <h1 class="brew-titulo">Detalle del <em>Producto</em></h1>
+            <p class="brew-subtitulo">Todo lo que necesitas saber sobre esta preparación.</p>
+            <div class="brew-hero-line">
+                <span></span>
+                <i>Ingredientes &amp; precio</i>
+                <span></span>
+            </div>
         </div>
+    </div>
 
-        <!-- Información -->
-        <div class="col-md-8">
+    @* Contenido *@
+    <div class="brew-content">
 
-            <dl class="row">
+        <a asp-action="Index" class="brew-btn-volver">← Volver al listado</a>
 
-                <dt class="col-sm-3">Categoría</dt>
-                <dd class="col-sm-9">
-                    <span class="badge bg-info text-dark">@Model.CategoriaNombre</span>
-                </dd>
+        <div class="brew-detail-card">
 
-                <dt class="col-sm-3">Descripción</dt>
-                <dd class="col-sm-9">@Model.Descripcion</dd>
+            @* Imagen *@
+            <div class="brew-detail-img-wrap">
+                @if (!string.IsNullOrEmpty(Model.ImagenPrincipal))
+                {
+                    <img src="@Model.ImagenPrincipal"
+                         alt="@Model.Nombre"
+                         class="brew-detail-img" />
+                }
+                else
+                {
+                    <div class="brew-detail-img-placeholder">
+                        <span>☕</span>
+                        <p>Sin imagen disponible</p>
+                    </div>
+                }
+            </div>
 
-                <dt class="col-sm-3">Precio</dt>
-                <dd class="col-sm-9">
-                    <strong>
-                        @Model.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))
-                    </strong>
-                </dd>
+            @* Info *@
+            <div class="brew-detail-info">
 
-                <dt class="col-sm-3">Estado</dt>
-                <dd class="col-sm-9">
-                    @if (Model.Activo)
-                    {
-                        <span class="badge bg-success">Activo</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-secondary">Inactivo</span>
-                    }
-                </dd>
+                <h2 class="brew-detail-nombre">@Model.Nombre</h2>
 
-                <dt class="col-sm-3">Fecha de creación</dt>
-                <dd class="col-sm-9">@Model.FechaCreacion.ToString("dd/MM/yyyy")</dd>
+                @* Categoría *@
+                <span class="brew-card-chip mb-3">@Model.CategoriaNombre</span>
 
-                <dt class="col-sm-3">Ingredientes</dt>
-                <dd class="col-sm-9">
+                @* Descripción *@
+                <p class="brew-detail-desc">@Model.Descripcion</p>
+
+                @* Datos en fila *@
+                <div class="brew-detail-meta">
+
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">Precio</span>
+                        <span class="brew-badge-tiempo">
+                            @Model.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))
+                        </span>
+                    </div>
+
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">Estado</span>
+                        @if (Model.Activo)
+                        {
+                            <span class="brew-badge-activo">Activo</span>
+                        }
+                        else
+                        {
+                            <span class="brew-badge-inactivo">Inactivo</span>
+                        }
+                    </div>
+
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">Fecha de creación</span>
+                        <span class="brew-meta-valor">@Model.FechaCreacion.ToString("dd/MM/yyyy")</span>
+                    </div>
+
+                </div>
+
+                @* Ingredientes *@
+                <div class="brew-detail-ingredientes">
+                    <p class="brew-meta-label">Ingredientes</p>
                     @if (Model.Ingredientes.Any())
                     {
-                        <ul class="list-unstyled mb-0">
+                        <ul class="brew-ingredientes-list">
                             @foreach (var ingrediente in Model.Ingredientes)
                             {
-                                <li>• @ingrediente</li>
+                                <li class="brew-ingrediente-item">
+                                    <span class="brew-ingrediente-dot">•</span>
+                                    @ingrediente
+                                </li>
                             }
                         </ul>
                     }
                     else
                     {
-                        <span class="text-muted">No registrados</span>
+                        <p class="brew-detail-empty">No hay ingredientes registrados.</p>
                     }
-                </dd>
+                </div>
 
-            </dl>
-
+            </div>
         </div>
     </div>
 </div>
