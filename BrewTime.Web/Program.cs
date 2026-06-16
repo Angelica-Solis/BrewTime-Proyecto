@@ -17,31 +17,47 @@ builder.Services.AddControllersWithViews();
 
 //Configurar D.I. //Repository 
 builder.Services.AddTransient<IRepositoryProducto, RepositoryProducto>();
+
+builder.Services.AddTransient<IRepositoryCombo, RepositoryCombo>();
+
 builder.Services.AddTransient<IRepositoryMenu, RepositoryMenu>();
 builder.Services.AddTransient<IRepositoryMenuDiaSemana, RepositoryMenuDiaSemana>();
 builder.Services.AddTransient<IRepositoryMenuProducto, RepositoryMenuProducto>();
 builder.Services.AddTransient<IRepositoryMenuCombo, RepositoryMenuCombo>();
+
 builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPreparacion>();
 builder.Services.AddTransient<IRepositoryCombo, RepositoryCombo>();
 //Services 
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
 builder.Services.AddTransient<IServiceCombo, ServiceCombo>();
+
+
+
 builder.Services.AddTransient<IServiceMenu, ServiceMenu>();
 builder.Services.AddTransient<IServiceMenuDiaSemana, ServiceMenuDiaSemana>();
 builder.Services.AddTransient<IServiceMenuProducto, ServiceMenuProducto>();
 builder.Services.AddTransient<IServiceMenuCombo, ServiceMenuCombo>();
+
 builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparacion>();
+
+
+
+
 
 //Configurar Automapper 
 builder.Services.AddAutoMapper(config =>
 {
     config.AddProfile<ProductoProfile>();
     config.AddProfile<ComboProfile>();
+
     config.AddProfile<MenuProfile>();
     config.AddProfile<MenuDiaSemanaProfile>();
     config.AddProfile<MenuProductoProfile>();
     config.AddProfile<MenuComboProfile>();
+
     config.AddProfile<ProcesoPreparacionProfile>();
+
+
 });
 
 // Configuar Conexión a la Base de Datos SQL 

@@ -1,32 +1,78 @@
 ﻿@model IEnumerable<BrewTime.Application.DTOs.ComboDTO>
 
-<h1>Combos</h1>
+@section Styles {
+    <link rel="stylesheet" href="~/css/combo.css" asp-append-version="true" />
+}
 
-<table class="table table-striped table-hover">
-    <thead class="table-dark">
-        <tr>
-            <th>Nombre</th>
-            <th>Categoría</th>
-            <th>Precio especial</th>
-            <th>Acciones</th>
-        </tr>
-    </thead>
-    <tbody>
-        @foreach (var item in Model)
+@{
+    ViewData["Title"] = "Combos";
+}
+
+<div class="brew-page">
+
+    @* Hero banner *@
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">Brew Time · Cafetería</p>
+            <h1 class="brew-titulo">Nuestros <em>Combos</em></h1>
+            <p class="brew-subtitulo">La mejor combinación al mejor precio.</p>
+            <div class="brew-hero-line">
+                <span></span>
+                <i>Ofertas &amp; precios especiales</i>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    @* Contenido *@
+    <div class="brew-content">
+
+        @if (!Model.Any())
         {
-            <tr>
-                <td>@item.Nombre</td>
-                <td>@item.CategoriaNombre</td>
-                <td>
-                    @item.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))
-                </td>
-                <td>
-                    <a asp-action="Detail" asp-route-id="@item.ComboID"
-                       class="btn btn-sm btn-primary">
-                        Ver detalle
-                    </a>
-                </td>
-            </tr>
+            <div class="brew-grid">
+                <div class="brew-empty">
+                    <span class="brew-empty-icon"></span>
+                    <p>No hay combos registrados aún.</p>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+        else
+        {
+            <p class="brew-count">@Model.Count() combo(s) disponible(s)</p>
+
+            <div class="brew-grid">
+                @foreach (var item in Model)
+                {
+                    <div class="brew-card">
+                        <div class="brew-card-stripe"></div>
+                        <div class="brew-card-body">
+
+                            @* Chip de categoría *@
+                            <span class="brew-card-chip">@item.CategoriaNombre</span>
+
+                            @* Nombre del combo *@
+                            <p class="brew-card-producto">@item.Nombre</p>
+
+                            @* Descripción *@
+                            <p class="brew-card-desc">@item.Descripcion</p>
+
+                            @* Footer *@
+                            <div class="brew-card-footer">
+                                <span class="brew-badge-tiempo">
+                                    @item.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))
+                                </span>
+                                <a asp-action="Detail"
+                                   asp-route-id="@item.ComboID"
+                                   class="brew-btn-detalle">
+                                    Ver detalle
+                                </a>
+                            </div>
+
+                        </div>
+                    </div>
+                }
+            </div>
+        }
+
+    </div>
+</div>
