@@ -1,8 +1,153 @@
 ﻿@{
-    ViewData["Title"] = "Home Page";
+    ViewData["Title"] = "Inicio";
 }
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://localhost:7193/producto">building Web apps with ASP.NET Core</a>.</p>
+@section Styles {
+    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+}
+
+<div class="home-page">
+
+    @* Hero  *@
+    <div class="home-hero">
+        <div class="home-hero-inner">
+            <p class="home-hero-eyebrow">Café y Bubble · Costa Rica</p>
+            <h1 class="home-hero-titulo">
+                Bienvenido a <em>Brew Time</em>
+            </h1>
+            <p class="home-hero-subtitulo">
+                Café de especialidad y bubble tea preparados con amor.<br />
+                Cada sorbo, una experiencia.
+            </p>
+            <a href="/producto" class="home-hero-cta">Ver menú completo</a>
+            <div class="home-hero-line">
+                <span></span>
+                <i>Bubble Tea &amp; Café</i>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    @* Sección Bubble Tea *@
+    <div class="home-section">
+        <div class="home-section-header">
+            <h2 class="home-section-titulo">Bubble Tea</h2>
+            <span class="home-section-tag">Nuestras estrellas</span>
+        </div>
+
+        <div class="home-grid">
+
+            <div class="home-card">
+                <div class="home-card-stripe"></div>
+                <div class="home-card-img-wrap">
+                    <img src="~/images/productos/Bubble Tea Original_BubbleTea.png" alt="Bubble Tea Original" />
+                </div>
+                <div class="home-card-body">
+                    <span class="home-card-cat">Bubble Tea</span>
+                    <p class="home-card-nombre">Original Bubble Tea</p>
+                    <p class="home-card-precio">₡2,500</p>
+                </div>
+            </div>
+
+            <div class="home-card">
+                <div class="home-card-stripe"></div>
+                <div class="home-card-img-wrap">
+                    <img src="~/images/productos/Bubble Tea Matcha_BubbleTea.png" alt="Matcha Bubble Tea" />
+                </div>
+                <div class="home-card-body">
+                    <span class="home-card-cat">Bubble Tea</span>
+                    <p class="home-card-nombre">Matcha Bubble Tea</p>
+                    <p class="home-card-precio">₡2,800</p>
+                </div>
+            </div>
+
+            <div class="home-card">
+                <div class="home-card-stripe"></div>
+                <div class="home-card-img-wrap">
+                    <img src="~/images/productos/Bubble Tea Taro_BubbleTea.png" alt="Taro Bubble Tea" />
+                </div>
+                <div class="home-card-body">
+                    <span class="home-card-cat">Bubble Tea</span>
+                    <p class="home-card-nombre">Taro Bubble Tea</p>
+                    <p class="home-card-precio">₡2,800</p>
+                </div>
+            </div>
+
+            <div class="home-card">
+                <div class="home-card-stripe"></div>
+                <div class="home-card-img-wrap">
+                    <img src="~/images/productos/OreoBoba_Bubble tea.png" alt="Oreo Boba" />
+                </div>
+                <div class="home-card-body">
+                    <span class="home-card-cat">Bubble Tea</span>
+                    <p class="home-card-nombre">Oreo Boba</p>
+                    <p class="home-card-precio">₡3,000</p>
+                </div>
+            </div>
+
+            <div class="home-card">
+                <div class="home-card-stripe"></div>
+                <div class="home-card-img-wrap">
+                    <img src="~/images/productos/CoffeeBoba _Bubble tea.png" alt="Coffee Boba" />
+                </div>
+                <div class="home-card-body">
+                    <span class="home-card-cat">Bubble Tea</span>
+                    <p class="home-card-nombre">Coffee Boba</p>
+                    <p class="home-card-precio">₡3,000</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="home-divider"><hr /></div>
+
+    @* Sección Café *@
+    <div class="home-section">
+        <div class="home-section-header">
+            <h2 class="home-section-titulo">Cafés</h2>
+            <span class="home-section-tag">Especialidad</span>
+        </div>
+
+        <div class="home-grid">
+
+            <div class="home-card">
+                <div class="home-card-stripe"></div>
+                <div class="home-card-img-wrap">
+                    <img src="~/images/productos/IcedAmericano_Café.png" alt="Iced Americano" />
+                </div>
+                <div class="home-card-body">
+                    <span class="home-card-cat">Café</span>
+                    <p class="home-card-nombre">Iced Americano</p>
+                    <p class="home-card-precio">₡2,200</p>
+                </div>
+            </div>
+
+            <div class="home-card">
+                <div class="home-card-stripe"></div>
+                <div class="home-card-img-wrap">
+                    <img src="~/images/productos/IcedLatte_Café.png" alt="Iced Latte" />
+                </div>
+                <div class="home-card-body">
+                    <span class="home-card-cat">Café</span>
+                    <p class="home-card-nombre">Iced Latte</p>
+                    <p class="home-card-precio">₡2,500</p>
+                </div>
+            </div>
+
+            <div class="home-card">
+                <div class="home-card-stripe"></div>
+                <div class="home-card-img-wrap">
+                    <img src="~/images/productos/IcedMocha_Café.png" alt="Iced Mocha" />
+                </div>
+                <div class="home-card-body">
+                    <span class="home-card-cat">Café</span>
+                    <p class="home-card-nombre">Iced Mocha</p>
+                    <p class="home-card-precio">₡2,700</p>
+                </div>
+            </div>
+
+        </div>
+    </div>
+
 </div>
