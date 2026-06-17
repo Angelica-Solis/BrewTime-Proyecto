@@ -43,15 +43,15 @@
 
     <div class="menu-content">
 
-        <p>
+        <p class="menu-lead">
             Esta pantalla muestra únicamente los menús disponibles, con su rango de
             disponibilidad y sus productos o combos organizados por categoría.
         </p>
 
         @if (!menusDisponibles.Any())
         {
-            <div class="menu-card">
-                <div class="menu-card-body">
+            <div class="menu-detail-card">
+                <div class="menu-detail-body">
                     <p class="menu-empty">No hay menús disponibles en este momento.</p>
                 </div>
             </div>
@@ -60,16 +60,16 @@
         {
             @foreach (var menu in menusDisponibles)
             {
-                <div class="menu-card">
+                <div class="menu-restaurant-card">
 
-                    <div class="menu-card-header text-center">
+                    <div class="menu-restaurant-header">
                         <h2>@menu.Nombre</h2>
                         <p>@menu.Descripcion</p>
                     </div>
 
-                    <div class="menu-card-body">
+                    <div class="menu-restaurant-body">
 
-                        <div class="text-center mb-4">
+                        <div class="menu-range">
                             <strong>Horario:</strong>
                             @menu.HoraInicio.ToString("HH:mm") - @menu.HoraFin.ToString("HH:mm")
                             <br />
@@ -114,7 +114,7 @@
 
                             foreach (var grupo in productosAgrupados)
                             {
-                                <h4 class="menu-section-title">@grupo.Key</h4>
+                                <h4 class="menu-category-title">@grupo.Key</h4>
 
                                 <div class="menu-grid">
                                     @foreach (var item in grupo)
@@ -122,7 +122,9 @@
                                         <div class="menu-product-card">
                                             <h5>@item.Producto.Nombre</h5>
                                             <p>@item.Producto.Descripcion</p>
-                                            <strong class="menu-price">₡@item.Producto.Precio</strong>
+                                            <strong class="menu-price">
+                                                ₡@item.Producto.Precio.ToString("N2")
+                                            </strong>
                                         </div>
                                     }
                                 </div>
@@ -143,7 +145,7 @@
 
                             foreach (var grupo in combosAgrupados)
                             {
-                                <h4 class="menu-section-title">@grupo.Key</h4>
+                                <h4 class="menu-category-title">@grupo.Key</h4>
 
                                 <div class="menu-grid">
                                     @foreach (var item in grupo)
@@ -151,7 +153,9 @@
                                         <div class="menu-product-card">
                                             <h5>@item.Combo.Nombre</h5>
                                             <p>@item.Combo.Descripcion</p>
-                                            <strong class="menu-price">₡@item.Combo.PrecioEspecial</strong>
+                                            <strong class="menu-price">
+                                                ₡@item.Combo.PrecioEspecial.ToString("N2")
+                                            </strong>
                                         </div>
                                     }
                                 </div>

@@ -37,68 +37,73 @@
 
     <div class="menu-content">
 
-        <div class="menu-card">
-            <div class="menu-card-header">
-                Información general
-            </div>
+        <a asp-action="Index" class="menu-btn-secondary">
+            ← Volver al listado
+        </a>
 
-            <div class="menu-card-body">
-                <h4 class="menu-name">@Model.Nombre</h4>
+        <div class="menu-detail-card mt-4">
+            <div class="menu-detail-body">
+                <h2 class="menu-detail-title" style="margin-top:0;">
+                    @Model.Nombre
+                </h2>
 
-                <p>
-                    <strong>Descripción:</strong>
+                <p class="menu-lead">
                     @Model.Descripcion
                 </p>
 
-                <p>
-                    <strong>Horario:</strong>
-                    @Model.HoraInicio.ToString("HH:mm") - @Model.HoraFin.ToString("HH:mm")
-                </p>
-
-                <p>
-                    <strong>Fechas:</strong>
-                    @if (Model.FechaInicio != null && Model.FechaFin != null)
-                    {
-                        <span>
-                            @Model.FechaInicio.Value.ToString("dd/MM/yyyy")
-                            -
-                            @Model.FechaFin.Value.ToString("dd/MM/yyyy")
+                <div class="menu-info-grid">
+                    <div class="menu-info-item">
+                        <span class="menu-info-label">Horario</span>
+                        <span class="menu-info-value">
+                            @Model.HoraInicio.ToString("HH:mm") - @Model.HoraFin.ToString("HH:mm")
                         </span>
-                    }
-                    else
-                    {
-                        <span>No definido</span>
-                    }
-                </p>
+                    </div>
 
-                <p>
-                    <strong>Estado:</strong>
-                    @if (Model.Activo)
-                    {
-                        <span class="menu-badge-active">Activo</span>
-                    }
-                    else
-                    {
-                        <span class="menu-badge-inactive">Inactivo</span>
-                    }
-                </p>
-            </div>
-        </div>
+                    <div class="menu-info-item">
+                        <span class="menu-info-label">Fechas</span>
+                        <span class="menu-info-value">
+                            @if (Model.FechaInicio != null && Model.FechaFin != null)
+                            {
+                                <span>
+                                    @Model.FechaInicio.Value.ToString("dd/MM/yyyy")
+                                    -
+                                    @Model.FechaFin.Value.ToString("dd/MM/yyyy")
+                                </span>
+                            }
+                            else
+                            {
+                                <span>No definido</span>
+                            }
+                        </span>
+                    </div>
 
-        <div class="menu-card">
-            <div class="menu-card-header">
-                Días disponibles
-            </div>
+                    <div class="menu-info-item">
+                        <span class="menu-info-label">Estado</span>
+                        <span class="menu-info-value">
+                            @if (Model.Activo)
+                            {
+                                <span class="menu-badge-active">Activo</span>
+                            }
+                            else
+                            {
+                                <span class="menu-badge-inactive">Inactivo</span>
+                            }
+                        </span>
+                    </div>
+                </div>
 
-            <div class="menu-card-body">
+                <h2 class="menu-detail-title">
+                    Días <em>disponibles</em>
+                </h2>
+
                 @if (Model.MenuDiaSemana != null && Model.MenuDiaSemana.Any())
                 {
-                    <ul>
+                    <div class="menu-days-list">
                         @foreach (var dia in Model.MenuDiaSemana.OrderBy(x => x.DiaSemana))
                         {
-                            <li>@NombreDia(dia.DiaSemana)</li>
+                            <span class="menu-day-chip">@NombreDia(dia.DiaSemana)</span>
                         }
-                    </ul>
+                    </div>
                 }
                 else
                 {
@@ -182,12 +187,6 @@
         {
             <p class="menu-empty">No hay combos registrados para este menú.</p>
         }
-
-        <div class="mt-4">
-            <a asp-action="Index" class="menu-btn-secondary">
-                ← Volver
-            </a>
-        </div>
 
     </div>
 </div>
