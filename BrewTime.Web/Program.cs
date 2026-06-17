@@ -19,21 +19,17 @@ builder.Services.AddControllersWithViews();
 builder.Services.AddTransient<IRepositoryProducto, RepositoryProducto>();
 builder.Services.AddTransient<IRepositoryCombo, RepositoryCombo>();
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 builder.Services.AddTransient<IRepositoryMenu, RepositoryMenu>();
 builder.Services.AddTransient<IRepositoryMenuDiaSemana, RepositoryMenuDiaSemana>();
 builder.Services.AddTransient<IRepositoryMenuProducto, RepositoryMenuProducto>();
 builder.Services.AddTransient<IRepositoryMenuCombo, RepositoryMenuCombo>();
-<<<<<<< Updated upstream
-=======
+
 
 
 builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPreparacion>();
 
->>>>>>> Stashed changes
+
 
 builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPreparacion>();
 
@@ -41,19 +37,13 @@ builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPr
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
 builder.Services.AddTransient<IServiceCombo, ServiceCombo>();
 
-<<<<<<< Updated upstream
-=======
 
->>>>>>> Stashed changes
 builder.Services.AddTransient<IServiceMenu, ServiceMenu>();
 builder.Services.AddTransient<IServiceMenuDiaSemana, ServiceMenuDiaSemana>();
 builder.Services.AddTransient<IServiceMenuProducto, ServiceMenuProducto>();
 builder.Services.AddTransient<IServiceMenuCombo, ServiceMenuCombo>();
-<<<<<<< Updated upstream
-=======
 builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparacion>();
 
->>>>>>> Stashed changes
 
 builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparacion>();
 
@@ -63,10 +53,6 @@ builder.Services.AddAutoMapper(config =>
 {
     config.AddProfile<ProductoProfile>();
     config.AddProfile<ComboProfile>();
-<<<<<<< Updated upstream
-
-=======
->>>>>>> Stashed changes
     config.AddProfile<MenuProfile>();
     config.AddProfile<MenuDiaSemanaProfile>();
     config.AddProfile<MenuProductoProfile>();
@@ -74,12 +60,10 @@ builder.Services.AddAutoMapper(config =>
 
     config.AddProfile<ProcesoPreparacionProfile>();
 
-<<<<<<< Updated upstream
-=======
     config.AddProfile<ProcesoPreparacionProfile>();
 
 
->>>>>>> Stashed changes
+
 });
 
 // Configuar Conexión a la Base de Datos SQL 
