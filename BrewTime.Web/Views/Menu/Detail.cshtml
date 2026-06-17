@@ -6,6 +6,21 @@
 
 @{
     ViewData["Title"] = "Detalle del Menú";
+
+    string NombreDia(byte dia)
+    {
+        return dia switch
+        {
+            1 => "Lunes",
+            2 => "Martes",
+            3 => "Miércoles",
+            4 => "Jueves",
+            5 => "Viernes",
+            6 => "Sábado",
+            7 => "Domingo",
+            _ => "Día no definido"
+        };
+    }
 }
 
 <div class="menu-page">
@@ -24,7 +39,7 @@
 
         <div class="menu-card">
             <div class="menu-card-header">
-                Información general del menú
+                Información general
             </div>
 
             <div class="menu-card-body">
@@ -37,12 +52,23 @@
 
                 <p>
                     <strong>Horario:</strong>
-                    @Model.HoraInicio - @Model.HoraFin
+                    @Model.HoraInicio.ToString("HH:mm") - @Model.HoraFin.ToString("HH:mm")
                 </p>
 
                 <p>
                     <strong>Fechas:</strong>
-                    @Model.FechaInicio - @Model.FechaFin
+                    @if (Model.FechaInicio != null && Model.FechaFin != null)
+                    {
+                        <span>
+                            @Model.FechaInicio.Value.ToString("dd/MM/yyyy")
+                            -
+                            @Model.FechaFin.Value.ToString("dd/MM/yyyy")
+                        </span>
+                    }
+                    else
+                    {
+                        <span>No definido</span>
+                    }
                 </p>
 
                 <p>
@@ -68,9 +94,9 @@
                 @if (Model.MenuDiaSemana != null && Model.MenuDiaSemana.Any())
                 {
                     <ul>
-                        @foreach (var dia in Model.MenuDiaSemana)
+                        @foreach (var dia in Model.MenuDiaSemana.OrderBy(x => x.DiaSemana))
                         {
-                            <li>Día: @dia.DiaSemana</li>
+                            <li>@NombreDia(dia.DiaSemana)</li>
                         }
                     </ul>
                 }
@@ -93,7 +119,7 @@
                         <thead>
                             <tr>
                                 <th>Producto</th>
-                                <th>Descripción</th>
+                                <th>Categoría</th>
                                 <th>Precio</th>
                             </tr>
                         </thead>
@@ -103,7 +129,7 @@
                             {
                                 <tr>
                                     <td>@item.Producto.Nombre</td>
-                                    <td>@item.Producto.Descripcion</td>
+                                    <td>@item.Producto.CategoriaNombre</td>
                                     <td>₡@item.Producto.Precio</td>
                                 </tr>
                             }
@@ -129,8 +155,8 @@
                         <thead>
                             <tr>
                                 <th>Combo</th>
-                                <th>Descripción</th>
-                                <th>Precio Especial</th>
+                                <th>Categoría</th>
+                                <th>Precio especial</th>
                             </tr>
                         </thead>
 
@@ -139,7 +165,7 @@
                             {
                                 <tr>
                                     <td>@item.Combo.Nombre</td>
-                                    <td>@item.Combo.Descripcion</td>
+                                    <td>@item.Combo.CategoriaNombre</td>
                                     <td>₡@item.Combo.PrecioEspecial</td>
                                 </tr>
                             }
@@ -158,3 +184,4 @@
         </a>
 
     </div>
+</div>
