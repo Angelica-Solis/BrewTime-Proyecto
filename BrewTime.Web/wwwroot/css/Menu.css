@@ -130,12 +130,19 @@
         padding: 0.8rem;
         font-size: 0.8rem;
         text-transform: uppercase;
+        letter-spacing: 0.04em;
     }
 
     .menu-table td {
         padding: 0.8rem;
         border-bottom: 1px solid rgba(120,80,30,0.12);
+        font-size: 0.95rem;
+        color: var(--text-body);
     }
+
+        .menu-table td:first-child {
+            font-weight: 600;
+        }
 
 .menu-badge-active {
     background: var(--musgo-light);
@@ -216,6 +223,11 @@
     font-size: 1rem;
 }
 
+.menu-price-text {
+    color: var(--cafe-dark);
+    font-weight: 700;
+}
+
 .menu-section-title {
     font-family: var(--font-display);
     color: var(--text-titulo);
@@ -229,6 +241,38 @@
     font-style: italic;
 }
 
+/* Títulos elegantes para Detail */
+.menu-detail-title {
+    font-family: var(--font-display);
+    font-size: 2.4rem;
+    font-weight: 700;
+    color: var(--text-titulo);
+    margin: 2.8rem 0 1rem;
+    line-height: 1.1;
+}
+
+    .menu-detail-title em {
+        font-style: italic;
+        color: var(--cafe-dark);
+        font-weight: 500;
+    }
+
+/* Contenedor flotante para tablas sin parecer card grande */
+.menu-table-wrapper {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 18px;
+    box-shadow: var(--shadow-card);
+    padding: 1.2rem;
+    margin-bottom: 2rem;
+}
+
+    .menu-table-wrapper .menu-table {
+        margin: 0;
+        border-radius: 14px;
+        overflow: hidden;
+    }
+
 @media (max-width: 768px) {
     .menu-hero {
         padding: 2.5rem 1.5rem 2rem;
@@ -240,5 +284,13 @@
 
     .menu-table {
         font-size: 0.85rem;
+    }
+
+    .menu-detail-title {
+        font-size: 1.9rem;
+    }
+
+    .menu-table-wrapper {
+        padding: 0.8rem;
     }
 }

@@ -18,70 +18,40 @@ builder.Services.AddControllersWithViews();
 //Configurar D.I. //Repository 
 builder.Services.AddTransient<IRepositoryProducto, RepositoryProducto>();
 builder.Services.AddTransient<IRepositoryCombo, RepositoryCombo>();
-<<<<<<< HEAD
-//<<<<<<< HEAD
-=======
 
->>>>>>> Erin
 builder.Services.AddTransient<IRepositoryMenu, RepositoryMenu>();
 builder.Services.AddTransient<IRepositoryMenuDiaSemana, RepositoryMenuDiaSemana>();
 builder.Services.AddTransient<IRepositoryMenuProducto, RepositoryMenuProducto>();
 builder.Services.AddTransient<IRepositoryMenuCombo, RepositoryMenuCombo>();
-<<<<<<< HEAD
-//=======
-builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPreparacion>();
-//>>>>>>> Angelica
-=======
+
 
 builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPreparacion>();
 
->>>>>>> Erin
 
-//Services 
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
 builder.Services.AddTransient<IServiceCombo, ServiceCombo>();
-<<<<<<< HEAD
-//<<<<<<< HEAD
-=======
 
->>>>>>> Erin
 builder.Services.AddTransient<IServiceMenu, ServiceMenu>();
 builder.Services.AddTransient<IServiceMenuDiaSemana, ServiceMenuDiaSemana>();
 builder.Services.AddTransient<IServiceMenuProducto, ServiceMenuProducto>();
 builder.Services.AddTransient<IServiceMenuCombo, ServiceMenuCombo>();
-<<<<<<< HEAD
-//=======
-builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparacion>();
-//>>>>>>> Angelica
-=======
 
 builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparacion>();
 
->>>>>>> Erin
 
 //Configurar Automapper 
 builder.Services.AddAutoMapper(config =>
 {
     config.AddProfile<ProductoProfile>();
     config.AddProfile<ComboProfile>();
-<<<<<<< HEAD
-//<<<<<<< HEAD
-=======
 
->>>>>>> Erin
     config.AddProfile<MenuProfile>();
     config.AddProfile<MenuDiaSemanaProfile>();
     config.AddProfile<MenuProductoProfile>();
     config.AddProfile<MenuComboProfile>();
-<<<<<<< HEAD
-//=======
-    config.AddProfile<ProcesoPreparacionProfile>();
-//>>>>>>> Angelica
-=======
 
     config.AddProfile<ProcesoPreparacionProfile>();
 
->>>>>>> Erin
 });
 
 // Configuar Conexión a la Base de Datos SQL 

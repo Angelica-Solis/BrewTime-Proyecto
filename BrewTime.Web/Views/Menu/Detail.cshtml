@@ -107,81 +107,87 @@
             </div>
         </div>
 
-        <div class="menu-card">
-            <div class="menu-card-header">
-                Productos del menú
-            </div>
+        <h2 class="menu-detail-title">
+            Productos del <em>menú</em>
+        </h2>
 
-            <div class="menu-card-body">
-                @if (Model.MenuProducto != null && Model.MenuProducto.Any())
-                {
-                    <table class="menu-table">
-                        <thead>
+        @if (Model.MenuProducto != null && Model.MenuProducto.Any())
+        {
+            <div class="menu-table-wrapper">
+                <table class="menu-table">
+                    <thead>
+                        <tr>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.MenuProducto)
+                        {
                             <tr>
-                                <th>Producto</th>
-                                <th>Categoría</th>
-                                <th>Precio</th>
+                                <td>@item.Producto.Nombre</td>
+                                <td>@item.Producto.CategoriaNombre</td>
+                                <td>
+                                    <span class="menu-price-text">
+                                        ₡@item.Producto.Precio.ToString("N2")
+                                    </span>
+                                </td>
                             </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var item in Model.MenuProducto)
-                            {
-                                <tr>
-                                    <td>@item.Producto.Nombre</td>
-                                    <td>@item.Producto.CategoriaNombre</td>
-                                    <td>₡@item.Producto.Precio</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <p class="menu-empty">No hay productos registrados para este menú.</p>
-                }
+                        }
+                    </tbody>
+                </table>
             </div>
-        </div>
+        }
+        else
+        {
+            <p class="menu-empty">No hay productos registrados para este menú.</p>
+        }
 
-        <div class="menu-card">
-            <div class="menu-card-header">
-                Combos del menú
-            </div>
+        <h2 class="menu-detail-title">
+            Combos del <em>menú</em>
+        </h2>
 
-            <div class="menu-card-body">
-                @if (Model.MenuCombo != null && Model.MenuCombo.Any())
-                {
-                    <table class="menu-table">
-                        <thead>
+        @if (Model.MenuCombo != null && Model.MenuCombo.Any())
+        {
+            <div class="menu-table-wrapper">
+                <table class="menu-table">
+                    <thead>
+                        <tr>
+                            <th>Combo</th>
+                            <th>Categoría</th>
+                            <th>Precio especial</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.MenuCombo)
+                        {
                             <tr>
-                                <th>Combo</th>
-                                <th>Categoría</th>
-                                <th>Precio especial</th>
+                                <td>@item.Combo.Nombre</td>
+                                <td>@item.Combo.CategoriaNombre</td>
+                                <td>
+                                    <span class="menu-price-text">
+                                        ₡@item.Combo.PrecioEspecial.ToString("N2")
+                                    </span>
+                                </td>
                             </tr>
-                        </thead>
-
-                        <tbody>
-                            @foreach (var item in Model.MenuCombo)
-                            {
-                                <tr>
-                                    <td>@item.Combo.Nombre</td>
-                                    <td>@item.Combo.CategoriaNombre</td>
-                                    <td>₡@item.Combo.PrecioEspecial</td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                }
-                else
-                {
-                    <p class="menu-empty">No hay combos registrados para este menú.</p>
-                }
+                        }
+                    </tbody>
+                </table>
             </div>
-        </div>
+        }
+        else
+        {
+            <p class="menu-empty">No hay combos registrados para este menú.</p>
+        }
 
-        <a asp-action="Index" class="menu-btn-secondary">
-            ← Volver
-        </a>
+        <div class="mt-4">
+            <a asp-action="Index" class="menu-btn-secondary">
+                ← Volver
+            </a>
+        </div>
 
     </div>
 </div>

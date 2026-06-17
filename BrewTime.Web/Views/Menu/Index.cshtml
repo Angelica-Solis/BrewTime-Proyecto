@@ -43,76 +43,68 @@
         }
         else
         {
-            <div class="menu-card">
-                <div class="menu-card-header">
-                    Listado de menús
-                </div>
+            <table class="menu-table">
+                <thead>
+                    <tr>
+                        <th>Nombre</th>
+                        <th>Horario</th>
+                        <th>Fechas</th>
+                        <th>Estado</th>
+                        <th>Acción</th>
+                    </tr>
+                </thead>
 
-                <div class="menu-card-body">
-                    <table class="menu-table">
-                        <thead>
-                            <tr>
-                                <th>Nombre</th>
-                                <th>Horario</th>
-                                <th>Fechas</th>
-                                <th>Estado</th>
-                                <th>Acción</th>
-                            </tr>
-                        </thead>
+                <tbody>
+                    @foreach (var item in menus)
+                    {
+                        <tr>
+                            <td>
+                                <strong>@item.Nombre</strong><br />
+                                <small>@item.Descripcion</small>
+                            </td>
 
-                        <tbody>
-                            @foreach (var item in menus)
-                            {
-                                <tr>
-                                    <td>
-                                        <strong>@item.Nombre</strong><br />
-                                        <small>@item.Descripcion</small>
-                                    </td>
+                            <td>
+                                @item.HoraInicio.ToString("HH:mm") -
+                                @item.HoraFin.ToString("HH:mm")
+                            </td>
 
-                                    <td>
-                                        @item.HoraInicio.ToString("HH:mm") -
-                                        @item.HoraFin.ToString("HH:mm")
-                                    </td>
+                            <td>
+                                @if (item.FechaInicio != null && item.FechaFin != null)
+                                {
+                                    <span>
+                                        @item.FechaInicio.Value.ToString("dd/MM/yyyy")
+                                        -
+                                        @item.FechaFin.Value.ToString("dd/MM/yyyy")
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span>No definido</span>
+                                }
+                            </td>
 
-                                    <td>
-                                        @if (item.FechaInicio != null && item.FechaFin != null)
-                                        {
-                                            <span>
-                                                @item.FechaInicio.Value.ToString("dd/MM/yyyy")
-                                                -
-                                                @item.FechaFin.Value.ToString("dd/MM/yyyy")
-                                            </span>
-                                        }
-                                        else
-                                        {
-                                            <span>No definido</span>
-                                        }
-                                    </td>
+                            <td>
+                                @if (item.Activo)
+                                {
+                                    <span class="menu-badge-active">Disponible</span>
+                                }
+                                else
+                                {
+                                    <span class="menu-badge-inactive">Inactivo</span>
+                                }
+                            </td>
 
-                                    <td>
-                                        @if (item.Activo)
-                                        {
-                                            <span class="menu-badge-active">Disponible</span>
-                                        }
-                                        else
-                                        {
-                                            <span class="menu-badge-inactive">Inactivo</span>
-                                        }
-                                    </td>
-
-                                    <td>
-                                        <a asp-action="Detail"
-                                           asp-route-id="@item.MenuId"
-                                           class="menu-btn">
-                                            Detalle
-                                        </a>
-                                    </td>
-                                </tr>
-                            }
-                        </tbody>
-                    </table>
-                </div>
-            </div>
+                            <td>
+                                <a asp-action="Detail"
+                                   asp-route-id="@item.MenuId"
+                                   class="menu-btn">
+                                    Detalle
+                                </a>
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
         }
 
     </div>
