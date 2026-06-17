@@ -1,0 +1,171 @@
+﻿@model IEnumerable<BrewTime.Application.DTOs.MenuDTO>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/Menu.css" asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = "Menú Disponible";
+
+    string NombreDia(byte dia)
+    {
+        return dia switch
+        {
+            1 => "Lunes",
+            2 => "Martes",
+            3 => "Miércoles",
+            4 => "Jueves",
+            5 => "Viernes",
+            6 => "Sábado",
+            7 => "Domingo",
+            _ => "Día no definido"
+        };
+    }
+
+    var menusDisponibles = Model
+        .Where(x => x.Activo)
+        .OrderByDescending(x => x.FechaInicio)
+        .ThenBy(x => x.HoraInicio)
+        .ToList();
+}
+
+<div class="menu-page">
+
+    <div class="menu-hero">
+        <div class="menu-hero-inner">
+            <p class="menu-eyebrow">Brew Time · Cafetería</p>
+            <h1 class="menu-title">Menú <em>Disponible</em></h1>
+            <p class="menu-subtitle">
+                Menús activos según días, fechas y horas configuradas.
+            </p>
+        </div>
+    </div>
+
+    <div class="menu-content">
+
+        <p>
+            Esta pantalla muestra únicamente los menús disponibles, con su rango de
+            disponibilidad y sus productos o combos organizados por categoría.
+        </p>
+
+        @if (!menusDisponibles.Any())
+        {
+            <div class="menu-card">
+                <div class="menu-card-body">
+                    <p class="menu-empty">No hay menús disponibles en este momento.</p>
+                </div>
+            </div>
+        }
+        else
+        {
+            @foreach (var menu in menusDisponibles)
+            {
+                <div class="menu-card">
+
+                    <div class="menu-card-header text-center">
+                        <h2>@menu.Nombre</h2>
+                        <p>@menu.Descripcion</p>
+                    </div>
+
+                    <div class="menu-card-body">
+
+                        <div class="text-center mb-4">
+                            <strong>Horario:</strong>
+                            @menu.HoraInicio.ToString("HH:mm") - @menu.HoraFin.ToString("HH:mm")
+                            <br />
+
+                            <strong>Fechas:</strong>
+                            @if (menu.FechaInicio != null && menu.FechaFin != null)
+                            {
+                                <span>
+                                    @menu.FechaInicio.Value.ToString("dd/MM/yyyy")
+                                    -
+                                    @menu.FechaFin.Value.ToString("dd/MM/yyyy")
+                                </span>
+                            }
+                            else
+                            {
+                                <span>No definido</span>
+                            }
+                            <br />
+
+                            <strong>Días:</strong>
+                            @if (menu.MenuDiaSemana != null && menu.MenuDiaSemana.Any())
+                            {
+                    <span>
+                        @string.Join(", ", menu.MenuDiaSemana
+                                                .OrderBy(x => x.DiaSemana)
+                                                .Select(x => NombreDia(x.DiaSemana)))
+                    </span>
+                                        }
+                            else
+                            {
+                                <span>No hay días configurados</span>
+                            }
+                        </div>
+
+                        <h3 class="menu-section-title">Productos</h3>
+
+                        @if (menu.MenuProducto != null && menu.MenuProducto.Any())
+                        {
+                            var productosAgrupados = menu.MenuProducto
+                            .Where(x => x.Producto != null)
+                            .GroupBy(x => x.Producto.CategoriaNombre);
+
+                            foreach (var grupo in productosAgrupados)
+                            {
+                                <h4 class="menu-section-title">@grupo.Key</h4>
+
+                                <div class="menu-grid">
+                                    @foreach (var item in grupo)
+                                    {
+                                        <div class="menu-product-card">
+                                            <h5>@item.Producto.Nombre</h5>
+                                            <p>@item.Producto.Descripcion</p>
+                                            <strong class="menu-price">₡@item.Producto.Precio</strong>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="menu-empty">No hay productos disponibles para este menú.</p>
+                        }
+
+                        <h3 class="menu-section-title">Combos</h3>
+
+                        @if (menu.MenuCombo != null && menu.MenuCombo.Any())
+                        {
+                            var combosAgrupados = menu.MenuCombo
+                            .Where(x => x.Combo != null)
+                            .GroupBy(x => x.Combo.CategoriaNombre);
+
+                            foreach (var grupo in combosAgrupados)
+                            {
+                                <h4 class="menu-section-title">@grupo.Key</h4>
+
+                                <div class="menu-grid">
+                                    @foreach (var item in grupo)
+                                    {
+                                        <div class="menu-product-card">
+                                            <h5>@item.Combo.Nombre</h5>
+                                            <p>@item.Combo.Descripcion</p>
+                                            <strong class="menu-price">₡@item.Combo.PrecioEspecial</strong>
+                                        </div>
+                                    }
+                                </div>
+                            }
+                        }
+                        else
+                        {
+                            <p class="menu-empty">No hay combos disponibles para este menú.</p>
+                        }
+
+                    </div>
+                </div>
+            }
+        }
+
+    </div>
+</div>
