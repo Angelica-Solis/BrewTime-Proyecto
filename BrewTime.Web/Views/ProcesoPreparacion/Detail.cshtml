@@ -1,4 +1,4 @@
-﻿@model ProcesoPreparacionDTO
+﻿@model ProcesoPreparacionDetalleDTO
 
 @section Styles {
     <link rel="stylesheet" href="~/css/procesoPreparacion.css" asp-append-version="true" />
@@ -17,67 +17,61 @@
             <h1 class="brew-titulo">Detalle del <em>Proceso</em></h1>
             <p class="brew-subtitulo">Información completa de preparación</p>
             <div class="brew-hero-line">
-                <span></span>
-                <i>@Model.Producto.Nombre</i>
-                <span></span>
             </div>
         </div>
     </div>
+  
 
     @* Contenido *@
     <div class="brew-content">
+        <a asp-action="Index" class="brew-btn-volver">
+            ← Volver al listado
+        </a>
         <div class="brew-detalle-wrapper">
 
             <div class="brew-card">
                 <div class="brew-card-stripe"></div>
                 <div class="brew-card-body">
 
-                    @* Chip de estacion *@
-                    <span class="brew-card-chip">@Model.Estacion.Nombre</span>
+                    <h2 class="brew-detalle-producto">
+                        @Model.NombreProducto
+                    </h2>
 
-                    @* Nombre del producto *@
-                    <p class="brew-card-producto">@Model.Producto.Nombre</p>
+                    @foreach (var item in Model.Procesos)
+                    {
+                        <div class="brew-paso-card">
 
-                    <hr class="brew-detalle-divider" />
+                            <div class="brew-paso-numero">
+                                @item.Orden.ToString("00")
+                            </div>
 
-                    @* Filas de detalle *@
-                    <div class="brew-detalle-grid">
+                            <div>
+                                <span class="brew-paso-label">
+                                    Estación
+                                </span>
 
-                        <div class="brew-detalle-item">
-                            <span class="brew-detalle-label">Producto</span>
-                            <span class="brew-detalle-value">@Model.Producto.Nombre</span>
+                                <div class="brew-paso-estacion">
+                                    @item.Estacion.Nombre
+                                </div>
+                            </div>
+
+                            <div>
+                                <span class="brew-paso-label">
+                                    Tiempo estimado
+                                </span>
+
+                                <span class="brew-detalle-tiempo">
+                                    @item.TiempoEstimadoMin min
+                                </span>
+                            </div>
+
                         </div>
-
-                        <div class="brew-detalle-item">
-                            <span class="brew-detalle-label">Estación</span>
-                            <span class="brew-detalle-value">@Model.Estacion.Nombre</span>
-                        </div>
-
-                        <div class="brew-detalle-item">
-                            <span class="brew-detalle-label">Orden</span>
-                            <span class="brew-detalle-value">Paso #@Model.Orden</span>
-                        </div>
-
-                        <div class="brew-detalle-item">
-                            <span class="brew-detalle-label">Tiempo estimado</span>
-                            <span class="brew-detalle-value brew-detalle-tiempo">
-                                ⏱ @Model.TiempoEstimadoMin minutos
-                            </span>
-                        </div>
-
-                    </div>
-
-                    @* Boton regresar *@
-                    <div class="brew-detalle-actions">
-                        <a asp-action="Index" class="brew-btn-secondary">
-                            ← Regresar
-                        </a>
-                    </div>
+                    }
 
                 </div>
             </div>
 
         </div>
     </div>
-
+  
 </div>

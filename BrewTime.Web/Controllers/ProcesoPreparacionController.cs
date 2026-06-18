@@ -16,15 +16,18 @@ namespace BrewTime.Web.Controllers
         [HttpGet]
         public async Task<IActionResult> Index()
         {
-            var collection = await _serviceProcesoPreparacion.ListAsync();
-            return View(collection);
-        }
+            var lista = await _serviceProcesoPreparacion.ListadoProcesosAsync();
 
-        [HttpGet]
+            return View(lista);
+        }
         public async Task<IActionResult> Detail(int id)
         {
-            var proceso = await _serviceProcesoPreparacion.FindByIdAsync(id);
-            return View(proceso);
+            var detalle = await _serviceProcesoPreparacion.DetailByProductoAsync(id);
+
+            if (detalle == null)
+                return NotFound();
+
+            return View(detalle);
         }
     }
 }

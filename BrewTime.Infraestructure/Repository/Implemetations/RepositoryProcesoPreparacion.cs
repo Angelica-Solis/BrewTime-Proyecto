@@ -38,5 +38,15 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
 
             return entity!;
         }
+        public async Task<ICollection<ProcesoPreparacion>>
+      FindByProductoIdAsync(int productoId)
+        {
+            return await _context.Set<ProcesoPreparacion>()
+                .Include(x => x.Producto)
+                .Include(x => x.Estacion)
+                .Where(x => x.ProductoId == productoId)
+                .OrderBy(x => x.Orden)
+                .ToListAsync();
+        }
     }
 }

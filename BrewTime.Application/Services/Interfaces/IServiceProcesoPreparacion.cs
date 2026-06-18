@@ -10,8 +10,9 @@ namespace BrewTime.Application.Services.Interfaces
     public interface IServiceProcesoPreparacion
     {
         Task<ICollection<ProcesoPreparacionDTO>> ListAsync();
-        Task<ProcesoPreparacionDTO> FindByIdAsync(int id);
+        Task<ICollection<ProcesoPreparacionListadoDTO>>ListadoProcesosAsync();
 
+        Task<ProcesoPreparacionDetalleDTO>DetailByProductoAsync(int productoId);
 
     }
 }

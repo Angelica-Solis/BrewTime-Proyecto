@@ -35,11 +35,33 @@ namespace BrewTime.Application.Services.Implementations
             return collection;
         }
 
-        async Task<ProcesoPreparacionDTO> IServiceProcesoPreparacion.FindByIdAsync(int id)
+        public async Task<ProcesoPreparacionDetalleDTO> DetailByProductoAsync(int productoId)
         {
-            var @object = await _repository.FindByIdAsync(id);
-            var objectMapped = _mapper.Map<ProcesoPreparacionDTO>(@object);
-            return objectMapped;
+            var lista = await _repository.FindByProductoIdAsync(productoId);
+
+            if (lista == null || !lista.Any())
+                return null;
+
+            return new ProcesoPreparacionDetalleDTO
+            {
+                NombreProducto = lista.First().Producto.Nombre,
+                Procesos = _mapper.Map<ICollection<ProcesoPreparacionDTO>>(lista)
+            };
+        }
+
+        public async Task<ICollection<ProcesoPreparacionListadoDTO>>ListadoProcesosAsync()
+        {
+            var lista = await _repository.ListAsync();
+
+            return lista
+                .GroupBy(x => x.ProductoId)
+                .Select(g => new ProcesoPreparacionListadoDTO
+                {
+                    ProductoId = g.Key,
+                    NombreProducto = g.First().Producto.Nombre,
+                    CantidadProcesos = g.Count()
+                })
+                .ToList();
         }
     }
 }

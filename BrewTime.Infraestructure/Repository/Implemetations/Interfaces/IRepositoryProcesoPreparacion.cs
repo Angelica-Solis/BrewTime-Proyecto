@@ -10,6 +10,7 @@ namespace BrewTime.Infraestructure.Repository.Implemetations.Interfaces
     public interface IRepositoryProcesoPreparacion
     {
         Task<ICollection<ProcesoPreparacion>> ListAsync();
+        Task<ICollection<ProcesoPreparacion>> FindByProductoIdAsync(int productoId);
         Task<ProcesoPreparacion> FindByIdAsync(int id);
     }
 }

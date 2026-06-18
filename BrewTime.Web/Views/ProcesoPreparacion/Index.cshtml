@@ -1,16 +1,12 @@
-﻿@model IEnumerable<BrewTime.Application.DTOs.ProcesoPreparacionDTO>
-
+﻿@model ICollection<ProcesoPreparacionListadoDTO>
 @section Styles {
     <link rel="stylesheet" href="~/css/procesoPreparacion.css" asp-append-version="true" />
 }
-
 @{
     ViewData["Title"] = "Proceso de Preparación";
 }
 
 <div class="brew-page">
-
-    @* Hero banner *@
     <div class="brew-hero">
         <div class="brew-hero-inner">
             <p class="brew-hero-eyebrow">Brew Time · Cafetería</p>
@@ -24,9 +20,7 @@
         </div>
     </div>
 
-    @* Contenido *@
     <div class="brew-content">
-
         @if (!Model.Any())
         {
             <div class="brew-grid">
@@ -38,46 +32,30 @@
         }
         else
         {
-            <p class="brew-count">@Model.Count() proceso(s) registrado(s)</p>
-
+            <p class="brew-count">@Model.Count producto(s) registrado(s)</p>
             <div class="brew-grid">
                 @foreach (var item in Model)
                 {
                     <div class="brew-card">
-
-                        @* Franja de color superior *@
                         <div class="brew-card-stripe"></div>
-
                         <div class="brew-card-body">
-
-                            @* Chip de estacion *@
-                            <span class="brew-card-chip">@item.Estacion.Nombre</span>
-
-                            @* Nombre del producto *@
-                            <p class="brew-card-producto">@item.Producto.Nombre</p>
-
-                            @* Paso *@
+                            <span class="brew-card-chip">Producto</span>
+                            <p class="brew-card-producto">@item.NombreProducto</p>
                             <p class="brew-card-paso">
-                                Paso&nbsp;<strong>#@item.Orden</strong>
+                                <strong>@item.CantidadProcesos</strong> proceso(s) registrado(s)
                             </p>
-
-                            @* Footer, tiempo + boton *@
                             <div class="brew-card-footer">
-                                <span class="brew-badge-tiempo">
-                                    ⏱ @item.TiempoEstimadoMin min
-                                </span>
-                                <a asp-action="Detail"
-                                   asp-route-id="@item.ProcesoId"
-                                   class="brew-btn-detalle">
+                                <span class="brew-badge-tiempo">☕ Brew</span>
+                                <a class="brew-btn-detalle"
+                                   asp-action="Detail"
+                                   asp-route-id="@item.ProductoId">
                                     Ver detalle
                                 </a>
                             </div>
-
                         </div>
                     </div>
                 }
             </div>
         }
-
     </div>
 </div>
