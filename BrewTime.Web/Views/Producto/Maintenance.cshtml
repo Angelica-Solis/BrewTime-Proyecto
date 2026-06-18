@@ -1,0 +1,100 @@
+﻿@model IEnumerable<BrewTime.Application.DTOs.ProductoDTO>
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = "Mantenimiento de Productos";
+}
+
+<div class="brew-page">
+
+    @* Hero banner *@
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">Brew Time · Administración</p>
+            <h1 class="brew-titulo">Mantenimiento de <em>Productos</em></h1>
+            <p class="brew-subtitulo">Creá, editá o eliminá productos del catálogo.</p>
+            <div class="brew-hero-line">
+                <span></span>
+                <i>Gestión de catálogo</i>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="brew-content">
+
+        @* Barra de acciones *@
+        <div class="brew-maint-toolbar">
+            <a asp-action="Index" class="brew-btn-volver">← Volver al catálogo</a>
+            <a asp-action="Create" class="brew-btn-nuevo">+ Nuevo producto</a>
+        </div>
+
+        @if (!Model.Any())
+        {
+            <div class="brew-empty">
+                <span class="brew-empty-icon">☕</span>
+                <p>No hay productos registrados aún.</p>
+            </div>
+        }
+        else
+        {
+            <div class="brew-maint-table-wrap">
+                <table class="brew-maint-table">
+                    <thead>
+                        <tr>
+                            <th class="text-center">#</th>
+                            <th class="text-center">Nombre</th>
+                            <th class="text-center">Categoría</th>
+                            <th class="text-center">Precio</th>
+                            <th class="text-center">Estado</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td class="text-center">@item.ProductoID</td>
+                                <td class="text-center">@item.Nombre</td>
+                                <td class="text-center">
+                                    <span class="brew-card-chip">@item.CategoriaNombre</span>
+                                </td>
+                                <td class="text-center">
+                                    @item.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))
+                                </td>
+                                <td class="text-center">
+                                    @if (item.Activo)
+                                    {
+                                        <span class="brew-badge-activo">Activo</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="brew-badge-inactivo">Inactivo</span>
+                                    }
+                                </td class="text-center">
+                                <td class="brew-maint-actions">
+                                    <a asp-action="Edit"
+                                       asp-route-id="@item.ProductoID"
+                                       class="brew-btn-editar">
+                                        <i class="bi bi-pencil"></i> Editar
+                                    </a>
+                                    <form asp-action="Delete" method="post" style="display:inline"
+                                          onsubmit="return confirm('¿Seguro que deseás eliminar este producto?')">
+                                        <input type="hidden" name="id" value="@item.ProductoID" />
+                                        <button type="submit" class="brew-btn-eliminar">
+                                            <i class="bi bi-trash"></i> Eliminar
+                                        </button>
+                                    </form>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </div>
+</div>

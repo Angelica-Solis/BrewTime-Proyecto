@@ -1,0 +1,87 @@
+﻿@model BrewTime.Application.DTOs.ProductoFormDTO
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = "Nuevo Producto";
+}
+
+<div class="brew-page">
+
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">Brew Time · Administración</p>
+            <h1 class="brew-titulo">Nuevo <em>Producto</em></h1>
+            <p class="brew-subtitulo">Completá los campos para agregar un producto al catálogo.</p>
+            <div class="brew-hero-line">
+                <span></span>
+                <i>Creación de producto</i>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="brew-content">
+
+        <a asp-action="Maintenance" class="brew-btn-volver">← Volver al mantenimiento</a>
+
+        <div class="brew-form-card">
+            <form asp-action="Create" method="post">
+                @Html.AntiForgeryToken()
+
+                <div class="brew-form-group">
+                    <label asp-for="Nombre" class="brew-form-label">Nombre</label>
+                    <input asp-for="Nombre" class="brew-form-input" placeholder="Ej: Espresso Arábica" />
+                    <span asp-validation-for="Nombre" class="brew-form-error"></span>
+                </div>
+
+                <div class="brew-form-group">
+                    <label asp-for="Descripcion" class="brew-form-label">Descripción</label>
+                    <textarea asp-for="Descripcion" class="brew-form-input brew-form-textarea"
+                              placeholder="Descripción breve del producto..."></textarea>
+                    <span asp-validation-for="Descripcion" class="brew-form-error"></span>
+                </div>
+
+                <div class="brew-form-row">
+
+                    <div class="brew-form-group">
+                        <label asp-for="Precio" class="brew-form-label">Precio (₡)</label>
+                        <input asp-for="Precio" type="number" step="50" min="0"
+                               class="brew-form-input" placeholder="0" />
+                        <span asp-validation-for="Precio" class="brew-form-error"></span>
+                    </div>
+
+                    <div class="brew-form-group">
+                        <label asp-for="CategoriaID" class="brew-form-label">Categoría</label>
+                        @* Por ahora un input — cuando tengamos el servicio de categorías
+                           lo reemplazamos por un <select> con asp-items *@
+                        <input asp-for="CategoriaID" type="number" class="brew-form-input"
+                               placeholder="ID de categoría" />
+                        <span asp-validation-for="CategoriaID" class="brew-form-error"></span>
+                    </div>
+
+                </div>
+
+                <div class="brew-form-group brew-form-check-group">
+                    <input asp-for="Activo" type="checkbox" class="brew-form-check" />
+                    <label asp-for="Activo" class="brew-form-label">Producto activo</label>
+                </div>
+
+                <div class="brew-form-footer">
+                    <a asp-action="Maintenance" class="brew-btn-volver">Cancelar</a>
+                    <button type="submit" class="brew-btn-nuevo">Guardar producto</button>
+                </div>
+
+            </form>
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+}

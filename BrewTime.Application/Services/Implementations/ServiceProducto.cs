@@ -6,6 +6,7 @@ using System.Threading.Tasks;
 using AutoMapper;
 using BrewTime.Application.DTOs;
 using BrewTime.Application.Services.Interfaces;
+using BrewTime.Infraestructure.Models;
 using BrewTime.Infraestructure.Repository.Implemetations.Interfaces;
 
 namespace BrewTime.Application.Services.Implementations
@@ -36,6 +37,31 @@ namespace BrewTime.Application.Services.Implementations
 
             // Retornar lista
             return collection;
+        }
+
+        public async Task<ProductoFormDTO> FindFormByIdAsync(int id)
+        {
+            var @object = await _repository.FindByIdAsync(id);
+            var objectMapped = _mapper.Map<ProductoFormDTO>(@object);
+            return objectMapped;
+        }
+
+        public async Task CreateAsync(ProductoFormDTO dto)
+        {
+            var entity = _mapper.Map<Producto>(dto);
+            await _repository.CreateAsync(entity);
+        }
+
+        public async Task UpdateAsync(ProductoFormDTO dto)
+        {
+            var entity = _mapper.Map<Producto>(dto);
+            await _repository.UpdateAsync(entity);
+        }
+
+        public async Task DeleteAsync(int id)
+        {
+            var entity = await _repository.FindByIdAsync(id);
+            await _repository.DeleteAsync(entity);
         }
 
     }

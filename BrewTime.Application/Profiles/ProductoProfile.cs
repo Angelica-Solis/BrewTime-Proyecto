@@ -8,7 +8,7 @@ namespace BrewTime.Application.Profiles
     {
         public ProductoProfile()
         {
-            // Mapeo del listado (ya existía)
+            // Mapeo del listado 
             CreateMap<Producto, ProductoDTO>()
                 .ForMember(dest => dest.CategoriaNombre,
                            opt => opt.MapFrom(src => src.Categoria != null
@@ -16,21 +16,28 @@ namespace BrewTime.Application.Profiles
                                                      : "Sin categoría"))
                 .ReverseMap();
 
-            // Mapeo del detalle (nuevo)
+            // Mapeo del detalle 
             CreateMap<Producto, ProductoDetalleDTO>()
     .ForMember(dest => dest.CategoriaNombre,
                opt => opt.MapFrom(src => src.Categoria != null
                                          ? src.Categoria.Nombre
                                          : "Sin categoría"))
     .ForMember(dest => dest.Ingredientes,
-               opt => opt.MapFrom(src => src.Ingrediente        // directo
+               opt => opt.MapFrom(src => src.Ingrediente        
                                             .Select(i => i.Nombre)
                                             .ToList()))
     .ForMember(dest => dest.ImagenPrincipal,
-               opt => opt.MapFrom(src => src.ProductoImagen     // sin la 's'
+               opt => opt.MapFrom(src => src.ProductoImagen     
                                             .Where(i => i.EsPrincipal == true)
                                             .Select(i => i.RutaImagen)
                                             .FirstOrDefault()));
+            // Mapeo del formulario (crear/editar)
+            CreateMap<Producto, ProductoFormDTO>()
+                .ForMember(dest => dest.CategoriaID,
+                           opt => opt.MapFrom(src => src.CategoriaId))
+                .ReverseMap()
+                .ForMember(dest => dest.CategoriaId,
+                           opt => opt.MapFrom(src => src.CategoriaID));
         }
     }
 }
