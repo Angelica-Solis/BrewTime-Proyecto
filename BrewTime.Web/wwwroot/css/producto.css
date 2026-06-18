@@ -502,6 +502,301 @@
     margin-top: 0.5rem;
 }
 
+/* ══════════════════════════════════
+   BOTÓN ADMIN (Index → Maintenance)
+══════════════════════════════════ */
+
+.brew-hero-actions {
+    margin-top: 1.6rem;
+}
+
+.brew-btn-admin {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.45rem;
+    background: rgba(201,149,106,0.15);
+    border: 1px solid rgba(201,149,106,0.45);
+    color: var(--cafe-light);
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.07em;
+    text-transform: uppercase;
+    padding: 0.6rem 1.3rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background 0.18s ease, border-color 0.18s ease, color 0.18s ease;
+}
+
+    .brew-btn-admin:hover {
+        background: rgba(201,149,106,0.28);
+        border-color: var(--cafe-light);
+        color: #fff;
+    }
+
+/* ══════════════════════════════════
+   MANTENIMIENTO — toolbar y tabla
+══════════════════════════════════ */
+
+.brew-maint-toolbar {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    margin-bottom: 1.8rem;
+    flex-wrap: wrap;
+    gap: 0.75rem;
+}
+
+/* Botón nuevo producto */
+.brew-btn-nuevo {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    background: var(--musgo);
+    color: #f5ede0;
+    font-family: var(--font-body);
+    font-size: 0.78rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    padding: 0.56rem 1.2rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    border: none;
+    cursor: pointer;
+    transition: background 0.18s ease, transform 0.12s ease;
+}
+
+    .brew-btn-nuevo:hover {
+        background: var(--musgo-light);
+        color: #fff;
+        transform: translateY(-1px);
+        text-decoration: none;
+    }
+
+/* Wrapper con scroll horizontal en mobile */
+.brew-maint-table-wrap {
+    overflow-x: auto;
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    border: 1px solid var(--border-card);
+}
+
+.brew-maint-table {
+    width: 100%;
+    border-collapse: collapse;
+    background: var(--bg-card);
+    font-size: 0.88rem;
+    color: var(--text-body);
+}
+
+    .brew-maint-table thead tr {
+        background: linear-gradient(135deg, #1a2712 0%, #111a0d 100%);
+    }
+
+    .brew-maint-table thead th {
+        padding: 1rem 1.2rem;
+        text-align: left;
+        font-family: var(--font-body);
+        font-size: 0.68rem;
+        font-weight: 600;
+        letter-spacing: 0.12em;
+        text-transform: uppercase;
+        color: var(--cafe-light);
+        white-space: nowrap;
+    }
+
+    .brew-maint-table tbody tr {
+        border-bottom: 1px solid rgba(120,80,30,0.10);
+        transition: background 0.15s ease;
+    }
+
+        .brew-maint-table tbody tr:last-child {
+            border-bottom: none;
+        }
+
+        .brew-maint-table tbody tr:hover {
+            background: var(--bg-card-hover);
+        }
+
+    .brew-maint-table tbody td {
+        padding: 0.9rem 1.2rem;
+        vertical-align: middle;
+        color: var(--text-body);
+    }
+
+/* Columna de acciones */
+.brew-maint-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    flex-wrap: wrap;
+}
+
+/* Botón editar */
+.brew-btn-editar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(201,149,106,0.12);
+    border: 1px solid rgba(201,149,106,0.35);
+    color: var(--cafe-dark);
+    font-family: var(--font-body);
+    font-size: 0.73rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.42rem 0.9rem;
+    border-radius: var(--radius-sm);
+    text-decoration: none;
+    transition: background 0.18s ease, border-color 0.18s ease;
+    cursor: pointer;
+    white-space: nowrap;
+}
+
+    .brew-btn-editar:hover {
+        background: rgba(201,149,106,0.25);
+        border-color: var(--cafe);
+        color: var(--cafe-dark);
+        text-decoration: none;
+    }
+
+/* Botón eliminar */
+.brew-btn-eliminar {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.25rem;
+    background: rgba(160,40,30,0.07);
+    border: 1px solid rgba(160,40,30,0.22);
+    color: #8a2020;
+    font-family: var(--font-body);
+    font-size: 0.73rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    padding: 0.42rem 0.9rem;
+    border-radius: var(--radius-sm);
+    cursor: pointer;
+    transition: background 0.18s ease, border-color 0.18s ease;
+    white-space: nowrap;
+}
+
+    .brew-btn-eliminar:hover {
+        background: rgba(160,40,30,0.16);
+        border-color: #8a2020;
+    }
+
+/* ══════════════════════════════════
+   FORMULARIOS (Create / Edit)
+══════════════════════════════════ */
+
+.brew-form-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-card);
+    box-shadow: var(--shadow-card);
+    padding: 2.4rem 2.8rem;
+    max-width: 720px;
+}
+
+    /* Franja decorativa superior igual al detail */
+    .brew-form-card::before {
+        content: '';
+        display: block;
+        height: 4px;
+        background: linear-gradient(90deg, var(--cafe) 0%, var(--musgo-light) 100%);
+        border-radius: 2px;
+        margin-bottom: 2rem;
+    }
+
+.brew-form-group {
+    display: flex;
+    flex-direction: column;
+    gap: 0.4rem;
+    margin-bottom: 1.4rem;
+}
+
+/* Fila con dos columnas */
+.brew-form-row {
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 1.2rem;
+}
+
+.brew-form-label {
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.10em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+}
+
+.brew-form-input {
+    background: var(--bg-page);
+    border: 1px solid rgba(120,80,30,0.22);
+    border-radius: var(--radius-sm);
+    padding: 0.62rem 0.9rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-body);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+    width: 100%;
+    outline: none;
+}
+
+    .brew-form-input:focus {
+        border-color: var(--cafe);
+        box-shadow: 0 0 0 3px rgba(201,149,106,0.18);
+    }
+
+    .brew-form-input::placeholder {
+        color: var(--text-soft);
+        opacity: 0.6;
+    }
+
+.brew-form-textarea {
+    resize: vertical;
+    min-height: 100px;
+}
+
+/* Checkbox */
+.brew-form-check-group {
+    flex-direction: row;
+    align-items: center;
+    gap: 0.6rem;
+}
+
+.brew-form-check {
+    width: 1rem;
+    height: 1rem;
+    accent-color: var(--musgo);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+/* Mensaje de error de validación */
+.brew-form-error {
+    font-size: 0.75rem;
+    color: #8a2020;
+    font-weight: 500;
+}
+
+/* Footer del formulario */
+.brew-form-footer {
+    display: flex;
+    align-items: center;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    padding-top: 1.6rem;
+    border-top: 1px solid rgba(120,80,30,0.10);
+    margin-top: 0.4rem;
+}
+
+    /* El botón volver dentro del footer actúa de cancelar */
+    .brew-form-footer .brew-btn-volver {
+        margin-bottom: 0;
+    }
+
 /* ── Responsive ── */
 @media (max-width: 768px) {
     .brew-hero {
@@ -528,4 +823,38 @@
         border-left: none;
         border-top: 1px solid var(--border-card);
     }
+
+    /* Mantenimiento responsive */
+    .brew-maint-toolbar {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .brew-maint-actions {
+        display: flex;
+        align-items: center;
+        justify-content: center;
+        gap: 0.5rem;
+        flex-wrap: wrap;
+    }
+
+    /* Formulario responsive */
+    .brew-form-card {
+        padding: 1.6rem 1.25rem;
+    }
+
+    .brew-form-row {
+        grid-template-columns: 1fr;
+    }
+
+    .brew-form-footer {
+        flex-direction: column-reverse;
+        align-items: stretch;
+    }
+
+        .brew-form-footer .brew-btn-volver,
+        .brew-form-footer .brew-btn-nuevo {
+            text-align: center;
+            justify-content: center;
+        }
 }

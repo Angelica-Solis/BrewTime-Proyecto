@@ -37,5 +37,22 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
 
             return collection;
         }
+        public async Task CreateAsync(Producto entity)
+        {
+            await _context.Set<Producto>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Producto entity)
+        {
+            _context.Set<Producto>().Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task DeleteAsync(Producto entity)
+        {
+            _context.Set<Producto>().Remove(entity);
+            await _context.SaveChangesAsync();
+        }
     }
 }

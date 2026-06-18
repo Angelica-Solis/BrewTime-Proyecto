@@ -11,6 +11,9 @@ namespace BrewTime.Application.Services.Interfaces
     {
         Task<ICollection<ProductoDTO>> ListAsync();
         Task<ProductoDetalleDTO> FindByIdAsync(int id);
-
+        Task<ProductoFormDTO> FindFormByIdAsync(int id);
+        Task CreateAsync(ProductoFormDTO dto);
+        Task UpdateAsync(ProductoFormDTO dto);
+        Task DeleteAsync(int id);
     }
 }
