@@ -1,140 +1,192 @@
 ﻿@model BrewTime.Application.DTOs.MenuDTO
 
-@{
-    ViewData["Title"] = "Detalle del Menú";
+@section Styles {
+    <link rel="stylesheet" href="~/css/Menu.css" asp-append-version="true" />
 }
 
-<h1>Detalle del Menú</h1>
+@{
+    ViewData["Title"] = "Detalle del Menú";
 
-<div class="card mb-4">
-    <div class="card-header bg-dark text-white">
-        Información general del menú
-    </div>
-
-    <div class="card-body">
-        <h4>@Model.Nombre</h4>
-
-        <p>
-            <strong>Descripción:</strong>
-            @Model.Descripcion
-        </p>
-
-        <p>
-            <strong>Horario:</strong>
-            @Model.HoraInicio - @Model.HoraFin
-        </p>
-
-        <p>
-            <strong>Fechas:</strong>
-            @Model.FechaInicio - @Model.FechaFin
-        </p>
-
-        <p>
-            <strong>Estado:</strong>
-            @if (Model.Activo)
-            {
-                <span class="badge bg-success">Activo</span>
-            }
-            else
-            {
-                <span class="badge bg-danger">Inactivo</span>
-            }
-        </p>
-    </div>
-</div>
-
-<div class="card mb-4">
-    <div class="card-header bg-secondary text-white">
-        Días disponibles
-    </div>
-
-    <div class="card-body">
-        @if (Model.MenuDiaSemana != null && Model.MenuDiaSemana.Any())
+    string NombreDia(byte dia)
+    {
+        return dia switch
         {
-            <ul>
-                @foreach (var dia in Model.MenuDiaSemana)
+            1 => "Lunes",
+            2 => "Martes",
+            3 => "Miércoles",
+            4 => "Jueves",
+            5 => "Viernes",
+            6 => "Sábado",
+            7 => "Domingo",
+            _ => "Día no definido"
+        };
+    }
+}
+
+<div class="menu-page">
+
+    <div class="menu-hero">
+        <div class="menu-hero-inner">
+            <p class="menu-eyebrow">Brew Time · Cafetería</p>
+            <h1 class="menu-title">Detalle del <em>Menú</em></h1>
+            <p class="menu-subtitle">
+                Información completa del menú seleccionado.
+            </p>
+        </div>
+    </div>
+
+    <div class="menu-content">
+
+        <a asp-action="Index" class="menu-btn-secondary">
+            ← Volver al listado
+        </a>
+
+        <div class="menu-detail-card mt-4">
+            <div class="menu-detail-body">
+                <h2 class="menu-detail-title" style="margin-top:0;">
+                    @Model.Nombre
+                </h2>
+
+                <p class="menu-lead">
+                    @Model.Descripcion
+                </p>
+
+                <div class="menu-info-grid">
+                    <div class="menu-info-item">
+                        <span class="menu-info-label">Horario</span>
+                        <span class="menu-info-value">
+                            @Model.HoraInicio.ToString("HH:mm") - @Model.HoraFin.ToString("HH:mm")
+                        </span>
+                    </div>
+
+                    <div class="menu-info-item">
+                        <span class="menu-info-label">Fechas</span>
+                        <span class="menu-info-value">
+                            @if (Model.FechaInicio != null && Model.FechaFin != null)
+                            {
+                                <span>
+                                    @Model.FechaInicio.Value.ToString("dd/MM/yyyy")
+                                    -
+                                    @Model.FechaFin.Value.ToString("dd/MM/yyyy")
+                                </span>
+                            }
+                            else
+                            {
+                                <span>No definido</span>
+                            }
+                        </span>
+                    </div>
+
+                    <div class="menu-info-item">
+                        <span class="menu-info-label">Estado</span>
+                        <span class="menu-info-value">
+                            @if (Model.Activo)
+                            {
+                                <span class="menu-badge-active">Activo</span>
+                            }
+                            else
+                            {
+                                <span class="menu-badge-inactive">Inactivo</span>
+                            }
+                        </span>
+                    </div>
+                </div>
+
+                <h2 class="menu-detail-title">
+                    Días <em>disponibles</em>
+                </h2>
+
+                @if (Model.MenuDiaSemana != null && Model.MenuDiaSemana.Any())
                 {
-                    <li>Día: @dia.DiaSemana</li>
+                    <div class="menu-days-list">
+                        @foreach (var dia in Model.MenuDiaSemana.OrderBy(x => x.DiaSemana))
+                        {
+                            <span class="menu-day-chip">@NombreDia(dia.DiaSemana)</span>
+                        }
+                    </div>
                 }
-            </ul>
-        }
-        else
-        {
-            <p>No hay días registrados para este menú.</p>
-        }
-    </div>
-</div>
+                else
+                {
+                    <p class="menu-empty">No hay días registrados para este menú.</p>
+                }
+            </div>
+        </div>
 
-<div class="card mb-4">
-    <div class="card-header bg-secondary text-white">
-        Productos del menú
-    </div>
+        <h2 class="menu-detail-title">
+            Productos del <em>menú</em>
+        </h2>
 
-    <div class="card-body">
         @if (Model.MenuProducto != null && Model.MenuProducto.Any())
         {
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Producto</th>
-                        <th>Descripción</th>
-                        <th>Precio</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var item in Model.MenuProducto)
-                    {
+            <div class="menu-table-wrapper">
+                <table class="menu-table">
+                    <thead>
                         <tr>
-                            <td>@item.Producto.Nombre</td>
-                            <td>@item.Producto.Descripcion</td>
-                            <td>₡@item.Producto.Precio</td>
+                            <th>Producto</th>
+                            <th>Categoría</th>
+                            <th>Precio</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.MenuProducto)
+                        {
+                            <tr>
+                                <td>@item.Producto.Nombre</td>
+                                <td>@item.Producto.CategoriaNombre</td>
+                                <td>
+                                    <span class="menu-price-text">
+                                        ₡@item.Producto.Precio.ToString("N2")
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
         else
         {
-            <p>No hay productos registrados para este menú.</p>
+            <p class="menu-empty">No hay productos registrados para este menú.</p>
         }
-    </div>
-</div>
 
-<div class="card mb-4">
-    <div class="card-header bg-secondary text-white">
-        Combos del menú
-    </div>
+        <h2 class="menu-detail-title">
+            Combos del <em>menú</em>
+        </h2>
 
-    <div class="card-body">
         @if (Model.MenuCombo != null && Model.MenuCombo.Any())
         {
-            <table class="table table-bordered">
-                <thead>
-                    <tr>
-                        <th>Combo</th>
-                        <th>Descripción</th>
-                        <th>Precio Especial</th>
-                    </tr>
-                </thead>
-
-                <tbody>
-                    @foreach (var item in Model.MenuCombo)
-                    {
+            <div class="menu-table-wrapper">
+                <table class="menu-table">
+                    <thead>
                         <tr>
-                            <td>@item.Combo.Nombre</td>
-                            <td>@item.Combo.Descripcion</td>
-                            <td>₡@item.Combo.PrecioEspecial</td>
+                            <th>Combo</th>
+                            <th>Categoría</th>
+                            <th>Precio especial</th>
                         </tr>
-                    }
-                </tbody>
-            </table>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in Model.MenuCombo)
+                        {
+                            <tr>
+                                <td>@item.Combo.Nombre</td>
+                                <td>@item.Combo.CategoriaNombre</td>
+                                <td>
+                                    <span class="menu-price-text">
+                                        ₡@item.Combo.PrecioEspecial.ToString("N2")
+                                    </span>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
         }
         else
         {
-            <p>No hay combos registrados para este menú.</p>
+            <p class="menu-empty">No hay combos registrados para este menú.</p>
         }
+
     </div>
 </div>
-
-<a asp-action="Index" class="btn btn-secondary">Volver</a>

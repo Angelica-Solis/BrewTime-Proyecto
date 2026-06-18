@@ -24,7 +24,7 @@ namespace BrewTime.Application.Services.Implementations
         public async Task<ICollection<MenuDTO>> ListAsync()
         {
             var list = await _repository.ListAsync();
-            return _mapper.Map<ICollection<MenuDTO>>(list);
+            return _mapper.Map<List<MenuDTO>>(list);
         }
 
         public async Task<MenuDTO> FindByIdAsync(int id)

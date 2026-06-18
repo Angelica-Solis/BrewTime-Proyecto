@@ -1,55 +1,112 @@
 ﻿@model IEnumerable<BrewTime.Application.DTOs.MenuDTO>
 
-@{
-    ViewData["Title"] = "Listado de Menús";
+@section Styles {
+    <link rel="stylesheet" href="~/css/Menu.css" asp-append-version="true" />
 }
 
-<h1>Listado de Menús</h1>
+@{
+    ViewData["Title"] = "Listado de Menús";
 
-<p>
-    Esta pantalla muestra todos los menús registrados en el sistema, ordenados desde el más reciente hasta el más antiguo.
-</p>
+    var menus = Model
+        .OrderByDescending(x => x.Activo)
+        .ThenByDescending(x => x.FechaInicio)
+        .ThenByDescending(x => x.FechaCreacion)
+        .ToList();
+}
 
-<table class="table table-bordered table-striped">
-    <thead class="table-dark">
-        <tr>
-            <th>Nombre</th>
-            <th>Descripción</th>
-            <th>Hora Inicio</th>
-            <th>Hora Fin</th>
-            <th>Fecha Creación</th>
-            <th>Activo</th>
-            <th>Acción</th>
-        </tr>
-    </thead>
+<div class="menu-page">
 
-    <tbody>
-        @foreach (var item in Model)
+    <div class="menu-hero">
+        <div class="menu-hero-inner">
+            <p class="menu-eyebrow">Brew Time · Cafetería</p>
+            <h1 class="menu-title">Listado de <em>Menús</em></h1>
+            <p class="menu-subtitle">
+                Consulta general de todos los menús registrados en el sistema.
+            </p>
+        </div>
+    </div>
+
+    <div class="menu-content">
+
+        <p class="menu-lead">
+            
+        </p>
+
+        @if (!menus.Any())
         {
-            <tr>
-                <td>@item.Nombre</td>
-                <td>@item.Descripcion</td>
-                <td>@item.HoraInicio</td>
-                <td>@item.HoraFin</td>
-                <td>@item.FechaCreacion.ToString("dd/MM/yyyy")</td>
-                <td>
-                    @if (item.Activo)
-                    {
-                        <span class="badge bg-success">Disponible</span>
-                    }
-                    else
-                    {
-                        <span class="badge bg-danger">Inactivo</span>
-                    }
-                </td>
-                <td>
-                    <a asp-action="Details"
-                       asp-route-id="@item.MenuId"
-                       class="btn btn-info btn-sm">
-                        Detalle
-                    </a>
-                </td>
-            </tr>
+            <div class="menu-detail-card">
+                <div class="menu-detail-body">
+                    <p class="menu-empty">No hay menús registrados.</p>
+                </div>
+            </div>
         }
-    </tbody>
-</table>
+        else
+        {
+            <div class="menu-table-card">
+                <table class="menu-table">
+                    <thead>
+                        <tr>
+                            <th>Nombre</th>
+                            <th>Horario</th>
+                            <th>Fechas</th>
+                            <th>Estado</th>
+                            <th>Acción</th>
+                        </tr>
+                    </thead>
+
+                    <tbody>
+                        @foreach (var item in menus)
+                        {
+                            <tr>
+                                <td>
+                                    @item.Nombre
+                                    <span class="menu-small-text">@item.Descripcion</span>
+                                </td>
+
+                                <td>
+                                    @item.HoraInicio.ToString("HH:mm") -
+                                    @item.HoraFin.ToString("HH:mm")
+                                </td>
+
+                                <td>
+                                    @if (item.FechaInicio != null && item.FechaFin != null)
+                                    {
+                                        <span>
+                                            @item.FechaInicio.Value.ToString("dd/MM/yyyy")
+                                            -
+                                            @item.FechaFin.Value.ToString("dd/MM/yyyy")
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span>No definido</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    @if (item.Activo)
+                                    {
+                                        <span class="menu-badge-active">Disponible</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="menu-badge-inactive">Inactivo</span>
+                                    }
+                                </td>
+
+                                <td>
+                                    <a asp-action="Detail"
+                                       asp-route-id="@item.MenuId"
+                                       class="menu-btn">
+                                        Detalle
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+
+    </div>
+</div>

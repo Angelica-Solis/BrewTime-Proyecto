@@ -33,13 +33,19 @@ builder.Services.AddTransient<IServiceCombo, ServiceCombo>();
 
 
 
+
+builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPreparacion>();
+
+
+builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
+builder.Services.AddTransient<IServiceCombo, ServiceCombo>();
+
 builder.Services.AddTransient<IServiceMenu, ServiceMenu>();
 builder.Services.AddTransient<IServiceMenuDiaSemana, ServiceMenuDiaSemana>();
 builder.Services.AddTransient<IServiceMenuProducto, ServiceMenuProducto>();
 builder.Services.AddTransient<IServiceMenuCombo, ServiceMenuCombo>();
 
 builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparacion>();
-
 
 
 
