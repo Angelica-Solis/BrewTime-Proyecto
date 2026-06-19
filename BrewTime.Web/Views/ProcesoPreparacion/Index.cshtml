@@ -26,13 +26,13 @@
             <div class="brew-grid">
                 <div class="brew-empty">
                     <span class="brew-empty-icon">☕</span>
-                    <p>No hay procesos registrados aún.</p>
+                    <p>No hay pasos registrados aún.</p>
                 </div>
             </div>
         }
         else
         {
-            <p class="brew-count">@Model.Count producto(s) registrado(s)</p>
+            <p class="brew-count">@Model.Count pasos registrado(s)</p>
             <div class="brew-grid">
                 @foreach (var item in Model)
                 {
@@ -42,7 +42,7 @@
                             <span class="brew-card-chip">Producto</span>
                             <p class="brew-card-producto">@item.NombreProducto</p>
                             <p class="brew-card-paso">
-                                <strong>@item.CantidadProcesos</strong> proceso(s) registrado(s)
+                                <strong>@item.CantidadProcesos</strong> paso(s) de preparación
                             </p>
                             <div class="brew-card-footer">
                                 <span class="brew-badge-tiempo">☕ Brew</span>

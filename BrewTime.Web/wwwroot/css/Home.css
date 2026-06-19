@@ -244,21 +244,23 @@
     width: 100%;
     aspect-ratio: 1 / 1;
     overflow: hidden;
-    background: #120f0a;
+    background: #f4e8d7;
     position: relative;
+    display: flex;
+    justify-content: center;
+    align-items: center;
 }
 
     .home-card-img-wrap img {
-        width: 100%;
-        height: 100%;
-        object-fit: cover;
-        transition: transform 0.40s ease;
-        filter: brightness(0.92) saturate(1.05);
+        width: 80%;
+        height: 80%;
+        object-fit: contain;
+        transition: transform .4s;
+        filter: brightness(.95);
     }
 
 .home-card:hover .home-card-img-wrap img {
-    transform: scale(1.06);
-    filter: brightness(1.0) saturate(1.10);
+    transform: scale(1.04);
 }
 
 /* Franja superior */
@@ -681,7 +683,7 @@
     display: flex;
     align-items: center;
     justify-content: center;
-    margin: 4rem auto;
+    margin: 2rem ;
     max-width: 1280px;
     padding: 0 2.5rem;
     gap: 1rem;
@@ -705,3 +707,135 @@
         text-transform: uppercase;
         white-space: nowrap;
     }
+.home-about {
+    max-width: 1280px;
+    margin: 4rem auto;
+    padding: 0 2.5rem;
+    display: grid;
+    grid-template-columns: 1fr 1fr;
+    gap: 2rem;
+}
+
+.home-about-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 25px;
+    padding: 2rem;
+    box-shadow: var(--shadow-card);
+    transition: .3s;
+}
+
+    .home-about-card:hover {
+        transform: translateY(-5px);
+        box-shadow: var(--shadow-hover);
+    }
+
+    .home-about-card span {
+        color: var(--cafe);
+        font-size: .7rem;
+        letter-spacing: .2em;
+        font-weight: 700;
+        text-transform: uppercase;
+    }
+
+    .home-about-card h2 {
+        margin: 1rem 0;
+        font-family: var(--font-display);
+        font-size: 2rem;
+        color: var(--text-titulo);
+    }
+
+    .home-about-card p,
+    .home-about-card li {
+        color: var(--text-soft);
+        line-height: 1.8;
+        font-size: .95rem;
+    }
+
+    .home-about-card ul {
+        padding-left: 1.2rem;
+        margin: 0;
+    }
+
+.home-history {
+    max-width: 1280px;
+    margin: 4rem auto 1.5rem auto; 
+    padding: 3rem;
+    background: linear-gradient( 135deg, #2b201b, #3a2a22 );
+    border-radius: 30px;
+    display: grid;
+    grid-template-columns: 300px 1fr;
+    gap: 3rem;
+}
+
+.home-section.cafes {
+    padding-top: 1rem;
+}
+
+.home-history-year {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    .home-history-year span {
+        color: #d1af85;
+        letter-spacing: .2em;
+        font-size: .8rem;
+    }
+
+    .home-history-year h2 {
+        margin: 0;
+        font-family: var(--font-display);
+        font-size: 6rem;
+        color: #fff;
+    }
+
+.home-history-info {
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+}
+
+    .home-history-info h3 {
+        font-family: var(--font-display);
+        color: #fff;
+        font-size: 2rem;
+        margin-bottom: 1rem;
+    }
+
+    .home-history-info p {
+        color: #d9c6ae;
+        line-height: 1.8;
+        margin-bottom: 1.5rem;
+    }
+
+.home-location {
+    display: inline-block;
+    width: fit-content;
+    background: rgba(255,255,255,.08);
+    padding: .8rem 1.3rem;
+    border-radius: 30px;
+    color: #f3d8a5;
+    border: 1px solid rgba(255,255,255,.1);
+}
+
+@media(max-width:768px) {
+
+    .home-about {
+        grid-template-columns: 1fr;
+    }
+
+    .home-history {
+        grid-template-columns: 1fr;
+        text-align: center;
+    }
+
+    .home-history-year h2 {
+        font-size: 4rem;
+    }
+
+    .home-location {
+        margin: auto;
+    }
+}
