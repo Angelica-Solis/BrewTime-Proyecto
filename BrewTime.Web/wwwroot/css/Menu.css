@@ -437,9 +437,43 @@
         border-bottom: none;
     }
 
-        .menu-table tbody tr:hover td {
-            background: var(--bg-card-hover) !important;
-        }
+    .menu-table tbody tr:hover td {
+        background: var(--bg-card-hover) !important;
+    }
+
+* DETAIL - Igualar columnas de Productos y Combos solo con CSS */
+.menu-table-wrapper .menu-table {
+    width: 100% !important;
+    table-layout: fixed !important;
+}
+
+/* Columna 1: Producto / Combo */
+.menu-table-wrapper .menu-table th:nth-child(1),
+.menu-table-wrapper .menu-table td:nth-child(1) {
+    width: 45% !important;
+    text-align: left;
+}
+
+/* Columna 2: Categoría */
+.menu-table-wrapper .menu-table th:nth-child(2),
+.menu-table-wrapper .menu-table td:nth-child(2) {
+    width: 30% !important;
+    text-align: left;
+}
+
+/* Columna 3: Precio */
+.menu-table-wrapper .menu-table th:nth-child(3),
+.menu-table-wrapper .menu-table td:nth-child(3) {
+    width: 25% !important;
+    text-align: left;
+}
+
+/* Evita que textos largos rompan el ancho */
+.menu-table-wrapper .menu-table td,
+.menu-table-wrapper .menu-table th {
+    overflow: hidden;
+    text-overflow: ellipsis;
+}
 
 /* ══════════════════════════════════
    MENÚ DISPONIBLE — Cafetería moderna
@@ -758,6 +792,14 @@
     font-size: 0.9rem;
     font-weight: 600;
     color: var(--text-titulo);
+}
+/* Contador simple fuera de la tarjeta */
+.menu-count-text {
+    font-size: 0.75rem;
+    color: var(--text-soft);
+    margin: 0 0 1.25rem;
+    letter-spacing: 0.03em;
+    font-weight: 400;
 }
 
 /* ══════════════════════════════════
