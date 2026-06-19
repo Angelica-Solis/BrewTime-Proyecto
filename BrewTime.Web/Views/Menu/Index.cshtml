@@ -8,8 +8,8 @@
     ViewData["Title"] = "Listado de Menús";
 
     var menus = Model
-        .OrderByDescending(x => x.Activo)
-        .ThenByDescending(x => x.FechaInicio)
+        .OrderByDescending(x => x.FechaInicio)
+        .ThenByDescending(x => x.HoraInicio)
         .ThenByDescending(x => x.FechaCreacion)
         .ToList();
 }
@@ -18,19 +18,15 @@
 
     <div class="menu-hero">
         <div class="menu-hero-inner">
-            <p class="menu-eyebrow">Brew Time · Cafetería</p>
+            <p class="menu-eyebrow">Brew Time · Administración</p>
             <h1 class="menu-title">Listado de <em>Menús</em></h1>
             <p class="menu-subtitle">
-                Consulta general de todos los menús registrados en el sistema.
+                Consulta general de los menús registrados, ordenados por la disponibilidad más reciente.
             </p>
         </div>
     </div>
 
     <div class="menu-content">
-
-        <p class="menu-lead">
-            
-        </p>
 
         @if (!menus.Any())
         {
@@ -42,13 +38,25 @@
         }
         else
         {
-            <div class="menu-table-card">
-                <table class="menu-table">
+            <div class="menu-table-card menu-index-card">
+
+                <div class="menu-index-header">
+                    <div>
+                        <p class="menu-index-label">Menús registrados</p>
+                        <h2>Listado general</h2>
+                    </div>
+
+                    <span class="menu-index-count">
+                        @menus.Count menú(s)
+                    </span>
+                </div>
+
+                <table class="menu-table menu-index-table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
+                            <th>Menú</th>
                             <th>Horario</th>
-                            <th>Fechas</th>
+                            <th>Disponibilidad</th>
                             <th>Estado</th>
                             <th>Acción</th>
                         </tr>
@@ -59,27 +67,37 @@
                         {
                             <tr>
                                 <td>
-                                    @item.Nombre
-                                    <span class="menu-small-text">@item.Descripcion</span>
+                                    <span class="menu-table-title">@item.Nombre</span>
+
+                                    @if (!string.IsNullOrWhiteSpace(item.Descripcion))
+                                    {
+                                        <span class="menu-small-text">@item.Descripcion</span>
+                                    }
+                                    else
+                                    {
+                                        <span class="menu-small-text">Sin descripción registrada</span>
+                                    }
                                 </td>
 
                                 <td>
-                                    @item.HoraInicio.ToString("HH:mm") -
-                                    @item.HoraFin.ToString("HH:mm")
+                                    <span class="menu-table-main">
+                                        @item.HoraInicio.ToString("HH:mm") - @item.HoraFin.ToString("HH:mm")
+                                    </span>
                                 </td>
 
                                 <td>
                                     @if (item.FechaInicio != null && item.FechaFin != null)
                                     {
-                                        <span>
+                                        <span class="menu-table-main">
                                             @item.FechaInicio.Value.ToString("dd/MM/yyyy")
-                                            -
-                                            @item.FechaFin.Value.ToString("dd/MM/yyyy")
+                                        </span>
+                                        <span class="menu-small-text">
+                                            hasta @item.FechaFin.Value.ToString("dd/MM/yyyy")
                                         </span>
                                     }
                                     else
                                     {
-                                        <span>No definido</span>
+                                        <span class="menu-small-text">No definido</span>
                                     }
                                 </td>
 

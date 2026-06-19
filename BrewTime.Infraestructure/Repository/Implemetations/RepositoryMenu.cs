@@ -23,10 +23,15 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
         {
             return await _context.Set<Menu>()
                 .Include(x => x.MenuDiaSemana)
+
                 .Include(x => x.MenuProducto)
                     .ThenInclude(x => x.Producto)
+                        .ThenInclude(x => x.Categoria)
+
                 .Include(x => x.MenuCombo)
                     .ThenInclude(x => x.Combo)
+                        .ThenInclude(x => x.Categoria)
+
                 .AsNoTracking()
                 .ToListAsync();
         }
@@ -35,10 +40,15 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
         {
             return await _context.Set<Menu>()
                 .Include(x => x.MenuDiaSemana)
+
                 .Include(x => x.MenuProducto)
                     .ThenInclude(x => x.Producto)
+                        .ThenInclude(x => x.Categoria)
+
                 .Include(x => x.MenuCombo)
                     .ThenInclude(x => x.Combo)
+                        .ThenInclude(x => x.Categoria)
+
                 .FirstAsync(x => x.MenuId == id);
         }
     }

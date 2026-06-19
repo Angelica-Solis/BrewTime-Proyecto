@@ -41,9 +41,10 @@
             ← Volver al listado
         </a>
 
-        <div class="menu-detail-card mt-4">
+        <div class="menu-detail-card">
             <div class="menu-detail-body">
-                <h2 class="menu-detail-title" style="margin-top:0;">
+
+                <h2 class="menu-detail-title menu-detail-main-title">
                     @Model.Nombre
                 </h2>
 
@@ -52,6 +53,7 @@
                 </p>
 
                 <div class="menu-info-grid">
+
                     <div class="menu-info-item">
                         <span class="menu-info-label">Horario</span>
                         <span class="menu-info-value">
@@ -90,6 +92,7 @@
                             }
                         </span>
                     </div>
+
                 </div>
 
                 <h2 class="menu-detail-title">
@@ -109,6 +112,7 @@
                 {
                     <p class="menu-empty">No hay días registrados para este menú.</p>
                 }
+
             </div>
         </div>
 
@@ -132,8 +136,27 @@
                         @foreach (var item in Model.MenuProducto)
                         {
                             <tr>
-                                <td>@item.Producto.Nombre</td>
-                                <td>@item.Producto.CategoriaNombre</td>
+                                <td>
+                                    <span class="menu-table-title">
+                                        @item.Producto.Nombre
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(item.Producto.CategoriaNombre))
+                                    {
+                                        <span class="menu-category-chip">
+                                            @item.Producto.CategoriaNombre
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="menu-category-chip menu-category-chip-empty">
+                                            Sin categoría
+                                        </span>
+                                    }
+                                </td>
+
                                 <td>
                                     <span class="menu-price-text">
                                         ₡@item.Producto.Precio.ToString("N2")
@@ -147,7 +170,11 @@
         }
         else
         {
-            <p class="menu-empty">No hay productos registrados para este menú.</p>
+            <div class="menu-detail-card">
+                <div class="menu-detail-body">
+                    <p class="menu-empty">No hay productos registrados para este menú.</p>
+                </div>
+            </div>
         }
 
         <h2 class="menu-detail-title">
@@ -170,8 +197,27 @@
                         @foreach (var item in Model.MenuCombo)
                         {
                             <tr>
-                                <td>@item.Combo.Nombre</td>
-                                <td>@item.Combo.CategoriaNombre</td>
+                                <td>
+                                    <span class="menu-table-title">
+                                        @item.Combo.Nombre
+                                    </span>
+                                </td>
+
+                                <td>
+                                    @if (!string.IsNullOrWhiteSpace(item.Combo.CategoriaNombre))
+                                    {
+                                        <span class="menu-category-chip">
+                                            @item.Combo.CategoriaNombre
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="menu-category-chip menu-category-chip-empty">
+                                            Sin categoría
+                                        </span>
+                                    }
+                                </td>
+
                                 <td>
                                     <span class="menu-price-text">
                                         ₡@item.Combo.PrecioEspecial.ToString("N2")
@@ -185,7 +231,11 @@
         }
         else
         {
-            <p class="menu-empty">No hay combos registrados para este menú.</p>
+            <div class="menu-detail-card">
+                <div class="menu-detail-body">
+                    <p class="menu-empty">No hay combos registrados para este menú.</p>
+                </div>
+            </div>
         }
 
     </div>
