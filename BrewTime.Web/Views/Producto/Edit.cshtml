@@ -28,7 +28,7 @@
         <a asp-action="Maintenance" class="brew-btn-volver">← Volver al mantenimiento</a>
 
         <div class="brew-form-card">
-            <form asp-action="Edit" method="post">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
                 @Html.AntiForgeryToken()
 
                 @* ID oculto para que el POST sepa qué registro actualizar *@
@@ -57,7 +57,9 @@
 
                     <div class="brew-form-group">
                         <label asp-for="CategoriaID" class="brew-form-label">Categoría</label>
-                        <input asp-for="CategoriaID" type="number" class="brew-form-input" />
+                        <select asp-for="CategoriaID" asp-items="ViewBag.Categorias" class="brew-form-input">
+                            <option value="">Seleccione una categoría</option>
+                        </select>
                         <span asp-validation-for="CategoriaID" class="brew-form-error"></span>
                     </div>
 
@@ -66,6 +68,40 @@
                 <div class="brew-form-group brew-form-check-group">
                     <input asp-for="Activo" type="checkbox" class="brew-form-check" />
                     <label asp-for="Activo" class="brew-form-label">Producto activo</label>
+                </div>
+
+                <div class="brew-form-group">
+                    <label asp-for="ImagenesNuevas" class="brew-form-label">Imagen del producto</label>
+
+                    @if (Model.ImagenesActuales.Any())
+                    {
+                        <div class="brew-current-images">
+                            @foreach (var imagen in Model.ImagenesActuales)
+                            {
+                                <label class="brew-current-image">
+                                    <img src="@imagen.RutaImagen" alt="@Model.Nombre" />
+                                    <span>
+                                        <input type="checkbox" name="ImagenesAEliminar" value="@imagen.ImagenID" />
+                                        Eliminar
+                                    </span>
+                                </label>
+                            }
+                        </div>
+                    }
+
+                    <div class="brew-upload-box">
+                        <div class="brew-upload-icon">IMG</div>
+                        <div class="brew-upload-copy">
+                            <strong>Agregar nueva imagen</strong>
+                            <span>Si no eliminás la actual, la nueva se agrega al producto.</span>
+                        </div>
+                        <input asp-for="ImagenesNuevas" type="file" accept="image/*" class="brew-file-input" />
+                    </div>
+                    <div class="brew-image-preview" data-image-preview hidden>
+                        <img src="" alt="Vista previa de la imagen seleccionada" />
+                        <span data-image-name></span>
+                    </div>
+                    <span asp-validation-for="ImagenesNuevas" class="brew-form-error"></span>
                 </div>
 
                 <div class="brew-form-footer">
@@ -83,4 +119,25 @@
     @{
         await Html.RenderPartialAsync("_ValidationScriptsPartial");
     }
+    <script>
+        document.querySelectorAll('.brew-file-input').forEach((input) => {
+            input.addEventListener('change', () => {
+                const preview = input.closest('.brew-form-group').querySelector('[data-image-preview]');
+                const image = preview.querySelector('img');
+                const name = preview.querySelector('[data-image-name]');
+                const file = input.files && input.files[0];
+
+                if (!file) {
+                    image.removeAttribute('src');
+                    name.textContent = '';
+                    preview.hidden = true;
+                    return;
+                }
+
+                image.src = URL.createObjectURL(file);
+                name.textContent = file.name;
+                preview.hidden = false;
+            });
+        });
+    </script>
 }

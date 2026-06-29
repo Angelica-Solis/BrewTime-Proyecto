@@ -34,5 +34,15 @@ namespace BrewTime.Application.Services.Implementations
             var objectMapped = _mapper.Map<ComboDetalleDTO>(@object);
             return objectMapped;
         }
+        public async Task<ICollection<ComboDTO>> ListInactivosAsync()
+        {
+            var list = await _repository.ListInactivosAsync();
+            return _mapper.Map<ICollection<ComboDTO>>(list);
+        }
+
+        public async Task ToggleActivoAsync(int id)
+        {
+            await _repository.ToggleActivoAsync(id);
+        }
     }
 }
