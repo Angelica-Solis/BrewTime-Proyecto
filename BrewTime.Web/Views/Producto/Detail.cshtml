@@ -33,11 +33,16 @@
 
             @* Imagen *@
             <div class="brew-detail-img-wrap">
-                @if (!string.IsNullOrEmpty(Model.ImagenPrincipal))
+                @if (Model.Imagenes.Any())
                 {
-                    <img src="@Model.ImagenPrincipal"
-                         alt="@Model.Nombre"
-                         class="brew-detail-img" />
+                    <div class="brew-detail-gallery">
+                        @foreach (var imagen in Model.Imagenes)
+                        {
+                            <img src="@imagen"
+                                 alt="@Model.Nombre"
+                                 class="brew-detail-img" />
+                        }
+                    </div>
                 }
                 else
                 {

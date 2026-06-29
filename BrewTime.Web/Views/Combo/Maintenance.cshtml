@@ -1,8 +1,8 @@
-﻿@model IEnumerable<BrewTime.Application.DTOs.ProductoDTO>
+﻿@model IEnumerable<BrewTime.Application.DTOs.ComboDTO>
 @{
-    var inactivos = ViewBag.Inactivos as IEnumerable<BrewTime.Application.DTOs.ProductoDTO>
-                   ?? Enumerable.Empty<BrewTime.Application.DTOs.ProductoDTO>();
-    ViewData["Title"] = "Mantenimiento de Productos";
+    var inactivos = ViewBag.Inactivos as IEnumerable<BrewTime.Application.DTOs.ComboDTO>
+                   ?? Enumerable.Empty<BrewTime.Application.DTOs.ComboDTO>();
+    ViewData["Title"] = "Mantenimiento de Combos";
 }
 
 @section Styles {
@@ -14,10 +14,10 @@
     <div class="brew-hero">
         <div class="brew-hero-inner">
             <p class="brew-hero-eyebrow">Brew Time · Administración</p>
-            <h1 class="brew-titulo">Mantenimiento de <em>Productos</em></h1>
-            <p class="brew-subtitulo">Creá, editá, activá o desactivá productos del catálogo.</p>
+            <h1 class="brew-titulo">Mantenimiento de <em>Combos</em></h1>
+            <p class="brew-subtitulo">Activá o desactivá combos del catálogo.</p>
             <div class="brew-hero-line">
-                <span></span><i>Gestión de catálogo</i><span></span>
+                <span></span><i>Gestión de combos</i><span></span>
             </div>
         </div>
     </div>
@@ -25,20 +25,19 @@
     <div class="brew-content">
 
         <div class="brew-maint-toolbar">
-            <a asp-action="Index" class="brew-btn-volver">← Volver al catálogo</a>
-            <a asp-action="Create" class="brew-btn-nuevo">+ Nuevo producto</a>
+            <a asp-action="Index" class="brew-btn-volver">← Volver al listado</a>
         </div>
 
-        @* ── PRODUCTOS ACTIVOS ── *@
+        @* ── COMBOS ACTIVOS ── *@
         <h2 class="brew-section-title">
             <span class="brew-section-dot activo"></span>
-            Productos activos
+            Combos activos
             <span class="brew-section-count">@Model.Count()</span>
         </h2>
 
         @if (!Model.Any())
         {
-            <div class="brew-empty"><span class="brew-empty-icon">☕</span><p>No hay productos activos.</p></div>
+            <div class="brew-empty"><span class="brew-empty-icon">☕</span><p>No hay combos activos.</p></div>
         }
         else
         {
@@ -46,10 +45,9 @@
                 <table class="brew-maint-table">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Nombre</th>
                             <th>Categoría</th>
-                            <th>Precio</th>
+                            <th>Precio especial</th>
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -57,18 +55,17 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.ProductoID</td>
                                 <td>@item.Nombre</td>
                                 <td><span class="brew-card-chip">@item.CategoriaNombre</span></td>
-                                <td>@item.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                <td>@item.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
                                 <td class="brew-maint-actions">
-                                    <a asp-action="Edit" asp-route-id="@item.ProductoID"
+                                    <a asp-action="Detail" asp-route-id="@item.ComboID"
                                        class="brew-btn-editar">
-                                        <i class="bi bi-pencil"></i> Editar
+                                        <i class="bi bi-eye"></i> Ver detalle
                                     </a>
                                     <form asp-action="ToggleActivo" method="post" style="display:inline"
-                                          onsubmit="return confirm('¿Desactivar el producto «@item.Nombre»?')">
-                                        <input type="hidden" name="id" value="@item.ProductoID" />
+                                          onsubmit="return confirm('¿Desactivar el combo «@item.Nombre»?')">
+                                        <input type="hidden" name="id" value="@item.ComboID" />
                                         <button type="submit" class="brew-btn-desactivar">
                                             <i class="bi bi-toggle-on"></i> Desactivar
                                         </button>
@@ -81,16 +78,16 @@
             </div>
         }
 
-        @* ── PRODUCTOS INACTIVOS ── *@
+        @* ── COMBOS INACTIVOS ── *@
         <h2 class="brew-section-title" style="margin-top:2.5rem;">
             <span class="brew-section-dot inactivo"></span>
-            Productos inactivos
+            Combos inactivos
             <span class="brew-section-count">@inactivos.Count()</span>
         </h2>
 
         @if (!inactivos.Any())
         {
-            <div class="brew-empty"><span class="brew-empty-icon">✓</span><p>No hay productos inactivos.</p></div>
+            <div class="brew-empty"><span class="brew-empty-icon">✓</span><p>No hay combos inactivos.</p></div>
         }
         else
         {
@@ -98,10 +95,9 @@
                 <table class="brew-maint-table">
                     <thead>
                         <tr>
-                            <th>#</th>
                             <th>Nombre</th>
                             <th>Categoría</th>
-                            <th>Precio</th>
+                            <th>Precio especial</th>
                             <th class="text-center">Acciones</th>
                         </tr>
                     </thead>
@@ -109,14 +105,13 @@
                         @foreach (var item in inactivos)
                         {
                             <tr class="brew-row-inactiva">
-                                <td>@item.ProductoID</td>
                                 <td>@item.Nombre</td>
                                 <td><span class="brew-card-chip">@item.CategoriaNombre</span></td>
-                                <td>@item.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                <td>@item.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
                                 <td class="brew-maint-actions">
                                     <form asp-action="ToggleActivo" method="post" style="display:inline"
-                                          onsubmit="return confirm('¿Activar el producto «@item.Nombre»?')">
-                                        <input type="hidden" name="id" value="@item.ProductoID" />
+                                          onsubmit="return confirm('¿Activar el combo «@item.Nombre»?')">
+                                        <input type="hidden" name="id" value="@item.ComboID" />
                                         <button type="submit" class="brew-btn-activar">
                                             <i class="bi bi-toggle-off"></i> Activar
                                         </button>

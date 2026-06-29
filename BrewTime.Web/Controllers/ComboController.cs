@@ -25,5 +25,21 @@ namespace BrewTime.Web.Controllers
             var combo = await _serviceCombo.FindByIdAsync(id);
             return View(combo);
         }
+        [HttpGet]
+        public async Task<IActionResult> Maintenance()
+        {
+            var activos = await _serviceCombo.ListAsync();
+            var inactivos = await _serviceCombo.ListInactivosAsync();
+
+            ViewBag.Inactivos = inactivos;
+            return View(activos);
+        }
+
+        [HttpPost]
+        public async Task<IActionResult> ToggleActivo(int id)
+        {
+            await _serviceCombo.ToggleActivoAsync(id);
+            return RedirectToAction(nameof(Maintenance));
+        }
     }
 }
