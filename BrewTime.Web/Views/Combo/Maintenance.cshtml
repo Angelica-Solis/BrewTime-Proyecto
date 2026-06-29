@@ -24,8 +24,10 @@
 
     <div class="brew-content">
 
+        @* Toolbar *@
         <div class="brew-maint-toolbar">
             <a asp-action="Index" class="brew-btn-volver">← Volver al listado</a>
+            <a asp-action="Create" class="brew-btn-nuevo">+ Nuevo combo</a>
         </div>
 
         @* ── COMBOS ACTIVOS ── *@
@@ -59,8 +61,10 @@
                                 <td><span class="brew-card-chip">@item.CategoriaNombre</span></td>
                                 <td>@item.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
                                 <td class="brew-maint-actions">
-                                    <a asp-action="Detail" asp-route-id="@item.ComboID"
-                                       class="brew-btn-editar">
+                                    <a asp-action="Edit" asp-route-id="@item.ComboID" class="brew-btn-editar">
+                                        <i class="bi bi-pencil"></i> Editar
+                                    </a>
+                                    <a asp-action="Detail" asp-route-id="@item.ComboID" class="brew-btn-editar">
                                         <i class="bi bi-eye"></i> Ver detalle
                                     </a>
                                     <form asp-action="ToggleActivo" method="post" style="display:inline"
@@ -108,7 +112,14 @@
                                 <td>@item.Nombre</td>
                                 <td><span class="brew-card-chip">@item.CategoriaNombre</span></td>
                                 <td>@item.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
+                                @* Botones en fila de activos *@
                                 <td class="brew-maint-actions">
+                                    <a asp-action="Edit" asp-route-id="@item.ComboID" class="brew-btn-editar">
+                                        <i class="bi bi-pencil"></i> Editar
+                                    </a>
+                                    <a asp-action="Detail" asp-route-id="@item.ComboID" class="brew-btn-editar">
+                                        <i class="bi bi-eye"></i> Ver detalle
+                                    </a>
                                     <form asp-action="ToggleActivo" method="post" style="display:inline"
                                           onsubmit="return confirm('¿Activar el combo «@item.Nombre»?')">
                                         <input type="hidden" name="id" value="@item.ComboID" />

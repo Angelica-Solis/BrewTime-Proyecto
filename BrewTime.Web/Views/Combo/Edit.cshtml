@@ -1,0 +1,126 @@
+﻿@model BrewTime.Application.DTOs.ComboFormDTO
+@{
+    ViewData["Title"] = "Editar Combo";
+    var productosDisponibles = ViewBag.ProductosDisponibles as List<BrewTime.Application.DTOs.ComboProductoFormDTO>
+                               ?? new List<BrewTime.Application.DTOs.ComboProductoFormDTO>();
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/combo.css" asp-append-version="true" />
+}
+
+<div class="brew-page">
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">Brew Time · Administración</p>
+            <h1 class="brew-titulo">Editar <em>Combo</em></h1>
+            <p class="brew-subtitulo">Modificá los datos del combo seleccionado.</p>
+            <div class="brew-hero-line"><span></span><i>Edición de combo</i><span></span></div>
+        </div>
+    </div>
+
+    <div class="brew-content">
+        <a asp-action="Maintenance" class="brew-btn-volver">← Volver al mantenimiento</a>
+
+        <div class="brew-form-card">
+            <form asp-action="Edit" method="post">
+                @Html.AntiForgeryToken()
+                <input asp-for="ComboID" type="hidden" />
+
+                <div class="brew-form-row">
+                    <div class="brew-form-group">
+                        <label asp-for="Nombre" class="brew-form-label">Nombre</label>
+                        <input asp-for="Nombre" class="brew-form-input" />
+                        <span asp-validation-for="Nombre" class="brew-form-error"></span>
+                    </div>
+                    <div class="brew-form-group">
+                        <label asp-for="CategoriaID" class="brew-form-label">Categoría</label>
+                        <select asp-for="CategoriaID" asp-items="ViewBag.Categorias" class="brew-form-input">
+                            <option value="">-- Seleccioná una categoría --</option>
+                        </select>
+                        <span asp-validation-for="CategoriaID" class="brew-form-error"></span>
+                    </div>
+                </div>
+
+                <div class="brew-form-row">
+                    <div class="brew-form-group">
+                        <label asp-for="PrecioEspecial" class="brew-form-label">Precio especial (₡)</label>
+                        <input asp-for="PrecioEspecial" type="number" step="50" min="0" class="brew-form-input" />
+                        <span asp-validation-for="PrecioEspecial" class="brew-form-error"></span>
+                    </div>
+                    <div class="brew-form-group brew-form-check-group" style="justify-content:flex-end;padding-top:1.6rem;">
+                        <input asp-for="Activo" type="checkbox" class="brew-form-check" />
+                        <label asp-for="Activo" class="brew-form-label">Combo activo</label>
+                    </div>
+                </div>
+
+                <div class="brew-form-group">
+                    <label asp-for="Descripcion" class="brew-form-label">Descripción</label>
+                    <textarea asp-for="Descripcion" class="brew-form-input brew-form-textarea"></textarea>
+                    <span asp-validation-for="Descripcion" class="brew-form-error"></span>
+                </div>
+
+                @* ── Selección de productos ── *@
+                <div class="brew-form-group">
+                    <label class="brew-form-label">Productos del combo</label>
+                    <small style="color:var(--text-soft);font-size:0.78rem;display:block;margin-bottom:0.75rem;">
+                        Marcá los productos que forman parte del combo e indicá la cantidad.
+                        Los productos ya incluidos aparecen marcados.
+                    </small>
+
+                    <div class="brew-productos-grid">
+                        @for (int i = 0; i < productosDisponibles.Count; i++)
+                        {
+                            var p = productosDisponibles[i];
+                            var mostrarCantidad = p.Seleccionado ? "block" : "none";
+                            <div class="brew-producto-item @(p.Seleccionado ? "brew-producto-activo" : "")">
+                                <input type="hidden"
+                                       name="ProductosSeleccionados[@i].ProductoID"
+                                       value="@p.ProductoID" />
+                                <input type="hidden"
+                                       name="ProductosSeleccionados[@i].NombreProducto"
+                                       value="@p.NombreProducto" />
+
+                                <label class="brew-producto-check-label">
+                                    <input type="checkbox"
+                                           name="ProductosSeleccionados[@i].Seleccionado"
+                                           value="true"
+                                           class="brew-form-check brew-producto-check"
+                                    @(p.Seleccionado ? "checked" : "")
+                                           onchange="toggleCantidad(this, 'cantidad-@i')" />
+                                    @p.NombreProducto
+                                </label>
+
+                                <div class="brew-cantidad-wrap" id="cantidad-@i" style="display:@mostrarCantidad;">
+                                    <label class="brew-form-label" style="font-size:0.65rem;">Cantidad</label>
+                                    <input type="number"
+                                           name="ProductosSeleccionados[@i].Cantidad"
+                                           value="@p.Cantidad"
+                                           min="1" max="10"
+                                           class="brew-form-input brew-cantidad-input" />
+                                </div>
+                            </div>
+                        }
+                    </div>
+                </div>
+
+                <div class="brew-form-footer">
+                    <a asp-action="Maintenance" class="brew-btn-volver">Cancelar</a>
+                    <button type="submit" class="brew-btn-nuevo">Guardar cambios</button>
+                </div>
+            </form>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+    <script>
+        function toggleCantidad(checkbox, cantidadId) {
+            const wrap = document.getElementById(cantidadId);
+            wrap.style.display = checkbox.checked ? 'block' : 'none';
+        }
+    </script>
+}
