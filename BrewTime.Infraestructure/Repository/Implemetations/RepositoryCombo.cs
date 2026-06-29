@@ -34,14 +34,16 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
 
             return entity!;
         }
-        public Task CreateAsync(Combo entity)
+        public async Task CreateAsync(Combo entity)
         {
-            throw new NotImplementedException();
+            await _context.Set<Combo>().AddAsync(entity);
+            await _context.SaveChangesAsync();
         }
 
-        public Task UpdateAsync(Combo entity)
+        public async Task UpdateAsync(Combo entity)
         {
-            throw new NotImplementedException();
+            _context.Set<Combo>().Update(entity);
+            await _context.SaveChangesAsync();
         }
 
         public async Task<ICollection<Combo>> ListInactivosAsync()

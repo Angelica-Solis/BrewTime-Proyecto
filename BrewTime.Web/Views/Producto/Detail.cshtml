@@ -35,13 +35,46 @@
             <div class="brew-detail-img-wrap">
                 @if (Model.Imagenes.Any())
                 {
-                    <div class="brew-detail-gallery">
-                        @foreach (var imagen in Model.Imagenes)
+                    <div id="carouselProducto"
+                         class="carousel slide"
+                         data-bs-ride="carousel">
+
+                        <div class="carousel-inner">
+
+                            @for (int i = 0; i < Model.Imagenes.Count; i++)
+                            {
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+
+                                    <img src="@Model.Imagenes[i]"
+                                         class="d-block w-100 brew-detail-img"
+                                         alt="@Model.Nombre" />
+
+                                </div>
+                            }
+
+                        </div>
+
+                        @if (Model.Imagenes.Count > 1)
                         {
-                            <img src="@imagen"
-                                 alt="@Model.Nombre"
-                                 class="brew-detail-img" />
+                            <button class="carousel-control-prev"
+                                    type="button"
+                                    data-bs-target="#carouselProducto"
+                                    data-bs-slide="prev">
+
+                                <span class="carousel-control-prev-icon"></span>
+
+                            </button>
+
+                            <button class="carousel-control-next"
+                                    type="button"
+                                    data-bs-target="#carouselProducto"
+                                    data-bs-slide="next">
+
+                                <span class="carousel-control-next-icon"></span>
+
+                            </button>
                         }
+
                     </div>
                 }
                 else
