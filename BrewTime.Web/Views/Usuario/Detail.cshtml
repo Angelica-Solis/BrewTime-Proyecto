@@ -1,0 +1,130 @@
+﻿@model BrewTime.Application.DTOs.UsuarioDetalleDTO
+@section Styles {
+    <link rel="stylesheet" href="~/css/usuario.css" asp-append-version="true" />
+}
+@{
+    ViewData["Title"] = "Detalle del Usuario";
+    var iniciales = $"{Model.Nombre[0]}{Model.Apellidos[0]}";
+}
+
+<div class="brew-page">
+
+    <section class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">Administración</p>
+
+            <h1 class="brew-titulo">
+                Perfil de <em>Usuario</em>
+            </h1>
+
+            <p class="brew-subtitulo">
+                Información detallada del usuario seleccionado.
+            </p>
+
+            <div class="brew-hero-line">
+                <span></span>
+                <i>BrewTime</i>
+                <span></span>
+            </div>
+        </div>
+    </section>
+
+    <div class="brew-content">
+
+        <div class="brew-detail-container">
+
+            <div class="brew-detail-card">
+
+                <div class="brew-detail-header">
+
+                    <div class="brew-detail-avatar">
+                        @iniciales
+                    </div>
+
+                    <div class="brew-detail-name">
+                        @Model.Nombre @Model.Apellidos
+                    </div>
+
+                    <div class="brew-detail-role">
+                        <span class="brew-card-chip">
+                            @Model.NombreRol
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="brew-detail-body">
+
+                    <div class="brew-detail-grid">
+
+                        <div class="brew-detail-field">
+                            <div class="brew-detail-label">
+                                Correo electrónico
+                            </div>
+                            <div class="brew-detail-value">
+                                @Model.Correo
+                            </div>
+                        </div>
+
+                        <div class="brew-detail-field">
+                            <div class="brew-detail-label">
+                                Teléfono
+                            </div>
+                            <div class="brew-detail-value">
+                                @(string.IsNullOrWhiteSpace(Model.Telefono)
+                                    ? "No registrado"
+                                    : Model.Telefono)
+                            </div>
+                        </div>
+
+                        <div class="brew-detail-field">
+                            <div class="brew-detail-label">
+                                Rol
+                            </div>
+                            <div class="brew-detail-value">
+                                <span class="brew-card-chip">
+                                    @Model.NombreRol
+                                </span>
+                            </div>
+                        </div>
+
+                        <div class="brew-detail-field">
+                            <div class="brew-detail-label">
+                                Estado
+                            </div>
+                            <div class="brew-detail-value">
+
+                                @if (Model.Activo)
+                                {
+                                    <span class="brew-badge-estado activo">
+                                        Activo
+                                    </span>
+                                }
+                                else
+                                {
+                                    <span class="brew-badge-estado inactivo">
+                                        Inactivo
+                                    </span>
+                                }
+
+                            </div>
+                        </div>
+
+                    </div>
+
+                    <div class="brew-detail-footer">
+                        <a asp-action="Index"
+                           class="brew-btn-volver">
+                            Volver al listado
+                        </a>
+                    </div>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>

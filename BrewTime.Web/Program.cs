@@ -27,6 +27,9 @@ builder.Services.AddTransient<IRepositoryMenuCombo, RepositoryMenuCombo>();
 
 builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPreparacion>();
 builder.Services.AddTransient<IRepositoryCombo, RepositoryCombo>();
+builder.Services.AddTransient<IRepositoryProducto, RepositoryProducto>();
+builder.Services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
+
 //Services 
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
 builder.Services.AddTransient<IServiceCombo, ServiceCombo>();
@@ -47,6 +50,8 @@ builder.Services.AddTransient<IServiceMenuCombo, ServiceMenuCombo>();
 
 builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparacion>();
 
+builder.Services.AddTransient<IServiceUsuario, ServiceUsuario>();
+
 
 
 
@@ -62,7 +67,7 @@ builder.Services.AddAutoMapper(config =>
     config.AddProfile<MenuComboProfile>();
 
     config.AddProfile<ProcesoPreparacionProfile>();
-
+    config.AddProfile<UsuarioProfile>();
 
 });
 
