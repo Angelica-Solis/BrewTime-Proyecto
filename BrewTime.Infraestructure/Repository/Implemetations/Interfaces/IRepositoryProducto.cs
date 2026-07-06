@@ -10,9 +10,11 @@ namespace BrewTime.Infraestructure.Repository.Implemetations.Interfaces
     public interface IRepositoryProducto
     {
         Task<ICollection<Producto>> ListAsync();
+        Task<ICollection<Producto>> ListInactivosAsync();
         Task<Producto> FindByIdAsync(int id);
         Task CreateAsync(Producto entity);
         Task UpdateAsync(Producto entity);
-        Task DeleteAsync(Producto entity);
+        void DeleteImagen(ProductoImagen imagen);
+        Task ToggleActivoAsync(int id);
     }
 }

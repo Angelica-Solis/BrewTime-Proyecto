@@ -26,18 +26,28 @@ namespace BrewTime.Application.Profiles
                opt => opt.MapFrom(src => src.Ingrediente        
                                             .Select(i => i.Nombre)
                                             .ToList()))
-    .ForMember(dest => dest.ImagenPrincipal,
+    .ForMember(dest => dest.Imagenes,
                opt => opt.MapFrom(src => src.ProductoImagen     
-                                            .Where(i => i.EsPrincipal == true)
                                             .Select(i => i.RutaImagen)
-                                            .FirstOrDefault()));
+                                            .ToList()));
+
+            CreateMap<ProductoImagen, ProductoImagenDTO>()
+                .ForMember(dest => dest.ImagenID,
+                           opt => opt.MapFrom(src => src.ImagenId));
+
             // Mapeo del formulario (crear/editar)
             CreateMap<Producto, ProductoFormDTO>()
                 .ForMember(dest => dest.CategoriaID,
                            opt => opt.MapFrom(src => src.CategoriaId))
+                .ForMember(dest => dest.ImagenesActuales,
+                           opt => opt.MapFrom(src => src.ProductoImagen))
                 .ReverseMap()
                 .ForMember(dest => dest.CategoriaId,
-                           opt => opt.MapFrom(src => src.CategoriaID));
+                           opt => opt.MapFrom(src => src.CategoriaID))
+                .ForMember(dest => dest.ProductoImagen,
+                           opt => opt.Ignore())
+                .ForMember(dest => dest.Categoria,
+                           opt => opt.Ignore());
         }
     }
 }

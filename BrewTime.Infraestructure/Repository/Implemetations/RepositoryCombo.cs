@@ -34,5 +34,37 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
 
             return entity!;
         }
+        public async Task CreateAsync(Combo entity)
+        {
+            await _context.Set<Combo>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Combo entity)
+        {
+            _context.Set<Combo>().Update(entity);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task<ICollection<Combo>> ListInactivosAsync()
+        {
+            return await _context.Set<Combo>()
+                .Include(c => c.Categoria)
+                .Where(c => c.Activo == false)
+                .ToListAsync();
+        }
+
+        public async Task ToggleActivoAsync(int id)
+        {
+            var entity = await _context.Set<Combo>()
+                .FirstOrDefaultAsync(c => c.ComboId == id);
+
+            if (entity != null)
+            {
+                entity.Activo = !entity.Activo;
+                _context.Set<Combo>().Update(entity);
+                await _context.SaveChangesAsync();
+            }
+        }
     }
 }

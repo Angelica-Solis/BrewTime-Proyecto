@@ -22,7 +22,7 @@ namespace BrewTime.Application.DTOs
         // Ingredientes
         public List<string> Ingredientes { get; set; } = new();
 
-        // Imagen principal
-        public string? ImagenPrincipal { get; set; }
+        // Imagenes del producto
+        public List<string> Imagenes { get; set; } = new();
     }
 }

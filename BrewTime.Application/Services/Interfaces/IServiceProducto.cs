@@ -10,10 +10,11 @@ namespace BrewTime.Application.Services.Interfaces
     public interface IServiceProducto
     {
         Task<ICollection<ProductoDTO>> ListAsync();
+        Task<ICollection<ProductoDTO>> ListInactivosAsync();
         Task<ProductoDetalleDTO> FindByIdAsync(int id);
         Task<ProductoFormDTO> FindFormByIdAsync(int id);
-        Task CreateAsync(ProductoFormDTO dto);
-        Task UpdateAsync(ProductoFormDTO dto);
-        Task DeleteAsync(int id);
+        Task CreateAsync(ProductoFormDTO dto, string wwwRootPath);
+        Task UpdateAsync(ProductoFormDTO dto, string wwwRootPath);
+        Task ToggleActivoAsync(int id);
     }
 }

@@ -17,6 +17,7 @@ builder.Services.AddControllersWithViews();
 
 //Configurar D.I. //Repository 
 builder.Services.AddTransient<IRepositoryProducto, RepositoryProducto>();
+builder.Services.AddTransient<IRepositoryCategoria, RepositoryCategoria>();
 
 builder.Services.AddTransient<IRepositoryCombo, RepositoryCombo>();
 
@@ -32,6 +33,7 @@ builder.Services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
 
 //Services 
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
+builder.Services.AddTransient<IServiceCategoria, ServiceCategoria>();
 builder.Services.AddTransient<IServiceCombo, ServiceCombo>();
 
 

@@ -45,14 +45,39 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
 
         public async Task UpdateAsync(Producto entity)
         {
-            _context.Set<Producto>().Update(entity);
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _context.Set<Producto>().Update(entity);
+            }
+
             await _context.SaveChangesAsync();
         }
 
-        public async Task DeleteAsync(Producto entity)
+        public void DeleteImagen(ProductoImagen imagen)
         {
-            _context.Set<Producto>().Remove(entity);
-            await _context.SaveChangesAsync();
+            _context.Set<ProductoImagen>().Remove(imagen);
+        }
+
+        public async Task<ICollection<Producto>> ListInactivosAsync()
+        {
+            return await _context.Set<Producto>()
+                .Include(p => p.Categoria)
+                .Where(p => p.Activo == false)
+                .ToListAsync();
+        }
+
+        public async Task ToggleActivoAsync(int id)
+        {
+            var entity = await _context.Set<Producto>()
+                .FirstOrDefaultAsync(p => p.ProductoId == id);
+
+            if (entity != null)
+            {
+                // Invierte el estado actual
+                entity.Activo = !entity.Activo;
+                _context.Set<Producto>().Update(entity);
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }
