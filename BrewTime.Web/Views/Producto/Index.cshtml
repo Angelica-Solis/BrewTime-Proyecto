@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BrewTime.Application.DTOs.ProductoDTO>
+@model IEnumerable<BrewTime.Application.DTOs.ProductoDTO>
 
 @section Styles {
     <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
@@ -56,21 +56,21 @@
 
                         <div class="brew-card-body">
 
-                            @* Chip de categoría *@
-                            <span class="brew-card-chip">@item.CategoriaNombre</span>
-
-                            @* Nombre del producto *@
-                            <p class="brew-card-producto">@item.Nombre</p>
+                            @* Fila superior: nombre y precio *@
+                            <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
+                                <p class="brew-card-producto m-0">@item.Nombre</p>
+                                <span class="brew-badge-tiempo">
+                                     @item.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))
+                                </span>
+                            </div>
 
                             @* Descripción *@
                             <p class="brew-card-desc">@item.Descripcion</p>
 
-                            @* Footer: precio + estado + botón *@
+                            @* Footer: categoría + estado + botón *@
                             <div class="brew-card-footer">
                                 <div class="brew-card-footer-left">
-                                    <span class="brew-badge-tiempo">
-                                         @item.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))
-                                    </span>
+                                    <span class="brew-card-chip mb-0">@item.CategoriaNombre</span>
                                     @if (item.Activo)
                                     {
                                         <span class="brew-badge-activo">Activo</span>

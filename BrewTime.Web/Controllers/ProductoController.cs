@@ -9,15 +9,18 @@ namespace BrewTime.Web.Controllers
     {
         private readonly IServiceProducto _serviceProducto;
         private readonly IServiceCategoria _serviceCategoria;
+        private readonly IServiceIngrediente _serviceIngrediente;
         private readonly IWebHostEnvironment _webHostEnvironment;
 
         public ProductoController(
             IServiceProducto serviceProducto,
             IServiceCategoria serviceCategoria,
+            IServiceIngrediente serviceIngrediente,
             IWebHostEnvironment webHostEnvironment)
         {
             _serviceProducto = serviceProducto;
             _serviceCategoria = serviceCategoria;
+            _serviceIngrediente = serviceIngrediente;
             _webHostEnvironment = webHostEnvironment;
         }
 
@@ -30,6 +33,12 @@ namespace BrewTime.Web.Controllers
                 Value = c.CategoriaID.ToString(),
                 Text = c.Nombre
             }).ToList();
+        }
+
+        private async Task CargarIngredientesAsync()
+        {
+            // Catálogo completo de ingredientes activos, para los checkboxes del formulario
+            ViewBag.IngredientesDisponibles = await _serviceIngrediente.ListActivasAsync();
         }
 
         [HttpGet]
@@ -59,6 +68,7 @@ namespace BrewTime.Web.Controllers
         public async Task<IActionResult> Create()
         {
             await CargarCategoriasAsync();
+            await CargarIngredientesAsync();
             return View(new ProductoFormDTO());
         }
 
@@ -68,6 +78,7 @@ namespace BrewTime.Web.Controllers
             if (!ModelState.IsValid)
             {
                 await CargarCategoriasAsync();
+                await CargarIngredientesAsync();
                 return View(dto);
             }
 
@@ -80,6 +91,7 @@ namespace BrewTime.Web.Controllers
         {
             var dto = await _serviceProducto.FindFormByIdAsync(id);
             await CargarCategoriasAsync();
+            await CargarIngredientesAsync();
             return View(dto);
         }
 
@@ -89,6 +101,7 @@ namespace BrewTime.Web.Controllers
             if (!ModelState.IsValid)
             {
                 await CargarCategoriasAsync();
+                await CargarIngredientesAsync();
                 return View(dto);
             }
 

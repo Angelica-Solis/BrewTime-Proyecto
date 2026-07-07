@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BrewTime.Application.DTOs.ProductoDTO>
+@model IEnumerable<BrewTime.Application.DTOs.ProductoDTO>
 @{
     var inactivos = ViewBag.Inactivos as IEnumerable<BrewTime.Application.DTOs.ProductoDTO>
                    ?? Enumerable.Empty<BrewTime.Application.DTOs.ProductoDTO>();
@@ -66,10 +66,9 @@
                                        class="brew-btn-editar">
                                         <i class="bi bi-pencil"></i> Editar
                                     </a>
-                                    <form asp-action="ToggleActivo" method="post" style="display:inline"
-                                          onsubmit="return confirm('¿Desactivar el producto «@item.Nombre»?')">
+                                    <form asp-action="ToggleActivo" method="post" style="display:inline">
                                         <input type="hidden" name="id" value="@item.ProductoID" />
-                                        <button type="submit" class="brew-btn-desactivar">
+                                        <button type="button" class="brew-btn-desactivar btn-toggle-activo" data-nombre="@item.Nombre" data-accion="desactivar">
                                             <i class="bi bi-toggle-on"></i> Desactivar
                                         </button>
                                     </form>
@@ -114,10 +113,9 @@
                                 <td><span class="brew-card-chip">@item.CategoriaNombre</span></td>
                                 <td>@item.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
                                 <td class="brew-maint-actions">
-                                    <form asp-action="ToggleActivo" method="post" style="display:inline"
-                                          onsubmit="return confirm('¿Activar el producto «@item.Nombre»?')">
+                                    <form asp-action="ToggleActivo" method="post" style="display:inline">
                                         <input type="hidden" name="id" value="@item.ProductoID" />
-                                        <button type="submit" class="brew-btn-activar">
+                                        <button type="button" class="brew-btn-activar btn-toggle-activo" data-nombre="@item.Nombre" data-accion="activar">
                                             <i class="bi bi-toggle-off"></i> Activar
                                         </button>
                                     </form>
@@ -131,3 +129,37 @@
 
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.querySelectorAll('.btn-toggle-activo').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const form = this.closest('form');
+                const nombre = this.getAttribute('data-nombre');
+                const accion = this.getAttribute('data-accion');
+                const esDesactivar = accion === 'desactivar';
+
+                Swal.fire({
+                    title: esDesactivar ? '¿Desactivar producto?' : '¿Activar producto?',
+                    text: esDesactivar 
+                        ? `El producto "${nombre}" ya no estará visible en el menú.`
+                        : `El producto "${nombre}" volverá a estar visible en el menú.`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: esDesactivar ? '#8a2020' : '#243318',
+                    cancelButtonColor: '#5a3e28',
+                    confirmButtonText: esDesactivar ? 'Sí, desactivar' : 'Sí, activar',
+                    cancelButtonText: 'Cancelar',
+                    background: '#f0e2cc',
+                    color: '#2e1e0e'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+}

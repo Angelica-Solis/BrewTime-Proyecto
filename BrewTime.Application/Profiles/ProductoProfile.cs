@@ -23,11 +23,11 @@ namespace BrewTime.Application.Profiles
                                          ? src.Categoria.Nombre
                                          : "Sin categoría"))
     .ForMember(dest => dest.Ingredientes,
-               opt => opt.MapFrom(src => src.Ingrediente        
+               opt => opt.MapFrom(src => src.Ingrediente
                                             .Select(i => i.Nombre)
                                             .ToList()))
     .ForMember(dest => dest.Imagenes,
-               opt => opt.MapFrom(src => src.ProductoImagen     
+               opt => opt.MapFrom(src => src.ProductoImagen
                                             .Select(i => i.RutaImagen)
                                             .ToList()));
 
@@ -41,12 +41,20 @@ namespace BrewTime.Application.Profiles
                            opt => opt.MapFrom(src => src.CategoriaId))
                 .ForMember(dest => dest.ImagenesActuales,
                            opt => opt.MapFrom(src => src.ProductoImagen))
+                .ForMember(dest => dest.ImagenesActualesCount,
+                           opt => opt.MapFrom(src => src.ProductoImagen.Count))
+                .ForMember(dest => dest.IngredientesSeleccionados,
+                           opt => opt.MapFrom(src => src.Ingrediente
+                                                         .Select(i => i.IngredienteId)
+                                                         .ToList()))
                 .ReverseMap()
                 .ForMember(dest => dest.CategoriaId,
                            opt => opt.MapFrom(src => src.CategoriaID))
                 .ForMember(dest => dest.ProductoImagen,
                            opt => opt.Ignore())
                 .ForMember(dest => dest.Categoria,
+                           opt => opt.Ignore())
+                .ForMember(dest => dest.Ingrediente,
                            opt => opt.Ignore());
         }
     }
