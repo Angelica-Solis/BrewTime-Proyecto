@@ -79,5 +79,15 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                 await _context.SaveChangesAsync();
             }
         }
+        // productos sin procesos
+        public async Task<ICollection<Producto>> ProductosSinProcesoAsync()
+        {
+            return await _context.Producto
+                .Where(p =>
+                    !_context.ProcesoPreparacion
+                    .Any(pp => pp.ProductoId == p.ProductoId)
+                )
+                .ToListAsync();
+        }
     }
 }

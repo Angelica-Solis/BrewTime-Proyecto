@@ -467,3 +467,185 @@
     letter-spacing: .08em;
     margin-bottom: .35rem;
 }
+
+/* Form de crear */
+
+/* Tarjeta contenedora del formulario */
+.brew-form-card {
+    background: rgba(240,226,204,.95);
+    border: 1px solid rgba(255,255,255,.15);
+    box-shadow: var(--shadow-card);
+    border-radius: var(--radius-card);
+    padding: 2rem 2.25rem 2.25rem;
+}
+
+.brew-form {
+    display: flex;
+    flex-direction: column;
+}
+
+/* Grupo de campo */
+.brew-form-group {
+    display: flex;
+    flex-direction: column;
+    margin-bottom: 1.4rem;
+}
+
+.brew-form-label {
+    font-size: 0.75rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 0.5rem;
+}
+
+/* Select estilizado */
+.brew-select {
+    appearance: none;
+    -webkit-appearance: none;
+    background-color: #fff8ee;
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 20 20'%3E%3Cpath fill='%238a5c30' d='M5.5 7.5l4.5 4.5 4.5-4.5z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.9rem center;
+    background-size: 16px;
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-sm);
+    padding: 0.65rem 2.2rem 0.65rem 0.9rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-body);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+    .brew-select:focus {
+        outline: none;
+        border-color: var(--cafe-dark);
+        box-shadow: 0 0 0 3px rgba(201,149,106,0.22);
+    }
+
+.brew-error {
+    font-size: 0.75rem;
+    color: #a13c2b;
+    margin-top: 0.35rem;
+}
+
+/* Subtítulo de sección dentro del formulario */
+.brew-subtitulo-section {
+    font-family: var(--font-display);
+    font-size: 1.4rem;
+    font-weight: 500;
+    color: var(--text-titulo);
+    margin: 0 0 0.4rem;
+}
+
+.brew-form-desc {
+    font-size: 0.85rem;
+    color: var(--text-mid);
+    margin: 0 0 1.25rem;
+}
+
+/* Grid de estaciones */
+.brew-estaciones-grid {
+    margin: 0 -0.6rem;
+}
+
+    .brew-estaciones-grid > [class*="col-"] {
+        padding: 0 0.6rem;
+    }
+
+/* Tarjeta de estación */
+.brew-estacion-card {
+    background: var(--bg-card);
+    border: 1px solid var(--border-card);
+    border-radius: 16px;
+    padding: 1.1rem 1.25rem 1.25rem;
+    height: 100%;
+    box-shadow: var(--shadow-card);
+    transition: transform 0.18s ease, box-shadow 0.18s ease, border-color 0.18s ease;
+}
+
+    .brew-estacion-card:hover {
+        transform: translateY(-2px);
+        box-shadow: var(--shadow-hover);
+        border-color: rgba(180,130,60,0.35);
+    }
+
+/* Checkbox de estación */
+.brew-checkbox-wrap {
+    display: flex;
+    align-items: center;
+    gap: 0.55rem;
+    padding-bottom: 0.75rem;
+    margin-bottom: 0.75rem;
+    border-bottom: 1px dashed rgba(180,130,60,0.25);
+}
+
+.brew-checkbox {
+    width: 18px;
+    height: 18px;
+    accent-color: var(--musgo-mid);
+    cursor: pointer;
+    flex-shrink: 0;
+}
+
+.brew-checkbox-label {
+    font-family: var(--font-display);
+    font-size: 1.05rem;
+    font-weight: 500;
+    color: var(--text-titulo);
+    cursor: pointer;
+}
+
+/* Grupo input numérico */
+.brew-input-group {
+    margin-top: 0.7rem;
+}
+
+.brew-input-label {
+    display: block;
+    font-size: 0.7rem;
+    font-weight: 600;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+    color: var(--text-soft);
+    margin-bottom: 0.35rem;
+}
+
+.brew-input-number {
+    width: 100%;
+    background-color: #fff8ee;
+    border: 1px solid var(--border-card);
+    border-radius: var(--radius-sm);
+    padding: 0.55rem 0.8rem;
+    font-family: var(--font-body);
+    font-size: 0.9rem;
+    color: var(--text-body);
+    transition: border-color 0.18s ease, box-shadow 0.18s ease;
+}
+
+    .brew-input-number:focus {
+        outline: none;
+        border-color: var(--cafe-dark);
+        box-shadow: 0 0 0 3px rgba(201,149,106,0.22);
+    }
+
+/* Acciones del formulario */
+.brew-form-actions {
+    display: flex;
+    align-items: center;
+    gap: 0.8rem;
+    padding-top: 1.4rem;
+    margin-top: 0.6rem;
+    border-top: 1px solid rgba(180,130,60,0.12);
+}
+
+    .brew-form-actions .brew-btn-detalle {
+        margin-left: 0;
+    }
+
+        .brew-form-actions .brew-btn-detalle::after {
+            content: '';
+            display: none;
+        }
+ 

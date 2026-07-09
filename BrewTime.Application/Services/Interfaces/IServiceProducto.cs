@@ -16,5 +16,6 @@ namespace BrewTime.Application.Services.Interfaces
         Task CreateAsync(ProductoFormDTO dto, string wwwRootPath);
         Task UpdateAsync(ProductoFormDTO dto, string wwwRootPath);
         Task ToggleActivoAsync(int id);
+        Task<ICollection<ProductoDTO>> ProductosSinProcesoAsync();
     }
 }

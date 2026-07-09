@@ -1,0 +1,218 @@
+﻿@model BrewTime.Application.DTOs.ProcesoPreparacionFormDTO
+@using BrewTime.Application.DTOs
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/procesoPreparacion.css" asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = "Crear Proceso de Preparación";
+}
+
+<div class="brew-page">
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <span class="brew-hero-eyebrow">Nuevo Proceso</span>
+
+            <h1 class="brew-titulo">
+                Crear Proceso de <em>Preparación</em>
+            </h1>
+
+            <p class="brew-subtitulo">
+                Seleccione las estaciones que forman parte del proceso y establezca el orden y tiempo estimado.
+            </p>
+
+            <div class="brew-hero-line">
+                <span></span>
+                <i>Configuración del flujo</i>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="brew-content">
+
+        <div class="brew-form-card">
+
+            <form asp-action="Create" method="post" class="brew-form">
+
+                <div asp-validation-summary="ModelOnly" class="brew-error"></div>
+
+                <div class="brew-form-group">
+                    <label asp-for="ProductoId" class="brew-form-label"></label>
+
+                    <select asp-for="ProductoId"
+                            asp-items="ViewBag.Productos"
+                            class="brew-select">
+
+                        <option value="">-- Seleccione un producto --</option>
+
+                    </select>
+
+                    <span asp-validation-for="ProductoId"
+                          class="brew-error"></span>
+                </div>
+
+                <hr class="brew-detalle-divider" />
+
+                <h4 class="brew-subtitulo-section">
+                    Estaciones del proceso
+                </h4>
+
+                <p class="brew-form-desc">
+                    Seleccione las estaciones que forman parte del proceso y establezca el orden y tiempo estimado.
+                </p>
+
+                <div class="row brew-estaciones-grid">
+
+                    @for (int index = 0; index < Model.Estaciones.Count; index++)
+                    {
+                        <div class="col-md-6 mb-3">
+
+                            <div class="brew-estacion-card">
+
+                                <input asp-for="Estaciones[index].EstacionId"
+                                       type="hidden" />
+
+                                <input asp-for="Estaciones[index].Nombre"
+                                       type="hidden" />
+
+                                <div class="form-check mb-2">
+
+                                    <input asp-for="Estaciones[index].Seleccionada"
+                                           class="form-check-input brew-checkbox" />
+
+                                    <label class="form-check-label fw-bold">
+                                        @Model.Estaciones[index].Nombre
+                                    </label>
+
+                                </div>
+
+                                <div class="mb-2">
+
+                                    <label class="brew-form-label">
+                                        Orden
+                                    </label>
+
+                                    <input asp-for="Estaciones[index].Orden"
+                                           class="form-control brew-input-number orden-input"
+                                           min="1"
+                                           disabled />
+
+                                    <span asp-validation-for="Estaciones[index].Orden"
+                                          class="brew-error"></span>
+
+                                </div>
+
+                                <div>
+
+                                    <label class="brew-form-label">
+                                        Tiempo estimado (min)
+                                    </label>
+
+                                    <input asp-for="Estaciones[index].TiempoEstimadoMin"
+                                           class="form-control brew-input-number tiempo-input"
+                                           min="1"
+                                           disabled />
+
+                                    <span asp-validation-for="Estaciones[index].TiempoEstimadoMin"
+                                          class="brew-error"></span>
+
+                                </div>
+
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+
+                <div class="brew-form-actions">
+
+                    <button type="submit"
+                            class="brew-btn-detalle"
+                            id="btnGuardar">
+                        Guardar
+                    </button>
+
+                    <a asp-action="Maintenance"
+                       class="brew-btn-volver">
+                        Cancelar
+                    </a>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts
+{
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+    <script>
+        @if (TempData["Success"] != null)
+        {
+            <text>
+                    Swal.fire({
+                        icon: 'success',
+                        title: 'Éxito',
+                        text: '@TempData["Success"]'
+                    });
+            </text>
+        }
+
+        @if (ViewBag.Error != null)
+        {
+                <script>
+                    Swal.fire({
+                        icon: 'error',
+                        title: 'Error',
+                        text: '@ViewBag.Error',
+                        confirmButtonText: 'Aceptar'
+                    });
+        </script>
+        }
+    </script>
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            document.querySelectorAll(".brew-estacion-card").forEach(card => {
+
+                const check = card.querySelector(".brew-checkbox");
+                const orden = card.querySelector(".orden-input");
+                const tiempo = card.querySelector(".tiempo-input");
+
+                function actualizar() {
+
+                    orden.disabled = !check.checked;
+                    tiempo.disabled = !check.checked;
+
+                    if (!check.checked) {
+                        orden.value = "";
+                        tiempo.value = "";
+                    }
+                }
+
+                actualizar();
+
+                check.addEventListener("change", actualizar);
+
+            });
+
+        });
+    </script>
+    <script>document.getElementById("btnGuardar").addEventListener("click", function () {
+
+    this.disabled = true;
+
+    this.form.submit();
+    </script>
+});
+}

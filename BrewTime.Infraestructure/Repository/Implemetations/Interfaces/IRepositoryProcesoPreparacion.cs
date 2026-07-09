@@ -12,5 +12,11 @@ namespace BrewTime.Infraestructure.Repository.Implemetations.Interfaces
         Task<ICollection<ProcesoPreparacion>> ListAsync();
         Task<ICollection<ProcesoPreparacion>> FindByProductoIdAsync(int productoId);
         Task<ProcesoPreparacion> FindByIdAsync(int id);
+
+
+        Task CreateAsync(ProcesoPreparacion entity);
+        Task CreateRangeAsync(IEnumerable<ProcesoPreparacion> entities);
+        Task UpdateAsync(ProcesoPreparacion entity);
+
     }
 }

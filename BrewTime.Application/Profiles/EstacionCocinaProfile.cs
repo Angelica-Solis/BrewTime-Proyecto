@@ -9,13 +9,11 @@ using BrewTime.Infraestructure.Models;
 
 namespace BrewTime.Application.Profiles
 {
-    public class ProcesoPreparacionProfile : Profile
+    public class EstacionCocinaProfile : Profile
     {
-        public ProcesoPreparacionProfile()
+        public EstacionCocinaProfile()
         {
-            CreateMap<ProcesoPreparacion, ProcesoPreparacionDTO>();
-
-
+            CreateMap<EstacionCocina, EstacionProcesoDTO>();
         }
     }
 }

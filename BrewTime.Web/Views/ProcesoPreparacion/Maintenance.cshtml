@@ -1,0 +1,105 @@
+﻿@model IEnumerable<BrewTime.Application.DTOs.ProcesoPreparacionListadoDTO>
+
+@{
+    ViewData["Title"] = "Mantenimiento de Procesos de Preparación";
+}
+
+<div class="container mt-4">
+
+    <div class="d-flex justify-content-between align-items-center mb-4">
+        <h2>Mantenimiento de Procesos de Preparación</h2>
+
+        <a asp-action="Create" class="btn btn-success">
+            <i class="bi bi-plus-circle"></i> Nuevo Proceso
+        </a>
+    </div>
+
+    <table class="table table-bordered table-hover align-middle">
+
+        <thead class="table-dark">
+            <tr>
+                <th>Producto</th>
+                <th class="text-center">Cantidad de Estaciones</th>
+                <th class="text-center" style="width:220px;">Acciones</th>
+            </tr>
+        </thead>
+
+        <tbody>
+
+            @if (Model != null && Model.Any())
+            {
+                @foreach (var item in Model)
+                {
+                    <tr>
+
+                        <td>
+                            @item.NombreProducto
+                        </td>
+
+                        <td class="text-center">
+                            @item.CantidadProcesos
+                        </td>
+
+                        <td class="text-center">
+
+                            <a asp-action="Detail"
+                               asp-route-id="@item.ProductoId"
+                               class="btn btn-info btn-sm">
+                                <i class="bi bi-eye"></i>
+                                Detalle
+                            </a>
+
+                            <a asp-action="Edit"
+                               asp-route-id="@item.ProductoId"
+                               class="btn btn-warning btn-sm">
+                                <i class="bi bi-pencil-square"></i>
+                                Editar
+                            </a>
+
+                        </td>
+
+                    </tr>
+                }
+            }
+            else
+            {
+                <tr>
+                    <td colspan="3" class="text-center text-muted">
+                        No hay procesos de preparación registrados.
+                    </td>
+                </tr>
+            }
+
+        </tbody>
+
+    </table>
+
+</div>
+
+@section Scripts {
+    @await Html.PartialAsync("_ValidationScriptsPartial")
+
+    @if (TempData["Success"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '@TempData["Success"]',
+                confirmButtonText: 'Aceptar'
+            });
+        </script>
+    }
+
+    @if (TempData["Error"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '@TempData["Error"]',
+                confirmButtonText: 'Aceptar'
+            });
+        </script>
+    }
+}

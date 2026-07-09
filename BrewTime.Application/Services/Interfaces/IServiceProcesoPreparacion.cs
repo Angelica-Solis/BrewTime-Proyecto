@@ -13,6 +13,10 @@ namespace BrewTime.Application.Services.Interfaces
         Task<ICollection<ProcesoPreparacionListadoDTO>>ListadoProcesosAsync();
 
         Task<ProcesoPreparacionDetalleDTO>DetailByProductoAsync(int productoId);
+        Task<ProcesoPreparacionFormDTO> FindFormByIdAsync(int id);
 
+
+        Task CreateAsync(ProcesoPreparacionFormDTO dto);
+        Task UpdateAsync(ProcesoPreparacionFormDTO dto);
     }
 }

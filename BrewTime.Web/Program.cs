@@ -30,16 +30,18 @@ builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPr
 builder.Services.AddTransient<IRepositoryCombo, RepositoryCombo>();
 builder.Services.AddTransient<IRepositoryProducto, RepositoryProducto>();
 builder.Services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
+builder.Services.AddTransient<IRepositoryEstacionCocina, RepositoryEstacionCocina>();
+
 
 //Services 
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
 builder.Services.AddTransient<IServiceCategoria, ServiceCategoria>();
 builder.Services.AddTransient<IServiceCombo, ServiceCombo>();
+builder.Services.AddTransient<IServiceEstacionCocina, ServiceEstacionCocina>();
 
 
 
 
-builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPreparacion>();
 
 
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
@@ -70,7 +72,7 @@ builder.Services.AddAutoMapper(config =>
 
     config.AddProfile<ProcesoPreparacionProfile>();
     config.AddProfile<UsuarioProfile>();
-
+    config.AddProfile<EstacionCocinaProfile>();
 });
 
 // Configuar Conexión a la Base de Datos SQL 

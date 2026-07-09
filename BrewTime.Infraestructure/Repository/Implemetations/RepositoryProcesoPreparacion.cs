@@ -48,5 +48,28 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                 .OrderBy(x => x.Orden)
                 .ToListAsync();
         }
+
+        public async Task CreateAsync(ProcesoPreparacion entity)
+        {
+            await _context.Set<ProcesoPreparacion>().AddAsync(entity);
+            await _context.SaveChangesAsync();
+        }
+        // ayuda a crear varias entidades en una sola transaccion.
+        public async Task CreateRangeAsync(IEnumerable<ProcesoPreparacion> entities)
+        {
+            await _context.Set<ProcesoPreparacion>().AddRangeAsync(entities);
+
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(ProcesoPreparacion entity)
+        {
+            if (_context.Entry(entity).State == EntityState.Detached)
+            {
+                _context.Set<ProcesoPreparacion>().Update(entity);
+            }
+
+            await _context.SaveChangesAsync();
+        }
     }
 }

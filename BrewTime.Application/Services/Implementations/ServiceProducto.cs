@@ -95,7 +95,7 @@ namespace BrewTime.Application.Services.Implementations
             var entity = await _repository.FindByIdAsync(dto.ProductoID);
             var imagenesAEliminar = dto.ImagenesAEliminar ?? new List<int>();
 
-            // Patrón del profe: source → destination sobre el objeto existente
+            // Patrón del profe: source → destination sobre el objeto existente 
             _mapper.Map(dto, entity);
 
             // Eliminar imágenes marcadas (borrado lógico de archivo físico no aplica,
@@ -150,6 +150,13 @@ namespace BrewTime.Application.Services.Implementations
         public async Task ToggleActivoAsync(int id)
         {
             await _repository.ToggleActivoAsync(id);
+        }
+
+        public async Task<ICollection<ProductoDTO>> ProductosSinProcesoAsync()
+        {
+            var productos = await _repository.ProductosSinProcesoAsync();
+
+            return _mapper.Map<ICollection<ProductoDTO>>(productos);
         }
     }
 }

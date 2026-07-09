@@ -16,5 +16,6 @@ namespace BrewTime.Infraestructure.Repository.Implemetations.Interfaces
         Task UpdateAsync(Producto entity);
         void DeleteImagen(ProductoImagen imagen);
         Task ToggleActivoAsync(int id);
+        Task<ICollection<Producto>> ProductosSinProcesoAsync();
     }
 }
