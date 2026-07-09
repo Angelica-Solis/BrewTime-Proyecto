@@ -14,12 +14,58 @@ namespace BrewTime.Application.Services.Implementations
     public class ServiceProducto : IServiceProducto
     {
         private readonly IRepositoryProducto _repository;
+        private readonly IRepositoryIngrediente _repositoryIngrediente;
         private readonly IMapper _mapper;
 
-        public ServiceProducto(IRepositoryProducto repository, IMapper mapper)
+        public ServiceProducto(IRepositoryProducto repository, IRepositoryIngrediente repositoryIngrediente, IMapper mapper)
         {
             _repository = repository;
+            _repositoryIngrediente = repositoryIngrediente;
             _mapper = mapper;
+        }
+
+        // Arma la colección de ingredientes del producto a partir de lo que llega del formulario:
+        // - Los ya existentes se traen del catálogo (sin volver a insertarlos).
+        // - Los nuevos se crean uno por uno (un INSERT independiente por cada ingrediente) y luego se asocian.
+        private async Task AsignarIngredientesAsync(Producto entity, ProductoFormDTO dto)
+        {
+            if (dto.IngredientesSeleccionados != null && dto.IngredientesSeleccionados.Any())
+            {
+                var existentes = await _repositoryIngrediente.FindByIdsAsync(dto.IngredientesSeleccionados);
+                foreach (var ingrediente in existentes)
+                {
+                    if (!entity.Ingrediente.Any(i => i.IngredienteId == ingrediente.IngredienteId))
+                        entity.Ingrediente.Add(ingrediente);
+                }
+            }
+
+            if (dto.IngredientesNuevos != null && dto.IngredientesNuevos.Any())
+            {
+                foreach (var nombre in dto.IngredientesNuevos.Where(n => !string.IsNullOrWhiteSpace(n)))
+                {
+                    // Insert aparte por cada ingrediente nuevo
+                    var ingrediente = await _repositoryIngrediente.ObtenerOCrearAsync(nombre);
+
+                    if (!entity.Ingrediente.Any(i => i.IngredienteId == ingrediente.IngredienteId))
+                        entity.Ingrediente.Add(ingrediente);
+                }
+            }
+        }
+
+        // Borra el archivo físico correspondiente a una imagen de producto.
+        // rutaImagen viene como "/images/nombre.ext" (tal como se guarda en BD).
+        private void EliminarArchivoFisico(string wwwRootPath, string rutaImagen)
+        {
+            if (string.IsNullOrWhiteSpace(rutaImagen)) return;
+
+            var rutaRelativa = rutaImagen.TrimStart('/', '\\')
+                                          .Replace('/', Path.DirectorySeparatorChar);
+            var rutaFisica = Path.Combine(wwwRootPath, rutaRelativa);
+
+            if (File.Exists(rutaFisica))
+            {
+                File.Delete(rutaFisica);
+            }
         }
 
         // ── Lectura ──────────────────────────────────────────
@@ -53,6 +99,9 @@ namespace BrewTime.Application.Services.Implementations
         public async Task CreateAsync(ProductoFormDTO dto, string wwwRootPath)
         {
             var entity = _mapper.Map<Producto>(dto);
+
+            // Ingredientes: los existentes se asocian y los nuevos se crean uno por uno antes de guardar el producto
+            await AsignarIngredientesAsync(entity, dto);
 
             // Guardar primero para obtener el ProductoId generado
             await _repository.CreateAsync(entity);
@@ -98,8 +147,13 @@ namespace BrewTime.Application.Services.Implementations
             // Patrón del profe: source → destination sobre el objeto existente 
             _mapper.Map(dto, entity);
 
-            // Eliminar imágenes marcadas (borrado lógico de archivo físico no aplica,
-            // pero sí quitamos el registro de BD si el usuario lo marcó)
+            // Ingredientes: se reconstruye la relación completa según lo que llegó del formulario
+            // (los checkboxes desmarcados se quitan, los marcados/nuevos quedan asociados)
+            entity.Ingrediente.Clear();
+            await AsignarIngredientesAsync(entity, dto);
+
+            // Eliminar imágenes marcadas: se borra tanto el registro de BD
+            // como el archivo físico en wwwroot/images para no dejar basura.
             if (imagenesAEliminar.Any())
             {
                 foreach (var imagenId in imagenesAEliminar)
@@ -109,6 +163,7 @@ namespace BrewTime.Application.Services.Implementations
 
                     if (imagen != null)
                     {
+                        EliminarArchivoFisico(wwwRootPath, imagen.RutaImagen);
                         _repository.DeleteImagen(imagen);
                     }
                 }

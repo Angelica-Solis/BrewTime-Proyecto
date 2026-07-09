@@ -1,4 +1,4 @@
-using BrewTime.Application.Profiles;
+ï»¿using BrewTime.Application.Profiles;
 using BrewTime.Application.Services.Implementations;
 using BrewTime.Application.Services.Interfaces;
 using BrewTime.Infraestructure.Data;
@@ -30,7 +30,10 @@ builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPr
 builder.Services.AddTransient<IRepositoryCombo, RepositoryCombo>();
 builder.Services.AddTransient<IRepositoryProducto, RepositoryProducto>();
 builder.Services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
+
 builder.Services.AddTransient<IRepositoryEstacionCocina, RepositoryEstacionCocina>();
+
+builder.Services.AddTransient<IRepositoryIngrediente, RepositoryIngrediente>();
 
 
 //Services 
@@ -55,6 +58,7 @@ builder.Services.AddTransient<IServiceMenuCombo, ServiceMenuCombo>();
 builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparacion>();
 
 builder.Services.AddTransient<IServiceUsuario, ServiceUsuario>();
+builder.Services.AddTransient<IServiceIngrediente, ServiceIngrediente>();
 
 
 
@@ -75,7 +79,7 @@ builder.Services.AddAutoMapper(config =>
     config.AddProfile<EstacionCocinaProfile>();
 });
 
-// Configuar Conexión a la Base de Datos SQL 
+// Configuar Conexiï¿½n a la Base de Datos SQL 
 builder.Services.AddDbContext<BrewTimeContext>(options => {
     // it read appsettings.json file 
     options.UseSqlServer(builder.Configuration.GetConnectionString("SqlServerDataBase"));

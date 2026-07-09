@@ -67,10 +67,11 @@
                                     <a asp-action="Detail" asp-route-id="@item.ComboID" class="brew-btn-editar">
                                         <i class="bi bi-eye"></i> Ver detalle
                                     </a>
-                                    <form asp-action="ToggleActivo" method="post" style="display:inline"
-                                          onsubmit="return confirm('¿Desactivar el combo «@item.Nombre»?')">
+                                    @* Formulario para desactivar *@
+                                    <form asp-action="ToggleActivo" method="post" style="display:inline">
                                         <input type="hidden" name="id" value="@item.ComboID" />
-                                        <button type="submit" class="brew-btn-desactivar">
+                                        <button type="button" class="brew-btn-desactivar btn-toggle-combo" 
+                                                data-nombre="@item.Nombre" data-accion="desactivar">
                                             <i class="bi bi-toggle-on"></i> Desactivar
                                         </button>
                                     </form>
@@ -112,7 +113,6 @@
                                 <td>@item.Nombre</td>
                                 <td><span class="brew-card-chip">@item.CategoriaNombre</span></td>
                                 <td>@item.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
-                                @* Botones en fila de activos *@
                                 <td class="brew-maint-actions">
                                     <a asp-action="Edit" asp-route-id="@item.ComboID" class="brew-btn-editar">
                                         <i class="bi bi-pencil"></i> Editar
@@ -120,10 +120,11 @@
                                     <a asp-action="Detail" asp-route-id="@item.ComboID" class="brew-btn-editar">
                                         <i class="bi bi-eye"></i> Ver detalle
                                     </a>
-                                    <form asp-action="ToggleActivo" method="post" style="display:inline"
-                                          onsubmit="return confirm('¿Activar el combo «@item.Nombre»?')">
+                                    @* Formulario para activar *@
+                                    <form asp-action="ToggleActivo" method="post" style="display:inline">
                                         <input type="hidden" name="id" value="@item.ComboID" />
-                                        <button type="submit" class="brew-btn-activar">
+                                        <button type="button" class="brew-btn-activar btn-toggle-combo" 
+                                                data-nombre="@item.Nombre" data-accion="activar">
                                             <i class="bi bi-toggle-off"></i> Activar
                                         </button>
                                     </form>
@@ -137,3 +138,37 @@
 
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+    <script>
+        document.querySelectorAll('.btn-toggle-combo').forEach(button => {
+            button.addEventListener('click', function(e) {
+                e.preventDefault();
+                const form = this.closest('form');
+                const nombre = this.getAttribute('data-nombre');
+                const accion = this.getAttribute('data-accion');
+                const esDesactivar = accion === 'desactivar';
+
+                Swal.fire({
+                    title: esDesactivar ? '¿Desactivar combo?' : '¿Activar combo?',
+                    text: esDesactivar 
+                        ? `El combo "${nombre}" ya no estará visible en el menú.`
+                        : `El combo "${nombre}" volverá a estar visible en el menú.`,
+                    icon: 'warning',
+                    showCancelButton: true,
+                    confirmButtonColor: esDesactivar ? '#8a2020' : '#243318',
+                    cancelButtonColor: '#5a3e28',
+                    confirmButtonText: esDesactivar ? 'Sí, desactivar' : 'Sí, activar',
+                    cancelButtonText: 'Cancelar',
+                    background: '#f0e2cc',
+                    color: '#2e1e0e'
+                }).then((result) => {
+                    if (result.isConfirmed) {
+                        form.submit();
+                    }
+                });
+            });
+        });
+    </script>
+}

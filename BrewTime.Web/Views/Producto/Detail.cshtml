@@ -1,4 +1,4 @@
-﻿@model BrewTime.Application.DTOs.ProductoDetalleDTO
+@model BrewTime.Application.DTOs.ProductoDetalleDTO
 
 @section Styles {
     <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
@@ -36,8 +36,23 @@
                 @if (Model.Imagenes.Any())
                 {
                     <div id="carouselProducto"
-                         class="carousel slide"
+                         class="carousel slide carousel-fade brew-detail-carousel"
                          data-bs-ride="carousel">
+
+                        @if (Model.Imagenes.Count > 1)
+                        {
+                            <div class="carousel-indicators">
+                                @for (int i = 0; i < Model.Imagenes.Count; i++)
+                                {
+                                    <button type="button"
+                                            data-bs-target="#carouselProducto"
+                                            data-bs-slide-to="@i"
+                                            class="@(i == 0 ? "active" : "")"
+                                            aria-current="@(i == 0 ? "true" : "false")"
+                                            aria-label="Slide @(i + 1)"></button>
+                                }
+                            </div>
+                        }
 
                         <div class="carousel-inner">
 

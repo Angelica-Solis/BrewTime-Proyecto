@@ -1,4 +1,4 @@
-﻿@model BrewTime.Application.DTOs.ProductoFormDTO
+@model BrewTime.Application.DTOs.ProductoFormDTO
 
 @section Styles {
     <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
@@ -34,6 +34,9 @@
                 @* ID oculto para que el POST sepa qué registro actualizar *@
                 <input asp-for="ProductoID" type="hidden" />
 
+                @* Cantidad de imágenes actuales, para validar en el POST que quede al menos una *@
+                <input asp-for="ImagenesActualesCount" type="hidden" />
+
                 <div class="brew-form-group">
                     <label asp-for="Nombre" class="brew-form-label">Nombre</label>
                     <input asp-for="Nombre" class="brew-form-input" />
@@ -63,6 +66,55 @@
                         <span asp-validation-for="CategoriaID" class="brew-form-error"></span>
                     </div>
 
+                </div>
+
+                <hr class="my-4" style="border-color: var(--border-card); opacity: 0.5;" />
+
+                <div class="brew-form-group">
+                    <label class="brew-form-label">Ingredientes del catálogo</label>
+                    <p class="brew-form-hint">Seleccione los ingredientes ya registrados en la cafetería:</p>
+                    
+                    @if (ViewBag.IngredientesDisponibles != null && ((IEnumerable<dynamic>)ViewBag.IngredientesDisponibles).Any())
+                    {
+                        <div class="brew-ingredientes-checklist">
+                            @foreach (var ingrediente in ViewBag.IngredientesDisponibles)
+                            {
+                                <label class="brew-ingrediente-check">
+                                    <input type="checkbox"
+                                           name="IngredientesSeleccionados"
+                                           value="@ingrediente.IngredienteID"
+                                           @(Model.IngredientesSeleccionados != null && Model.IngredientesSeleccionados.Contains((int)ingrediente.IngredienteID) ? "checked" : "") />
+                                    <span>@ingrediente.Nombre</span>
+                                </label>
+                            }
+                        </div>
+                    }
+                    else
+                    {
+                        <p class="brew-ingredientes-vacio">No hay ingredientes registrados en el catálogo.</p>
+                    }
+                </div>
+
+                <div class="brew-form-group">
+                    <label class="brew-form-label">Ingredientes nuevos</label>
+                    <p class="brew-form-hint">Escriba un ingrediente nuevo y pulse "Agregar":</p>
+                    <div class="brew-ingrediente-nuevo">
+                        <input type="text" id="nuevo-ingrediente-input" class="brew-form-input" placeholder="Ej: Crema batida" />
+                        <button type="button" class="brew-btn-secundario" id="btn-agregar-ingrediente-nuevo">Agregar</button>
+                    </div>
+                    <div class="brew-ingredientes-nuevos-lista" id="lista-ingredientes-nuevos">
+                        @if (Model.IngredientesNuevos != null)
+                        {
+                            @foreach (var nuevo in Model.IngredientesNuevos)
+                            {
+                                <div class="brew-chip-ingrediente">
+                                    <span>@nuevo</span>
+                                    <input type="hidden" name="IngredientesNuevos" value="@nuevo" />
+                                    <button type="button" onclick="this.parentElement.remove()">×</button>
+                                </div>
+                            }
+                        }
+                    </div>
                 </div>
 
                 <div class="brew-form-group brew-form-check-group">
@@ -139,5 +191,46 @@
                 preview.hidden = false;
             });
         });
+
+        const nuevoInput = document.getElementById('nuevo-ingrediente-input');
+        const btnAgregar = document.getElementById('btn-agregar-ingrediente-nuevo');
+        const listaNuevos = document.getElementById('lista-ingredientes-nuevos');
+
+        function agregarIngredienteNuevo() {
+            const nombre = nuevoInput.value.trim();
+            if (!nombre) return;
+
+            // Evitar duplicados en los nuevos
+            const existentes = Array.from(listaNuevos.querySelectorAll('input[type="hidden"]'))
+                                    .map(inp => inp.value.toLowerCase());
+            if (existentes.includes(nombre.toLowerCase())) {
+                nuevoInput.value = '';
+                return;
+            }
+
+            const chip = document.createElement('div');
+            chip.className = 'brew-chip-ingrediente';
+            chip.innerHTML = `
+                <span>${nombre}</span>
+                <input type="hidden" name="IngredientesNuevos" value="${nombre}" />
+                <button type="button" onclick="this.parentElement.remove()">×</button>
+            `;
+            listaNuevos.appendChild(chip);
+            nuevoInput.value = '';
+            nuevoInput.focus();
+        }
+
+        if (btnAgregar && nuevoInput) {
+            btnAgregar.addEventListener('click', (e) => {
+                e.preventDefault();
+                agregarIngredienteNuevo();
+            });
+            nuevoInput.addEventListener('keydown', (e) => {
+                if (e.key === 'Enter') {
+                    e.preventDefault();
+                    agregarIngredienteNuevo();
+                }
+            });
+        }
     </script>
 }
