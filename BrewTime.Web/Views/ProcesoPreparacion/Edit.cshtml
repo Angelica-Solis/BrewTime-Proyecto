@@ -1,0 +1,284 @@
+﻿@model BrewTime.Application.DTOs.ProcesoPreparacionFormDTO
+@using BrewTime.Application.DTOs
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/procesoPreparacion.css" asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = "Editar Proceso de Preparación";
+}
+
+<div class="brew-page">
+
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+
+            <span class="brew-hero-eyebrow">
+                Actualizar Proceso
+            </span>
+
+            <h1 class="brew-titulo">
+                Editar Flujo de <em>Preparación</em>
+            </h1>
+
+            <p class="brew-subtitulo">
+                Modifique las estaciones, orden y tiempos del proceso actual del producto.
+            </p>
+
+            <div class="brew-hero-line">
+                <span></span>
+                <i>Configuración del flujo</i>
+                <span></span>
+            </div>
+
+        </div>
+    </div>
+
+
+    <div class="brew-content">
+
+        <div class="brew-form-card">
+
+            <form asp-action="Edit"
+                  method="post"
+                  class="brew-form">
+
+
+                <input asp-for="ProductoId" type="hidden" />
+
+
+                <div class="brew-form-group">
+
+                    <label class="brew-form-label">
+                        Producto
+                    </label>
+
+
+                    <select class="brew-select"
+                            asp-for="ProductoId"
+                            asp-items="ViewBag.Productos"
+                            disabled>
+                    </select>
+
+
+                    <small class="text-muted">
+                        El producto no puede modificarse al editar el proceso.
+                    </small>
+
+                </div>
+
+
+
+                <hr class="brew-detalle-divider" />
+
+
+                <h4 class="brew-subtitulo-section">
+                    Configuración de estaciones
+                </h4>
+
+
+                <p class="brew-form-desc">
+                    Las estaciones activas actualmente aparecen seleccionadas.
+                    Puede agregar o quitar pasos del proceso.
+                </p>
+
+
+
+                <div class="row brew-estaciones-grid">
+
+
+                    @for (int index = 0; index < Model.Estaciones.Count; index++)
+                    {
+
+                        <div class="col-md-6 mb-3">
+
+                            <div class="brew-estacion-card">
+
+
+                                <input asp-for="Estaciones[index].EstacionId"
+                                       type="hidden" />
+
+
+                                <input asp-for="Estaciones[index].Nombre"
+                                       type="hidden" />
+
+
+
+                                <div class="form-check mb-3">
+
+                                    <input asp-for="Estaciones[index].Seleccionada"
+                                           class="form-check-input brew-checkbox" />
+
+
+                                    <label class="form-check-label fw-bold">
+
+                                        @Model.Estaciones[index].Nombre
+
+                                    </label>
+
+                                </div>
+
+
+
+                                <div class="mb-3">
+
+                                    <label class="brew-form-label">
+                                        Orden del paso
+                                    </label>
+
+
+                                    <input asp-for="Estaciones[index].Orden"
+                                           class="form-control brew-input-number"
+                                           min="1" />
+
+
+                                </div>
+
+
+
+
+                                <div>
+
+                                    <label class="brew-form-label">
+                                        Tiempo estimado (minutos)
+                                    </label>
+
+
+                                    <input asp-for="Estaciones[index].TiempoEstimadoMin"
+                                           class="form-control brew-input-number"
+                                           min="1" />
+
+                                </div>
+
+
+
+                            </div>
+
+                        </div>
+
+                    }
+
+
+                </div>
+
+
+
+                <div class="brew-form-actions">
+
+
+                    <button type="submit"
+                            class="brew-btn-detalle">
+                        Guardar cambios
+                    </button>
+
+
+
+                    <a asp-action="Maintenance"
+                       class="brew-btn-volver">
+                        Cancelar
+                    </a>
+
+
+                </div>
+
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+@section Scripts
+{
+
+    @{
+        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+    }
+
+
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+
+            document.querySelectorAll(".brew-estacion-card")
+            .forEach(card => {
+
+
+                const checkbox =
+                    card.querySelector(".brew-checkbox");
+
+
+                const inputs =
+                    card.querySelectorAll(
+                        ".brew-input-number"
+                    );
+
+
+                function actualizarCampos()
+                {
+
+                    inputs.forEach(input => {
+
+                        input.disabled = !checkbox.checked;
+
+                    });
+
+                }
+
+
+                actualizarCampos();
+
+
+                checkbox.addEventListener(
+                    "change",
+                    actualizarCampos
+                );
+
+
+            });
+
+
+        });
+
+
+    </script>
+
+
+
+    @if (TempData["Success"] != null)
+    {
+        <script>
+
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '@TempData["Success"]',
+                confirmButtonText: 'Aceptar'
+            });
+
+        </script>
+    }
+
+
+
+    @if (TempData["Error"] != null)
+    {
+        <script>
+
+            Swal.fire({
+                icon: 'error',
+                title: 'Error',
+                text: '@TempData["Error"]',
+                confirmButtonText: 'Aceptar'
+            });
+
+        </script>
+    }
+
+}

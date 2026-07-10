@@ -18,5 +18,7 @@ namespace BrewTime.Infraestructure.Repository.Implemetations.Interfaces
         Task CreateRangeAsync(IEnumerable<ProcesoPreparacion> entities);
         Task UpdateAsync(ProcesoPreparacion entity);
 
+        Task DeleteByProductoIdAsync(int productoId);
+
     }
 }

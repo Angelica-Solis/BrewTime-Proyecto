@@ -48,6 +48,7 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                 .OrderBy(x => x.Orden)
                 .ToListAsync();
         }
+        // DE ACCION 
 
         public async Task CreateAsync(ProcesoPreparacion entity)
         {
@@ -70,6 +71,21 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
             }
 
             await _context.SaveChangesAsync();
+        }
+
+
+        public async Task DeleteByProductoIdAsync(int productoId)
+        {
+            var procesos = await _context.Set<ProcesoPreparacion>()
+                .Where(x => x.ProductoId == productoId)
+                .ToListAsync();
+
+            if (procesos.Any())
+            {
+                _context.Set<ProcesoPreparacion>().RemoveRange(procesos);
+
+                await _context.SaveChangesAsync();
+            }
         }
     }
 }

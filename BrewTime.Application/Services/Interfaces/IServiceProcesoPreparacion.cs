@@ -18,5 +18,7 @@ namespace BrewTime.Application.Services.Interfaces
 
         Task CreateAsync(ProcesoPreparacionFormDTO dto);
         Task UpdateAsync(ProcesoPreparacionFormDTO dto);
+        // funciona solo para el edit, no se usa el mismo qeu create porque daña create
+        Task<ProcesoPreparacionFormDTO> FindFormEditByProductoIdAsync(int productoId);
     }
 }
