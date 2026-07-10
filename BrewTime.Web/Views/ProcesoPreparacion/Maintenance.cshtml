@@ -1,84 +1,100 @@
 ﻿@model IEnumerable<BrewTime.Application.DTOs.ProcesoPreparacionListadoDTO>
-
 @{
     ViewData["Title"] = "Mantenimiento de Procesos de Preparación";
 }
+@section Styles {
+    <link rel="stylesheet" href="~/css/procesoPreparacion.css" asp-append-version="true" />
+}
 
-<div class="container mt-4">
+<div class="brew-page">
 
-    <div class="d-flex justify-content-between align-items-center mb-4">
-        <h2>Mantenimiento de Procesos de Preparación</h2>
-
-        <a asp-action="Create" class="btn btn-success">
-            <i class="bi bi-plus-circle"></i> Nuevo Proceso
-        </a>
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">BREW TIME · ADMINISTRACIÓN</p>
+            <h1 class="brew-titulo">Mantenimiento de <em>Procesos de Preparación</em></h1>
+            <p class="brew-subtitulo">Creá, editá y consultá los procesos de preparación de cada producto.</p>
+            <div class="brew-hero-line">
+                <span></span>
+                <i>Gestión de Procesos</i>
+                <span></span>
+            </div>
+        </div>
     </div>
 
-    <table class="table table-bordered table-hover align-middle">
+    <div class="brew-content">
 
-        <thead class="table-dark">
-            <tr>
-                <th>Producto</th>
-                <th class="text-center">Cantidad de Estaciones</th>
-                <th class="text-center" style="width:220px;">Acciones</th>
-            </tr>
-        </thead>
+        <div class="brew-mant-header">
+            <a asp-action="Index" asp-controller="Home" class="brew-btn-volver-mant">
+                ← Volver
+            </a>
+            <a asp-action="Create" class="brew-btn-nuevo">
+                + Nuevo Proceso
+            </a>
+        </div>
 
-        <tbody>
+        <div class="brew-mant-title-row">
+            <span class="brew-mant-dot"></span>
+            <h2 class="brew-mant-title">Procesos registrados</h2>
+            <span class="brew-mant-count">@(Model?.Count() ?? 0)</span>
+        </div>
 
-            @if (Model != null && Model.Any())
-            {
-                @foreach (var item in Model)
-                {
+        <div class="brew-table-container">
+            <table class="brew-table">
+                <thead>
                     <tr>
-
-                        <td>
-                            @item.NombreProducto
-                        </td>
-
-                        <td class="text-center">
-                            @item.CantidadProcesos
-                        </td>
-
-                        <td class="text-center">
-
-                            <a asp-action="Detail"
-                               asp-route-id="@item.ProductoId"
-                               class="btn btn-info btn-sm">
-                                <i class="bi bi-eye"></i>
-                                Detalle
-                            </a>
-
-                            <a asp-action="Edit"
-                               asp-route-id="@item.ProductoId"
-                               class="btn btn-warning btn-sm">
-                                <i class="bi bi-pencil-square"></i>
-                                Editar
-                            </a>
-
-                        </td>
-
+                        <th style="width:60px;">#</th>
+                        <th>Producto</th>
+                        <th class="text-center">Cantidad de Estaciones</th>
+                        <th class="text-center" style="width:260px;">Acciones</th>
                     </tr>
-                }
-            }
-            else
-            {
-                <tr>
-                    <td colspan="3" class="text-center text-muted">
-                        No hay procesos de preparación registrados.
-                    </td>
-                </tr>
-            }
+                </thead>
+                <tbody>
+                    @if (Model != null && Model.Any())
+                    {
+                        int i = 1;
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@i</td>
+                                <td>@item.NombreProducto</td>
+                                <td class="text-center">
+                                    <span class="brew-badge-cantidad">@item.CantidadProcesos</span>
+                                </td>
+                                <td>
+                                    <div class="brew-actions-cell">
+                                        <a asp-action="Detail"
+                                           asp-route-id="@item.ProductoId"
+                                           class="brew-btn-detalle-table">
+                                            <i class="bi bi-eye"></i> Detalle
+                                        </a>
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.ProductoId"
+                                           class="brew-btn-editar-table">
+                                            <i class="bi bi-pencil-square"></i> Editar
+                                        </a>
+                                    </div>
+                                </td>
+                            </tr>
+                            i++;
+                        }
+                    }
+                    else
+                    {
+                        <tr class="brew-empty-row">
+                            <td colspan="4">
+                                No hay procesos de preparación registrados.
+                            </td>
+                        </tr>
+                    }
+                </tbody>
+            </table>
+        </div>
 
-        </tbody>
-
-    </table>
-
+    </div>
 </div>
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-
     @if (TempData["Success"] != null)
     {
         <script>
@@ -90,7 +106,6 @@
             });
         </script>
     }
-
     @if (TempData["Error"] != null)
     {
         <script>
