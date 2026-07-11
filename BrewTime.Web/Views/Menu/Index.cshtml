@@ -23,6 +23,15 @@
             <p class="menu-subtitle">
                 Consulta general de los menús registrados.
             </p>
+
+            @* Botón de mantenimiento; posteriormente puede ocultarse según el rol *@
+            <div class="menu-hero-actions">
+                <a asp-action="Maintenance"
+                   class="menu-btn-admin">
+                    Administrar menús
+                </a>
+            </div>
+
         </div>
     </div>
 

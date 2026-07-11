@@ -13,7 +13,18 @@ namespace BrewTime.Application.Profiles
     {
         public MenuComboProfile()
         {
-            CreateMap<MenuComboDTO, MenuCombo>().ReverseMap();
+            CreateMap<MenuCombo, MenuComboDTO>()
+                .ForMember(
+                    dest => dest.Menu,
+                    opt => opt.Ignore());
+
+            CreateMap<MenuComboDTO, MenuCombo>()
+                .ForMember(
+                    dest => dest.Menu,
+                    opt => opt.Ignore())
+                .ForMember(
+                    dest => dest.Combo,
+                    opt => opt.Ignore());
         }
     }
 }

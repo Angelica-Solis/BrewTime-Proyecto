@@ -13,7 +13,15 @@ namespace BrewTime.Application.Profiles
     {
         public MenuDiaSemanaProfile()
         {
-            CreateMap<MenuDiaSemanaDTO, MenuDiaSemana>().ReverseMap();
+            CreateMap<MenuDiaSemana, MenuDiaSemanaDTO>()
+                .ForMember(
+                    dest => dest.Menu,
+                    opt => opt.Ignore());
+
+            CreateMap<MenuDiaSemanaDTO, MenuDiaSemana>()
+                .ForMember(
+                    dest => dest.Menu,
+                    opt => opt.Ignore());
         }
     }
 }
