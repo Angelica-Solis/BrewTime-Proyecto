@@ -7,13 +7,14 @@
 }
 
 <div class="home-page">
-
+    @* Chatbot  *@
+    <partial name="_Chatbot" />
     @* Hero  *@
     <div class="home-hero">
         <div class="home-hero-inner">
             <p class="home-hero-eyebrow">Café y Bubble · Costa Rica</p>
             <h1 class="home-hero-titulo">
-                Bienvenido a <br> 
+                Bienvenido a <br>
                 <em>Brew Time</em>
             </h1>
             <p class="home-hero-subtitulo">
@@ -173,51 +174,8 @@
 
     <div class="home-divider" style="margin-top:2.5rem;"><hr /></div>
 
-    @section Scripts {
-        <script>
-            (function(){
-                const track = document.getElementById('brew-track');
-                const items = track.querySelectorAll('.home-carrusel-item');
-                const dotsWrap = document.getElementById('brew-dots');
-                const total = items.length;
-                let cur = 0, timer;
-
-                function visible(){ return window.innerWidth <= 768 ? 1 : 3; }
-                function maxIdx(){ return Math.max(0, total - visible()); }
-
-                function render(){
-                    const vw = track.parentElement.offsetWidth;
-                    const gap = 16;
-                    const w = (vw - gap * (visible() - 1)) / visible();
-                    items.forEach(it => { it.style.flex = `0 0 ${w}px`; it.style.minWidth = `${w}px`; });
-                    track.style.transform = `translateX(-${cur * (w + gap)}px)`;
-                    dotsWrap.querySelectorAll('.home-carrusel-dot').forEach((d,i) => d.classList.toggle('active', i === cur));
-                }
-
-                for(let i = 0; i < total; i++){
-                    const d = document.createElement('button');
-                    d.className = 'home-carrusel-dot' + (i === 0 ? ' active' : '');
-                    d.setAttribute('aria-label', 'Ir a slide ' + (i+1));
-                    d.addEventListener('click', () => { cur = Math.min(i, maxIdx()); render(); resetTimer(); });
-                    dotsWrap.appendChild(d);
-                }
-
-                function advance(){ cur = cur >= maxIdx() ? 0 : cur + 1; render(); }
-                function resetTimer(){ clearInterval(timer); timer = setInterval(advance, 3500); }
-
-                document.getElementById('brew-prev').addEventListener('click', () => { cur = Math.max(0, cur-1); render(); resetTimer(); });
-                document.getElementById('brew-next').addEventListener('click', () => { cur = Math.min(maxIdx(), cur+1); render(); resetTimer(); });
-                window.addEventListener('resize', () => { cur = Math.min(cur, maxIdx()); render(); });
-
-                render();
-                resetTimer();
-            })();
-        </script>
-    }
-
     @* Sección Bubble Tea *@
     <div class="section-divider">
-        
     </div>
     <div class="home-divider">
         <div class="home-section-header">
@@ -341,3 +299,6 @@
     </div>
 
 </div>
+
+
+
