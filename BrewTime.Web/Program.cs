@@ -9,6 +9,9 @@ using Serilog.Events;
 using Serilog;
 using System.Text;
 using BrewTime.Web.Middleware;
+using BrewTime.Application.Configuration;
+using Microsoft.Extensions.DependencyInjection;
+using BrewTime.Infraestructure.Configuration;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +39,8 @@ builder.Services.AddTransient<IRepositoryEstacionCocina, RepositoryEstacionCocin
 builder.Services.AddTransient<IRepositoryIngrediente, RepositoryIngrediente>();
 
 
+
+
 //Services 
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
 builder.Services.AddTransient<IServiceCategoria, ServiceCategoria>();
@@ -60,8 +65,15 @@ builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparac
 builder.Services.AddTransient<IServiceUsuario, ServiceUsuario>();
 builder.Services.AddTransient<IServiceIngrediente, ServiceIngrediente>();
 
+// service de open ai
+builder.Services.Configure<OpenRouterSettings>(
+builder.Configuration.GetSection("OpenRouter"));
 
 
+
+builder.Services.AddScoped<IServiceChatBot, ServiceChatBot>();
+
+builder.Services.AddScoped<IOpenRouterService, OpenRouterService>();
 
 //Configurar Automapper 
 builder.Services.AddAutoMapper(config =>

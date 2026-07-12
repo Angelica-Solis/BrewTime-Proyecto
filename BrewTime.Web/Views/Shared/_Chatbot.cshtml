@@ -1,0 +1,78 @@
+﻿
+@*  ChatBot BrewTime  *@
+<div id="brew-chatbot">
+    <!-- Ventana del Chat -->
+    <div id="brew-chat-window">
+        <!-- Encabezado -->
+        <div class="chat-header">
+            <div class="chat-header-info">
+                <div class="chat-avatar">
+                    <i class="bi bi-cup-hot-fill"></i>
+                </div>
+                <div class="chat-title">
+                    <h5>Asistente BrewTime</h5>
+                    <span>
+                        En línea • Café y Bubble
+                    </span>
+                </div>
+            </div>
+            <button type="button"
+                    id="btnCerrarChat"
+                    class="chat-close">
+                <i class="bi bi-x-lg"></i>
+            </button>
+        </div>
+        <!-- Conversacion -->
+        <div class="chat-body">
+            <!-- Mensaje del Bot -->
+            <div class="message bot">
+                <div class="message-avatar">
+                    BT
+                </div>
+                <div class="message-content">
+                    Bienvenido a BrewTime.
+                    ¿En qué puedo ayudarte hoy?
+                </div>
+            </div>
+            <!-- Mensajes -->
+            <div id="chatMessages">
+            </div>
+        </div>
+        <!-- Preguntas rápidas -->
+        <div class="chat-options">
+
+            <button type="button" class="quick-question">
+                Combos
+            </button>
+
+            <button type="button" class="quick-question">
+                Pagos
+            </button>
+
+            <button type="button" class="quick-question">
+                Entrega
+            </button>
+
+            <button type="button" class="quick-question">
+                Pedido
+            </button>
+
+        </div>
+        <!-- Caja para escribir -->
+        <div class="chat-footer">
+            <input type="text"
+                   id="txtPregunta"
+                   placeholder="Escriba su pregunta..." />
+            <button type="button"
+                    id="btnEnviar" onclick="enviarMensaje()">
+                ENVIAR
+            </button>
+        </div>
+    </div>
+    <!-- Burbuja flotante -->
+    <button id="btnAbrirChat"
+            class="chat-float-button">
+        <i class="bi bi-cup-hot-fill"></i>
+    </button>
+</div>
+
