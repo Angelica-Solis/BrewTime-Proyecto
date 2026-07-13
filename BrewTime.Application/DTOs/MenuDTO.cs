@@ -13,30 +13,31 @@ namespace BrewTime.Application.DTOs
         public int MenuId { get; set; }
 
         [Display(Name = "Nombre")]
-        public string Nombre { get; set; } = null!;
+        public string Nombre { get; set; } = string.Empty;
 
         [Display(Name = "Descripción")]
         public string? Descripcion { get; set; }
 
-        [Display(Name = "Hora Inicio")]
+        [Display(Name = "Hora de inicio")]
         public TimeOnly HoraInicio { get; set; }
 
-        [Display(Name = "Hora Fin")]
+        [Display(Name = "Hora final")]
         public TimeOnly HoraFin { get; set; }
 
-        [Display(Name = "Fecha Inicio")]
+        [Display(Name = "Fecha de inicio")]
         public DateOnly? FechaInicio { get; set; }
 
-        [Display(Name = "Fecha Fin")]
+        [Display(Name = "Fecha final")]
         public DateOnly? FechaFin { get; set; }
 
-        [Display(Name = "Fecha Creación")]
+        [Display(Name = "Fecha de creación")]
         public DateTime FechaCreacion { get; set; }
 
+        [Display(Name = "Activo")]
         public bool Activo { get; set; }
 
-        public virtual List<MenuDiaSemanaDTO> MenuDiaSemana { get; set; } = new();
-        public virtual List<MenuProductoDTO> MenuProducto { get; set; } = new();
-        public virtual List<MenuComboDTO> MenuCombo { get; set; } = new();
+        public List<MenuDiaSemanaDTO> MenuDiaSemana { get; set; } = new();
+        public List<MenuProductoDTO> MenuProducto { get; set; } = new();
+        public List<MenuComboDTO> MenuCombo { get; set; } = new();
     }
 }

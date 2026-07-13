@@ -1,0 +1,450 @@
+﻿@model IEnumerable<BrewTime.Application.DTOs.MenuDTO>
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/Menu.css"
+          asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = "Mantenimiento de Menús";
+
+    var menusActivos = Model
+    .Where(x => x.Activo)
+    .OrderByDescending(x => x.FechaInicio)
+    .ThenByDescending(x => x.FechaCreacion)
+    .ToList();
+
+    var menusInactivos = Model
+        .Where(x => !x.Activo)
+        .OrderByDescending(x => x.FechaInicio)
+        .ThenByDescending(x => x.FechaCreacion)
+        .ToList();
+}
+
+<div class="menu-page">
+
+    <div class="menu-hero">
+        <div class="menu-hero-inner">
+
+            <p class="menu-eyebrow">
+                Brew Time · Administración
+            </p>
+
+            <h1 class="menu-title">
+                Mantenimiento de <em>Menús</em>
+            </h1>
+
+            <p class="menu-subtitle">
+                Cree, modifique y controle la disponibilidad de los menús.
+            </p>
+
+            <div class="menu-hero-line">
+                <span></span>
+                <i>Gestión administrativa</i>
+                <span></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="menu-content">
+
+       
+        <div class="menu-maintenance-toolbar">
+
+            <div>
+
+                <h2>Menús registrados</h2>
+
+                <p>
+                   total de  @(menusActivos.Count + menusInactivos.Count) menú(s) registrado(s)
+                </p>
+            </div>
+
+            <div class="menu-maintenance-toolbar-actions">
+
+                
+
+                <a asp-action="Create"
+                   class="menu-btn-create">
+                    <span>＋</span>
+                    Crear menú
+                </a>
+
+            </div>
+
+        </div>
+
+        @if (!menusActivos.Any())
+        {
+            <div class="menu-detail-card">
+                <div class="menu-detail-body">
+                    <p class="menu-empty">
+                        No hay menús activos registrados.
+                    </p>
+                </div>
+            </div>
+        }
+        else
+        {
+            <div class="menu-section-heading">
+
+                <div class="menu-section-title">
+                    <span class="menu-section-dot"></span>
+                    <h2>Menús activos</h2>
+                </div>
+
+                <span class="menu-section-count">
+                    @menusActivos.Count
+                </span>
+
+            </div>
+
+            <div class="menu-maintenance-list">
+
+                @foreach (var item in menusActivos)
+                {
+                    <article class="menu-maintenance-card">
+
+                        <div class="menu-maintenance-stripe"></div>
+
+                        <div class="menu-maintenance-main">
+
+                            <div class="menu-maintenance-info">
+
+                                <div class="menu-maintenance-title-row">
+
+                                    <h3>@item.Nombre</h3>
+
+                                    <span class="menu-badge-active">
+                                        Activo
+                                    </span>
+
+                                </div>
+
+                                <p class="menu-maintenance-description">
+                                    @(string.IsNullOrWhiteSpace(item.Descripcion)
+                                                                ? "Sin descripción registrada."
+                                                                : item.Descripcion)
+                        </p>
+
+                                <div class="menu-maintenance-meta">
+
+                                    <div class="menu-maintenance-meta-item">
+                                        <span>Fechas</span>
+
+                                        <strong>
+                                    @if (item.FechaInicio.HasValue &&
+                                                                        item.FechaFin.HasValue)
+                                            {
+                                                @($"{item.FechaInicio.Value:dd/MM/yyyy} - {item.FechaFin.Value:dd/MM/yyyy}")
+                                            }
+                                            else
+                                            {
+                                                @("No definido")
+                                            }
+                                        </strong>
+                                    </div>
+
+                                    <div class="menu-maintenance-meta-item">
+                                        <span>Horario</span>
+
+                                        <strong>
+                                            @item.HoraInicio.ToString("HH:mm")
+                                            -
+                                            @item.HoraFin.ToString("HH:mm")
+                                        </strong>
+                                    </div>
+
+                                    <div class="menu-maintenance-meta-item">
+                                        <span>Productos</span>
+                                        <strong>@(item.MenuProducto?.Count ?? 0)</strong>
+                                    </div>
+
+                                    <div class="menu-maintenance-meta-item">
+                                        <span>Combos</span>
+                                        <strong>@(item.MenuCombo?.Count ?? 0)</strong>
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="menu-maintenance-actions">
+
+                                <a asp-action="Detail"
+                                   asp-route-id="@item.MenuId"
+                                   class="menu-action-detail">
+                                    Detalle
+                                </a>
+
+                                <a asp-action="Edit"
+                                   asp-route-id="@item.MenuId"
+                                   class="menu-btn-editar">
+                                    <i class="bi bi-pencil"></i>
+                                    Editar
+                                </a>
+
+                                <form asp-action="ToggleActivo"
+                                      asp-route-id="@item.MenuId"
+                                      method="post"
+                                      class="form-toggle-menu">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <button type="submit"
+                                            class="menu-btn-desactivar"
+                                            data-nombre="@item.Nombre"
+                                            data-accion="desactivar">
+
+                                        <i class="bi bi-toggle-on"></i>
+                                        Desactivar
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    </article>
+                }
+
+            </div>
+            <div class="menu-inactive-section">
+
+                <div class="menu-section-heading">
+
+                    <div class="menu-section-title">
+                        <span class="menu-section-dot"></span>
+                        <h2>Menús inactivos</h2>
+                    </div>
+
+                    <span class="menu-section-count">
+                        @menusInactivos.Count
+                    </span>
+
+                </div>
+
+                @if (!menusInactivos.Any())
+                {
+                    <div class="menu-empty-state">
+
+                        <i class="bi bi-journal-text menu-empty-state-icon"></i>
+
+                        <p>No hay menús inactivos.</p>
+
+                    </div>
+                }
+                else
+                {
+                    <div class="menu-maintenance-list">
+
+                        @foreach (var item in menusInactivos)
+                        {
+                            <article class="menu-maintenance-card menu-maintenance-card-inactive">
+
+                                <div class="menu-maintenance-main">
+
+                                    <div class="menu-maintenance-info">
+
+                                        <div class="menu-maintenance-title-row">
+
+                                            <h3>@item.Nombre</h3>
+
+                                            <span class="menu-badge-inactive">
+                                                Inactivo
+                                            </span>
+
+                                        </div>
+
+                                        <p class="menu-maintenance-description">
+                                            @(string.IsNullOrWhiteSpace(item.Descripcion)
+                                                                            ? "Sin descripción registrada."
+                                                                            : item.Descripcion)
+                            </p>
+
+                                        <div class="menu-maintenance-meta">
+
+                                            <div class="menu-maintenance-meta-item">
+                                                <span>Fechas</span>
+
+                                                <strong>
+                                        @if (item.FechaInicio.HasValue &&
+                                                                                item.FechaFin.HasValue)
+                                                    {
+                                                        @($"{item.FechaInicio.Value:dd/MM/yyyy} - {item.FechaFin.Value:dd/MM/yyyy}")
+                                                    }
+                                                    else
+                                                    {
+                                                        @("No definido")
+                                                    }
+                                                </strong>
+                                            </div>
+
+                                            <div class="menu-maintenance-meta-item">
+                                                <span>Horario</span>
+
+                                                <strong>
+                                                    @item.HoraInicio.ToString("HH:mm")
+                                                    -
+                                                    @item.HoraFin.ToString("HH:mm")
+                                                </strong>
+                                            </div>
+
+                                            <div class="menu-maintenance-meta-item">
+                                                <span>Productos</span>
+                                                <strong>@(item.MenuProducto?.Count ?? 0)</strong>
+                                            </div>
+
+                                            <div class="menu-maintenance-meta-item">
+                                                <span>Combos</span>
+                                                <strong>@(item.MenuCombo?.Count ?? 0)</strong>
+                                            </div>
+
+                                        </div>
+
+                                    </div>
+
+                                    <div class="menu-maintenance-actions">
+
+                                        <a asp-action="Detail"
+                                           asp-route-id="@item.MenuId"
+                                           class="menu-action-detail">
+                                            Detalle
+                                        </a>
+
+                                        <a asp-action="Edit"
+                                           asp-route-id="@item.MenuId"
+                                           class="menu-btn-editar">
+                                            <i class="bi bi-pencil"></i>
+                                            Editar
+                                        </a>
+
+                                        <form asp-action="ToggleActivo"
+                                              asp-route-id="@item.MenuId"
+                                              method="post"
+                                              class="form-toggle-menu">
+
+                                            @Html.AntiForgeryToken()
+
+                                            <button type="submit"
+                                                    class="menu-btn-activar"
+                                                    data-nombre="@item.Nombre"
+                                                    data-accion="activar">
+
+                                                <i class="bi bi-toggle-off"></i>
+                                                Activar
+
+                                            </button>
+
+                                        </form>
+
+                                    </div>
+
+                                </div>
+
+                            </article>
+                        }
+
+                    </div>
+                }
+
+            </div>
+        }
+
+    </div>
+
+</div>
+
+@section Scripts {
+
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    <script>
+        document.addEventListener("DOMContentLoaded", function () {
+
+            const mensajeExito =
+                @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                    TempData["MensajeExito"]?.ToString()));
+
+        const mensajeError =
+            @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                TempData["MensajeError"]?.ToString()));
+
+        const tituloMensaje =
+            @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
+                                TempData["TituloMensaje"]?.ToString()));
+
+        if (mensajeExito) {
+            Swal.fire({
+                icon: "success",
+                title: tituloMensaje || "Operación exitosa",
+                text: mensajeExito,
+                confirmButtonText: "Aceptar",
+                confirmButtonColor: "#243318"
+            });
+        }
+
+        if (mensajeError) {
+            Swal.fire({
+                icon: "error",
+                title: tituloMensaje || "Ocurrió un error",
+                text: mensajeError,
+                confirmButtonText: "Aceptar",
+                confirmButtonColor: "#8a3030"
+            });
+        }
+
+        document.querySelectorAll(".form-toggle-menu")
+            .forEach(function (formulario) {
+
+                formulario.addEventListener(
+                    "submit",
+                    function (event) {
+
+                        event.preventDefault();
+
+                        const boton =
+                            formulario.querySelector("button");
+
+                        const nombre =
+                            boton.dataset.nombre;
+
+                        const accion =
+                            boton.dataset.accion;
+
+                        const esDesactivar =
+                            accion === "desactivar";
+
+                        Swal.fire({
+                            icon: "warning",
+                            title: esDesactivar
+                                ? "¿Desactivar menú?"
+                                : "¿Activar menú?",
+                            text:
+                                `¿Está seguro de ${accion} el menú "${nombre}"?`,
+                            showCancelButton: true,
+                            confirmButtonText: esDesactivar
+                                ? "Sí, desactivar"
+                                : "Sí, activar",
+                            cancelButtonText: "Cancelar",
+                            reverseButtons: true,
+                            confirmButtonColor: esDesactivar
+                                ? "#8a3030"
+                                : "#344d24",
+                            cancelButtonColor: "#8a6848"
+                        }).then(function (resultado) {
+
+                            if (resultado.isConfirmed) {
+                                formulario.submit();
+                            }
+
+                        });
+                    });
+            });
+    });
+</script>
+}

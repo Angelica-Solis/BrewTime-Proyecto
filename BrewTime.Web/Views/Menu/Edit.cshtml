@@ -1,0 +1,426 @@
+﻿@model BrewTime.Application.DTOs.MenuFormDTO
+
+@using BrewTime.Application.DTOs
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/Menu.css"
+          asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = "Modificar Menú";
+
+    var productos =
+        ViewBag.ProductosDisponibles as IEnumerable<ProductoDTO>
+        ?? Enumerable.Empty<ProductoDTO>();
+
+    var combos =
+        ViewBag.CombosDisponibles as IEnumerable<ComboDTO>
+        ?? Enumerable.Empty<ComboDTO>();
+}
+
+<div class="menu-page">
+
+    <div class="menu-hero">
+        <div class="menu-hero-inner">
+
+            <p class="menu-eyebrow">
+                Brew Time · Administración
+            </p>
+
+            <h1 class="menu-title">
+                Modificar <em>Menú</em>
+            </h1>
+
+            <p class="menu-subtitle">
+                Actualice la disponibilidad, productos y combos del menú.
+            </p>
+
+            <div class="menu-hero-line">
+                <span></span>
+                <i>Edición de menú</i>
+                <span></span>
+            </div>
+
+        </div>
+    </div>
+
+    <div class="menu-content menu-form-content">
+
+        <a asp-action="Maintenance"
+           class="menu-btn-secondary">
+            ← Volver al mantenimiento
+        </a>
+
+        <div class="menu-form-card">
+
+            <form asp-action="Edit" method="post">
+
+                @Html.AntiForgeryToken()
+
+                <input asp-for="MenuId" type="hidden" />
+
+                <div asp-validation-summary="ModelOnly"
+                     class="menu-validation-summary">
+                </div>
+
+                <div class="menu-form-section">
+
+                    <div class="menu-form-section-header">
+                        <span class="menu-form-step">01</span>
+
+                        <div>
+                            <h2>Información general</h2>
+                            <p>Modifique los datos principales del menú.</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-form-grid">
+
+                        <div class="menu-form-group menu-form-full">
+
+                            <label asp-for="Nombre"
+                                   class="menu-form-label">
+                                Nombre del menú
+                            </label>
+
+                            <input asp-for="Nombre"
+                                   class="menu-form-input" />
+
+                            <span asp-validation-for="Nombre"
+                                  class="menu-form-error">
+                            </span>
+
+                        </div>
+
+                        <div class="menu-form-group menu-form-full">
+
+                            <label asp-for="Descripcion"
+                                   class="menu-form-label">
+                                Descripción
+                            </label>
+
+                            <textarea asp-for="Descripcion"
+                                      class="menu-form-input menu-form-textarea"
+                                      rows="4"></textarea>
+
+                            <span asp-validation-for="Descripcion"
+                                  class="menu-form-error">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                </div>
+
+                <div class="menu-form-section">
+
+                    <div class="menu-form-section-header">
+                        <span class="menu-form-step">02</span>
+
+                        <div>
+                            <h2>Disponibilidad</h2>
+                            <p>Modifique el rango de fechas y horas.</p>
+                        </div>
+                    </div>
+
+                    <div class="menu-form-grid">
+
+                        <div class="menu-form-group">
+
+                            <label asp-for="FechaInicio"
+                                   class="menu-form-label">
+                                Fecha de inicio
+                            </label>
+
+                            <input asp-for="FechaInicio"
+                                   type="date"
+                                   class="menu-form-input" />
+
+                            <span asp-validation-for="FechaInicio"
+                                  class="menu-form-error">
+                            </span>
+
+                        </div>
+
+                        <div class="menu-form-group">
+
+                            <label asp-for="FechaFin"
+                                   class="menu-form-label">
+                                Fecha final
+                            </label>
+
+                            <input asp-for="FechaFin"
+                                   type="date"
+                                   class="menu-form-input" />
+
+                            <span asp-validation-for="FechaFin"
+                                  class="menu-form-error">
+                            </span>
+
+                        </div>
+
+                        <div class="menu-form-group">
+
+                            <label asp-for="HoraInicio"
+                                   class="menu-form-label">
+                                Hora de inicio
+                            </label>
+
+                            <input asp-for="HoraInicio"
+                                   type="time"
+                                   class="menu-form-input" />
+
+                            <span asp-validation-for="HoraInicio"
+                                  class="menu-form-error">
+                            </span>
+
+                        </div>
+
+                        <div class="menu-form-group">
+
+                            <label asp-for="HoraFin"
+                                   class="menu-form-label">
+                                Hora final
+                            </label>
+
+                            <input asp-for="HoraFin"
+                                   type="time"
+                                   class="menu-form-input" />
+
+                            <span asp-validation-for="HoraFin"
+                                  class="menu-form-error">
+                            </span>
+
+                        </div>
+
+                    </div>
+
+                    <label class="menu-status-option">
+
+                        <input asp-for="Activo" />
+
+                        <span class="menu-status-control"></span>
+
+                        <span>
+                            <strong>Menú activo</strong>
+                            <small>
+                                Determine si puede mostrarse como menú disponible.
+                            </small>
+                        </span>
+
+                    </label>
+
+                </div>
+
+                <div class="menu-form-section">
+
+                    <div class="menu-form-section-header">
+                        <span class="menu-form-step">03</span>
+
+                        <div>
+                            <h2>Días disponibles</h2>
+                            <p>
+                                Marque o desmarque los días en que estará disponible el menú.
+                            </p>
+                        </div>
+                    </div>
+
+                    <span asp-validation-for="DiasSeleccionados"
+                          class="menu-form-error">
+                    </span>
+
+                    @{
+                        var diasSemana = new[]
+                        {
+                                        new { Id = (byte)1, Nombre = "Lunes" },
+                                        new { Id = (byte)2, Nombre = "Martes" },
+                                        new { Id = (byte)3, Nombre = "Miércoles" },
+                                        new { Id = (byte)4, Nombre = "Jueves" },
+                                        new { Id = (byte)5, Nombre = "Viernes" },
+                                        new { Id = (byte)6, Nombre = "Sábado" },
+                                        new { Id = (byte)7, Nombre = "Domingo" }
+                                        };
+                    }
+
+                    <div class="menu-days-grid">
+
+                        @foreach (var dia in diasSemana)
+                        {
+                            bool seleccionado =
+                            Model.DiasSeleccionados.Contains(dia.Id);
+
+                            <label class="menu-day-option">
+
+                                <input type="checkbox"
+                                       name="DiasSeleccionados"
+                                       value="@dia.Id"
+                                       checked="@seleccionado" />
+
+                                <span class="menu-day-check">✓</span>
+
+                                <span class="menu-day-name">
+                                    @dia.Nombre
+                                </span>
+
+                            </label>
+                        }
+
+                    </div>
+
+                </div>
+
+                <div class="menu-form-section">
+
+                    <div class="menu-form-section-header">
+                        <span class="menu-form-step">04</span>
+
+                        <div>
+                            <h2>Productos</h2>
+                            <p>Marque o desmarque los productos del menú.</p>
+                        </div>
+                    </div>
+
+                    <span asp-validation-for="ProductosSeleccionados"
+                          class="menu-form-error">
+                    </span>
+
+                    <div class="menu-selection-grid">
+
+                        @foreach (var producto in productos)
+                        {
+                            bool seleccionado =
+                            Model.ProductosSeleccionados.Contains(
+                            producto.ProductoID);
+
+                            <label class="menu-selection-card">
+
+                                <input type="checkbox"
+                                       name="ProductosSeleccionados"
+                                       value="@producto.ProductoID"
+                                       checked="@seleccionado" />
+
+                                <span class="menu-selection-check">✓</span>
+
+                                <span class="menu-selection-info">
+                                    <strong>@producto.Nombre</strong>
+                                    <small>@producto.CategoriaNombre</small>
+                                </span>
+
+                                <span class="menu-selection-price">
+                                    @producto.Precio.ToString(
+                                    "C",
+                                                                new System.Globalization.CultureInfo("es-CR"))
+                            </span>
+
+                        </label>
+                                                }
+
+                    </div>
+
+                </div>
+
+                <div class="menu-form-section">
+
+                    <div class="menu-form-section-header">
+                        <span class="menu-form-step">05</span>
+
+                        <div>
+                            <h2>Combos</h2>
+                            <p>Marque o desmarque los combos del menú.</p>
+                        </div>
+                    </div>
+
+                    <span asp-validation-for="CombosSeleccionados"
+                          class="menu-form-error">
+                    </span>
+
+                    <div class="menu-selection-grid">
+
+                        @foreach (var combo in combos)
+                        {
+                            bool seleccionado =
+                            Model.CombosSeleccionados.Contains(
+                            combo.ComboID);
+
+                            <label class="menu-selection-card">
+
+                                <input type="checkbox"
+                                       name="CombosSeleccionados"
+                                       value="@combo.ComboID"
+                                       checked="@seleccionado" />
+
+                                <span class="menu-selection-check">✓</span>
+
+                                <span class="menu-selection-info">
+                                    <strong>@combo.Nombre</strong>
+
+                                    <small>
+                                        @(string.IsNullOrWhiteSpace(
+                                                                            combo.CategoriaNombre)
+                                                                            ? "Sin categoría"
+                                                                            : combo.CategoriaNombre)
+                                </small>
+                            </span>
+
+                                <span class="menu-selection-price">
+                                    @combo.PrecioEspecial.ToString(
+                                                                "C",
+                                                                new System.Globalization.CultureInfo("es-CR"))
+                            </span>
+
+                        </label>
+                                                }
+
+                    </div>
+
+                </div>
+
+                <div class="menu-form-actions">
+
+                    <a asp-action="Maintenance"
+                       class="menu-btn-cancel">
+                        Cancelar
+                    </a>
+
+                    <button type="submit"
+                            class="menu-btn-save">
+                        Guardar cambios
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (ViewData["MostrarErrorValidacion"] is true)
+    {
+        <script>
+            document.addEventListener(
+                "DOMContentLoaded",
+                function () {
+
+                    Swal.fire({
+                        icon: "error",
+                        title: "No fue posible guardar los cambios",
+                        text:
+                            "Revise los campos señalados en el formulario.",
+                        confirmButtonText: "Revisar formulario",
+                        confirmButtonColor: "#8a3030"
+                    });
+
+                });
+        </script>
+    }
+}
