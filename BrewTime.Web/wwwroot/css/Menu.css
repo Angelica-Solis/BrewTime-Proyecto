@@ -584,14 +584,12 @@
     }
 
 .menu-modern-section-title {
+    display: block;
     font-family: var(--font-display);
     font-size: 1.65rem;
     color: var(--text-titulo);
     text-align: center;
-    border-bottom: none;
-    padding-bottom: 0;
     margin: 0 0 1.4rem;
-    position: relative;
 }
 
     .menu-modern-section-title::after {
@@ -599,14 +597,10 @@
         display: block;
         width: 58px;
         height: 2px;
-        background: linear-gradient(90deg, var(--cafe) 0%, var(--musgo-light) 100%);
         margin: 0.55rem auto 0;
+        background: linear-gradient( 90deg, var(--cafe) 0%, var(--musgo-light) 100% );
         border-radius: 999px;
     }
-
-.menu-category-block {
-    margin-bottom: 2rem;
-}
 
 .menu-modern-category-title {
     font-family: var(--font-body);
