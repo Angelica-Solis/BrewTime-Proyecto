@@ -58,15 +58,50 @@ namespace BrewTime.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProcesoPreparacionFormDTO dto)
         {
+            System.Diagnostics.Debug.WriteLine("========= CREATE =========");
+
+            foreach (var e in dto.Estaciones)
+            {
+                System.Diagnostics.Debug.WriteLine(
+                    $"{e.Nombre} | Sel:{e.Seleccionada} | Orden:{e.Orden} | Tiempo:{e.TiempoEstimadoMin}");
+            }
+
             try
             {
+                // Ignorar validaciones de campos vacios en estaciones no seleccionadas
+                for (int i = 0; i < dto.Estaciones.Count; i++)
+                {
+                    if (!dto.Estaciones[i].Seleccionada)
+                    {
+                        ModelState.Remove($"Estaciones[{i}].Orden");
+                        ModelState.Remove($"Estaciones[{i}].TiempoEstimadoMin");
+                    }
+                }
+
+
                 if (!ModelState.IsValid)
                 {
+                    System.Diagnostics.Debug.WriteLine("ModelState inválido");
+
+                    foreach (var error in ModelState)
+                    {
+                        foreach (var e in error.Value.Errors)
+                        {
+                            System.Diagnostics.Debug.WriteLine(
+                                $"{error.Key}: {e.ErrorMessage}"
+                            );
+                        }
+                    }
+
                     await CargarDatosFormulario(dto);
                     return View(dto);
                 }
 
+                System.Diagnostics.Debug.WriteLine("Llamando al Service...");
+
                 await _serviceProcesoPreparacion.CreateAsync(dto);
+
+                System.Diagnostics.Debug.WriteLine("Service terminó correctamente");
 
                 TempData["Success"] = "Proceso de preparación creado correctamente.";
 
@@ -74,17 +109,22 @@ namespace BrewTime.Web.Controllers
             }
             catch (Exception ex)
             {
-                ViewBag.Error = ex.Message;
+                System.Diagnostics.Debug.WriteLine("Entró al catch");
+                System.Diagnostics.Debug.WriteLine(ex.Message);
+
+                foreach (var error in ex.Message.Split('|'))
+                {
+                    ModelState.AddModelError("", error);
+                }
 
                 await CargarDatosFormulario(dto);
 
                 return View(dto);
             }
-
         }
 
 
-        
+
 
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
@@ -106,17 +146,33 @@ namespace BrewTime.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ProcesoPreparacionFormDTO dto)
         {
-            ModelState.Remove("Estaciones");
-
-            if (!ModelState.IsValid)
+            try
             {
-                await CargarDatosFormularioEdit(dto,true);
+                ModelState.Remove("Estaciones");
+
+                if (!ModelState.IsValid)
+                {
+                    await CargarDatosFormularioEdit(dto, true);
+                    return View(dto);
+                }
+
+                await _serviceProcesoPreparacion.UpdateAsync(dto);
+
+                TempData["Success"] = "Proceso de preparación actualizado correctamente.";
+
+                return RedirectToAction(nameof(Maintenance));
+            }
+            catch (Exception ex)
+            {
+                foreach (var error in ex.Message.Split('|'))
+                {
+                    ModelState.AddModelError("", error);
+                }
+
+                await CargarDatosFormularioEdit(dto, true);
+
                 return View(dto);
             }
-
-            await _serviceProcesoPreparacion.UpdateAsync(dto);
-            TempData["Success"] = "Proceso de preparación actualizado correctamente.";
-            return RedirectToAction(nameof(Maintenance));
         }
 
         // helper

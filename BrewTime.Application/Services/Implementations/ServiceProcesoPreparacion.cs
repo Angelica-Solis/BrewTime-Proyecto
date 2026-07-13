@@ -78,84 +78,112 @@ namespace BrewTime.Application.Services.Implementations
 
         public async Task CreateAsync(ProcesoPreparacionFormDTO dto)
         {
-            // obtener solo las estaciones que seleccione el usuario
+            var errores = new List<string>();
+
+            // Producto
+            if (dto.ProductoId <= 0)
+            {
+                errores.Add("Debe seleccionar un producto.");
+            }
+
             var estacionesSeleccionadas = dto.Estaciones
                 .Where(x => x.Seleccionada)
                 .ToList();
 
-            // se debio seleccionar al menos 1 estacion
+            // Debe existir al menos una estación
             if (!estacionesSeleccionadas.Any())
             {
-                throw new Exception("Debe seleccionar al menos una estación.");
+                errores.Add("Debe seleccionar al menos una estación.");
             }
 
-            // vlida orden
+            // Solo valida las estaciones seleccionadas
             foreach (var estacion in estacionesSeleccionadas)
             {
-                if (estacion.Orden <= 0)
+                if (!estacion.Orden.HasValue || estacion.Orden <= 0)
                 {
-                    throw new Exception($"Debe indicar un orden válido para la estación '{estacion.Nombre}'.");
+                    errores.Add($"Debe indicar el orden para la estación '{estacion.Nombre}'.");
                 }
 
-                if (estacion.TiempoEstimadoMin <= 0)
+                if (!estacion.TiempoEstimadoMin.HasValue || estacion.TiempoEstimadoMin <= 0)
                 {
-                    throw new Exception($"Debe indicar un tiempo válido para la estación '{estacion.Nombre}'.");
+                    errores.Add($"Debe indicar el tiempo estimado para la estación '{estacion.Nombre}'.");
                 }
             }
 
-            // valida que no existan ordenes repetidas
+            // validar ordenes repetidas
             if (estacionesSeleccionadas
                 .GroupBy(x => x.Orden)
-                .Any(g => g.Count() > 1))
+                .Any(g => g.Key > 0 && g.Count() > 1))
             {
-                throw new Exception("No pueden existir dos estaciones con el mismo número de orden.");
+                errores.Add("No pueden existir estaciones con el mismo número de orden.");
             }
 
-            // crea entidades
+            if (errores.Any())
+            {
+                throw new Exception(string.Join("|", errores));
+            }
+
             var procesos = estacionesSeleccionadas
                 .Select(x => new ProcesoPreparacion
                 {
                     ProductoId = dto.ProductoId,
                     EstacionId = x.EstacionId,
-                    Orden = x.Orden,
-                    TiempoEstimadoMin = x.TiempoEstimadoMin
+                    Orden = x.Orden!.Value,
+                    TiempoEstimadoMin = x.TiempoEstimadoMin!.Value
                 })
                 .ToList();
 
             await _repository.CreateRangeAsync(procesos);
         }
 
+
+
+
+
         public async Task UpdateAsync(ProcesoPreparacionFormDTO dto)
         {
-            var estacionesSeleccionadas = dto.Estaciones
+            var errores = new List<string>();
+
+
+
+             var estacionesSeleccionadas = dto.Estaciones
                 .Where(x => x.Seleccionada)
                 .ToList();
 
-
+            // Debe existir al menos una estación
             if (!estacionesSeleccionadas.Any())
             {
-                throw new Exception("Debe seleccionar al menos una estación.");
+                errores.Add("Debe seleccionar al menos una estación.");
             }
 
 
-            if (estacionesSeleccionadas
-                .GroupBy(x => x.Orden)
-                .Any(g => g.Count() > 1))
-            {
-                throw new Exception("No pueden existir dos estaciones con el mismo orden.");
-            }
 
 
             foreach (var estacion in estacionesSeleccionadas)
             {
-                if (estacion.Orden <= 0)
-                    throw new Exception($"Debe indicar el orden de {estacion.Nombre}");
+                if (!estacion.Orden.HasValue || estacion.Orden <= 0)
+                {
+                    errores.Add($"Debe indicar el orden para la estación '{estacion.Nombre}'.");
+                }
 
-                if (estacion.TiempoEstimadoMin <= 0)
-                    throw new Exception($"Debe indicar el tiempo de {estacion.Nombre}");
+                if (!estacion.TiempoEstimadoMin.HasValue || estacion.TiempoEstimadoMin <= 0)
+                {
+                    errores.Add($"Debe indicar el tiempo estimado para la estación '{estacion.Nombre}'.");
+                }
             }
 
+            // validar ordenes repetidas
+            if (estacionesSeleccionadas
+                .GroupBy(x => x.Orden)
+                .Any(g => g.Key > 0 && g.Count() > 1))
+            {
+                errores.Add("No pueden existir estaciones con el mismo número de orden.");
+            }
 
+            if (errores.Any())
+            {
+                throw new Exception(string.Join("|", errores));
+            }
             // borrar proceso actual
             await _repository.DeleteByProductoIdAsync(dto.ProductoId);
 
@@ -166,8 +194,8 @@ namespace BrewTime.Application.Services.Implementations
                 {
                     ProductoId = dto.ProductoId,
                     EstacionId = x.EstacionId,
-                    Orden = x.Orden,
-                    TiempoEstimadoMin = x.TiempoEstimadoMin
+                    Orden = x.Orden!.Value,
+                    TiempoEstimadoMin = x.TiempoEstimadoMin!.Value
                 })
                 .ToList();
 

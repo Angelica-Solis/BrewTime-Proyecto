@@ -83,7 +83,19 @@
                     Puede agregar o quitar pasos del proceso.
                 </p>
 
+                
 
+                <div class="mb-3 text-end">
+
+                    <button type="button"
+                            class="brew-btn-volver"
+                            id="btnLimpiar">
+
+                        Limpiar selección
+
+                    </button>
+
+                </div>
 
                 <div class="row brew-estaciones-grid">
 
@@ -129,7 +141,7 @@
 
 
                                     <input asp-for="Estaciones[index].Orden"
-                                           class="form-control brew-input-number"
+                                           class="form-control brew-input-number orden-input"
                                            min="1" />
 
 
@@ -146,7 +158,7 @@
 
 
                                     <input asp-for="Estaciones[index].TiempoEstimadoMin"
-                                           class="form-control brew-input-number"
+                                           class="form-control brew-input-number tiempo-input"
                                            min="1" />
 
                                 </div>
@@ -195,62 +207,18 @@
 
 @section Scripts
 {
-
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+       
+
+        var errores = ViewData.ModelState.Values
+            .SelectMany(v => v.Errors)
+            .Select(e => e.ErrorMessage)
+            .ToList();
     }
 
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
-    <script>
-
-        document.addEventListener("DOMContentLoaded", function () {
-
-
-            document.querySelectorAll(".brew-estacion-card")
-            .forEach(card => {
-
-
-                const checkbox =
-                    card.querySelector(".brew-checkbox");
-
-
-                const inputs =
-                    card.querySelectorAll(
-                        ".brew-input-number"
-                    );
-
-
-                function actualizarCampos()
-                {
-
-                    inputs.forEach(input => {
-
-                        input.disabled = !checkbox.checked;
-
-                    });
-
-                }
-
-
-                actualizarCampos();
-
-
-                checkbox.addEventListener(
-                    "change",
-                    actualizarCampos
-                );
-
-
-            });
-
-
-        });
-
-
-    </script>
-
-
-
+    @* Éxito *@
     @if (TempData["Success"] != null)
     {
         <script>
@@ -265,20 +233,87 @@
         </script>
     }
 
-
-
-    @if (TempData["Error"] != null)
+    @* Validaciones *@
+    @if (errores.Any())
     {
         <script>
 
-            Swal.fire({
+            let mensaje = "";
+
+            @foreach (var error in errores)
+            {
+                <text>
+                        mensaje += "• @error<br>";
+                </text>
+            }
+
+                Swal.fire({
+                toast: true,
+                position: 'top-end',
                 icon: 'error',
-                title: 'Error',
-                text: '@TempData["Error"]',
-                confirmButtonText: 'Aceptar'
+                title: 'No se pudo guardar',
+                html: mensaje,
+                showConfirmButton: false,
+                timer: 3000
             });
+
 
         </script>
     }
 
+    <script>
+
+        document.addEventListener("DOMContentLoaded", function () {
+
+            // Activar / desactivar campos
+            document.querySelectorAll(".brew-estacion-card").forEach(card => {
+
+                const checkbox = card.querySelector(".brew-checkbox");
+                const orden = card.querySelector(".orden-input");
+                const tiempo = card.querySelector(".tiempo-input");
+
+                function actualizarCampos() {
+
+                    orden.disabled = !checkbox.checked;
+                    tiempo.disabled = !checkbox.checked;
+
+                    if (!checkbox.checked) {
+                        orden.value = "";
+                        tiempo.value = "";
+                    }
+
+                }
+
+                actualizarCampos();
+
+                checkbox.addEventListener("change", actualizarCampos);
+
+            });
+
+            // Botón limpiar
+            document.getElementById("btnLimpiar")
+                .addEventListener("click", function () {
+
+                    document.querySelectorAll(".brew-estacion-card")
+                        .forEach(card => {
+
+                            const checkbox = card.querySelector(".brew-checkbox");
+                            const orden = card.querySelector(".orden-input");
+                            const tiempo = card.querySelector(".tiempo-input");
+
+                            checkbox.checked = false;
+
+                            orden.value = "";
+                            tiempo.value = "";
+
+                            orden.disabled = true;
+                            tiempo.disabled = true;
+
+                        });
+
+                });
+
+        });
+
+    </script>
 }

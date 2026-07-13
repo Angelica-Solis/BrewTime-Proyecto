@@ -40,7 +40,7 @@
                 <div asp-validation-summary="ModelOnly" class="brew-error"></div>
 
                 <div class="brew-form-group">
-                    <label asp-for="ProductoId" class="brew-form-label"></label>
+                    <label class="brew-form-label">Producto</label>
 
                     <select asp-for="ProductoId"
                             asp-items="ViewBag.Productos"
@@ -53,7 +53,17 @@
                     <span asp-validation-for="ProductoId"
                           class="brew-error"></span>
                 </div>
+                <div class="mb-3 text-end">
 
+                    <button type="button"
+                            class="brew-btn-volver"
+                            id="btnLimpiar">
+
+                        Limpiar selección
+
+                    </button>
+
+                </div>
                 <hr class="brew-detalle-divider" />
 
                 <h4 class="brew-subtitulo-section">
@@ -98,10 +108,9 @@
                                     <input asp-for="Estaciones[index].Orden"
                                            class="form-control brew-input-number orden-input"
                                            min="1"
-                                           disabled />
+                                           readonly />
 
-                                    <span asp-validation-for="Estaciones[index].Orden"
-                                          class="brew-error"></span>
+                                 
 
                                 </div>
 
@@ -114,10 +123,7 @@
                                     <input asp-for="Estaciones[index].TiempoEstimadoMin"
                                            class="form-control brew-input-number tiempo-input"
                                            min="1"
-                                           disabled />
-
-                                    <span asp-validation-for="Estaciones[index].TiempoEstimadoMin"
-                                          class="brew-error"></span>
+                                           readonly />
 
                                 </div>
 
@@ -132,7 +138,7 @@
 
                     <button type="submit"
                             class="brew-btn-detalle"
-                            id="btnGuardar">
+                            >
                         Guardar
                     </button>
 
@@ -154,35 +160,63 @@
 @section Scripts
 {
     @{
-        await Html.RenderPartialAsync("_ValidationScriptsPartial");
+     
+
+        var errores = ViewData.ModelState.Values
+            .SelectMany(v => v.Errors)
+            .Select(e => e.ErrorMessage)
+            .ToList();
+    }
+
+    <!-- SweetAlert2 -->
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @* Mensaje de éxito *@
+    @if (TempData["Success"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'success',
+                title: 'Éxito',
+                text: '@TempData["Success"]',
+                confirmButtonText: 'Aceptar'
+            });
+        </script>
+    }
+
+    @* Mensajes de error *@
+    @if (errores.Any())
+    {
+        <script>
+
+            let mensaje = "";
+
+            @foreach (var error in errores)
+            {
+                <text>
+                        mensaje += "• @error<br>";
+                </text>
+            }
+
+                Swal.fire({
+                toast: true,
+                position: 'top-end',
+                icon: 'error',
+                title: 'No se pudo guardar',
+                html: mensaje,
+                showConfirmButton: false,
+                timer: 3000
+            });
+
+
+
+
+        </script>
     }
 
     <script>
-        @if (TempData["Success"] != null)
-        {
-            <text>
-                    Swal.fire({
-                        icon: 'success',
-                        title: 'Éxito',
-                        text: '@TempData["Success"]'
-                    });
-            </text>
-        }
 
-        @if (ViewBag.Error != null)
-        {
-                <script>
-                    Swal.fire({
-                        icon: 'error',
-                        title: 'Error',
-                        text: '@ViewBag.Error',
-                        confirmButtonText: 'Aceptar'
-                    });
-        </script>
-        }
-    </script>
-    <script>
-        document.addEventListener("DOMContentLoaded", function () {
+             document.addEventListener("DOMContentLoaded", function () {
 
             document.querySelectorAll(".brew-estacion-card").forEach(card => {
 
@@ -192,13 +226,14 @@
 
                 function actualizar() {
 
-                    orden.disabled = !check.checked;
-                    tiempo.disabled = !check.checked;
+                    orden.readOnly = !check.checked;
+                    tiempo.readOnly = !check.checked;
 
                     if (!check.checked) {
                         orden.value = "";
                         tiempo.value = "";
                     }
+
                 }
 
                 actualizar();
@@ -208,12 +243,30 @@
             });
 
         });
-    </script>
-    <script>document.getElementById("btnGuardar").addEventListener("click", function () {
 
-    this.disabled = true;
+          // Botón limpiar
+            document.getElementById("btnLimpiar")
+                .addEventListener("click", function () {
 
-    this.form.submit();
+                    document.querySelectorAll(".brew-estacion-card")
+                        .forEach(card => {
+
+                            const checkbox = card.querySelector(".brew-checkbox");
+                            const orden = card.querySelector(".orden-input");
+                            const tiempo = card.querySelector(".tiempo-input");
+
+                            checkbox.checked = false;
+
+                            orden.value = "";
+                            tiempo.value = "";
+
+                            orden.disabled = true;
+                            tiempo.disabled = true;
+
+                        });
+
+                });
+
     </script>
-});
+
 }

@@ -15,9 +15,10 @@ namespace BrewTime.Application.DTOs
 
         public bool Seleccionada { get; set; }
 
-        public int Orden { get; set; }
+        public int? Orden { get; set; }
 
-        public int TiempoEstimadoMin { get; set; }
-
+        public int? TiempoEstimadoMin { get; set; }
     }
+
 }
+
