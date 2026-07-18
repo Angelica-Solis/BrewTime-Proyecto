@@ -7,6 +7,7 @@
 
 @{
     ViewData["Title"] = "Crear Proceso de Preparación";
+   
 }
 
 <div class="brew-page">
@@ -44,7 +45,8 @@
 
                     <select asp-for="ProductoId"
                             asp-items="ViewBag.Productos"
-                            class="brew-select">
+                            class="brew-select"
+                            id="productoSelect">
 
                         <option value="">-- Seleccione un producto --</option>
 
@@ -78,6 +80,8 @@
 
                     @for (int index = 0; index < Model.Estaciones.Count; index++)
                     {
+                        var esCaja = Model.Estaciones[index].Nombre == "Caja";
+                        var esEmplatado = Model.Estaciones[index].Nombre == "Emplatado";
                         <div class="col-md-6 mb-3">
 
                             <div class="brew-estacion-card">
@@ -91,7 +95,9 @@
                                 <div class="form-check mb-2">
 
                                     <input asp-for="Estaciones[index].Seleccionada"
-                                           class="form-check-input brew-checkbox" />
+                                           class="form-check-input brew-checkbox"
+                                           data-caja="@esCaja"
+                                           data-emplatado="@esEmplatado" />
 
                                     <label class="form-check-label fw-bold">
                                         @Model.Estaciones[index].Nombre
@@ -166,8 +172,12 @@
             .SelectMany(v => v.Errors)
             .Select(e => e.ErrorMessage)
             .ToList();
-    }
 
+
+    }
+    
+     
+    
     <!-- SweetAlert2 -->
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
@@ -216,29 +226,81 @@
 
     <script>
 
-             document.addEventListener("DOMContentLoaded", function () {
+            document.addEventListener("DOMContentLoaded", function () {
 
-            document.querySelectorAll(".brew-estacion-card").forEach(card => {
+            const producto = document.getElementById("productoSelect");
+
+            function esComida() {
+
+                return producto.selectedOptions[0].text.includes("Repostería")
+                    || producto.selectedOptions[0].text.includes("Combo");
+
+            }
+
+            function actualizar(card) {
 
                 const check = card.querySelector(".brew-checkbox");
                 const orden = card.querySelector(".orden-input");
                 const tiempo = card.querySelector(".tiempo-input");
 
-                function actualizar() {
+                const esCaja = check.dataset.caja === "True";
+                const esEmplatado = check.dataset.emplatado === "True";
 
+                
+               // Solo Caja y Emplatado tienen el orden bloqueado
+                if (esCaja || esEmplatado) {
+                    orden.readOnly = true;
+                } else {
                     orden.readOnly = !check.checked;
-                    tiempo.readOnly = !check.checked;
+                }
 
-                    if (!check.checked) {
-                        orden.value = "";
-                        tiempo.value = "";
+                // El tiempo solo se habilita si la estación está seleccionada
+                tiempo.readOnly = !check.checked;
+
+                if (esComida()) {
+
+                    if (esCaja || esEmplatado) {
+
+                        check.checked = true;
+                        check.disabled = true;
+
+                    } else {
+
+                        check.disabled = false;
+
                     }
+
+                } else {
+
+                    check.disabled = false;
 
                 }
 
-                actualizar();
+                if (!check.checked) {
 
-                check.addEventListener("change", actualizar);
+                    orden.value = "";
+                    tiempo.value = "";
+
+                }
+
+            }
+
+            document.querySelectorAll(".brew-estacion-card")
+                .forEach(card => {
+
+                    actualizar(card);
+
+                    card.querySelector(".brew-checkbox")
+                        .addEventListener("change", function () {
+                            actualizar(card);
+                        });
+
+                });
+
+            producto.addEventListener("change", function () {
+
+                document.querySelectorAll(".brew-estacion-card")
+                    .forEach(card => actualizar(card));
 
             });
 

@@ -60,6 +60,14 @@ namespace BrewTime.Web.Controllers
         {
             System.Diagnostics.Debug.WriteLine("========= CREATE =========");
 
+            var caja = dto.Estaciones.FirstOrDefault(x => x.Nombre == "Caja");
+            var emplatado = dto.Estaciones.FirstOrDefault(x => x.Nombre == "Emplatado");
+
+            if (caja != null)
+                caja.Orden = 1;
+
+            if (emplatado != null)
+                emplatado.Orden = 999;
             foreach (var e in dto.Estaciones)
             {
                 System.Diagnostics.Debug.WriteLine(
