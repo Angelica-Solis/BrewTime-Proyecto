@@ -75,6 +75,13 @@ namespace BrewTime.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductoFormDTO dto)
         {
+            // Validar nombre duplicado antes de revisar ModelState
+            if (await _serviceProducto.ExisteNombreAsync(dto.Nombre))
+            {
+                ModelState.AddModelError(nameof(dto.Nombre),
+                    "Ya existe un producto con ese nombre. Por favor usá uno diferente.");
+            }
+
             if (!ModelState.IsValid)
             {
                 await CargarCategoriasAsync();
@@ -98,6 +105,13 @@ namespace BrewTime.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ProductoFormDTO dto)
         {
+            // Validar nombre duplicado excluyendo el propio producto que se edita
+            if (await _serviceProducto.ExisteNombreAsync(dto.Nombre, dto.ProductoID))
+            {
+                ModelState.AddModelError(nameof(dto.Nombre),
+                    "Ya existe un producto con ese nombre. Por favor usá uno diferente.");
+            }
+
             if (!ModelState.IsValid)
             {
                 await CargarCategoriasAsync();
