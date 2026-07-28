@@ -1,6 +1,6 @@
 ﻿@model BrewTime.Application.DTOs.MenuFormDTO
-
-@using BrewTime.Application.DTOs
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet"
@@ -9,7 +9,7 @@
 }
 
 @{
-    ViewData["Title"] = "Crear Menú";
+    ViewData["Title"] = SharedLocalizer["CreateMenuTitle"];
 
     var productos =
         ViewBag.ProductosDisponibles as IEnumerable<ProductoDTO>
@@ -26,20 +26,20 @@
         <div class="menu-hero-inner">
 
             <p class="menu-eyebrow">
-                Brew Time · Administración
+                @SharedLocalizer["BrewTimeAdmin"]
             </p>
 
             <h1 class="menu-title">
-                Nuevo <em>Menú</em>
+                @Html.Raw(SharedLocalizer["NewMenuHeading"])
             </h1>
 
             <p class="menu-subtitle">
-                Defina la disponibilidad y los elementos que conformarán el menú.
+                @SharedLocalizer["MenuSubtitle"]
             </p>
 
             <div class="menu-hero-line">
                 <span></span>
-                <i>Creación de menú</i>
+                <i>@SharedLocalizer["MenuCreation"]</i>
                 <span></span>
             </div>
 
@@ -50,7 +50,7 @@
 
         <a asp-action="Maintenance"
            class="menu-btn-secondary">
-            ← Volver al mantenimiento
+            @SharedLocalizer["BackToMaintenance"]
         </a>
 
         <div class="menu-form-card">
@@ -69,8 +69,8 @@
                         <span class="menu-form-step">01</span>
 
                         <div>
-                            <h2>Información general</h2>
-                            <p>Datos principales del menú.</p>
+                            <h2>@SharedLocalizer["GeneralInformation"]</h2>
+                            <p>@SharedLocalizer["GeneralInfoDesc"]</p>
                         </div>
                     </div>
 
@@ -80,12 +80,12 @@
 
                             <label asp-for="Nombre"
                                    class="menu-form-label">
-                                Nombre del menú
+                                @SharedLocalizer["MenuName"]
                             </label>
 
                             <input asp-for="Nombre"
                                    class="menu-form-input"
-                                   placeholder="Ej: Menú de desayuno" />
+                                   placeholder="@SharedLocalizer["MenuNamePlaceholder"]" />
 
                             <span asp-validation-for="Nombre"
                                   class="menu-form-error">
@@ -97,13 +97,13 @@
 
                             <label asp-for="Descripcion"
                                    class="menu-form-label">
-                                Descripción
+                                @SharedLocalizer["Description"]
                             </label>
 
                             <textarea asp-for="Descripcion"
                                       class="menu-form-input menu-form-textarea"
                                       rows="4"
-                                      placeholder="Describa brevemente el menú..."></textarea>
+                                      placeholder="@SharedLocalizer["DescriptionPlaceholder"]"></textarea>
 
                             <span asp-validation-for="Descripcion"
                                   class="menu-form-error">
@@ -121,8 +121,8 @@
                         <span class="menu-form-step">02</span>
 
                         <div>
-                            <h2>Disponibilidad</h2>
-                            <p>Establezca el rango de fechas y horas.</p>
+                            <h2>@SharedLocalizer["Availability"]</h2>
+                            <p>@SharedLocalizer["AvailabilityDesc"]</p>
                         </div>
                     </div>
 
@@ -132,7 +132,7 @@
 
                             <label asp-for="FechaInicio"
                                    class="menu-form-label">
-                                Fecha de inicio
+                                @SharedLocalizer["StartDate"]
                             </label>
 
                             <input asp-for="FechaInicio"
@@ -149,7 +149,7 @@
 
                             <label asp-for="FechaFin"
                                    class="menu-form-label">
-                                Fecha final
+                                @SharedLocalizer["EndDate"]
                             </label>
 
                             <input asp-for="FechaFin"
@@ -166,7 +166,7 @@
 
                             <label asp-for="HoraInicio"
                                    class="menu-form-label">
-                                Hora de inicio
+                                @SharedLocalizer["StartTime"]
                             </label>
 
                             <input asp-for="HoraInicio"
@@ -183,7 +183,7 @@
 
                             <label asp-for="HoraFin"
                                    class="menu-form-label">
-                                Hora final
+                                @SharedLocalizer["EndTime"]
                             </label>
 
                             <input asp-for="HoraFin"
@@ -205,9 +205,9 @@
                         <span class="menu-status-control"></span>
 
                         <span>
-                            <strong>Menú activo</strong>
+                            <strong>@SharedLocalizer["ActiveMenu"]</strong>
                             <small>
-                                El menú podrá participar en la selección del menú disponible.
+                                @SharedLocalizer["ActiveMenuDesc"]
                             </small>
                         </span>
 
@@ -221,9 +221,9 @@
                         <span class="menu-form-step">03</span>
 
                         <div>
-                            <h2>Días disponibles</h2>
+                            <h2>@SharedLocalizer["AvailableDays"]</h2>
                             <p>
-                                Seleccione los días de la semana en que estará disponible el menú.
+                                @SharedLocalizer["AvailableDaysDesc"]
                             </p>
                         </div>
                     </div>
@@ -235,22 +235,21 @@
                     @{
                         var diasSemana = new[]
                         {
-                                        new { Id = (byte)1, Nombre = "Lunes" },
-                                        new { Id = (byte)2, Nombre = "Martes" },
-                                        new { Id = (byte)3, Nombre = "Miércoles" },
-                                        new { Id = (byte)4, Nombre = "Jueves" },
-                                        new { Id = (byte)5, Nombre = "Viernes" },
-                                        new { Id = (byte)6, Nombre = "Sábado" },
-                                        new { Id = (byte)7, Nombre = "Domingo" }
-                                        };
+                    new { Id = (byte)1, Nombre = SharedLocalizer["Monday"].Value },
+                    new { Id = (byte)2, Nombre = SharedLocalizer["Tuesday"].Value },
+                    new { Id = (byte)3, Nombre = SharedLocalizer["Wednesday"].Value },
+                    new { Id = (byte)4, Nombre = SharedLocalizer["Thursday"].Value },
+                    new { Id = (byte)5, Nombre = SharedLocalizer["Friday"].Value },
+                    new { Id = (byte)6, Nombre = SharedLocalizer["Saturday"].Value },
+                    new { Id = (byte)7, Nombre = SharedLocalizer["Sunday"].Value }
+                    };
                     }
 
                     <div class="menu-days-grid">
 
                         @foreach (var dia in diasSemana)
                         {
-                            bool seleccionado =
-                            Model.DiasSeleccionados.Contains(dia.Id);
+                            bool seleccionado = Model.DiasSeleccionados.Contains(dia.Id);
 
                             <label class="menu-day-option">
 
@@ -278,9 +277,9 @@
                         <span class="menu-form-step">04</span>
 
                         <div>
-                            <h2>Productos</h2>
+                            <h2>@SharedLocalizer["Products"]</h2>
                             <p>
-                                Seleccione los productos que formarán parte del menú.
+                                @SharedLocalizer["ProductsDesc"]
                             </p>
                         </div>
                     </div>
@@ -292,7 +291,7 @@
                     @if (!productos.Any())
                     {
                         <div class="menu-selection-empty">
-                            No hay productos activos disponibles.
+                            @SharedLocalizer["NoProductsAvailable"]
                         </div>
                     }
                     else
@@ -301,9 +300,7 @@
 
                             @foreach (var producto in productos)
                             {
-                                bool seleccionado =
-                                Model.ProductosSeleccionados.Contains(
-                                producto.ProductoID);
+                                bool seleccionado = Model.ProductosSeleccionados.Contains(producto.ProductoID);
 
                                 <label class="menu-selection-card">
 
@@ -312,30 +309,19 @@
                                            value="@producto.ProductoID"
                                            checked="@seleccionado" />
 
-                                    <span class="menu-selection-check">
-                                        ✓
-                                    </span>
+                                    <span class="menu-selection-check">✓</span>
 
                                     <span class="menu-selection-info">
-
-                                        <strong>
-                                            @producto.Nombre
-                                        </strong>
-
-                                        <small>
-                                            @producto.CategoriaNombre
-                                        </small>
-
+                                        <strong>@producto.Nombre</strong>
+                                        <small>@producto.CategoriaNombre</small>
                                     </span>
 
                                     <span class="menu-selection-price">
-                                        @producto.Precio.ToString(
-                                        "C",
-                                                                new System.Globalization.CultureInfo("es-CR"))
-                            </span>
+                                        @producto.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))
+                                    </span>
 
-                        </label>
-                                                }
+                                </label>
+                            }
 
                         </div>
                     }
@@ -348,9 +334,9 @@
                         <span class="menu-form-step">05</span>
 
                         <div>
-                            <h2>Combos</h2>
+                            <h2>@SharedLocalizer["Combos"]</h2>
                             <p>
-                                Seleccione los combos que formarán parte del menú.
+                                @SharedLocalizer["CombosDesc"]
                             </p>
                         </div>
                     </div>
@@ -362,7 +348,7 @@
                     @if (!combos.Any())
                     {
                         <div class="menu-selection-empty">
-                            No hay combos activos disponibles.
+                            @SharedLocalizer["NoCombosAvailable"]
                         </div>
                     }
                     else
@@ -371,9 +357,7 @@
 
                             @foreach (var combo in combos)
                             {
-                                bool seleccionado =
-                                Model.CombosSeleccionados.Contains(
-                                combo.ComboID);
+                                bool seleccionado = Model.CombosSeleccionados.Contains(combo.ComboID);
 
                                 <label class="menu-selection-card">
 
@@ -382,33 +366,23 @@
                                            value="@combo.ComboID"
                                            checked="@seleccionado" />
 
-                                    <span class="menu-selection-check">
-                                        ✓
-                                    </span>
+                                    <span class="menu-selection-check">✓</span>
 
                                     <span class="menu-selection-info">
-
-                                        <strong>
-                                            @combo.Nombre
-                                        </strong>
-
+                                        <strong>@combo.Nombre</strong>
                                         <small>
-                                            @(string.IsNullOrWhiteSpace(
-                                                                                combo.CategoriaNombre)
-                                                                                ? "Sin categoría"
-                                                                                : combo.CategoriaNombre)
-                                </small>
-
+                                            @(string.IsNullOrWhiteSpace(combo.CategoriaNombre)
+                                                ? SharedLocalizer["Uncategorized"].Value
+                                                : combo.CategoriaNombre)
+                                        </small>
                                     </span>
 
                                     <span class="menu-selection-price">
-                                        @combo.PrecioEspecial.ToString(
-                                                                "C",
-                                                                new System.Globalization.CultureInfo("es-CR"))
-                            </span>
+                                        @combo.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))
+                                    </span>
 
-                        </label>
-                                                }
+                                </label>
+                            }
 
                         </div>
                     }
@@ -419,12 +393,12 @@
 
                     <a asp-action="Maintenance"
                        class="menu-btn-cancel">
-                        Cancelar
+                        @SharedLocalizer["Cancel"]
                     </a>
 
                     <button type="submit"
                             class="menu-btn-save">
-                        Guardar menú
+                        @SharedLocalizer["SaveMenu"]
                     </button>
 
                 </div>
@@ -439,26 +413,20 @@
 
 @section Scripts {
     <partial name="_ValidationScriptsPartial" />
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @if (ViewData["MostrarErrorValidacion"] is true)
     {
         <script>
-            document.addEventListener(
-                "DOMContentLoaded",
-                function () {
-
-                    Swal.fire({
-                        icon: "error",
-                        title: "Revise los datos ingresados",
-                        text:
-                            "Algunos campos están vacíos o contienen información inválida.",
-                        confirmButtonText: "Revisar formulario",
-                        confirmButtonColor: "#8a3030"
-                    });
-
+            document.addEventListener("DOMContentLoaded", function () {
+                Swal.fire({
+                    icon: "error",
+                    title: "@SharedLocalizer["SwalTitle"]",
+                    text: "@SharedLocalizer["SwalText"]",
+                    confirmButtonText: "@SharedLocalizer["SwalButton"]",
+                    confirmButtonColor: "#8a3030"
                 });
+            });
         </script>
     }
 }

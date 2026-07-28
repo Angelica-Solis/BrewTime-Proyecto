@@ -1,8 +1,11 @@
 @model IEnumerable<BrewTime.Application.DTOs.ProductoDTO>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
 @{
     var inactivos = ViewBag.Inactivos as IEnumerable<BrewTime.Application.DTOs.ProductoDTO>
                    ?? Enumerable.Empty<BrewTime.Application.DTOs.ProductoDTO>();
-    ViewData["Title"] = "Mantenimiento de Productos";
+    ViewData["Title"] = SharedLocalizer["MantenimientoTitulo"].Value;
 }
 
 @section Styles {
@@ -10,14 +13,14 @@
 }
 
 <div class="brew-page">
-  
+
     <div class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Brew Time · Administración</p>
-            <h1 class="brew-titulo">Mantenimiento de <em>Productos</em></h1>
-            <p class="brew-subtitulo">Creá, editá, activá o desactivá productos del catálogo.</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["AdminEyebrow"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["MantenimientoTxt"] <em>@SharedLocalizer["ProductosEm"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["DescMantenimiento"]</p>
             <div class="brew-hero-line">
-                <span></span><i>Gestión de catálogo</i><span></span>
+                <span></span><i>@SharedLocalizer["GestionCatalogoLabel"]</i><span></span>
             </div>
         </div>
     </div>
@@ -25,20 +28,20 @@
     <div class="brew-content">
 
         <div class="brew-maint-toolbar">
-            <a asp-action="Index" class="brew-btn-volver">← Volver al catálogo</a>
-            <a asp-action="Create" class="brew-btn-nuevo">+ Nuevo producto</a>
+            <a asp-action="Index" class="brew-btn-volver">← @SharedLocalizer["VolverCatalogoBtn"]</a>
+            <a asp-action="Create" class="brew-btn-nuevo">+ @SharedLocalizer["NuevoProductoBtn"]</a>
         </div>
 
         @* ── PRODUCTOS ACTIVOS ── *@
         <h2 class="brew-section-title">
             <span class="brew-section-dot activo"></span>
-            Productos activos
+            @SharedLocalizer["ProductosActivosTitle"]
             <span class="brew-section-count">@Model.Count()</span>
         </h2>
 
         @if (!Model.Any())
         {
-            <div class="brew-empty"><span class="brew-empty-icon">☕</span><p>No hay productos activos.</p></div>
+            <div class="brew-empty"><span class="brew-empty-icon">☕</span><p>@SharedLocalizer["NoProductosActivos"]</p></div>
         }
         else
         {
@@ -47,10 +50,10 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nombre</th>
-                            <th>Categoría</th>
-                            <th>Precio</th>
-                            <th class="text-center">Acciones</th>
+                            <th>@SharedLocalizer["NombreLabel"]</th>
+                            <th>@SharedLocalizer["CategoriaLabel"]</th>
+                            <th>@SharedLocalizer["PrecioLabel"]</th>
+                            <th class="text-center">@SharedLocalizer["AccionesCol"]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -64,16 +67,16 @@
                                 <td class="brew-maint-actions">
                                     <a asp-action="Edit" asp-route-id="@item.ProductoID"
                                        class="brew-btn-editar">
-                                        <i class="bi bi-pencil"></i> Editar
+                                        <i class="bi bi-pencil"></i> @SharedLocalizer["EditarBtn"]
                                     </a>
                                     <form asp-action="ToggleActivo" method="post" style="display:inline">
                                         <input type="hidden" name="id" value="@item.ProductoID" />
                                         <button type="button" class="brew-btn-desactivar btn-toggle-activo" data-nombre="@item.Nombre" data-accion="desactivar">
-                                            <i class="bi bi-toggle-on"></i> Desactivar
+                                            <i class="bi bi-toggle-on"></i> @SharedLocalizer["DesactivarBtn"]
                                         </button>
                                     </form>
                                     <a asp-action="Detail" asp-route-id="@item.ProductoID" class="brew-btn-editar">
-                                        <i class="bi bi-eye"></i> Ver detalle
+                                        <i class="bi bi-eye"></i> @SharedLocalizer["VerDetalleBtn"]
                                     </a>
                                 </td>
                             </tr>
@@ -86,13 +89,13 @@
         @* ── PRODUCTOS INACTIVOS ── *@
         <h2 class="brew-section-title" style="margin-top:2.5rem;">
             <span class="brew-section-dot inactivo"></span>
-            Productos inactivos
+            @SharedLocalizer["ProductosInactivosTitle"]
             <span class="brew-section-count">@inactivos.Count()</span>
         </h2>
 
         @if (!inactivos.Any())
         {
-            <div class="brew-empty"><span class="brew-empty-icon">✓</span><p>No hay productos inactivos.</p></div>
+            <div class="brew-empty"><span class="brew-empty-icon">✓</span><p>@SharedLocalizer["NoProductosInactivos"]</p></div>
         }
         else
         {
@@ -101,10 +104,10 @@
                     <thead>
                         <tr>
                             <th>#</th>
-                            <th>Nombre</th>
-                            <th>Categoría</th>
-                            <th>Precio</th>
-                            <th class="text-center">Acciones</th>
+                            <th>@SharedLocalizer["NombreLabel"]</th>
+                            <th>@SharedLocalizer["CategoriaLabel"]</th>
+                            <th>@SharedLocalizer["PrecioLabel"]</th>
+                            <th class="text-center">@SharedLocalizer["AccionesCol"]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -119,7 +122,7 @@
                                     <form asp-action="ToggleActivo" method="post" style="display:inline">
                                         <input type="hidden" name="id" value="@item.ProductoID" />
                                         <button type="button" class="brew-btn-activar btn-toggle-activo" data-nombre="@item.Nombre" data-accion="activar">
-                                            <i class="bi bi-toggle-off"></i> Activar
+                                            <i class="bi bi-toggle-off"></i> @SharedLocalizer["ActivarBtn"]
                                         </button>
                                     </form>
                                 </td>
@@ -144,17 +147,18 @@
                 const accion = this.getAttribute('data-accion');
                 const esDesactivar = accion === 'desactivar';
 
+                const textDesactivar = '@SharedLocalizer["SwalTextDesactivar"].Value'.replace('{0}', nombre);
+                const textActivar = '@SharedLocalizer["SwalTextActivar"].Value'.replace('{0}', nombre);
+
                 Swal.fire({
-                    title: esDesactivar ? '¿Desactivar producto?' : '¿Activar producto?',
-                    text: esDesactivar 
-                        ? `El producto "${nombre}" ya no estará visible en el menú.`
-                        : `El producto "${nombre}" volverá a estar visible en el menú.`,
+                    title: esDesactivar ? '@SharedLocalizer["SwalTitleDesactivar"].Value' : '@SharedLocalizer["SwalTitleActivar"].Value',
+                    text: esDesactivar ? textDesactivar : textActivar,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: esDesactivar ? '#8a2020' : '#243318',
                     cancelButtonColor: '#5a3e28',
-                    confirmButtonText: esDesactivar ? 'Sí, desactivar' : 'Sí, activar',
-                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: esDesactivar ? '@SharedLocalizer["SwalConfirmDesactivar"].Value' : '@SharedLocalizer["SwalConfirmActivar"].Value',
+                    cancelButtonText: '@SharedLocalizer["CancelarBtn"].Value',
                     background: '#f0e2cc',
                     color: '#2e1e0e'
                 }).then((result) => {

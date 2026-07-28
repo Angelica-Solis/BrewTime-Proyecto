@@ -1,5 +1,13 @@
 ﻿<!DOCTYPE html>
 <html lang="en">
+@using Microsoft.AspNetCore.Builder
+@using Microsoft.AspNetCore.Localization
+@using Microsoft.Extensions.Options
+@using Microsoft.AspNetCore.Mvc.Localization
+@using BrewTime.Web
+
+@inject IOptions<RequestLocalizationOptions> LocOptions
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -36,28 +44,47 @@
                 <!-- Links -->
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1">
-                        <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Home" asp-action="Index">Inicio</a>
+                         <li class="nav-item">
+                          <a class="brew-nav-link nav-link" asp-area="" asp-controller="Home" asp-action="Index">@SharedLocalizer["Inicio"]</a>
                         </li>
 
                         <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="ProcesoPreparacion" asp-action="Index">Procesos</a>
+                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="ProcesoPreparacion" asp-action="Index">@SharedLocalizer["Procesos"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Producto" asp-action="Index">Productos</a>
+                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Producto" asp-action="Index">@SharedLocalizer["Productos"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Combo" asp-action="Index">Combos</a>
+                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Combo" asp-action="Index">@SharedLocalizer["Combos"]</a>
                         </li>
-                        
+
                         <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Menu" asp-action="Maintenance">Menús</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Menu" asp-action="Disponible"> Menú Disponible </a>
+                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Menu" asp-action="Maintenance">@SharedLocalizer["Menus"]</a>
                         </li>
                         <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Usuario" asp-action="Index"> Usuarios </a>
+                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Menu" asp-action="Disponible">@SharedLocalizer["MenuDisponible"]</a>
+                        </li>
+                        <li class="nav-item">
+                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Usuario" asp-action="Index">@SharedLocalizer["Usuarios"]</a>
+                        </li>
+
+                        <li class="nav-item brew-lang-item">
+                            @{
+                                var requestCulture = Context.Features.Get<IRequestCultureFeature>();
+                                var cultureItems = LocOptions.Value.SupportedUICultures
+                                .Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName })
+                                .ToList();
+                            }
+                            <form asp-controller="Language" asp-action="SetLanguage"
+                                  asp-route-returnUrl="@Context.Request.Path"
+                                  method="post" class="brew-lang-form">
+                                <span class="brew-lang-label">@SharedLocalizer["SeleccionIdioma"]</span>
+                                <select name="culture" class="brew-lang-select"
+                                        onchange="this.form.submit();"
+                                        asp-for="@requestCulture.RequestCulture.UICulture.Name"
+                                        asp-items="cultureItems">
+                                </select>
+                            </form>
                         </li>
                        
                     </ul>

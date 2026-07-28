@@ -1,32 +1,35 @@
 ﻿@model ProcesoPreparacionDetalleDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet" href="~/css/procesoPreparacion.css" asp-append-version="true" />
 }
 
 @{
-    ViewData["Title"] = "Detalle del Proceso";
+    ViewData["Title"] = SharedLocalizer["TituloDetalleProceso"].Value;
 }
 
 <div class="brew-page">
     @* Chatbot  *@
     <partial name="_Chatbot" />
+
     @* Hero banner *@
     <div class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Brew Time · Cafetería</p>
-            <h1 class="brew-titulo">Detalle del <em>Proceso</em></h1>
-            <p class="brew-subtitulo">Información completa de preparación</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["CafeteriaEyebrow"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["DetalleDel"] <em>@SharedLocalizer["ProcesoEm"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["InfoCompletaPreparacion"]</p>
             <div class="brew-hero-line">
             </div>
         </div>
     </div>
-  
+
 
     @* Contenido *@
     <div class="brew-content">
         <a asp-action="Index" class="brew-btn-volver">
-            ← Volver al listado
+            &larr; @SharedLocalizer["VolverAlListado"]
         </a>
         <div class="brew-detalle-wrapper">
 
@@ -48,7 +51,7 @@
 
                             <div>
                                 <span class="brew-paso-label">
-                                    Estación
+                                    @SharedLocalizer["EstacionLabel"]
                                 </span>
 
                                 <div class="brew-paso-estacion">
@@ -58,11 +61,11 @@
 
                             <div>
                                 <span class="brew-paso-label">
-                                    Tiempo estimado
+                                    @SharedLocalizer["TiempoEstimadoLabel"]
                                 </span>
 
                                 <span class="brew-detalle-tiempo">
-                                    @item.TiempoEstimadoMin min
+                                    @item.TiempoEstimadoMin @SharedLocalizer["MinutosAbv"]
                                 </span>
                             </div>
 
@@ -74,5 +77,5 @@
 
         </div>
     </div>
-  
+
 </div>

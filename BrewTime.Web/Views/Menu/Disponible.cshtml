@@ -1,4 +1,6 @@
 ﻿@model BrewTime.Application.DTOs.MenuDTO?
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet"
@@ -7,20 +9,20 @@
 }
 
 @{
-    ViewData["Title"] = "Menú Disponible";
+    ViewData["Title"] = SharedLocalizer["MenuDisponibleTitulo"].Value;
 
     string NombreDia(byte dia)
     {
         return dia switch
         {
-            1 => "Lunes",
-            2 => "Martes",
-            3 => "Miércoles",
-            4 => "Jueves",
-            5 => "Viernes",
-            6 => "Sábado",
-            7 => "Domingo",
-            _ => "Día no definido"
+            1 => SharedLocalizer["Lunes"].Value,
+            2 => SharedLocalizer["Martes"].Value,
+            3 => SharedLocalizer["Miercoles"].Value,
+            4 => SharedLocalizer["Jueves"].Value,
+            5 => SharedLocalizer["Viernes"].Value,
+            6 => SharedLocalizer["Sabado"].Value,
+            7 => SharedLocalizer["Domingo"].Value,
+            _ => SharedLocalizer["DiaNoDefinido"].Value
         };
     }
 }
@@ -30,14 +32,14 @@
     <partial name="_Chatbot" />
     <section class="menu-hero">
         <div class="menu-hero-inner">
-            <p class="menu-eyebrow">Brew Time · Cafetería</p>
+            <p class="menu-eyebrow">@SharedLocalizer["CafeteriaEyebrow"]</p>
 
             <h1 class="menu-title">
-                Menú <em>Disponible</em>
+                @SharedLocalizer["MenuTxt"] <em>@SharedLocalizer["DisponibleEm"]</em>
             </h1>
 
             <p class="menu-subtitle">
-                Disfrutá nuestra selección de productos y combos.
+                @SharedLocalizer["DisfrutaSeleccion"]
             </p>
         </div>
     </section>
@@ -49,7 +51,7 @@
             <div class="menu-detail-card">
                 <div class="menu-detail-body">
                     <p class="menu-empty">
-                        No hay un menú disponible para la fecha actual.
+                        @SharedLocalizer["NoMenuDisponibleFecha"]
                     </p>
                 </div>
             </div>
@@ -63,7 +65,7 @@
                 <div class="menu-restaurant-header menu-modern-header">
 
                     <p class="menu-board-label">
-                        Menú activo
+                        @SharedLocalizer["MenuActiveLabel"]
                     </p>
 
                     <h2 class="menu-board-title">
@@ -80,7 +82,7 @@
                     <div class="menu-range menu-modern-range">
 
                         <div class="menu-range-item">
-                            <span>Horario</span>
+                            <span>@SharedLocalizer["HorarioLabel"]</span>
 
                             <strong>
                                 @menu.HoraInicio.ToString("HH:mm")
@@ -90,38 +92,38 @@
                         </div>
 
                         <div class="menu-range-item">
-                            <span>Fechas</span>
+                            <span>@SharedLocalizer["FechasLabel"]</span>
 
                             <strong>
                                 @if (menu.FechaInicio.HasValue &&
-                                                            menu.FechaFin.HasValue)
+                               menu.FechaFin.HasValue)
                                 {
                                     @($"{menu.FechaInicio.Value:dd/MM/yyyy} - {menu.FechaFin.Value:dd/MM/yyyy}")
                                 }
                                 else
                                 {
-                                    @("No definido")
+                                    @SharedLocalizer["NoDefinido"]
                                 }
                             </strong>
                         </div>
 
                         <div class="menu-range-item">
-                            <span>Días</span>
+                            <span>@SharedLocalizer["DiasTxt"]</span>
 
                             <strong>
                                 @if (menu.MenuDiaSemana != null &&
-                                                            menu.MenuDiaSemana.Any())
+                               menu.MenuDiaSemana.Any())
                                 {
                                     @string.Join(
-                                    ", ",
-                                                        menu.MenuDiaSemana
-                                                        .OrderBy(x => x.DiaSemana)
-                                                        .Select(x =>
-                                                        NombreDia(x.DiaSemana)))
-                                                        }
+                                             ", ",
+                                             menu.MenuDiaSemana
+                                             .OrderBy(x => x.DiaSemana)
+                                             .Select(x =>
+                                             NombreDia(x.DiaSemana)))
+                                }
                                 else
                                 {
-                                    @("No hay días configurados")
+                                    @SharedLocalizer["NoDiasConfigurados"]
                                 }
                             </strong>
                         </div>
@@ -132,13 +134,13 @@
                 <div class="menu-restaurant-body menu-modern-body">
 
                     @if (menu.MenuProducto != null &&
-                                    menu.MenuProducto.Any(x =>
-                                    x.Producto != null))
+                   menu.MenuProducto.Any(x =>
+                   x.Producto != null))
                     {
                         <div class="menu-section-block">
 
                             <h3 class="menu-modern-section-title">
-                                Productos
+                                @SharedLocalizer["ProductosTitle"]
                             </h3>
 
                             @{
@@ -148,7 +150,7 @@
                                 .GroupBy(x =>
                                 string.IsNullOrWhiteSpace(
                                 x.Producto.CategoriaNombre)
-                                ? "Sin categoría"
+                                ? SharedLocalizer["SinCategoria"].Value
                                 : x.Producto.CategoriaNombre)
                                 .OrderBy(x => x.Key)
                                 .ToList();
@@ -185,7 +187,7 @@
                                                     </div>
 
                                                     @if (!string.IsNullOrWhiteSpace(
-                                                                                        item.Producto.Descripcion))
+                                                   item.Producto.Descripcion))
                                                     {
                                                         <p>
                                                             @item.Producto.Descripcion
@@ -206,13 +208,13 @@
                     }
 
                     @if (menu.MenuCombo != null &&
-                                    menu.MenuCombo.Any(x =>
-                                    x.Combo != null))
+                   menu.MenuCombo.Any(x =>
+                   x.Combo != null))
                     {
                         <div class="menu-section-block">
 
                             <h3 class="menu-modern-section-title">
-                                Combos
+                                @SharedLocalizer["CombosTitle"]
                             </h3>
 
                             @{
@@ -222,7 +224,7 @@
                                 .GroupBy(x =>
                                 string.IsNullOrWhiteSpace(
                                 x.Combo.CategoriaNombre)
-                                ? "Sin categoría"
+                                ? SharedLocalizer["SinCategoria"].Value
                                 : x.Combo.CategoriaNombre)
                                 .OrderBy(x => x.Key)
                                 .ToList();
@@ -259,7 +261,7 @@
                                                     </div>
 
                                                     @if (!string.IsNullOrWhiteSpace(
-                                                                                        item.Combo.Descripcion))
+                                                   item.Combo.Descripcion))
                                                     {
                                                         <p>
                                                             @item.Combo.Descripcion
@@ -280,14 +282,14 @@
                     }
 
                     @if ((menu.MenuProducto == null ||
-                                    !menu.MenuProducto.Any(x =>
-                                    x.Producto != null)) &&
-                                    (menu.MenuCombo == null ||
-                                    !menu.MenuCombo.Any(x =>
-                                    x.Combo != null)))
+                   !menu.MenuProducto.Any(x =>
+                   x.Producto != null)) &&
+                   (menu.MenuCombo == null ||
+                   !menu.MenuCombo.Any(x =>
+                   x.Combo != null)))
                     {
                         <p class="menu-empty">
-                            No hay productos ni combos disponibles para este menú.
+                            @SharedLocalizer["NoProductosCombos"]
                         </p>
                     }
 

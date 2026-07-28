@@ -1,23 +1,25 @@
 @model BrewTime.Application.DTOs.ProductoFormDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
 }
 
 @{
-    ViewData["Title"] = "Editar Producto";
+    ViewData["Title"] = SharedLocalizer["EditarProductoTitulo"].Value;
 }
 
 <div class="brew-page">
 
     <div class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Brew Time · Administración</p>
-            <h1 class="brew-titulo">Editar <em>Producto</em></h1>
-            <p class="brew-subtitulo">Modificá los datos del producto seleccionado.</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["AdminEyebrow"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["EditarTxt"] <em>@SharedLocalizer["ProductoEm"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["DescEditarProducto"]</p>
             <div class="brew-hero-line">
                 <span></span>
-                <i>Edición de producto</i>
+                <i>@SharedLocalizer["EdicionProductoLabel"]</i>
                 <span></span>
             </div>
         </div>
@@ -25,7 +27,7 @@
 
     <div class="brew-content">
 
-        <a asp-action="Maintenance" class="brew-btn-volver">← Volver al mantenimiento</a>
+        <a asp-action="Maintenance" class="brew-btn-volver">← @SharedLocalizer["VolverMantenimientoBtn"]</a>
 
         <div class="brew-form-card">
             <form asp-action="Edit" method="post" enctype="multipart/form-data">
@@ -38,13 +40,13 @@
                 <input asp-for="ImagenesActualesCount" type="hidden" />
 
                 <div class="brew-form-group">
-                    <label asp-for="Nombre" class="brew-form-label">Nombre</label>
+                    <label asp-for="Nombre" class="brew-form-label">@SharedLocalizer["NombreLabel"]</label>
                     <input asp-for="Nombre" class="brew-form-input" />
                     <span asp-validation-for="Nombre" class="brew-form-error"></span>
                 </div>
 
                 <div class="brew-form-group">
-                    <label asp-for="Descripcion" class="brew-form-label">Descripción</label>
+                    <label asp-for="Descripcion" class="brew-form-label">@SharedLocalizer["DescripcionLabel"]</label>
                     <textarea asp-for="Descripcion" class="brew-form-input brew-form-textarea"></textarea>
                     <span asp-validation-for="Descripcion" class="brew-form-error"></span>
                 </div>
@@ -52,16 +54,16 @@
                 <div class="brew-form-row">
 
                     <div class="brew-form-group">
-                        <label asp-for="Precio" class="brew-form-label">Precio (₡)</label>
+                        <label asp-for="Precio" class="brew-form-label">@SharedLocalizer["PrecioColonesLabel"]</label>
                         <input asp-for="Precio" type="number" step="50" min="0"
                                class="brew-form-input" />
                         <span asp-validation-for="Precio" class="brew-form-error"></span>
                     </div>
 
                     <div class="brew-form-group">
-                        <label asp-for="CategoriaID" class="brew-form-label">Categoría</label>
+                        <label asp-for="CategoriaID" class="brew-form-label">@SharedLocalizer["CategoriaLabel"]</label>
                         <select asp-for="CategoriaID" asp-items="ViewBag.Categorias" class="brew-form-input">
-                            <option value="">Seleccione una categoría</option>
+                            <option value="">@SharedLocalizer["SeleccioneCategoriaOption"]</option>
                         </select>
                         <span asp-validation-for="CategoriaID" class="brew-form-error"></span>
                     </div>
@@ -71,9 +73,9 @@
                 <hr class="my-4" style="border-color: var(--border-card); opacity: 0.5;" />
 
                 <div class="brew-form-group">
-                    <label class="brew-form-label">Ingredientes del catálogo</label>
-                    <p class="brew-form-hint">Seleccione los ingredientes ya registrados en la cafetería:</p>
-                    
+                    <label class="brew-form-label">@SharedLocalizer["IngredientesCatalogoLabel"]</label>
+                    <p class="brew-form-hint">@SharedLocalizer["SeleccioneIngredientesHint"]</p>
+
                     @if (ViewBag.IngredientesDisponibles != null && ((IEnumerable<dynamic>)ViewBag.IngredientesDisponibles).Any())
                     {
                         <div class="brew-ingredientes-checklist">
@@ -83,7 +85,7 @@
                                     <input type="checkbox"
                                            name="IngredientesSeleccionados"
                                            value="@ingrediente.IngredienteID"
-                                           @(Model.IngredientesSeleccionados != null && Model.IngredientesSeleccionados.Contains((int)ingrediente.IngredienteID) ? "checked" : "") />
+                                    @(Model.IngredientesSeleccionados != null && Model.IngredientesSeleccionados.Contains((int)ingrediente.IngredienteID) ? "checked" : "") />
                                     <span>@ingrediente.Nombre</span>
                                 </label>
                             }
@@ -91,16 +93,16 @@
                     }
                     else
                     {
-                        <p class="brew-ingredientes-vacio">No hay ingredientes registrados en el catálogo.</p>
+                        <p class="brew-ingredientes-vacio">@SharedLocalizer["NoHayIngredientesCatalogo"]</p>
                     }
                 </div>
 
                 <div class="brew-form-group">
-                    <label class="brew-form-label">Ingredientes nuevos</label>
-                    <p class="brew-form-hint">Escriba un ingrediente nuevo y pulse "Agregar":</p>
+                    <label class="brew-form-label">@SharedLocalizer["IngredientesNuevosLabel"]</label>
+                    <p class="brew-form-hint">@SharedLocalizer["EscribaIngredienteHint"]</p>
                     <div class="brew-ingrediente-nuevo">
-                        <input type="text" id="nuevo-ingrediente-input" class="brew-form-input" placeholder="Ej: Crema batida" />
-                        <button type="button" class="brew-btn-secundario" id="btn-agregar-ingrediente-nuevo">Agregar</button>
+                        <input type="text" id="nuevo-ingrediente-input" class="brew-form-input" placeholder="@SharedLocalizer["EjCremaBatidaPlaceholder"].Value" />
+                        <button type="button" class="brew-btn-secundario" id="btn-agregar-ingrediente-nuevo">@SharedLocalizer["AgregarBtn"]</button>
                     </div>
                     <div class="brew-ingredientes-nuevos-lista" id="lista-ingredientes-nuevos">
                         @if (Model.IngredientesNuevos != null)
@@ -119,11 +121,11 @@
 
                 <div class="brew-form-group brew-form-check-group">
                     <input asp-for="Activo" type="checkbox" class="brew-form-check" />
-                    <label asp-for="Activo" class="brew-form-label">Producto activo</label>
+                    <label asp-for="Activo" class="brew-form-label">@SharedLocalizer["ProductoActivoLabel"]</label>
                 </div>
 
                 <div class="brew-form-group">
-                    <label asp-for="ImagenesNuevas" class="brew-form-label">Imagen del producto</label>
+                    <label asp-for="ImagenesNuevas" class="brew-form-label">@SharedLocalizer["ImagenProductoLabel"]</label>
 
                     @if (Model.ImagenesActuales.Any())
                     {
@@ -134,7 +136,7 @@
                                     <img src="@imagen.RutaImagen" alt="@Model.Nombre" />
                                     <span>
                                         <input type="checkbox" name="ImagenesAEliminar" value="@imagen.ImagenID" />
-                                        Eliminar
+                                        @SharedLocalizer["EliminarBtn"]
                                     </span>
                                 </label>
                             }
@@ -144,21 +146,21 @@
                     <div class="brew-upload-box">
                         <div class="brew-upload-icon">IMG</div>
                         <div class="brew-upload-copy">
-                            <strong>Agregar nueva imagen</strong>
-                            <span>Si no eliminás la actual, la nueva se agrega al producto.</span>
+                            <strong>@SharedLocalizer["AgregarNuevaImagenStrong"]</strong>
+                            <span>@SharedLocalizer["HintNuevaImagen"]</span>
                         </div>
                         <input asp-for="ImagenesNuevas" type="file" accept="image/*" class="brew-file-input" />
                     </div>
                     <div class="brew-image-preview" data-image-preview hidden>
-                        <img src="" alt="Vista previa de la imagen seleccionada" />
+                        <img src="" alt="@SharedLocalizer["VistaPreviaImgAlt"].Value" />
                         <span data-image-name></span>
                     </div>
                     <span asp-validation-for="ImagenesNuevas" class="brew-form-error"></span>
                 </div>
 
                 <div class="brew-form-footer">
-                    <a asp-action="Maintenance" class="brew-btn-volver">Cancelar</a>
-                    <button type="submit" class="brew-btn-nuevo">Guardar cambios</button>
+                    <a asp-action="Maintenance" class="brew-btn-volver">@SharedLocalizer["CancelarBtn"]</a>
+                    <button type="submit" class="brew-btn-nuevo">@SharedLocalizer["GuardarCambiosBtn"]</button>
                 </div>
 
             </form>

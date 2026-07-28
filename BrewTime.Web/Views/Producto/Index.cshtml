@@ -1,31 +1,34 @@
 @model IEnumerable<BrewTime.Application.DTOs.ProductoDTO>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
 }
 
 @{
-    ViewData["Title"] = "Productos";
+    ViewData["Title"] = SharedLocalizer["ProductosTitulo"].Value;
 }
 
 <div class="brew-page">
     @* Chatbot  *@
     <partial name="_Chatbot" />
+
     @* Hero banner *@
     <div class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Brew Time · Cafetería</p>
-            <h1 class="brew-titulo">Nuestros <em>Productos</em></h1>
-            <p class="brew-subtitulo">Cada sorbo, cada sabor, cada experiencia.</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["CafeteriaEyebrow"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["Nuestros"] <em>@SharedLocalizer["ProductosTitulo"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["SubtituloProductos"]</p>
             <div class="brew-hero-line">
                 <span></span>
-                <i>Menú &amp; precios</i>
+                <i>@SharedLocalizer["MenuPrecios"]</i>
                 <span></span>
             </div>
             @* Botón de mantenimiento - se ocultará según rol *@
             <div class="brew-hero-actions">
                 <a asp-action="Maintenance" class="brew-btn-admin">
-                    Administrar productos
+                    @SharedLocalizer["AdministrarProductos"]
                 </a>
             </div>
         </div>
@@ -39,13 +42,13 @@
             <div class="brew-grid">
                 <div class="brew-empty">
                     <span class="brew-empty-icon">☕</span>
-                    <p>No hay productos registrados aún.</p>
+                    <p>@SharedLocalizer["NoHayProductos"]</p>
                 </div>
             </div>
         }
         else
         {
-            <p class="brew-count">@Model.Count() producto(s) registrado(s)</p>
+            <p class="brew-count">@Model.Count() @SharedLocalizer["ProductosRegistradosCount"]</p>
 
             <div class="brew-grid">
                 @foreach (var item in Model)
@@ -61,7 +64,7 @@
                             <div class="d-flex justify-content-between align-items-start gap-2 mb-2">
                                 <p class="brew-card-producto m-0">@item.Nombre</p>
                                 <span class="brew-badge-tiempo">
-                                     @item.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))
+                                    @item.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))
                                 </span>
                             </div>
 
@@ -74,17 +77,17 @@
                                     <span class="brew-card-chip mb-0">@item.CategoriaNombre</span>
                                     @if (item.Activo)
                                     {
-                                        <span class="brew-badge-activo">Activo</span>
+                                        <span class="brew-badge-activo">@SharedLocalizer["Activo"]</span>
                                     }
                                     else
                                     {
-                                        <span class="brew-badge-inactivo">Inactivo</span>
+                                        <span class="brew-badge-inactivo">@SharedLocalizer["Inactivo"]</span>
                                     }
                                 </div>
                                 <a asp-action="Detail"
                                    asp-route-id="@item.ProductoID"
                                    class="brew-btn-detalle">
-                                    Ver detalle
+                                    @SharedLocalizer["VerDetalle"]
                                 </a>
                             </div>
 

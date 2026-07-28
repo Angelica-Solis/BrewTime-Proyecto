@@ -1,21 +1,24 @@
 ﻿@model IEnumerable<BrewTime.Application.DTOs.ProcesoPreparacionListadoDTO>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
 @{
-    ViewData["Title"] = "Mantenimiento de Procesos de Preparación";
+    ViewData["Title"] = SharedLocalizer["MantProcesosTitulo"].Value;
 }
 @section Styles {
     <link rel="stylesheet" href="~/css/procesoPreparacion.css" asp-append-version="true" />
 }
 
 <div class="brew-page">
- 
+
     <div class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">BREW TIME · ADMINISTRACIÓN</p>
-            <h1 class="brew-titulo">Mantenimiento de <em>Procesos de Preparación</em></h1>
-            <p class="brew-subtitulo">Creá, editá y consultá los procesos de preparación de cada producto.</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["AdminEyebrow"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["MantenimientoDe"] <em>@SharedLocalizer["ProcesosPreparacionEm"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["DescMantProcesos"]</p>
             <div class="brew-hero-line">
                 <span></span>
-                <i>Gestión de Procesos</i>
+                <i>@SharedLocalizer["GestionProcesosLabel"]</i>
                 <span></span>
             </div>
         </div>
@@ -25,16 +28,16 @@
 
         <div class="brew-mant-header">
             <a asp-action="Index" asp-controller="Home" class="brew-btn-volver-mant">
-                ← Volver
+                ← @SharedLocalizer["VolverBtn"]
             </a>
             <a asp-action="Create" class="brew-btn-nuevo">
-                + Nuevo Proceso
+                + @SharedLocalizer["NuevoProcesoBtn"]
             </a>
         </div>
 
         <div class="brew-mant-title-row">
             <span class="brew-mant-dot"></span>
-            <h2 class="brew-mant-title">Procesos registrados</h2>
+            <h2 class="brew-mant-title">@SharedLocalizer["ProcesosRegistradosTitulo"]</h2>
             <span class="brew-mant-count">@(Model?.Count() ?? 0)</span>
         </div>
 
@@ -43,9 +46,9 @@
                 <thead>
                     <tr>
                         <th style="width:60px;">#</th>
-                        <th>Producto</th>
-                        <th class="text-center">Cantidad de Estaciones</th>
-                        <th class="text-center" style="width:260px;">Acciones</th>
+                        <th>@SharedLocalizer["ProductoCol"]</th>
+                        <th class="text-center">@SharedLocalizer["CantEstacionesCol"]</th>
+                        <th class="text-center" style="width:260px;">@SharedLocalizer["AccionesCol"]</th>
                     </tr>
                 </thead>
                 <tbody>
@@ -65,12 +68,12 @@
                                         <a asp-action="Detail"
                                            asp-route-id="@item.ProductoId"
                                            class="brew-btn-detalle-table">
-                                            <i class="bi bi-eye"></i> Detalle
+                                            <i class="bi bi-eye"></i> @SharedLocalizer["DetalleBtn"]
                                         </a>
                                         <a asp-action="Edit"
                                            asp-route-id="@item.ProductoId"
                                            class="brew-btn-editar-table">
-                                            <i class="bi bi-pencil-square"></i> Editar
+                                            <i class="bi bi-pencil-square"></i> @SharedLocalizer["EditarBtn"]
                                         </a>
                                     </div>
                                 </td>
@@ -82,7 +85,7 @@
                     {
                         <tr class="brew-empty-row">
                             <td colspan="4">
-                                No hay procesos de preparación registrados.
+                                @SharedLocalizer["NoHayProcesosMsj"]
                             </td>
                         </tr>
                     }
@@ -95,34 +98,20 @@
 
 @section Scripts {
     @await Html.PartialAsync("_ValidationScriptsPartial")
-    @if (TempData["Success"] != null)
-    {
-        <script>
-            Swal.fire({
-                icon: 'success',
-                title: 'Éxito',
-                text: '@TempData["Success"]',
-                confirmButtonText: 'Aceptar'
-            });
-        </script>
-    }
-    @if (TempData["Error"] != null)
-    {
-        <script>
-            Swal.fire({
-                icon: 'error',
-                title: 'Error',
-                text: '@TempData["Error"]',
-                confirmButtonText: 'Aceptar'
-            });
-        </script>
-    }
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
 
     @if (TempData["Success"] != null)
     {
         <script>
+            // Alerta clásica de éxito (puedes unificarla con el toast si prefieres)
+            Swal.fire({
+                icon: 'success',
+                title: '@SharedLocalizer["ExitoAlerta"].Value',
+                text: '@TempData["Success"]',
+                confirmButtonText: '@SharedLocalizer["AceptarBtn"].Value'
+            });
 
+            // Toast de éxito
             Swal.fire({
                 toast: true,
                 position: 'top-end',
@@ -132,7 +121,18 @@
                 timer: 2500,
                 timerProgressBar: true
             });
+        </script>
+    }
 
+    @if (TempData["Error"] != null)
+    {
+        <script>
+            Swal.fire({
+                icon: 'error',
+                title: '@SharedLocalizer["ErrorAlerta"].Value',
+                text: '@TempData["Error"]',
+                confirmButtonText: '@SharedLocalizer["AceptarBtn"].Value'
+            });
         </script>
     }
 }

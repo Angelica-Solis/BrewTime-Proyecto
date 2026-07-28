@@ -1,11 +1,13 @@
 ﻿@model IEnumerable<BrewTime.Application.DTOs.MenuDTO>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet" href="~/css/Menu.css" asp-append-version="true" />
 }
 
 @{
-    ViewData["Title"] = "Listado de Menús";
+    ViewData["Title"] = SharedLocalizer["ListadoMenusTitulo"].Value;
 
     var menus = Model
         .OrderByDescending(x => x.FechaInicio)
@@ -18,17 +20,17 @@
 
     <div class="menu-hero">
         <div class="menu-hero-inner">
-            <p class="menu-eyebrow">Brew Time · Administración</p>
-            <h1 class="menu-title">Listado de <em>Menús</em></h1>
+            <p class="menu-eyebrow">@SharedLocalizer["AdminEyebrow"]</p>
+            <h1 class="menu-title">@SharedLocalizer["ListadoDeTxt"] <em>@SharedLocalizer["MenusEm"]</em></h1>
             <p class="menu-subtitle">
-                Consulta general de los menús registrados.
+                @SharedLocalizer["DescListadoMenus"]
             </p>
 
             @* Botón de mantenimiento; posteriormente puede ocultarse según el rol *@
             <div class="menu-hero-actions">
                 <a asp-action="Maintenance"
                    class="menu-btn-admin">
-                    Administrar menús
+                    @SharedLocalizer["AdministrarMenusBtn"]
                 </a>
             </div>
 
@@ -41,33 +43,33 @@
         {
             <div class="menu-detail-card">
                 <div class="menu-detail-body">
-                    <p class="menu-empty">No hay menús registrados.</p>
+                    <p class="menu-empty">@SharedLocalizer["NoMenusRegistrados"]</p>
                 </div>
             </div>
         }
         else
         {
             <p class="menu-count-text">
-                @menus.Count menú(s) registrado(s)
+                @menus.Count @SharedLocalizer["MenusRegistradosSufijo"]
             </p>
 
             <div class="menu-table-card menu-index-card">
 
                 <div class="menu-index-header">
                     <div>
-                        <p class="menu-index-label">Menús registrados</p>
-                        <h2>Listado general</h2>
+                        <p class="menu-index-label">@SharedLocalizer["MenusRegistradosLabel"]</p>
+                        <h2>@SharedLocalizer["ListadoGeneralLabel"]</h2>
                     </div>
                 </div>
 
                 <table class="menu-table menu-index-table">
                     <thead>
                         <tr>
-                            <th>Menú</th>
-                            <th>Horario</th>
-                            <th>Disponibilidad</th>
-                            <th>Estado</th>
-                            <th>Acción</th>
+                            <th>@SharedLocalizer["MenuLabel"]</th>
+                            <th>@SharedLocalizer["HorarioLabel"]</th>
+                            <th>@SharedLocalizer["DisponibilidadLabel"]</th>
+                            <th>@SharedLocalizer["EstadoLabel"]</th>
+                            <th>@SharedLocalizer["AccionLabel"]</th>
                         </tr>
                     </thead>
 
@@ -84,7 +86,7 @@
                                     }
                                     else
                                     {
-                                        <span class="menu-small-text">Sin descripción registrada</span>
+                                        <span class="menu-small-text">@SharedLocalizer["SinDescripcion"]</span>
                                     }
                                 </td>
 
@@ -101,23 +103,23 @@
                                             @item.FechaInicio.Value.ToString("dd/MM/yyyy")
                                         </span>
                                         <span class="menu-small-text">
-                                            hasta @item.FechaFin.Value.ToString("dd/MM/yyyy")
+                                            @SharedLocalizer["HastaTxt"] @item.FechaFin.Value.ToString("dd/MM/yyyy")
                                         </span>
                                     }
                                     else
                                     {
-                                        <span class="menu-small-text">No definido</span>
+                                        <span class="menu-small-text">@SharedLocalizer["NoDefinido"]</span>
                                     }
                                 </td>
 
                                 <td>
                                     @if (item.Activo)
                                     {
-                                        <span class="menu-badge-active">Disponible</span>
+                                        <span class="menu-badge-active">@SharedLocalizer["DisponibleBadge"]</span>
                                     }
                                     else
                                     {
-                                        <span class="menu-badge-inactive">Inactivo</span>
+                                        <span class="menu-badge-inactive">@SharedLocalizer["InactivoBadge"]</span>
                                     }
                                 </td>
 
@@ -125,7 +127,7 @@
                                     <a asp-action="Detail"
                                        asp-route-id="@item.MenuId"
                                        class="menu-btn">
-                                        Detalle
+                                        @SharedLocalizer["DetalleBtn"]
                                     </a>
                                 </td>
                             </tr>

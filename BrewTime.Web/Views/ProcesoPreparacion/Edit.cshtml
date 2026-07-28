@@ -1,12 +1,14 @@
 ﻿@model BrewTime.Application.DTOs.ProcesoPreparacionFormDTO
 @using BrewTime.Application.DTOs
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet" href="~/css/procesoPreparacion.css" asp-append-version="true" />
 }
 
 @{
-    ViewData["Title"] = "Editar Proceso de Preparación";
+    ViewData["Title"] = SharedLocalizer["EditarProcesoTitulo"].Value;
 }
 
 <div class="brew-page">
@@ -15,26 +17,25 @@
         <div class="brew-hero-inner">
 
             <span class="brew-hero-eyebrow">
-                Actualizar Proceso
+                @SharedLocalizer["ActualizarProcesoEyebrow"]
             </span>
 
             <h1 class="brew-titulo">
-                Editar Flujo de <em>Preparación</em>
+                @SharedLocalizer["EditarFlujoDe"] <em>@SharedLocalizer["PreparacionEm"]</em>
             </h1>
 
             <p class="brew-subtitulo">
-                Modifique las estaciones, orden y tiempos del proceso actual del producto.
+                @SharedLocalizer["DescEditarProceso"]
             </p>
 
             <div class="brew-hero-line">
                 <span></span>
-                <i>Configuración del flujo</i>
+                <i>@SharedLocalizer["ConfiguracionFlujo"]</i>
                 <span></span>
             </div>
 
         </div>
     </div>
-
 
     <div class="brew-content">
 
@@ -44,16 +45,13 @@
                   method="post"
                   class="brew-form">
 
-
                 <input asp-for="ProductoId" type="hidden" />
-
 
                 <div class="brew-form-group">
 
                     <label class="brew-form-label">
-                        Producto
+                        @SharedLocalizer["ProductoLabel"]
                     </label>
-
 
                     <select class="brew-select"
                             asp-for="ProductoId"
@@ -61,101 +59,74 @@
                             disabled>
                     </select>
 
-
                     <small class="text-muted">
-                        El producto no puede modificarse al editar el proceso.
+                        @SharedLocalizer["ProductoNoModificableInfo"]
                     </small>
 
                 </div>
 
-
-
                 <hr class="brew-detalle-divider" />
 
-
                 <h4 class="brew-subtitulo-section">
-                    Configuración de estaciones
+                    @SharedLocalizer["ConfiguracionEstaciones"]
                 </h4>
 
-
                 <p class="brew-form-desc">
-                    Las estaciones activas actualmente aparecen seleccionadas.
-                    Puede agregar o quitar pasos del proceso.
+                    @SharedLocalizer["DescConfiguracionEstaciones"]
                 </p>
-
-                
 
                 <div class="mb-3 text-end">
 
                     <button type="button"
                             class="brew-btn-volver"
                             id="btnLimpiar">
-
-                        Limpiar selección
-
+                        @SharedLocalizer["LimpiarSeleccionBtn"]
                     </button>
 
                 </div>
 
                 <div class="row brew-estaciones-grid">
 
-
                     @for (int index = 0; index < Model.Estaciones.Count; index++)
                     {
-
-                        <div class="col-md-6 mb-3">
+                        <div class="col-md-3 mb-3">
 
                             <div class="brew-estacion-card">
-
 
                                 <input asp-for="Estaciones[index].EstacionId"
                                        type="hidden" />
 
-
                                 <input asp-for="Estaciones[index].Nombre"
                                        type="hidden" />
-
-
 
                                 <div class="form-check mb-3">
 
                                     <input asp-for="Estaciones[index].Seleccionada"
                                            class="form-check-input brew-checkbox" />
 
-
                                     <label class="form-check-label fw-bold">
-
                                         @Model.Estaciones[index].Nombre
-
                                     </label>
 
                                 </div>
 
-
-
                                 <div class="mb-3">
 
                                     <label class="brew-form-label">
-                                        Orden del paso
+                                        @SharedLocalizer["OrdenPasoLabel"]
                                     </label>
-
 
                                     <input asp-for="Estaciones[index].Orden"
                                            class="form-control brew-input-number orden-input"
                                            min="1" />
 
-
                                 </div>
-
-
-
 
                                 <div>
 
                                     <label class="brew-form-label">
-                                        Tiempo estimado (minutos)
+                                        @SharedLocalizer["TiempoEstimadoMinutosLabel"]
                                     </label>
-
 
                                     <input asp-for="Estaciones[index].TiempoEstimadoMin"
                                            class="form-control brew-input-number tiempo-input"
@@ -163,37 +134,26 @@
 
                                 </div>
 
-
-
                             </div>
 
                         </div>
-
                     }
 
-
                 </div>
-
-
 
                 <div class="brew-form-actions">
 
-
                     <button type="submit"
                             class="brew-btn-detalle">
-                        Guardar cambios
+                        @SharedLocalizer["GuardarCambiosBtn"]
                     </button>
-
-
 
                     <a asp-action="Maintenance"
                        class="brew-btn-volver">
-                        Cancelar
+                        @SharedLocalizer["CancelarBtn"]
                     </a>
 
-
                 </div>
-
 
             </form>
 
@@ -203,13 +163,9 @@
 
 </div>
 
-
-
 @section Scripts
 {
     @{
-       
-
         var errores = ViewData.ModelState.Values
             .SelectMany(v => v.Errors)
             .Select(e => e.ErrorMessage)
@@ -222,14 +178,12 @@
     @if (TempData["Success"] != null)
     {
         <script>
-
             Swal.fire({
                 icon: 'success',
-                title: 'Éxito',
+                title: '@SharedLocalizer["ExitoAlerta"].Value',
                 text: '@TempData["Success"]',
-                confirmButtonText: 'Aceptar'
+                confirmButtonText: '@SharedLocalizer["AceptarBtn"].Value'
             });
-
         </script>
     }
 
@@ -243,7 +197,7 @@
             @foreach (var error in errores)
             {
                 <text>
-                        mensaje += "• @error<br>";
+                            mensaje += "• @error<br>";
                 </text>
             }
 
@@ -251,29 +205,25 @@
                 toast: true,
                 position: 'top-end',
                 icon: 'error',
-                title: 'No se pudo guardar',
+                title: '@SharedLocalizer["ErrorGuardarAlerta"].Value',
                 html: mensaje,
                 showConfirmButton: false,
                 timer: 3000
             });
 
-
         </script>
     }
 
     <script>
-
         document.addEventListener("DOMContentLoaded", function () {
 
             // Activar / desactivar campos
             document.querySelectorAll(".brew-estacion-card").forEach(card => {
-
                 const checkbox = card.querySelector(".brew-checkbox");
                 const orden = card.querySelector(".orden-input");
                 const tiempo = card.querySelector(".tiempo-input");
 
                 function actualizarCampos() {
-
                     orden.disabled = !checkbox.checked;
                     tiempo.disabled = !checkbox.checked;
 
@@ -281,39 +231,28 @@
                         orden.value = "";
                         tiempo.value = "";
                     }
-
                 }
 
                 actualizarCampos();
-
                 checkbox.addEventListener("change", actualizarCampos);
-
             });
 
             // Botón limpiar
             document.getElementById("btnLimpiar")
                 .addEventListener("click", function () {
-
                     document.querySelectorAll(".brew-estacion-card")
                         .forEach(card => {
-
                             const checkbox = card.querySelector(".brew-checkbox");
                             const orden = card.querySelector(".orden-input");
                             const tiempo = card.querySelector(".tiempo-input");
 
                             checkbox.checked = false;
-
                             orden.value = "";
                             tiempo.value = "";
-
                             orden.disabled = true;
                             tiempo.disabled = true;
-
                         });
-
                 });
-
         });
-
     </script>
 }

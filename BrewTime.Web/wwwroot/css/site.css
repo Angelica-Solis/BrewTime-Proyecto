@@ -324,3 +324,69 @@ body {
         text-align: center;
     }
 }
+
+/* Selector de idioma  */
+.brew-lang-item {
+    display: flex;
+    align-items: center;
+}
+
+.brew-lang-form {
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    margin: 0;
+}
+
+.brew-lang-label {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.72rem;
+    font-weight: 500;
+    text-transform: uppercase;
+    letter-spacing: 0.08em;
+    color: rgba(230,210,180,0.55);
+    white-space: nowrap;
+}
+
+.brew-lang-select {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: #f0e0c0;
+    background-color: rgba(201,149,106,0.10);
+    border: 1px solid rgba(201,149,106,0.30);
+    border-radius: 7px;
+    padding: 0.3rem 1.8rem 0.3rem 0.7rem;
+    cursor: pointer;
+    transition: color 0.18s ease, background 0.18s ease, border-color 0.18s ease;
+    /* flecha personalizada en tono dorado */
+    background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 12 12'%3E%3Cpath fill='%23d9b48f' d='M2 4l4 4 4-4z'/%3E%3C/svg%3E");
+    background-repeat: no-repeat;
+    background-position: right 0.6rem center;
+    background-size: 10px;
+    -webkit-appearance: none;
+    -moz-appearance: none;
+    appearance: none;
+}
+
+    .brew-lang-select:hover {
+        background-color: rgba(201,149,106,0.18);
+        color: #fff8ee;
+    }
+
+    .brew-lang-select:focus {
+        outline: none;
+        border-color: #d9b48f;
+        box-shadow: 0 0 0 0.15rem rgba(201,149,106,0.25);
+    }
+
+    .brew-lang-select option {
+        background-color: #1a2712;
+        color: #f0e0c0;
+    }
+
+@media (max-width: 767px) {
+    .brew-lang-form {
+        margin-top: 0.5rem;
+    }
+}
