@@ -14,6 +14,8 @@ using Microsoft.Extensions.DependencyInjection;
 using BrewTime.Infraestructure.Configuration;
 using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Builder;
+using Microsoft.AspNetCore.Authentication.Cookies;
+using Microsoft.AspNetCore.Authentication;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -36,6 +38,19 @@ builder.Host.UseSerilog(logger);
 
 // localizacion e idiomas 
 builder.Services.AddLocalization(options => options.ResourcesPath = "Resources");
+// login
+builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationScheme)
+    .AddCookie(options =>
+    {
+        options.LoginPath = "/Login/Index";
+        options.AccessDeniedPath = "/Login/AccessDenied";
+
+        options.Cookie.Name = "BrewTimeAuth";
+
+        options.ExpireTimeSpan = TimeSpan.FromHours(8);
+
+        options.SlidingExpiration = true;
+    });
 
 builder.Services.AddControllersWithViews()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
@@ -74,6 +89,7 @@ builder.Services.AddTransient<IServiceMenuCombo, ServiceMenuCombo>();
 builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparacion>();
 builder.Services.AddTransient<IServiceUsuario, ServiceUsuario>();
 builder.Services.AddTransient<IServiceIngrediente, ServiceIngrediente>();
+builder.Services.AddTransient<IServiceAutenticacion, ServiceAutenticacion>();
 
 // CHATBOT 
 builder.Services.Configure<OpenRouterSettings>(builder.Configuration.GetSection("OpenRouter"));
@@ -120,7 +136,10 @@ else
 
 app.UseSerilogRequestLogging();
 app.UseHttpsRedirection();
+
 app.UseRouting();
+
+app.UseAuthentication();
 
 app.UseAuthorization();
 app.UseAntiforgery();

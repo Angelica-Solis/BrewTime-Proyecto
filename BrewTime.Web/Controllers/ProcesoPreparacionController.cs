@@ -1,12 +1,14 @@
 ﻿using BrewTime.Application.DTOs;
 using BrewTime.Application.Services.Implementations;
 using BrewTime.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace BrewTime.Web.Controllers
 {
+    [Authorize]
     public class ProcesoPreparacionController : Controller
     {
         private readonly IServiceProcesoPreparacion _serviceProcesoPreparacion;

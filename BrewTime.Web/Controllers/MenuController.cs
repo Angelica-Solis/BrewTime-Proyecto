@@ -1,10 +1,12 @@
 ﻿using BrewTime.Application.DTOs;
 using BrewTime.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BrewTime.Web.Controllers
 {
+    [Authorize]
     public class MenuController : Controller
     {
         private readonly IServiceMenu _serviceMenu;
