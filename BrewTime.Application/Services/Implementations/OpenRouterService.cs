@@ -23,7 +23,7 @@ namespace BrewTime.Application.Services.Implementations
 
 
 
-        public async Task<string> SendMessageAsync(string message)
+        public async Task<string> SendMessageAsync(string systemPrompt, string message)
         {
 
             using HttpClient client = new();
@@ -57,11 +57,7 @@ namespace BrewTime.Application.Services.Implementations
         new
         {
             role="system",
-            content=
-            """
-            Eres un asistente de una cafetería.
-            Responde únicamente información relacionada con BrewTime.
-            """
+            content=systemPrompt
         },
 
         new

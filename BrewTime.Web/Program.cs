@@ -95,8 +95,11 @@ builder.Services.AddTransient<IServicePedido, ServicePedido>();
 
 // CHATBOT 
 builder.Services.Configure<OpenRouterSettings>(builder.Configuration.GetSection("OpenRouter"));
+builder.Services.Configure<ChatbotFaqSettings>(builder.Configuration.GetSection("ChatbotFaq"));
 builder.Services.AddScoped<IServiceChatBot, ServiceChatBot>();
 builder.Services.AddScoped<IOpenRouterService, OpenRouterService>();
+// Singleton porque el PDF se lee y se cachea una sola vez en memoria.
+builder.Services.AddSingleton<IServiceFaqKnowledgeBase, ServiceFaqKnowledgeBase>();
 
 // automapper
 builder.Services.AddAutoMapper(config =>
