@@ -390,3 +390,34 @@ body {
         margin-top: 0.5rem;
     }
 }
+/* Dropdowns de Navbar */
+.brew-navbar .dropdown-menu {
+    background-color: #1a2712 !important;
+    border: 1px solid rgba(201,149,106,0.3) !important;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.3);
+    margin-top: 0.5rem;
+    padding: 0.5rem 0;
+}
+
+.brew-navbar .dropdown-item {
+    font-family: 'Inter', sans-serif;
+    font-size: 0.78rem;
+    font-weight: 500;
+    color: rgba(230,210,180,0.7) !important;
+    letter-spacing: 0.08em;
+    text-transform: uppercase;
+    padding: 0.5rem 1.25rem !important;
+    transition: all 0.18s ease;
+    background: transparent !important;
+}
+
+.brew-navbar .dropdown-item:hover {
+    color: #f0e0c0 !important;
+    background-color: rgba(201,149,106,0.15) !important;
+}
+
+.brew-navbar .dropdown-toggle::after {
+    color: rgba(230,210,180,0.65);
+    margin-left: 0.35rem;
+    vertical-align: 0.15em;
+}

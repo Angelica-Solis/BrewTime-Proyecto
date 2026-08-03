@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -11,5 +11,6 @@ namespace BrewTime.Application.Services.Interfaces
     public interface IServiceAutenticacion
     {
         Task<Usuario?> LoginAsync(LoginDTO dto);
+        Task<Usuario?> GetUsuarioByIdAsync(int id);
     }
 }

@@ -26,11 +26,14 @@
                 <span></span>
             </div>
             @* Botón de mantenimiento - se ocultará según rol *@
-            <div class="brew-hero-actions">
-                <a asp-action="Maintenance" class="brew-btn-admin">
-                    @SharedLocalizer["AdministrarProductos"]
-                </a>
-            </div>
+            @if (User.IsInRole("Administrador") || User.IsInRole("Encargado"))
+            {
+                <div class="brew-hero-actions">
+                    <a asp-action="Maintenance" class="brew-btn-admin">
+                        @SharedLocalizer["AdministrarProductos"]
+                    </a>
+                </div>
+            }
         </div>
     </div>
 

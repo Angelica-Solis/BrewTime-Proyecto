@@ -1,4 +1,4 @@
-﻿using System;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -35,6 +35,11 @@ namespace BrewTime.Application.Services.Implementations
                 return null;
 
             return usuario;
+        }
+
+        public async Task<Usuario?> GetUsuarioByIdAsync(int id)
+        {
+            return await _repository.FindByIdAsync(id);
         }
     }
 }
