@@ -74,7 +74,7 @@ namespace BrewTime.Web.Controllers
             return RedirectToAction(nameof(Index));
         }
 
-        // Switch user (testing/role verification)
+        // Cambiar el usuario para la verificacion
         [HttpPost]
         public async Task<IActionResult> SwitchUser(int usuarioId)
         {
