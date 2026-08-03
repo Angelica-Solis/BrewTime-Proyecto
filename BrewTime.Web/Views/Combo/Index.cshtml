@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BrewTime.Application.DTOs.ComboDTO>
+@model IEnumerable<BrewTime.Application.DTOs.ComboDTO>
 @using Microsoft.AspNetCore.Mvc.Localization
 @using BrewTime.Web
 @inject IHtmlLocalizer<SharedResource> SharedLocalizer
@@ -26,11 +26,14 @@
                 <i>@SharedLocalizer["OffersAndSpecialPrices"]</i>
                 <span></span>
             </div>
-            <div class="brew-hero-actions">
-                <a asp-action="Maintenance" class="brew-btn-admin">
-                    @SharedLocalizer["ManageCombos"]
-                </a>
-            </div>
+            @if (User.IsInRole("Administrador") || User.IsInRole("Encargado"))
+            {
+                <div class="brew-hero-actions">
+                    <a asp-action="Maintenance" class="brew-btn-admin">
+                        @SharedLocalizer["ManageCombos"]
+                    </a>
+                </div>
+            }
         </div>
     </div>
 

@@ -1,4 +1,4 @@
-﻿using System.Security.Claims;
+using System.Security.Claims;
 using BrewTime.Application.DTOs;
 using BrewTime.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authentication;
@@ -72,6 +72,42 @@ namespace BrewTime.Web.Controllers
             TempData["Success"] = "La sesión se cerró correctamente.";
 
             return RedirectToAction(nameof(Index));
+        }
+
+        // Switch user (testing/role verification)
+        [HttpPost]
+        public async Task<IActionResult> SwitchUser(int usuarioId)
+        {
+            var usuario = await _service.GetUsuarioByIdAsync(usuarioId);
+            if (usuario == null)
+            {
+                TempData["Error"] = "Usuario no encontrado.";
+                return RedirectToAction("Index", "Home");
+            }
+
+            await HttpContext.SignOutAsync(CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var claims = new List<Claim>
+            {
+                new Claim(ClaimTypes.NameIdentifier, usuario.UsuarioId.ToString()),
+                new Claim(ClaimTypes.Name, usuario.Nombre + " " + usuario.Apellidos),
+                new Claim(ClaimTypes.Email, usuario.Correo),
+                new Claim(ClaimTypes.Role, usuario.Rol.Nombre)
+            };
+
+            var identity = new ClaimsIdentity(
+                claims,
+                CookieAuthenticationDefaults.AuthenticationScheme);
+
+            var principal = new ClaimsPrincipal(identity);
+
+            await HttpContext.SignInAsync(
+                CookieAuthenticationDefaults.AuthenticationScheme,
+                principal);
+
+            TempData["Success"] = $"¡Sesión cambiada a {usuario.Nombre} ({usuario.Rol.Nombre})!";
+
+            return RedirectToAction("Index", "Home");
         }
     }
 }

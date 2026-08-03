@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BrewTime.Application.DTOs.MenuDTO>
+@model IEnumerable<BrewTime.Application.DTOs.MenuDTO>
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
@@ -27,12 +27,15 @@
             </p>
 
             @* Botón de mantenimiento; posteriormente puede ocultarse según el rol *@
-            <div class="menu-hero-actions">
-                <a asp-action="Maintenance"
-                   class="menu-btn-admin">
-                    @SharedLocalizer["AdministrarMenusBtn"]
-                </a>
-            </div>
+            @if (User.IsInRole("Administrador") || User.IsInRole("Encargado"))
+            {
+                <div class="menu-hero-actions">
+                    <a asp-action="Maintenance"
+                       class="menu-btn-admin">
+                        @SharedLocalizer["AdministrarMenusBtn"]
+                    </a>
+                </div>
+            }
 
         </div>
     </div>

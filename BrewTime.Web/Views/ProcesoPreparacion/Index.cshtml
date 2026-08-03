@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
 @using BrewTime.Web
 @model ICollection<ProcesoPreparacionListadoDTO>
 
@@ -28,11 +28,14 @@
             </div>
 
 
-            <div class="brew-hero-actions">
-                <a asp-action="Maintenance" class="brew-btn-admin">
-                    @SharedLocalizer["BtnAdministrar"]
-                </a>
-            </div>
+            @if (User.IsInRole("Administrador") || User.IsInRole("Encargado"))
+            {
+                <div class="brew-hero-actions">
+                    <a asp-action="Maintenance" class="brew-btn-admin">
+                        @SharedLocalizer["BtnAdministrar"]
+                    </a>
+                </div>
+            }
         </div>
     </div>
 
