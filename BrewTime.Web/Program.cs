@@ -1,4 +1,4 @@
-﻿using BrewTime.Application.Profiles;
+using BrewTime.Application.Profiles;
 using BrewTime.Application.Services.Implementations;
 using BrewTime.Application.Services.Interfaces;
 using BrewTime.Infraestructure.Data;
@@ -77,6 +77,8 @@ builder.Services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
 builder.Services.AddTransient<IRepositoryEstacionCocina, RepositoryEstacionCocina>();
 builder.Services.AddTransient<IRepositoryIngrediente, RepositoryIngrediente>();
 builder.Services.AddTransient<IRepositoryCarrito, RepositoryCarrito>();
+builder.Services.AddTransient<IRepositoryPedido, RepositoryPedido>();
+
 
 // dependencias del services 
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
@@ -92,11 +94,15 @@ builder.Services.AddTransient<IServiceUsuario, ServiceUsuario>();
 builder.Services.AddTransient<IServiceIngrediente, ServiceIngrediente>();
 builder.Services.AddTransient<IServiceAutenticacion, ServiceAutenticacion>();
 builder.Services.AddTransient<IServiceCarrito, ServiceCarrito>();
+builder.Services.AddTransient<IServicePedido, ServicePedido>();
 
 // CHATBOT 
 builder.Services.Configure<OpenRouterSettings>(builder.Configuration.GetSection("OpenRouter"));
+builder.Services.Configure<ChatbotFaqSettings>(builder.Configuration.GetSection("ChatbotFaq"));
 builder.Services.AddScoped<IServiceChatBot, ServiceChatBot>();
 builder.Services.AddScoped<IOpenRouterService, OpenRouterService>();
+// Singleton porque el PDF se lee y se cachea una sola vez en memoria.
+builder.Services.AddSingleton<IServiceFaqKnowledgeBase, ServiceFaqKnowledgeBase>();
 
 // automapper
 builder.Services.AddAutoMapper(config =>
@@ -111,6 +117,8 @@ builder.Services.AddAutoMapper(config =>
     config.AddProfile<UsuarioProfile>();
     config.AddProfile<EstacionCocinaProfile>();
     config.AddProfile<CarritoProfile>();
+    config.AddProfile<PedidoProfile>();
+
 });
 
 // bd

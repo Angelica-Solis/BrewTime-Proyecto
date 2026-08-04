@@ -8,6 +8,6 @@ namespace BrewTime.Application.Services.Interfaces
 {
     public interface IOpenRouterService
     {
-        Task<string> SendMessageAsync(string message);
+        Task<string> SendMessageAsync(string systemPrompt, string message);
     }
 }

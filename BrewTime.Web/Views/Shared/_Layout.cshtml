@@ -1,4 +1,4 @@
-﻿<!DOCTYPE html>
+<!DOCTYPE html>
 <html lang="en">
 @using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Localization
@@ -8,6 +8,7 @@
 
 @inject IOptions<RequestLocalizationOptions> LocOptions
 @inject IHtmlLocalizer<SharedResource> SharedLocalizer
+@inject BrewTime.Application.Services.Interfaces.IServiceUsuario ServiceUsuario
 <head>
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
@@ -80,31 +81,87 @@
 
                 <!-- Links -->
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
-                    <ul class="navbar-nav flex-grow-1">
+                    <ul class="navbar-nav flex-grow-1 align-items-center flex-wrap">
                          <li class="nav-item">
                           <a class="brew-nav-link nav-link" asp-area="" asp-controller="Home" asp-action="Index">@SharedLocalizer["Inicio"]</a>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="ProcesoPreparacion" asp-action="Index">@SharedLocalizer["Procesos"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Producto" asp-action="Index">@SharedLocalizer["Productos"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Combo" asp-action="Index">@SharedLocalizer["Combos"]</a>
+                        @if (User.Identity!.IsAuthenticated)
+                        {
+                            <li class="nav-item">
+                                <a class="brew-nav-link nav-link" asp-area="" asp-controller="Pedido" asp-action="Index">Pedidos</a>
+                            </li>
+
+                            <!-- Dropdown de Menús -->
+                            <li class="nav-item dropdown">
+                                <a class="brew-nav-link nav-link dropdown-toggle" href="#" id="navbarDropdownMenus" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Menús
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenus" style="background-color: #1a2712; border-color: rgba(201,149,106,0.3);">
+                                    <li><a class="dropdown-item brew-nav-link" asp-controller="Menu" asp-action="Disponible">@SharedLocalizer["MenuDisponible"]</a></li>
+                                    <li><a class="dropdown-item brew-nav-link" asp-controller="Menu" asp-action="Index">Historial de Menús</a></li>
+                                </ul>
+                            </li>
+
+                            <!-- Dropdown de Explorar -->
+                            <li class="nav-item dropdown">
+                                <a class="brew-nav-link nav-link dropdown-toggle" href="#" id="navbarDropdownExplorar" role="button" data-bs-toggle="dropdown" aria-expanded="false">
+                                    Explorar
+                                </a>
+                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownExplorar" style="background-color: #1a2712; border-color: rgba(201,149,106,0.3);">
+                                    <li><a class="dropdown-item brew-nav-link" asp-controller="Producto" asp-action="Index">@SharedLocalizer["Productos"]</a></li>
+                                    <li><a class="dropdown-item brew-nav-link" asp-controller="Combo" asp-action="Index">@SharedLocalizer["Combos"]</a></li>
+                                    <li><a class="dropdown-item brew-nav-link" asp-controller="ProcesoPreparacion" asp-action="Index">@SharedLocalizer["Procesos"]</a></li>
+                                </ul>
+                            </li>
+
+                            @if (User.IsInRole("Administrador"))
+                            {
+                                <li class="nav-item">
+                                    <a class="brew-nav-link nav-link" asp-controller="Usuario" asp-action="Index">@SharedLocalizer["Usuarios"]</a>
+                                </li>
+                            }
+                        }
+                        else
+                        {
+                            <li class="nav-item">
+                                <a class="brew-nav-link nav-link" asp-area="" asp-controller="Menu" asp-action="Disponible">@SharedLocalizer["MenuDisponible"]</a>
+                            </li>
+                        }
+
+                        <!-- Separador flexible para empujar la autenticación y selección a la derecha -->
+                        <div class="flex-grow-1"></div>
+
+                        <!-- Selector de Usuario (Simulador de roles) -->
+                        <li class="nav-item brew-lang-item">
+                            @{
+                                var testUsers = await ServiceUsuario.ListAsync();
+                                var currentUserClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+                                int.TryParse(currentUserClaim, out int currentUserId);
+                            }
+                            <form asp-controller="Login" asp-action="SwitchUser" method="post" id="switchUserForm" class="brew-lang-form">
+                                <span class="brew-lang-label">Usuario/Rol:</span>
+                                <select name="usuarioId" class="brew-lang-select" onchange="document.getElementById('switchUserForm').submit();" style="max-width: 170px;">
+                                    <option value="">-- Cambiar Usuario --</option>
+                                    @foreach (var u in testUsers)
+                                    {
+                                        if (u.Activo)
+                                        {
+                                            if (u.UsuarioId == currentUserId)
+                                            {
+                                                <option value="@u.UsuarioId" selected="selected">@u.Nombre (@u.NombreRol)</option>
+                                            }
+                                            else
+                                            {
+                                                <option value="@u.UsuarioId">@u.Nombre (@u.NombreRol)</option>
+                                            }
+                                        }
+                                    }
+                                </select>
+                            </form>
                         </li>
 
-                        <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Menu" asp-action="Maintenance">@SharedLocalizer["Menus"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Menu" asp-action="Disponible">@SharedLocalizer["MenuDisponible"]</a>
-                        </li>
-                        <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Usuario" asp-action="Index">@SharedLocalizer["Usuarios"]</a>
-                        </li>
-
+                        <!-- Selector de Idioma -->
                         <li class="nav-item brew-lang-item">
                             @{
                                 var requestCulture = Context.Features.Get<IRequestCultureFeature>();
