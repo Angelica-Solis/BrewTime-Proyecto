@@ -89,5 +89,11 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                 )
                 .ToListAsync();
         }
+        public async Task<bool> ExisteNombreAsync(string nombre, int? excludeId = null)
+        {
+            return await _context.Set<Producto>()
+                .AnyAsync(p => p.Nombre.ToLower() == nombre.ToLower()
+                            && (excludeId == null || p.ProductoId != excludeId));
+        }
     }
 }

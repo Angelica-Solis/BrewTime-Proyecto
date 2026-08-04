@@ -1,8 +1,11 @@
 ﻿@model IEnumerable<BrewTime.Application.DTOs.ComboDTO>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
 @{
     var inactivos = ViewBag.Inactivos as IEnumerable<BrewTime.Application.DTOs.ComboDTO>
-                   ?? Enumerable.Empty<BrewTime.Application.DTOs.ComboDTO>();
-    ViewData["Title"] = "Mantenimiento de Combos";
+                    ?? Enumerable.Empty<BrewTime.Application.DTOs.ComboDTO>();
+    ViewData["Title"] = SharedLocalizer["Title_ComboMaintenance"];
 }
 
 @section Styles {
@@ -13,11 +16,11 @@
 
     <div class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Brew Time · Administración</p>
-            <h1 class="brew-titulo">Mantenimiento de <em>Combos</em></h1>
-            <p class="brew-subtitulo">Activá o desactivá combos del catálogo.</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["BrewTimeAdministration"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["MaintenanceTitleBefore"] <em>@SharedLocalizer["MaintenanceTitleItalic"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["HeroSubtitleMaintenance"]</p>
             <div class="brew-hero-line">
-                <span></span><i>Gestión de combos</i><span></span>
+                <span></span><i>@SharedLocalizer["CombosManagement"]</i><span></span>
             </div>
         </div>
     </div>
@@ -26,20 +29,20 @@
 
         @* Toolbar *@
         <div class="brew-maint-toolbar">
-            <a asp-action="Index" class="brew-btn-volver">← Volver al listado</a>
-            <a asp-action="Create" class="brew-btn-nuevo">+ Nuevo combo</a>
+            <a asp-action="Index" class="brew-btn-volver">← @SharedLocalizer["BackToList"]</a>
+            <a asp-action="Create" class="brew-btn-nuevo">+ @SharedLocalizer["NewComboBtn"]</a>
         </div>
 
         @* ── COMBOS ACTIVOS ── *@
         <h2 class="brew-section-title">
             <span class="brew-section-dot activo"></span>
-            Combos activos
+            @SharedLocalizer["ActiveCombos"]
             <span class="brew-section-count">@Model.Count()</span>
         </h2>
 
         @if (!Model.Any())
         {
-            <div class="brew-empty"><span class="brew-empty-icon">☕</span><p>No hay combos activos.</p></div>
+            <div class="brew-empty"><span class="brew-empty-icon">☕</span><p>@SharedLocalizer["NoActiveCombos"]</p></div>
         }
         else
         {
@@ -47,10 +50,10 @@
                 <table class="brew-maint-table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Categoría</th>
-                            <th>Precio especial</th>
-                            <th class="text-center">Acciones</th>
+                            <th>@SharedLocalizer["ThName"]</th>
+                            <th>@SharedLocalizer["ThCategory"]</th>
+                            <th>@SharedLocalizer["ThSpecialPrice"]</th>
+                            <th class="text-center">@SharedLocalizer["ThActions"]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -62,17 +65,17 @@
                                 <td>@item.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
                                 <td class="brew-maint-actions">
                                     <a asp-action="Edit" asp-route-id="@item.ComboID" class="brew-btn-editar">
-                                        <i class="bi bi-pencil"></i> Editar
+                                        <i class="bi bi-pencil"></i> @SharedLocalizer["BtnEdit"]
                                     </a>
                                     <a asp-action="Detail" asp-route-id="@item.ComboID" class="brew-btn-editar">
-                                        <i class="bi bi-eye"></i> Ver detalle
+                                        <i class="bi bi-eye"></i> @SharedLocalizer["BtnViewDetail"]
                                     </a>
                                     @* Formulario para desactivar *@
                                     <form asp-action="ToggleActivo" method="post" style="display:inline">
                                         <input type="hidden" name="id" value="@item.ComboID" />
-                                        <button type="button" class="brew-btn-desactivar btn-toggle-combo" 
+                                        <button type="button" class="brew-btn-desactivar btn-toggle-combo"
                                                 data-nombre="@item.Nombre" data-accion="desactivar">
-                                            <i class="bi bi-toggle-on"></i> Desactivar
+                                            <i class="bi bi-toggle-on"></i> @SharedLocalizer["BtnDeactivate"]
                                         </button>
                                     </form>
                                 </td>
@@ -86,13 +89,13 @@
         @* ── COMBOS INACTIVOS ── *@
         <h2 class="brew-section-title" style="margin-top:2.5rem;">
             <span class="brew-section-dot inactivo"></span>
-            Combos inactivos
+            @SharedLocalizer["InactiveCombos"]
             <span class="brew-section-count">@inactivos.Count()</span>
         </h2>
 
         @if (!inactivos.Any())
         {
-            <div class="brew-empty"><span class="brew-empty-icon">✓</span><p>No hay combos inactivos.</p></div>
+            <div class="brew-empty"><span class="brew-empty-icon">✓</span><p>@SharedLocalizer["NoInactiveCombos"]</p></div>
         }
         else
         {
@@ -100,10 +103,10 @@
                 <table class="brew-maint-table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Categoría</th>
-                            <th>Precio especial</th>
-                            <th class="text-center">Acciones</th>
+                            <th>@SharedLocalizer["ThName"]</th>
+                            <th>@SharedLocalizer["ThCategory"]</th>
+                            <th>@SharedLocalizer["ThSpecialPrice"]</th>
+                            <th class="text-center">@SharedLocalizer["ThActions"]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -115,17 +118,17 @@
                                 <td>@item.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
                                 <td class="brew-maint-actions">
                                     <a asp-action="Edit" asp-route-id="@item.ComboID" class="brew-btn-editar">
-                                        <i class="bi bi-pencil"></i> Editar
+                                        <i class="bi bi-pencil"></i> @SharedLocalizer["BtnEdit"]
                                     </a>
                                     <a asp-action="Detail" asp-route-id="@item.ComboID" class="brew-btn-editar">
-                                        <i class="bi bi-eye"></i> Ver detalle
+                                        <i class="bi bi-eye"></i> @SharedLocalizer["BtnViewDetail"]
                                     </a>
                                     @* Formulario para activar *@
                                     <form asp-action="ToggleActivo" method="post" style="display:inline">
                                         <input type="hidden" name="id" value="@item.ComboID" />
-                                        <button type="button" class="brew-btn-activar btn-toggle-combo" 
+                                        <button type="button" class="brew-btn-activar btn-toggle-combo"
                                                 data-nombre="@item.Nombre" data-accion="activar">
-                                            <i class="bi bi-toggle-off"></i> Activar
+                                            <i class="bi bi-toggle-off"></i> @SharedLocalizer["BtnActivate"]
                                         </button>
                                     </form>
                                 </td>
@@ -151,16 +154,16 @@
                 const esDesactivar = accion === 'desactivar';
 
                 Swal.fire({
-                    title: esDesactivar ? '¿Desactivar combo?' : '¿Activar combo?',
-                    text: esDesactivar 
-                        ? `El combo "${nombre}" ya no estará visible en el menú.`
-                        : `El combo "${nombre}" volverá a estar visible en el menú.`,
+                    title: esDesactivar ? '@SharedLocalizer["SwalTitleDeactivate"]' : '@SharedLocalizer["SwalTitleActivate"]',
+                    text: esDesactivar
+                        ? `@SharedLocalizer["SwalTextDeactivateBefore"] "${nombre}" @SharedLocalizer["SwalTextDeactivateAfter"]`
+                        : `@SharedLocalizer["SwalTextActivateBefore"] "${nombre}" @SharedLocalizer["SwalTextActivateAfter"]`,
                     icon: 'warning',
                     showCancelButton: true,
                     confirmButtonColor: esDesactivar ? '#8a2020' : '#243318',
                     cancelButtonColor: '#5a3e28',
-                    confirmButtonText: esDesactivar ? 'Sí, desactivar' : 'Sí, activar',
-                    cancelButtonText: 'Cancelar',
+                    confirmButtonText: esDesactivar ? '@SharedLocalizer["SwalConfirmDeactivate"]' : '@SharedLocalizer["SwalConfirmActivate"]',
+                    cancelButtonText: '@SharedLocalizer["SwalCancel"]',
                     background: '#f0e2cc',
                     color: '#2e1e0e'
                 }).then((result) => {

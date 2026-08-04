@@ -11,5 +11,7 @@ namespace BrewTime.Infraestructure.Repository.Implemetations.Interfaces
     {
         Task<ICollection<Usuario>> ListAsync();
         Task<Usuario> FindByIdAsync(int id);
+        // encontrar usuario por correo
+        Task<Usuario?> FindByCorreoAsync(string correo);
     }
 }

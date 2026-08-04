@@ -1,24 +1,26 @@
 ﻿@model BrewTime.Application.DTOs.MenuDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet" href="~/css/Menu.css" asp-append-version="true" />
 }
 
 @{
-    ViewData["Title"] = "Detalle del Menú";
+    ViewData["Title"] = SharedLocalizer["DetalleMenuTitulo"].Value;
 
     string NombreDia(byte dia)
     {
         return dia switch
         {
-            1 => "Lunes",
-            2 => "Martes",
-            3 => "Miércoles",
-            4 => "Jueves",
-            5 => "Viernes",
-            6 => "Sábado",
-            7 => "Domingo",
-            _ => "Día no definido"
+            1 => SharedLocalizer["Lunes"].Value,
+            2 => SharedLocalizer["Martes"].Value,
+            3 => SharedLocalizer["Miercoles"].Value,
+            4 => SharedLocalizer["Jueves"].Value,
+            5 => SharedLocalizer["Viernes"].Value,
+            6 => SharedLocalizer["Sabado"].Value,
+            7 => SharedLocalizer["Domingo"].Value,
+            _ => SharedLocalizer["DiaNoDefinido"].Value
         };
     }
 }
@@ -28,10 +30,10 @@
     <partial name="_Chatbot" />
     <div class="menu-hero">
         <div class="menu-hero-inner">
-            <p class="menu-eyebrow">Brew Time · Cafetería</p>
-            <h1 class="menu-title">Detalle del <em>Menú</em></h1>
+            <p class="menu-eyebrow">@SharedLocalizer["CafeteriaEyebrow"]</p>
+            <h1 class="menu-title">@SharedLocalizer["DetalleDelTxt"] <em>@SharedLocalizer["MenuEm"]</em></h1>
             <p class="menu-subtitle">
-                Información completa del menú seleccionado.
+                @SharedLocalizer["DescDetalleMenu"]
             </p>
         </div>
     </div>
@@ -39,7 +41,7 @@
     <div class="menu-content">
 
         <a asp-action="Maintenance" class="menu-btn-secondary">
-            ← Volver al listado
+            ← @SharedLocalizer["VolverListadoBtn"]
         </a>
 
         <div class="menu-detail-card">
@@ -56,14 +58,14 @@
                 <div class="menu-info-grid">
 
                     <div class="menu-info-item">
-                        <span class="menu-info-label">Horario</span>
+                        <span class="menu-info-label">@SharedLocalizer["HorarioLabel"]</span>
                         <span class="menu-info-value">
                             @Model.HoraInicio.ToString("HH:mm") - @Model.HoraFin.ToString("HH:mm")
                         </span>
                     </div>
 
                     <div class="menu-info-item">
-                        <span class="menu-info-label">Fechas</span>
+                        <span class="menu-info-label">@SharedLocalizer["FechasLabel"]</span>
                         <span class="menu-info-value">
                             @if (Model.FechaInicio != null && Model.FechaFin != null)
                             {
@@ -75,21 +77,21 @@
                             }
                             else
                             {
-                                <span>No definido</span>
+                                <span>@SharedLocalizer["NoDefinido"]</span>
                             }
                         </span>
                     </div>
 
                     <div class="menu-info-item">
-                        <span class="menu-info-label">Estado</span>
+                        <span class="menu-info-label">@SharedLocalizer["EstadoLabel"]</span>
                         <span class="menu-info-value">
                             @if (Model.Activo)
                             {
-                                <span class="menu-badge-active">Activo</span>
+                                <span class="menu-badge-active">@SharedLocalizer["ActivoBadge"]</span>
                             }
                             else
                             {
-                                <span class="menu-badge-inactive">Inactivo</span>
+                                <span class="menu-badge-inactive">@SharedLocalizer["InactivoBadge"]</span>
                             }
                         </span>
                     </div>
@@ -97,7 +99,7 @@
                 </div>
 
                 <h2 class="menu-detail-title">
-                    Días <em>disponibles</em>
+                    @SharedLocalizer["DiasTxt"] <em>@SharedLocalizer["DisponiblesEm"]</em>
                 </h2>
 
                 @if (Model.MenuDiaSemana != null && Model.MenuDiaSemana.Any())
@@ -111,14 +113,14 @@
                 }
                 else
                 {
-                    <p class="menu-empty">No hay días registrados para este menú.</p>
+                    <p class="menu-empty">@SharedLocalizer["NoDiasRegistrados"]</p>
                 }
 
             </div>
         </div>
 
         <h2 class="menu-detail-title">
-            Productos del <em>menú</em>
+            @SharedLocalizer["ProductosDelTxt"] <em>@SharedLocalizer["MenuEm"]</em>
         </h2>
 
         @if (Model.MenuProducto != null && Model.MenuProducto.Any())
@@ -127,9 +129,9 @@
                 <table class="menu-table">
                     <thead>
                         <tr>
-                            <th>Producto</th>
-                            <th>Categoría</th>
-                            <th>Precio</th>
+                            <th>@SharedLocalizer["ProductoLabel"]</th>
+                            <th>@SharedLocalizer["CategoriaLabel"]</th>
+                            <th>@SharedLocalizer["PrecioLabel"]</th>
                         </tr>
                     </thead>
 
@@ -153,7 +155,7 @@
                                     else
                                     {
                                         <span class="menu-category-chip menu-category-chip-empty">
-                                            Sin categoría
+                                            @SharedLocalizer["SinCategoria"]
                                         </span>
                                     }
                                 </td>
@@ -173,13 +175,13 @@
         {
             <div class="menu-detail-card">
                 <div class="menu-detail-body">
-                    <p class="menu-empty">No hay productos registrados para este menú.</p>
+                    <p class="menu-empty">@SharedLocalizer["NoProductosRegistrados"]</p>
                 </div>
             </div>
         }
 
         <h2 class="menu-detail-title">
-            Combos del <em>menú</em>
+            @SharedLocalizer["CombosDelTxt"] <em>@SharedLocalizer["MenuEm"]</em>
         </h2>
 
         @if (Model.MenuCombo != null && Model.MenuCombo.Any())
@@ -188,9 +190,9 @@
                 <table class="menu-table">
                     <thead>
                         <tr>
-                            <th>Combo</th>
-                            <th>Categoría</th>
-                            <th>Precio especial</th>
+                            <th>@SharedLocalizer["ComboLabel"]</th>
+                            <th>@SharedLocalizer["CategoriaLabel"]</th>
+                            <th>@SharedLocalizer["PrecioEspecialLabel"]</th>
                         </tr>
                     </thead>
 
@@ -214,7 +216,7 @@
                                     else
                                     {
                                         <span class="menu-category-chip menu-category-chip-empty">
-                                            Sin categoría
+                                            @SharedLocalizer["SinCategoria"]
                                         </span>
                                     }
                                 </td>
@@ -234,7 +236,7 @@
         {
             <div class="menu-detail-card">
                 <div class="menu-detail-body">
-                    <p class="menu-empty">No hay combos registrados para este menú.</p>
+                    <p class="menu-empty">@SharedLocalizer["NoCombosRegistrados"]</p>
                 </div>
             </div>
         }

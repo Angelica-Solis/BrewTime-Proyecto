@@ -17,5 +17,6 @@ namespace BrewTime.Infraestructure.Repository.Implemetations.Interfaces
         void DeleteImagen(ProductoImagen imagen);
         Task ToggleActivoAsync(int id);
         Task<ICollection<Producto>> ProductosSinProcesoAsync();
+        Task<bool> ExisteNombreAsync(string nombre, int? excludeId = null);
     }
 }

@@ -1,4 +1,6 @@
 @model BrewTime.Application.DTOs.ProductoDetalleDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
@@ -14,12 +16,12 @@
     @* Hero banner *@
     <div class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Brew Time · Cafetería</p>
-            <h1 class="brew-titulo">Detalle del <em>Producto</em></h1>
-            <p class="brew-subtitulo">Todo lo que necesitas saber sobre esta preparación.</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["BrewTimeCafeteria"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["DetalleDel"] <em>@SharedLocalizer["ProductoEm"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["DescDetalleProducto"]</p>
             <div class="brew-hero-line">
                 <span></span>
-                <i>Ingredientes &amp; precio</i>
+                <i>@SharedLocalizer["IngredientesPrecio"]</i>
                 <span></span>
             </div>
         </div>
@@ -28,7 +30,7 @@
     @* Contenido *@
     <div class="brew-content">
 
-        <a asp-action="Index" class="brew-btn-volver">← Volver al listado</a>
+        <a asp-action="Index" class="brew-btn-volver">← @SharedLocalizer["VolverListadoBtn"]</a>
 
         <div class="brew-detail-card">
 
@@ -97,7 +99,7 @@
                 {
                     <div class="brew-detail-img-placeholder">
                         <span>☕</span>
-                        <p>Sin imagen disponible</p>
+                        <p>@SharedLocalizer["SinImagenDisponible"]</p>
                     </div>
                 }
             </div>
@@ -117,26 +119,26 @@
                 <div class="brew-detail-meta">
 
                     <div class="brew-meta-item">
-                        <span class="brew-meta-label">Precio</span>
+                        <span class="brew-meta-label">@SharedLocalizer["PrecioLabel"]</span>
                         <span class="brew-badge-tiempo">
                             @Model.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))
                         </span>
                     </div>
 
                     <div class="brew-meta-item">
-                        <span class="brew-meta-label">Estado</span>
+                        <span class="brew-meta-label">@SharedLocalizer["EstadoLabel"]</span>
                         @if (Model.Activo)
                         {
-                            <span class="brew-badge-activo">Activo</span>
+                            <span class="brew-badge-activo">@SharedLocalizer["ActivoBadge"]</span>
                         }
                         else
                         {
-                            <span class="brew-badge-inactivo">Inactivo</span>
+                            <span class="brew-badge-inactivo">@SharedLocalizer["InactivoBadge"]</span>
                         }
                     </div>
 
                     <div class="brew-meta-item">
-                        <span class="brew-meta-label">Fecha de creación</span>
+                        <span class="brew-meta-label">@SharedLocalizer["FechaCreacionLabel"]</span>
                         <span class="brew-meta-valor">@Model.FechaCreacion.ToString("dd/MM/yyyy")</span>
                     </div>
 
@@ -144,7 +146,7 @@
 
                 @* Ingredientes *@
                 <div class="brew-detail-ingredientes">
-                    <p class="brew-meta-label">Ingredientes</p>
+                    <p class="brew-meta-label">@SharedLocalizer["IngredientesLabel"]</p>
                     @if (Model.Ingredientes.Any())
                     {
                         <ul class="brew-ingredientes-list">
@@ -159,7 +161,7 @@
                     }
                     else
                     {
-                        <p class="brew-detail-empty">No hay ingredientes registrados.</p>
+                        <p class="brew-detail-empty">@SharedLocalizer["NoHayIngredientesMsj"]</p>
                     }
                 </div>
 

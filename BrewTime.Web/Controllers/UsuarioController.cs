@@ -1,10 +1,12 @@
 ﻿using BrewTime.Application.Services.Implementations;
 using BrewTime.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrewTime.Web.Controllers
 {
+    [Authorize]
     public class UsuarioController : Controller
     {
         private readonly IServiceUsuario _serviceUsuario;

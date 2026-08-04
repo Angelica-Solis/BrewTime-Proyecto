@@ -1,4 +1,6 @@
 ﻿@model IEnumerable<BrewTime.Application.DTOs.MenuDTO>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet"
@@ -7,7 +9,7 @@
 }
 
 @{
-    ViewData["Title"] = "Mantenimiento de Menús";
+    ViewData["Title"] = SharedLocalizer["Title_MenuMaintenance"];
 
     var menusActivos = Model
     .Where(x => x.Activo)
@@ -28,20 +30,20 @@
         <div class="menu-hero-inner">
 
             <p class="menu-eyebrow">
-                Brew Time · Administración
+                @SharedLocalizer["BrewTimeAdministration"]
             </p>
 
             <h1 class="menu-title">
-                Mantenimiento de <em>Menús</em>
+                @SharedLocalizer["MaintenanceOf"] <em>@SharedLocalizer["MenusItalic"]</em>
             </h1>
 
             <p class="menu-subtitle">
-                Cree, modifique y controle la disponibilidad de los menús.
+                @SharedLocalizer["HeroSubtitle"]
             </p>
 
             <div class="menu-hero-line">
                 <span></span>
-                <i>Gestión administrativa</i>
+                <i>@SharedLocalizer["AdministrativeManagement"]</i>
                 <span></span>
             </div>
 
@@ -50,28 +52,21 @@
 
     <div class="menu-content">
 
-       
         <div class="menu-maintenance-toolbar">
 
             <div>
-
-                <h2>Menús registrados</h2>
-
+                <h2>@SharedLocalizer["RegisteredMenus"]</h2>
                 <p>
-                   total de  @(menusActivos.Count + menusInactivos.Count) menú(s) registrado(s)
+                    @SharedLocalizer["TotalOf"] @(menusActivos.Count + menusInactivos.Count) @SharedLocalizer["MenusRegisteredSuffix"]
                 </p>
             </div>
 
             <div class="menu-maintenance-toolbar-actions">
-
-                
-
                 <a asp-action="Create"
                    class="menu-btn-create">
                     <span>＋</span>
-                    Crear menú
+                    @SharedLocalizer["CreateMenu"]
                 </a>
-
             </div>
 
         </div>
@@ -81,7 +76,7 @@
             <div class="menu-detail-card">
                 <div class="menu-detail-body">
                     <p class="menu-empty">
-                        No hay menús activos registrados.
+                        @SharedLocalizer["NoActiveMenusRegistered"]
                     </p>
                 </div>
             </div>
@@ -89,362 +84,278 @@
         else
         {
             <div class="menu-section-heading">
-
                 <div class="menu-section-title">
                     <span class="menu-section-dot"></span>
-                    <h2>Menús activos</h2>
+                    <h2>@SharedLocalizer["ActiveMenus"]</h2>
                 </div>
-
                 <span class="menu-section-count">
                     @menusActivos.Count
                 </span>
-
             </div>
 
             <div class="menu-maintenance-list">
-
                 @foreach (var item in menusActivos)
                 {
                     <article class="menu-maintenance-card">
-
                         <div class="menu-maintenance-stripe"></div>
-
                         <div class="menu-maintenance-main">
-
                             <div class="menu-maintenance-info">
-
                                 <div class="menu-maintenance-title-row">
-
                                     <h3>@item.Nombre</h3>
-
                                     <span class="menu-badge-active">
-                                        Activo
+                                        @SharedLocalizer["BadgeActive"]
                                     </span>
-
                                 </div>
 
                                 <p class="menu-maintenance-description">
                                     @(string.IsNullOrWhiteSpace(item.Descripcion)
-                                                                ? "Sin descripción registrada."
-                                                                : item.Descripcion)
-                        </p>
+                                        ? SharedLocalizer["NoDescriptionRegistered"].Value
+                                        : item.Descripcion)
+                                </p>
 
                                 <div class="menu-maintenance-meta">
-
                                     <div class="menu-maintenance-meta-item">
-                                        <span>Fechas</span>
-
+                                        <span>@SharedLocalizer["Dates"]</span>
                                         <strong>
-                                    @if (item.FechaInicio.HasValue &&
-                                                                        item.FechaFin.HasValue)
+                                            @if (item.FechaInicio.HasValue && item.FechaFin.HasValue)
                                             {
                                                 @($"{item.FechaInicio.Value:dd/MM/yyyy} - {item.FechaFin.Value:dd/MM/yyyy}")
                                             }
                                             else
                                             {
-                                                @("No definido")
+                                                @SharedLocalizer["NotDefined"]
                                             }
                                         </strong>
                                     </div>
 
                                     <div class="menu-maintenance-meta-item">
-                                        <span>Horario</span>
-
+                                        <span>@SharedLocalizer["Schedule"]</span>
                                         <strong>
-                                            @item.HoraInicio.ToString("HH:mm")
-                                            -
-                                            @item.HoraFin.ToString("HH:mm")
+                                            @item.HoraInicio.ToString("HH:mm") - @item.HoraFin.ToString("HH:mm")
                                         </strong>
                                     </div>
 
                                     <div class="menu-maintenance-meta-item">
-                                        <span>Productos</span>
+                                        <span>@SharedLocalizer["Products"]</span>
                                         <strong>@(item.MenuProducto?.Count ?? 0)</strong>
                                     </div>
 
                                     <div class="menu-maintenance-meta-item">
-                                        <span>Combos</span>
+                                        <span>@SharedLocalizer["Combos"]</span>
                                         <strong>@(item.MenuCombo?.Count ?? 0)</strong>
                                     </div>
-
                                 </div>
-
                             </div>
 
                             <div class="menu-maintenance-actions">
-
                                 <a asp-action="Detail"
                                    asp-route-id="@item.MenuId"
                                    class="menu-action-detail">
-                                    Detalle
+                                    @SharedLocalizer["Detail"]
                                 </a>
 
                                 <a asp-action="Edit"
                                    asp-route-id="@item.MenuId"
                                    class="menu-btn-editar">
                                     <i class="bi bi-pencil"></i>
-                                    Editar
+                                    @SharedLocalizer["Edit"]
                                 </a>
 
                                 <form asp-action="ToggleActivo"
                                       asp-route-id="@item.MenuId"
                                       method="post"
                                       class="form-toggle-menu">
-
                                     @Html.AntiForgeryToken()
-
                                     <button type="submit"
                                             class="menu-btn-desactivar"
                                             data-nombre="@item.Nombre"
                                             data-accion="desactivar">
-
                                         <i class="bi bi-toggle-on"></i>
-                                        Desactivar
-
+                                        @SharedLocalizer["Deactivate"]
                                     </button>
-
                                 </form>
-
                             </div>
-
                         </div>
-
                     </article>
                 }
-
             </div>
+
             <div class="menu-inactive-section">
-
                 <div class="menu-section-heading">
-
                     <div class="menu-section-title">
                         <span class="menu-section-dot"></span>
-                        <h2>Menús inactivos</h2>
+                        <h2>@SharedLocalizer["InactiveMenus"]</h2>
                     </div>
-
                     <span class="menu-section-count">
                         @menusInactivos.Count
                     </span>
-
                 </div>
 
                 @if (!menusInactivos.Any())
                 {
                     <div class="menu-empty-state">
-
                         <i class="bi bi-journal-text menu-empty-state-icon"></i>
-
-                        <p>No hay menús inactivos.</p>
-
+                        <p>@SharedLocalizer["NoInactiveMenus"]</p>
                     </div>
                 }
                 else
                 {
                     <div class="menu-maintenance-list">
-
                         @foreach (var item in menusInactivos)
                         {
                             <article class="menu-maintenance-card menu-maintenance-card-inactive">
-
                                 <div class="menu-maintenance-main">
-
                                     <div class="menu-maintenance-info">
-
                                         <div class="menu-maintenance-title-row">
-
                                             <h3>@item.Nombre</h3>
-
                                             <span class="menu-badge-inactive">
-                                                Inactivo
+                                                @SharedLocalizer["BadgeInactive"]
                                             </span>
-
                                         </div>
 
                                         <p class="menu-maintenance-description">
                                             @(string.IsNullOrWhiteSpace(item.Descripcion)
-                                                                            ? "Sin descripción registrada."
-                                                                            : item.Descripcion)
-                            </p>
+                                                ? SharedLocalizer["NoDescriptionRegistered"].Value
+                                                : item.Descripcion)
+                                        </p>
 
                                         <div class="menu-maintenance-meta">
-
                                             <div class="menu-maintenance-meta-item">
-                                                <span>Fechas</span>
-
+                                                <span>@SharedLocalizer["Dates"]</span>
                                                 <strong>
-                                        @if (item.FechaInicio.HasValue &&
-                                                                                item.FechaFin.HasValue)
+                                                    @if (item.FechaInicio.HasValue && item.FechaFin.HasValue)
                                                     {
                                                         @($"{item.FechaInicio.Value:dd/MM/yyyy} - {item.FechaFin.Value:dd/MM/yyyy}")
                                                     }
                                                     else
                                                     {
-                                                        @("No definido")
+                                                        @SharedLocalizer["NotDefined"]
                                                     }
                                                 </strong>
                                             </div>
 
                                             <div class="menu-maintenance-meta-item">
-                                                <span>Horario</span>
-
+                                                <span>@SharedLocalizer["Schedule"]</span>
                                                 <strong>
-                                                    @item.HoraInicio.ToString("HH:mm")
-                                                    -
-                                                    @item.HoraFin.ToString("HH:mm")
+                                                    @item.HoraInicio.ToString("HH:mm") - @item.HoraFin.ToString("HH:mm")
                                                 </strong>
                                             </div>
 
                                             <div class="menu-maintenance-meta-item">
-                                                <span>Productos</span>
+                                                <span>@SharedLocalizer["Products"]</span>
                                                 <strong>@(item.MenuProducto?.Count ?? 0)</strong>
                                             </div>
 
                                             <div class="menu-maintenance-meta-item">
-                                                <span>Combos</span>
+                                                <span>@SharedLocalizer["Combos"]</span>
                                                 <strong>@(item.MenuCombo?.Count ?? 0)</strong>
                                             </div>
-
                                         </div>
-
                                     </div>
 
                                     <div class="menu-maintenance-actions">
-
                                         <a asp-action="Detail"
                                            asp-route-id="@item.MenuId"
                                            class="menu-action-detail">
-                                            Detalle
+                                            @SharedLocalizer["Detail"]
                                         </a>
 
                                         <a asp-action="Edit"
                                            asp-route-id="@item.MenuId"
                                            class="menu-btn-editar">
                                             <i class="bi bi-pencil"></i>
-                                            Editar
+                                            @SharedLocalizer["Edit"]
                                         </a>
 
                                         <form asp-action="ToggleActivo"
                                               asp-route-id="@item.MenuId"
                                               method="post"
                                               class="form-toggle-menu">
-
                                             @Html.AntiForgeryToken()
-
                                             <button type="submit"
                                                     class="menu-btn-activar"
                                                     data-nombre="@item.Nombre"
                                                     data-accion="activar">
-
                                                 <i class="bi bi-toggle-off"></i>
-                                                Activar
-
+                                                @SharedLocalizer["Activate"]
                                             </button>
-
                                         </form>
-
                                     </div>
-
                                 </div>
-
                             </article>
                         }
-
                     </div>
                 }
-
             </div>
         }
-
     </div>
-
 </div>
 
 @section Scripts {
-
     <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
-
     <script>
         document.addEventListener("DOMContentLoaded", function () {
+            const mensajeExito = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(TempData["MensajeExito"]?.ToString()));
+            const mensajeError = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(TempData["MensajeError"]?.ToString()));
+            const tituloMensaje = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(TempData["TituloMensaje"]?.ToString()));
 
-            const mensajeExito =
-                @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
-                    TempData["MensajeExito"]?.ToString()));
+            // Textos traducidos inyectados desde Razor hacia JavaScript
+            const txtSuccessTitle = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(SharedLocalizer["SwalSuccessTitle"].Value));
+            const txtErrorTitle = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(SharedLocalizer["SwalErrorTitle"].Value));
+            const txtAcceptButton = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(SharedLocalizer["SwalAcceptButton"].Value));
+            const txtDeactivateMenuTitle = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(SharedLocalizer["SwalDeactivateMenuTitle"].Value));
+            const txtActivateMenuTitle = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(SharedLocalizer["SwalActivateMenuTitle"].Value));
+            const txtYesDeactivate = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(SharedLocalizer["SwalYesDeactivate"].Value));
+            const txtYesActivate = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(SharedLocalizer["SwalYesActivate"].Value));
+            const txtCancel = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(SharedLocalizer["SwalCancel"].Value));
+            const txtConfirmDeactivateText = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(SharedLocalizer["SwalConfirmDeactivateText"].Value));
+            const txtConfirmActivateText = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(SharedLocalizer["SwalConfirmActivateText"].Value));
 
-        const mensajeError =
-            @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
-                                TempData["MensajeError"]?.ToString()));
+            if (mensajeExito) {
+                Swal.fire({
+                    icon: "success",
+                    title: tituloMensaje || txtSuccessTitle,
+                    text: mensajeExito,
+                    confirmButtonText: txtAcceptButton,
+                    confirmButtonColor: "#243318"
+                });
+            }
 
-        const tituloMensaje =
-            @Html.Raw(System.Text.Json.JsonSerializer.Serialize(
-                                TempData["TituloMensaje"]?.ToString()));
+            if (mensajeError) {
+                Swal.fire({
+                    icon: "error",
+                    title: tituloMensaje || txtErrorTitle,
+                    text: mensajeError,
+                    confirmButtonText: txtAcceptButton,
+                    confirmButtonColor: "#8a3030"
+                });
+            }
 
-        if (mensajeExito) {
-            Swal.fire({
-                icon: "success",
-                title: tituloMensaje || "Operación exitosa",
-                text: mensajeExito,
-                confirmButtonText: "Aceptar",
-                confirmButtonColor: "#243318"
-            });
-        }
+            document.querySelectorAll(".form-toggle-menu").forEach(function (formulario) {
+                formulario.addEventListener("submit", function (event) {
+                    event.preventDefault();
+                    const boton = formulario.querySelector("button");
+                    const nombre = boton.dataset.nombre;
+                    const accion = boton.dataset.accion;
+                    const esDesactivar = accion === "desactivar";
 
-        if (mensajeError) {
-            Swal.fire({
-                icon: "error",
-                title: tituloMensaje || "Ocurrió un error",
-                text: mensajeError,
-                confirmButtonText: "Aceptar",
-                confirmButtonColor: "#8a3030"
-            });
-        }
-
-        document.querySelectorAll(".form-toggle-menu")
-            .forEach(function (formulario) {
-
-                formulario.addEventListener(
-                    "submit",
-                    function (event) {
-
-                        event.preventDefault();
-
-                        const boton =
-                            formulario.querySelector("button");
-
-                        const nombre =
-                            boton.dataset.nombre;
-
-                        const accion =
-                            boton.dataset.accion;
-
-                        const esDesactivar =
-                            accion === "desactivar";
-
-                        Swal.fire({
-                            icon: "warning",
-                            title: esDesactivar
-                                ? "¿Desactivar menú?"
-                                : "¿Activar menú?",
-                            text:
-                                `¿Está seguro de ${accion} el menú "${nombre}"?`,
-                            showCancelButton: true,
-                            confirmButtonText: esDesactivar
-                                ? "Sí, desactivar"
-                                : "Sí, activar",
-                            cancelButtonText: "Cancelar",
-                            reverseButtons: true,
-                            confirmButtonColor: esDesactivar
-                                ? "#8a3030"
-                                : "#344d24",
-                            cancelButtonColor: "#8a6848"
-                        }).then(function (resultado) {
-
-                            if (resultado.isConfirmed) {
-                                formulario.submit();
-                            }
-
-                        });
+                    Swal.fire({
+                        icon: "warning",
+                        title: esDesactivar ? txtDeactivateMenuTitle : txtActivateMenuTitle,
+                        text: esDesactivar ? txtConfirmDeactivateText.replace("{0}", nombre) : txtConfirmActivateText.replace("{0}", nombre),
+                        showCancelButton: true,
+                        confirmButtonText: esDesactivar ? txtYesDeactivate : txtYesActivate,
+                        cancelButtonText: txtCancel,
+                        reverseButtons: true,
+                        confirmButtonColor: esDesactivar ? "#8a3030" : "#344d24",
+                        cancelButtonColor: "#8a6848"
+                    }).then(function (resultado) {
+                        if (resultado.isConfirmed) {
+                            formulario.submit();
+                        }
                     });
+                });
             });
-    });
-</script>
+        });
+    </script>
 }

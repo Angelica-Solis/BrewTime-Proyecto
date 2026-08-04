@@ -1,0 +1,52 @@
+﻿@model BrewTime.Application.DTOs.LoginDTO
+@{
+    ViewData["Title"] = "Iniciar Sesión";
+    Layout = "_Layout";
+}
+
+<link rel="stylesheet" href="~/css/usuario.css" />
+
+<div class="brew-page">
+    <div class="brew-hero" style="padding-bottom: 2.5rem;">
+        <div class="brew-hero-inner" style="text-align:center;">
+            <p class="brew-hero-eyebrow">Bienvenido de vuelta</p>
+            <h1 class="brew-titulo">Brew<em>Time</em></h1>
+            <p class="brew-subtitulo">Inicia sesión para continuar</p>
+            <div class="brew-hero-line" style="justify-content:center;">
+                <span></span><i>Acceso</i><span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="brew-content" style="padding-top: 2rem;">
+        <div class="brew-detail-container">
+            <div class="brew-detail-card" style="max-width: 420px;">
+                <div class="brew-detail-body" style="padding: 2rem 2.25rem 2.25rem;">
+                    <form asp-action="Index" method="post">
+                        <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
+
+                        <div class="mb-3">
+                            <label asp-for="Correo" class="brew-detail-label" style="display:block; margin-bottom:0.5rem;"></label>
+                            <input asp-for="Correo" class="form-control brew-input" />
+                            <span asp-validation-for="Correo" class="text-danger"></span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Password" class="brew-detail-label" style="display:block; margin-bottom:0.5rem;"></label>
+                            <input asp-for="Password" type="password" class="form-control brew-input" />
+                            <span asp-validation-for="Password" class="text-danger"></span>
+                        </div>
+
+                        <button type="submit" class="brew-btn-detalle" style="width:100%; justify-content:center; padding:0.7rem 1rem; font-size:0.75rem; margin-top:0.5rem;">
+                            Iniciar Sesión →
+                        </button>
+                    </form>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

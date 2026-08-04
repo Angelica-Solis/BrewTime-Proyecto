@@ -17,15 +17,17 @@ namespace BrewTime.Application.Services.Implementations
     public class ServiceProcesoPreparacion: IServiceProcesoPreparacion
     {
         private readonly IRepositoryProcesoPreparacion _repository;
+        private readonly IRepositoryProducto _repositoryProducto;
         private readonly IRepositoryEstacionCocina _repositoryEstacion;
         private readonly IMapper _mapper;
        
 
-        public ServiceProcesoPreparacion(IRepositoryProcesoPreparacion repository, IMapper mapper, IRepositoryEstacionCocina repositoryEstacion)
+        public ServiceProcesoPreparacion(IRepositoryProcesoPreparacion repository, IMapper mapper, IRepositoryEstacionCocina repositoryEstacion, IRepositoryProducto repositoryProducto)
         {
             _repository = repository;
             _mapper = mapper;
             _repositoryEstacion = repositoryEstacion;
+            _repositoryProducto = repositoryProducto;
         }
         // de lectura
         async Task<ICollection<ProcesoPreparacionDTO>> IServiceProcesoPreparacion.ListAsync()
@@ -78,84 +80,166 @@ namespace BrewTime.Application.Services.Implementations
 
         public async Task CreateAsync(ProcesoPreparacionFormDTO dto)
         {
-            // obtener solo las estaciones que seleccione el usuario
-            var estacionesSeleccionadas = dto.Estaciones
-                .Where(x => x.Seleccionada)
-                .ToList();
+            var errores = new List<string>();
+            var producto = await _repositoryProducto.FindByIdAsync(dto.ProductoId);
 
-            // se debio seleccionar al menos 1 estacion
+            bool esComida =
+                producto.CategoriaId == 3 ||
+                producto.CategoriaId == 4;
+
+            // obtener estaciones seleccionadas
+            var estacionesSeleccionadas = dto.Estaciones
+              .Where(x => x.Seleccionada)
+              .ToList();
+
+            var caja = estacionesSeleccionadas
+            .FirstOrDefault(x =>
+                x.Nombre.Trim().Equals("Caja",
+                StringComparison.OrdinalIgnoreCase));
+
+            var emplatado = estacionesSeleccionadas
+                .FirstOrDefault(x =>
+                    x.Nombre.Trim().Equals("Emplatado",
+                    StringComparison.OrdinalIgnoreCase));
+
+
+            
+            // Producto
+            if (dto.ProductoId <= 0)
+            {
+                errores.Add("Debe seleccionar un producto.");
+            }
+
+          
+            // Debe existir al menos una estación
             if (!estacionesSeleccionadas.Any())
             {
-                throw new Exception("Debe seleccionar al menos una estación.");
+                errores.Add("Debe seleccionar al menos una estación.");
             }
 
-            // vlida orden
+            // Solo valida las estaciones seleccionadas
             foreach (var estacion in estacionesSeleccionadas)
             {
-                if (estacion.Orden <= 0)
+                if (!estacion.Orden.HasValue || estacion.Orden <= 0)
                 {
-                    throw new Exception($"Debe indicar un orden válido para la estación '{estacion.Nombre}'.");
+                    errores.Add($"Debe indicar el orden para la estación '{estacion.Nombre}'.");
                 }
 
-                if (estacion.TiempoEstimadoMin <= 0)
+                if (!estacion.TiempoEstimadoMin.HasValue || estacion.TiempoEstimadoMin <= 0)
                 {
-                    throw new Exception($"Debe indicar un tiempo válido para la estación '{estacion.Nombre}'.");
+                    errores.Add($"Debe indicar el tiempo estimado para la estación '{estacion.Nombre}'.");
                 }
             }
 
-            // valida que no existan ordenes repetidas
+            //validar que es comida
+            if (esComida)
+            {
+                if (caja == null)
+                    errores.Add("La estación Caja es obligatoria para productos de comida.");
+
+                if (emplatado == null)
+                    errores.Add("La estación Emplatado es obligatoria para productos de comida.");
+            }
+
+            // validar ordenes repetidas
             if (estacionesSeleccionadas
                 .GroupBy(x => x.Orden)
-                .Any(g => g.Count() > 1))
+                .Any(g => g.Key > 0 && g.Count() > 1))
             {
-                throw new Exception("No pueden existir dos estaciones con el mismo número de orden.");
+                errores.Add("No pueden existir estaciones con el mismo número de orden.");
             }
 
-            // crea entidades
+            if (errores.Any())
+            {
+                throw new Exception(string.Join("|", errores));
+            }
+
+            // reordenar estaciones
+            var intermedias = estacionesSeleccionadas
+                .Where(x =>
+                    !x.Nombre.Equals("Caja", StringComparison.OrdinalIgnoreCase) &&
+                    !x.Nombre.Equals("Emplatado", StringComparison.OrdinalIgnoreCase))
+                .OrderBy(x => x.Orden)
+                .ToList();
+
+                   int orden = 1;
+
+                   if(caja != null)
+                   {
+                      caja.Orden = orden++;
+                   }
+
+                   foreach(var e in intermedias)
+                   {
+                      e.Orden = orden++;
+                   }
+
+                   if(emplatado != null)
+                   {
+                    emplatado.Orden = orden;
+                   }
+
             var procesos = estacionesSeleccionadas
                 .Select(x => new ProcesoPreparacion
                 {
                     ProductoId = dto.ProductoId,
                     EstacionId = x.EstacionId,
-                    Orden = x.Orden,
-                    TiempoEstimadoMin = x.TiempoEstimadoMin
+                    Orden = x.Orden!.Value,
+                    TiempoEstimadoMin = x.TiempoEstimadoMin!.Value
                 })
                 .ToList();
 
             await _repository.CreateRangeAsync(procesos);
         }
 
+
+
+
+
         public async Task UpdateAsync(ProcesoPreparacionFormDTO dto)
         {
-            var estacionesSeleccionadas = dto.Estaciones
+            var errores = new List<string>();
+
+
+
+             var estacionesSeleccionadas = dto.Estaciones
                 .Where(x => x.Seleccionada)
                 .ToList();
 
-
+            // Debe existir al menos una estación
             if (!estacionesSeleccionadas.Any())
             {
-                throw new Exception("Debe seleccionar al menos una estación.");
+                errores.Add("Debe seleccionar al menos una estación.");
             }
 
 
-            if (estacionesSeleccionadas
-                .GroupBy(x => x.Orden)
-                .Any(g => g.Count() > 1))
-            {
-                throw new Exception("No pueden existir dos estaciones con el mismo orden.");
-            }
 
 
             foreach (var estacion in estacionesSeleccionadas)
             {
-                if (estacion.Orden <= 0)
-                    throw new Exception($"Debe indicar el orden de {estacion.Nombre}");
+                if (!estacion.Orden.HasValue || estacion.Orden <= 0)
+                {
+                    errores.Add($"Debe indicar el orden para la estación '{estacion.Nombre}'.");
+                }
 
-                if (estacion.TiempoEstimadoMin <= 0)
-                    throw new Exception($"Debe indicar el tiempo de {estacion.Nombre}");
+                if (!estacion.TiempoEstimadoMin.HasValue || estacion.TiempoEstimadoMin <= 0)
+                {
+                    errores.Add($"Debe indicar el tiempo estimado para la estación '{estacion.Nombre}'.");
+                }
             }
 
+            // validar ordenes repetidas
+            if (estacionesSeleccionadas
+                .GroupBy(x => x.Orden)
+                .Any(g => g.Key > 0 && g.Count() > 1))
+            {
+                errores.Add("No pueden existir estaciones con el mismo número de orden.");
+            }
 
+            if (errores.Any())
+            {
+                throw new Exception(string.Join("|", errores));
+            }
             // borrar proceso actual
             await _repository.DeleteByProductoIdAsync(dto.ProductoId);
 
@@ -166,8 +250,8 @@ namespace BrewTime.Application.Services.Implementations
                 {
                     ProductoId = dto.ProductoId,
                     EstacionId = x.EstacionId,
-                    Orden = x.Orden,
-                    TiempoEstimadoMin = x.TiempoEstimadoMin
+                    Orden = x.Orden!.Value,
+                    TiempoEstimadoMin = x.TiempoEstimadoMin!.Value
                 })
                 .ToList();
 

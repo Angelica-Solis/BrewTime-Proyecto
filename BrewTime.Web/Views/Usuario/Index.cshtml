@@ -1,19 +1,22 @@
 ﻿@model IEnumerable<BrewTime.Application.DTOs.UsuarioDTO>
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
 @section Styles {
     <link rel="stylesheet" href="~/css/usuario.css" asp-append-version="true" />
 }
 @{
-    ViewData["Title"] = "Listado de Usuarios";
+    ViewData["Title"] = SharedLocalizer["ListadoUsuariosTitulo"].Value;
 }
 <div class="brew-page">
     <section class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Administración</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["AdministracionEyebrow"]</p>
             <h1 class="brew-titulo">
-                Listado de <em>Usuarios - María Angélica Solís Sibaja</em>
+                @SharedLocalizer["ListadoDeTxt"] <em>@SharedLocalizer["UsuariosEm"]</em>
             </h1>
             <p class="brew-subtitulo">
-                Consulta y administración de los usuarios registrados en el sistema.
+                @SharedLocalizer["DescUsuarios"]
             </p>
             <div class="brew-hero-line">
                 <span></span>
@@ -24,7 +27,7 @@
     </section>
     <div class="brew-content">
         <div class="brew-count">
-            Total de usuarios: @Model.Count()
+            @SharedLocalizer["TotalUsuarios"] @Model.Count()
         </div>
         @if (Model.Any())
         {
@@ -33,9 +36,9 @@
                 <table class="brew-table">
                     <thead>
                         <tr>
-                            <th>Nombre</th>
-                            <th>Rol</th>
-                            <th>Estado</th>
+                            <th>@SharedLocalizer["NombreLabel"]</th>
+                            <th>@SharedLocalizer["RolLabel"]</th>
+                            <th>@SharedLocalizer["EstadoLabel"]</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -55,13 +58,13 @@
                                     @if (usuario.Activo)
                                     {
                                         <span class="brew-badge-estado activo">
-                                            Activo
+                                            @SharedLocalizer["ActivoBadge"]
                                         </span>
                                     }
                                     else
                                     {
                                         <span class="brew-badge-estado inactivo">
-                                            Inactivo
+                                            @SharedLocalizer["InactivoBadge"]
                                         </span>
                                     }
                                 </td>
@@ -69,7 +72,7 @@
                                     <a asp-action="Detail"
                                        asp-route-id="@usuario.UsuarioId"
                                        class="brew-btn-detalle">
-                                        Ver detalle
+                                        @SharedLocalizer["VerDetalleBtn"]
                                     </a>
                                 </td>
                             </tr>
@@ -81,7 +84,7 @@
         else
         {
             <div class="brew-empty">
-                No hay usuarios registrados.
+                @SharedLocalizer["NoUsuariosRegistrados"]
             </div>
         }
     </div>

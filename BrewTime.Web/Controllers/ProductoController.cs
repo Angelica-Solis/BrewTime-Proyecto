@@ -1,10 +1,12 @@
 ﻿using BrewTime.Application.DTOs;
 using BrewTime.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using Microsoft.AspNetCore.Mvc.Rendering;
 
 namespace BrewTime.Web.Controllers
 {
+    [Authorize]
     public class ProductoController : Controller
     {
         private readonly IServiceProducto _serviceProducto;
@@ -75,6 +77,13 @@ namespace BrewTime.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Create(ProductoFormDTO dto)
         {
+            // Validar nombre duplicado antes de revisar ModelState
+            if (await _serviceProducto.ExisteNombreAsync(dto.Nombre))
+            {
+                ModelState.AddModelError(nameof(dto.Nombre),
+                    "Ya existe un producto con ese nombre. Por favor usá uno diferente.");
+            }
+
             if (!ModelState.IsValid)
             {
                 await CargarCategoriasAsync();
@@ -98,6 +107,13 @@ namespace BrewTime.Web.Controllers
         [HttpPost]
         public async Task<IActionResult> Edit(ProductoFormDTO dto)
         {
+            // Validar nombre duplicado excluyendo el propio producto que se edita
+            if (await _serviceProducto.ExisteNombreAsync(dto.Nombre, dto.ProductoID))
+            {
+                ModelState.AddModelError(nameof(dto.Nombre),
+                    "Ya existe un producto con ese nombre. Por favor usá uno diferente.");
+            }
+
             if (!ModelState.IsValid)
             {
                 await CargarCategoriasAsync();

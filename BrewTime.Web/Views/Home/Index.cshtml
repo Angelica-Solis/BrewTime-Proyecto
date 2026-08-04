@@ -1,5 +1,8 @@
-﻿@{
-    ViewData["Title"] = "Inicio";
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
+@{
+    ViewData["Title"] = SharedLocalizer["InicioTitulo"].Value;
 }
 
 @section Styles {
@@ -9,22 +12,23 @@
 <div class="home-page">
     @* Chatbot  *@
     <partial name="_Chatbot" />
+
     @* Hero  *@
     <div class="home-hero">
         <div class="home-hero-inner">
-            <p class="home-hero-eyebrow">Café y Bubble · Costa Rica</p>
+            <p class="home-hero-eyebrow">@SharedLocalizer["HeroEyebrow"]</p>
             <h1 class="home-hero-titulo">
-                Bienvenido a <br>
+                @SharedLocalizer["BienvenidoA"] <br>
                 <em>Brew Time</em>
             </h1>
             <p class="home-hero-subtitulo">
-                Café de especialidad y bubble tea preparados con amor.<br />
-                Cada sorbo, una experiencia.
+                @SharedLocalizer["HeroSub1"]<br />
+                @SharedLocalizer["HeroSub2"]
             </p>
-            <a href="/producto" class="home-hero-cta">Ver menú completo</a>
+            <a href="/producto" class="home-hero-cta">@SharedLocalizer["VerMenuCompleto"]</a>
             <div class="home-hero-line">
                 <span></span>
-                <i>Bubble Tea &amp; Café</i>
+                <i>@SharedLocalizer["HeroLineTag"]</i>
                 <span></span>
             </div>
         </div>
@@ -34,29 +38,26 @@
     <div class="home-about">
 
         <div class="home-about-card">
-            <span>NOSOTROS</span>
+            <span>@SharedLocalizer["NosotrosBadge"]</span>
 
-            <h2>Más que una bebida.</h2>
+            <h2>@SharedLocalizer["MasQueBebida"]</h2>
 
             <p>
-                En Brew Time creemos que cada taza y cada bubble tea
-                son una experiencia. Combinamos ingredientes de calidad,
-                creatividad y un ambiente acogedor.
+                @SharedLocalizer["NosotrosTexto"]
             </p>
         </div>
 
         <div class="home-about-card">
             <span>BREW TIME</span>
 
-            <h2>¿Qué nos hace diferentes?</h2>
+            <h2>@SharedLocalizer["QueNosHaceDiferentes"]</h2>
 
             <ul>
-                <li>Café de especialidad.</li>
-                <li>Bubble Tea artesanal.</li>
-                <li>Postres únicos.</li>
-                <li>Ingredientes frescos.</li>
-                <li>Atención personalizada.</li>
-
+                <li>@SharedLocalizer["Diff1"]</li>
+                <li>@SharedLocalizer["Diff2"]</li>
+                <li>@SharedLocalizer["Diff3"]</li>
+                <li>@SharedLocalizer["Diff4"]</li>
+                <li>@SharedLocalizer["Diff5"]</li>
             </ul>
         </div>
 
@@ -66,18 +67,16 @@
     <div class="home-history">
 
         <div class="home-history-year">
-            <span>DESDE</span>
+            <span>@SharedLocalizer["DesdeBadge"]</span>
             <h2>2025</h2>
         </div>
 
         <div class="home-history-info">
 
-            <h3>Comenzamos a compartir momentos especiales.</h3>
+            <h3>@SharedLocalizer["HistoriaTitulo"]</h3>
 
             <p>
-                Desde Costa Rica, Brew Time nació con la idea de unir
-                el café de especialidad y el auténtico bubble tea en un
-                solo lugar.
+                @SharedLocalizer["HistoriaTexto"]
             </p>
 
             <div class="home-location">
@@ -88,20 +87,23 @@
 
     </div>
     <div class="section-divider" style="margin-top:2.5rem;"><hr /></div>
+
     @* Carrusel *@
     <div class="home-carrusel">
         <div class="home-carrusel-header">
             <div>
-                <p class="home-menu-eyebrow">Lo más pedido</p>
-                <h2 class="home-menu-titulo" style="margin-bottom:0;">Estrellas de la temporada</h2>
+                <p class="home-menu-eyebrow">@SharedLocalizer["LoMasPedido"]</p>
+                <h2 class="home-menu-titulo" style="margin-bottom:0;">@SharedLocalizer["EstrellasTemporada"]</h2>
             </div>
             <div class="home-carrusel-nav">
-                <button class="home-carrusel-btn" id="brew-prev" aria-label="Anterior">&#8592;</button>
-                <button class="home-carrusel-btn" id="brew-next" aria-label="Siguiente">&#8594;</button>
+                <button class="home-carrusel-btn" id="brew-prev" aria-label="@SharedLocalizer["BtnAnterior"]">&#8592;</button>
+                <button class="home-carrusel-btn" id="brew-next" aria-label="@SharedLocalizer["BtnSiguiente"]">&#8594;</button>
             </div>
         </div>
         <div class="home-carrusel-viewport">
             <div class="home-carrusel-track" id="brew-track">
+
+                @* Items del Carrusel *@
                 <div class="home-carrusel-item">
                     <div class="home-card">
                         <div class="home-card-stripe"></div>
@@ -109,7 +111,7 @@
                             <img src="~/images/productos/Bubble Tea Original_BubbleTea.png" alt="Bubble Tea Original" />
                         </div>
                         <div class="home-card-body">
-                            <span class="home-card-cat">Bubble Tea</span>
+                            <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
                             <p class="home-card-nombre">Original Bubble Tea</p>
                             <p class="home-card-precio">₡2,500</p>
                         </div>
@@ -122,7 +124,7 @@
                             <img src="~/images/productos/CoffeeBoba _Bubble tea.png" alt="Coffee Boba" />
                         </div>
                         <div class="home-card-body">
-                            <span class="home-card-cat">Bubble Tea</span>
+                            <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
                             <p class="home-card-nombre">Coffee Boba</p>
                             <p class="home-card-precio">₡3,000</p>
                         </div>
@@ -135,7 +137,7 @@
                             <img src="~/images/productos/IcedMocha_Café.png" alt="Iced Mocha" />
                         </div>
                         <div class="home-card-body">
-                            <span class="home-card-cat">Café</span>
+                            <span class="home-card-cat">@SharedLocalizer["CatCafe"]</span>
                             <p class="home-card-nombre">Iced Mocha</p>
                             <p class="home-card-precio">₡2,700</p>
                         </div>
@@ -148,7 +150,7 @@
                             <img src="~/images/productos/Bubble Tea Matcha_BubbleTea.png" alt="Matcha Bubble Tea" />
                         </div>
                         <div class="home-card-body">
-                            <span class="home-card-cat">Bubble Tea</span>
+                            <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
                             <p class="home-card-nombre">Matcha Bubble Tea</p>
                             <p class="home-card-precio">₡2,800</p>
                         </div>
@@ -161,7 +163,7 @@
                             <img src="~/images/productos/OreoBoba_Bubble tea.png" alt="Oreo Boba" />
                         </div>
                         <div class="home-card-body">
-                            <span class="home-card-cat">Bubble Tea</span>
+                            <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
                             <p class="home-card-nombre">Oreo Boba</p>
                             <p class="home-card-precio">₡3,000</p>
                         </div>
@@ -175,12 +177,12 @@
     <div class="home-divider" style="margin-top:2.5rem;"><hr /></div>
 
     @* Sección Bubble Tea *@
-    <div class="section-divider">
-    </div>
+    <div class="section-divider"></div>
+
     <div class="home-divider">
         <div class="home-section-header">
             <h2 class="home-section-titulo">Bubble Tea</h2>
-            <span class="home-section-tag">Nuestras estrellas</span>
+            <span class="home-section-tag">@SharedLocalizer["NuestrasEstrellas"]</span>
         </div>
 
         <div class="home-grid">
@@ -191,7 +193,7 @@
                     <img src="~/images/productos/Bubble Tea Original_BubbleTea.png" alt="Bubble Tea Original" />
                 </div>
                 <div class="home-card-body">
-                    <span class="home-card-cat">Bubble Tea</span>
+                    <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
                     <p class="home-card-nombre">Original Bubble Tea</p>
                     <p class="home-card-precio">₡2,500</p>
                 </div>
@@ -203,7 +205,7 @@
                     <img src="~/images/productos/Bubble Tea Matcha_BubbleTea.png" alt="Matcha Bubble Tea" />
                 </div>
                 <div class="home-card-body">
-                    <span class="home-card-cat">Bubble Tea</span>
+                    <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
                     <p class="home-card-nombre">Matcha Bubble Tea</p>
                     <p class="home-card-precio">₡2,800</p>
                 </div>
@@ -215,7 +217,7 @@
                     <img src="~/images/productos/Bubble Tea Taro_BubbleTea.png" alt="Taro Bubble Tea" />
                 </div>
                 <div class="home-card-body">
-                    <span class="home-card-cat">Bubble Tea</span>
+                    <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
                     <p class="home-card-nombre">Taro Bubble Tea</p>
                     <p class="home-card-precio">₡2,800</p>
                 </div>
@@ -227,7 +229,7 @@
                     <img src="~/images/productos/OreoBoba_Bubble tea.png" alt="Oreo Boba" />
                 </div>
                 <div class="home-card-body">
-                    <span class="home-card-cat">Bubble Tea</span>
+                    <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
                     <p class="home-card-nombre">Oreo Boba</p>
                     <p class="home-card-precio">₡3,000</p>
                 </div>
@@ -239,7 +241,7 @@
                     <img src="~/images/productos/CoffeeBoba _Bubble tea.png" alt="Coffee Boba" />
                 </div>
                 <div class="home-card-body">
-                    <span class="home-card-cat">Bubble Tea</span>
+                    <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
                     <p class="home-card-nombre">Coffee Boba</p>
                     <p class="home-card-precio">₡3,000</p>
                 </div>
@@ -253,8 +255,8 @@
     @* Sección Café *@
     <div class="home-section cafes">
         <div class="home-section-header">
-            <h2 class="home-section-titulo">Cafés</h2>
-            <span class="home-section-tag">Especialidad</span>
+            <h2 class="home-section-titulo">@SharedLocalizer["TituloCafes"]</h2>
+            <span class="home-section-tag">@SharedLocalizer["TagEspecialidad"]</span>
         </div>
 
         <div class="home-grid">
@@ -265,7 +267,7 @@
                     <img src="~/images/productos/IcedAmericano_Café.png" alt="Iced Americano" />
                 </div>
                 <div class="home-card-body">
-                    <span class="home-card-cat">Café</span>
+                    <span class="home-card-cat">@SharedLocalizer["CatCafe"]</span>
                     <p class="home-card-nombre">Iced Americano</p>
                     <p class="home-card-precio">₡2,200</p>
                 </div>
@@ -277,7 +279,7 @@
                     <img src="~/images/productos/IcedLatte_Café.png" alt="Iced Latte" />
                 </div>
                 <div class="home-card-body">
-                    <span class="home-card-cat">Café</span>
+                    <span class="home-card-cat">@SharedLocalizer["CatCafe"]</span>
                     <p class="home-card-nombre">Iced Latte</p>
                     <p class="home-card-precio">₡2,500</p>
                 </div>
@@ -289,7 +291,7 @@
                     <img src="~/images/productos/IcedMocha_Café.png" alt="Iced Mocha" />
                 </div>
                 <div class="home-card-body">
-                    <span class="home-card-cat">Café</span>
+                    <span class="home-card-cat">@SharedLocalizer["CatCafe"]</span>
                     <p class="home-card-nombre">Iced Mocha</p>
                     <p class="home-card-precio">₡2,700</p>
                 </div>
@@ -299,6 +301,5 @@
     </div>
 
 </div>
-
 
 

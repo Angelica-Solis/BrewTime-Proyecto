@@ -1,8 +1,11 @@
 ﻿@model BrewTime.Application.DTOs.ComboFormDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
 @{
-    ViewData["Title"] = "Nuevo Combo";
+    ViewData["Title"] = SharedLocalizer["Title_NewCombo"];
     var productosDisponibles = ViewBag.ProductosDisponibles as List<BrewTime.Application.DTOs.ComboProductoFormDTO>
-                               ?? new List<BrewTime.Application.DTOs.ComboProductoFormDTO>();
+                              ?? new List<BrewTime.Application.DTOs.ComboProductoFormDTO>();
 }
 
 @section Styles {
@@ -13,15 +16,15 @@
 
     <div class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Brew Time · Administración</p>
-            <h1 class="brew-titulo">Nuevo <em>Combo</em></h1>
-            <p class="brew-subtitulo">Completá los campos para registrar un nuevo combo.</p>
-            <div class="brew-hero-line"><span></span><i>Creación de combo</i><span></span></div>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["BrewTimeAdministration"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["NewTitle"] <em>@SharedLocalizer["NewItalicCombo"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["HeroSubtitleNewCombo"]</p>
+            <div class="brew-hero-line"><span></span><i>@SharedLocalizer["ComboCreation"]</i><span></span></div>
         </div>
     </div>
 
     <div class="brew-content">
-        <a asp-action="Maintenance" class="brew-btn-volver">← Volver al mantenimiento</a>
+        <a asp-action="Maintenance" class="brew-btn-volver">← @SharedLocalizer["BackToMaintenance"]</a>
 
         <div class="brew-form-card">
             <form asp-action="Create" method="post">
@@ -29,14 +32,14 @@
 
                 <div class="brew-form-row">
                     <div class="brew-form-group">
-                        <label asp-for="Nombre" class="brew-form-label">Nombre</label>
-                        <input asp-for="Nombre" class="brew-form-input" placeholder="Ej: Combo Mañana" />
+                        <label asp-for="Nombre" class="brew-form-label">@SharedLocalizer["LabelName"]</label>
+                        <input asp-for="Nombre" class="brew-form-input" placeholder="@SharedLocalizer["PlaceholderName"]" />
                         <span asp-validation-for="Nombre" class="brew-form-error"></span>
                     </div>
                     <div class="brew-form-group">
-                        <label asp-for="CategoriaID" class="brew-form-label">Categoría</label>
+                        <label asp-for="CategoriaID" class="brew-form-label">@SharedLocalizer["LabelCategory"]</label>
                         <select asp-for="CategoriaID" asp-items="ViewBag.Categorias" class="brew-form-input">
-                            <option value="">-- Seleccioná una categoría --</option>
+                            <option value="">@SharedLocalizer["SelectCategoryOption"]</option>
                         </select>
                         <span asp-validation-for="CategoriaID" class="brew-form-error"></span>
                     </div>
@@ -44,29 +47,29 @@
 
                 <div class="brew-form-row">
                     <div class="brew-form-group">
-                        <label asp-for="PrecioEspecial" class="brew-form-label">Precio especial (₡)</label>
+                        <label asp-for="PrecioEspecial" class="brew-form-label">@SharedLocalizer["LabelSpecialPrice"]</label>
                         <input asp-for="PrecioEspecial" type="number" step="50" min="0"
                                class="brew-form-input" placeholder="0" />
                         <span asp-validation-for="PrecioEspecial" class="brew-form-error"></span>
                     </div>
                     <div class="brew-form-group brew-form-check-group" style="justify-content:flex-end;padding-top:1.6rem;">
                         <input asp-for="Activo" type="checkbox" class="brew-form-check" />
-                        <label asp-for="Activo" class="brew-form-label">Combo activo</label>
+                        <label asp-for="Activo" class="brew-form-label">@SharedLocalizer["LabelComboActive"]</label>
                     </div>
                 </div>
 
                 <div class="brew-form-group">
-                    <label asp-for="Descripcion" class="brew-form-label">Descripción</label>
+                    <label asp-for="Descripcion" class="brew-form-label">@SharedLocalizer["LabelDescription"]</label>
                     <textarea asp-for="Descripcion" class="brew-form-input brew-form-textarea"
-                              placeholder="Descripción del combo..."></textarea>
+                              placeholder="@SharedLocalizer["PlaceholderDescription"]"></textarea>
                     <span asp-validation-for="Descripcion" class="brew-form-error"></span>
                 </div>
 
                 @* ── Selección de productos ── *@
                 <div class="brew-form-group">
-                    <label class="brew-form-label">Productos del combo</label>
+                    <label class="brew-form-label">@SharedLocalizer["LabelComboProducts"]</label>
                     <small style="color:var(--text-soft);font-size:0.78rem;display:block;margin-bottom:0.75rem;">
-                        Marcá los productos que forman parte del combo e indicá la cantidad de cada uno.
+                        @SharedLocalizer["InstructionProducts"]
                     </small>
 
                     <div class="brew-productos-grid">
@@ -91,7 +94,7 @@
                                 </label>
 
                                 <div class="brew-cantidad-wrap" id="cantidad-@p.ProductoID" style="display:none;">
-                                    <label class="brew-form-label" style="font-size:0.65rem;">Cantidad</label>
+                                    <label class="brew-form-label" style="font-size:0.65rem;">@SharedLocalizer["LabelQuantity"]</label>
                                     <input type="number"
                                            name="ProductosSeleccionados[@i].Cantidad"
                                            value="@p.Cantidad"
@@ -104,8 +107,8 @@
                 </div>
 
                 <div class="brew-form-footer">
-                    <a asp-action="Maintenance" class="brew-btn-volver">Cancelar</a>
-                    <button type="submit" class="brew-btn-nuevo">Guardar combo</button>
+                    <a asp-action="Maintenance" class="brew-btn-volver">@SharedLocalizer["BtnCancel"]</a>
+                    <button type="submit" class="brew-btn-nuevo">@SharedLocalizer["BtnSaveCombo"]</button>
                 </div>
             </form>
         </div>

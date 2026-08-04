@@ -1,28 +1,41 @@
-﻿@model ICollection<ProcesoPreparacionListadoDTO>
+@using Microsoft.AspNetCore.Mvc.Localization
+@using BrewTime.Web
+@model ICollection<ProcesoPreparacionListadoDTO>
+
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
+
 @section Styles {
     <link rel="stylesheet" href="~/css/procesoPreparacion.css" asp-append-version="true" />
 }
 @{
-    ViewData["Title"] = "Proceso de Preparación";
+    ViewData["Title"] = SharedLocalizer["TituloPestana"].Value;
 }
 
 <div class="brew-page">
     <div class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Brew Time · Cafetería</p>
-            <h1 class="brew-titulo">Proceso de <em>Preparación</em></h1>
-            <p class="brew-subtitulo">Cada paso, cada estación, cada minuto importa.</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["EyebrowCafeteria"]</p>
+
+
+
+            <h1 class="brew-titulo">@SharedLocalizer["TituloPrincipal"]</h1>
+
+            <p class="brew-subtitulo">@SharedLocalizer["Subtitulo"]</p>
             <div class="brew-hero-line">
                 <span></span>
-                <i>Estaciones &amp; tiempos</i>
+                <i>@SharedLocalizer["EstacionesTiempos"]</i>
                 <span></span>
             </div>
-            @* Botón de mantenimiento - se ocultará según rol *@
-            <div class="brew-hero-actions">
-                <a asp-action="Maintenance" class="brew-btn-admin">
-                    Administrar procesos
-                </a>
-            </div>
+
+
+            @if (User.IsInRole("Administrador") || User.IsInRole("Encargado"))
+            {
+                <div class="brew-hero-actions">
+                    <a asp-action="Maintenance" class="brew-btn-admin">
+                        @SharedLocalizer["BtnAdministrar"]
+                    </a>
+                </div>
+            }
         </div>
     </div>
 
@@ -31,31 +44,33 @@
         {
             <div class="brew-grid">
                 <div class="brew-empty">
-                   
-                    <p>No hay pasos registrados aún.</p>
+                    <p>@SharedLocalizer["SinPasosRegistrados"]</p>
                 </div>
             </div>
         }
         else
         {
-            <p class="brew-count">@Model.Count pasos registrado(s)</p>
+
+
+            <p class="brew-count">@SharedLocalizer["ConteoPasos", Model.Count]</p>
             <div class="brew-grid">
                 @foreach (var item in Model)
                 {
                     <div class="brew-card">
                         <div class="brew-card-stripe"></div>
                         <div class="brew-card-body">
-                            <span class="brew-card-chip">Producto</span>
+                            <span class="brew-card-chip">@SharedLocalizer["EtiquetaProducto"]</span>
                             <p class="brew-card-producto">@item.NombreProducto</p>
                             <p class="brew-card-paso">
-                                <strong>@item.CantidadProcesos</strong> paso(s) de preparación
+
+
+                                @SharedLocalizer["PasosPreparacion", item.CantidadProcesos]
                             </p>
                             <div class="brew-card-footer">
-                                
                                 <a class="brew-btn-detalle"
                                    asp-action="Detail"
                                    asp-route-id="@item.ProductoId">
-                                    Ver detalle
+                                    @SharedLocalizer["BtnVerDetalle"]
                                 </a>
                             </div>
                         </div>

@@ -34,5 +34,11 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
 
             return collection;
         }
+        public async Task<Usuario?> FindByCorreoAsync(string correo)
+        {
+            return await _context.Usuario
+                .Include(u => u.Rol)
+                .FirstOrDefaultAsync(u => u.Correo == correo && u.Activo);
+        }
     }
 }

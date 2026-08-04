@@ -1,32 +1,39 @@
-﻿@model IEnumerable<BrewTime.Application.DTOs.ComboDTO>
+@model IEnumerable<BrewTime.Application.DTOs.ComboDTO>
+@using Microsoft.AspNetCore.Mvc.Localization
+@using BrewTime.Web
+@inject IHtmlLocalizer<SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet" href="~/css/combo.css" asp-append-version="true" />
 }
 
 @{
-    ViewData["Title"] = "Combos";
+    ViewData["Title"] = SharedLocalizer["Title_Combos"].Value;
 }
 
 <div class="brew-page">
     @* Chatbot  *@
     <partial name="_Chatbot" />
+
     @* Hero banner *@
     <div class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Brew Time · Cafetería</p>
-            <h1 class="brew-titulo">Nuestros <em>Combos</em></h1>
-            <p class="brew-subtitulo">La mejor combinación al mejor precio.</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["BrewTimeCafeteria"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["Our"] <em>@SharedLocalizer["CombosItalic"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["HeroSubtitle"]</p>
             <div class="brew-hero-line">
                 <span></span>
-                <i>Ofertas &amp; precios especiales</i>
+                <i>@SharedLocalizer["OffersAndSpecialPrices"]</i>
                 <span></span>
             </div>
-            <div class="brew-hero-actions">
-                <a asp-action="Maintenance" class="brew-btn-admin">
-                    Administrar combos
-                </a>
-            </div>
+            @if (User.IsInRole("Administrador") || User.IsInRole("Encargado"))
+            {
+                <div class="brew-hero-actions">
+                    <a asp-action="Maintenance" class="brew-btn-admin">
+                        @SharedLocalizer["ManageCombos"]
+                    </a>
+                </div>
+            }
         </div>
     </div>
 
@@ -38,13 +45,13 @@
             <div class="brew-grid">
                 <div class="brew-empty">
                     <span class="brew-empty-icon"></span>
-                    <p>No hay combos registrados aún.</p>
+                    <p>@SharedLocalizer["NoCombosRegisteredYet"]</p>
                 </div>
             </div>
         }
         else
         {
-            <p class="brew-count">@Model.Count() combo(s) disponible(s)</p>
+            <p class="brew-count">@Model.Count() @SharedLocalizer["CombosAvailableSuffix"]</p>
 
             <div class="brew-grid">
                 @foreach (var item in Model)
@@ -70,7 +77,7 @@
                                 <a asp-action="Detail"
                                    asp-route-id="@item.ComboID"
                                    class="brew-btn-detalle">
-                                    Ver detalle
+                                    @SharedLocalizer["ViewDetail"]
                                 </a>
                             </div>
 

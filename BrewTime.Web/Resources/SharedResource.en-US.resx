@@ -1,0 +1,1329 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<root>
+  <!-- 
+    Microsoft ResX Schema 
+    
+    Version 2.0
+    
+    The primary goals of this format is to allow a simple XML format 
+    that is mostly human readable. The generation and parsing of the 
+    various data types are done through the TypeConverter classes 
+    associated with the data types.
+    
+    Example:
+    
+    ... ado.net/XML headers & schema ...
+    <resheader name="resmimetype">text/microsoft-resx</resheader>
+    <resheader name="version">2.0</resheader>
+    <resheader name="reader">System.Resources.ResXResourceReader, System.Windows.Forms, ...</resheader>
+    <resheader name="writer">System.Resources.ResXResourceWriter, System.Windows.Forms, ...</resheader>
+    <data name="Name1"><value>this is my long string</value><comment>this is a comment</comment></data>
+    <data name="Color1" type="System.Drawing.Color, System.Drawing">Blue</data>
+    <data name="Bitmap1" mimetype="application/x-microsoft.net.object.binary.base64">
+        <value>[base64 mime encoded serialized .NET Framework object]</value>
+    </data>
+    <data name="Icon1" type="System.Drawing.Icon, System.Drawing" mimetype="application/x-microsoft.net.object.bytearray.base64">
+        <value>[base64 mime encoded string representing a byte array form of the .NET Framework object]</value>
+        <comment>This is a comment</comment>
+    </data>
+                
+    There are any number of "resheader" rows that contain simple 
+    name/value pairs.
+    
+    Each data row contains a name, and value. The row also contains a 
+    type or mimetype. Type corresponds to a .NET class that support 
+    text/value conversion through the TypeConverter architecture. 
+    Classes that don't support this are serialized and stored with the 
+    mimetype set.
+    
+    The mimetype is used for serialized objects, and tells the 
+    ResXResourceReader how to depersist the object. This is currently not 
+    extensible. For a given mimetype the value must be set accordingly:
+    
+    Note - application/x-microsoft.net.object.binary.base64 is the format 
+    that the ResXResourceWriter will generate, however the reader can 
+    read any of the formats listed below.
+    
+    mimetype: application/x-microsoft.net.object.binary.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Binary.BinaryFormatter
+            : and then encoded with base64 encoding.
+    
+    mimetype: application/x-microsoft.net.object.soap.base64
+    value   : The object must be serialized with 
+            : System.Runtime.Serialization.Formatters.Soap.SoapFormatter
+            : and then encoded with base64 encoding.
+
+    mimetype: application/x-microsoft.net.object.bytearray.base64
+    value   : The object must be serialized into a byte array 
+            : using a System.ComponentModel.TypeConverter
+            : and then encoded with base64 encoding.
+    -->
+  <xsd:schema id="root" xmlns="" xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:msdata="urn:schemas-microsoft-com:xml-msdata">
+    <xsd:import namespace="http://www.w3.org/XML/1998/namespace" />
+    <xsd:element name="root" msdata:IsDataSet="true">
+      <xsd:complexType>
+        <xsd:choice maxOccurs="unbounded">
+          <xsd:element name="metadata">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" />
+              </xsd:sequence>
+              <xsd:attribute name="name" use="required" type="xsd:string" />
+              <xsd:attribute name="type" type="xsd:string" />
+              <xsd:attribute name="mimetype" type="xsd:string" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="assembly">
+            <xsd:complexType>
+              <xsd:attribute name="alias" type="xsd:string" />
+              <xsd:attribute name="name" type="xsd:string" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="data">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+                <xsd:element name="comment" type="xsd:string" minOccurs="0" msdata:Ordinal="2" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" msdata:Ordinal="1" />
+              <xsd:attribute name="type" type="xsd:string" msdata:Ordinal="3" />
+              <xsd:attribute name="mimetype" type="xsd:string" msdata:Ordinal="4" />
+              <xsd:attribute ref="xml:space" />
+            </xsd:complexType>
+          </xsd:element>
+          <xsd:element name="resheader">
+            <xsd:complexType>
+              <xsd:sequence>
+                <xsd:element name="value" type="xsd:string" minOccurs="0" msdata:Ordinal="1" />
+              </xsd:sequence>
+              <xsd:attribute name="name" type="xsd:string" use="required" />
+            </xsd:complexType>
+          </xsd:element>
+        </xsd:choice>
+      </xsd:complexType>
+    </xsd:element>
+  </xsd:schema>
+  <resheader name="resmimetype">
+    <value>text/microsoft-resx</value>
+  </resheader>
+  <resheader name="version">
+    <value>2.0</value>
+  </resheader>
+  <resheader name="reader">
+    <value>System.Resources.ResXResourceReader, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <resheader name="writer">
+    <value>System.Resources.ResXResourceWriter, System.Windows.Forms, Version=4.0.0.0, Culture=neutral, PublicKeyToken=b77a5c561934e089</value>
+  </resheader>
+  <data name="AccionesCol" xml:space="preserve">
+    <value>Actions</value>
+  </data>
+  <data name="AccionLabel" xml:space="preserve">
+    <value>Action</value>
+  </data>
+  <data name="AceptarBtn" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="ActivarBtn" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="ActiveMenu" xml:space="preserve">
+    <value>Active menu</value>
+  </data>
+  <data name="ActiveMenuDesc" xml:space="preserve">
+    <value>The menu will be able to participate in the available menu selection.</value>
+  </data>
+  <data name="Activo" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="ActivoBadge" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="ActualizarProcesoEyebrow" xml:space="preserve">
+    <value>Update Process</value>
+  </data>
+  <data name="AdminEyebrow" xml:space="preserve">
+    <value>BREW TIME · ADMINISTRATION</value>
+  </data>
+  <data name="AdministracionEyebrow" xml:space="preserve">
+    <value>Administration</value>
+  </data>
+  <data name="AdministrarMenusBtn" xml:space="preserve">
+    <value>Manage menus</value>
+  </data>
+  <data name="AdministrarProductos" xml:space="preserve">
+    <value>Manage products</value>
+  </data>
+  <data name="AgregarBtn" xml:space="preserve">
+    <value>Add</value>
+  </data>
+  <data name="AgregarNuevaImagenStrong" xml:space="preserve">
+    <value>Add new image</value>
+  </data>
+  <data name="Availability" xml:space="preserve">
+    <value>Availability</value>
+  </data>
+  <data name="AvailabilityDesc" xml:space="preserve">
+    <value>Set the date and time range.</value>
+  </data>
+  <data name="AvailableDays" xml:space="preserve">
+    <value>Available days</value>
+  </data>
+  <data name="AvailableDaysDesc" xml:space="preserve">
+    <value>Select the days of the week the menu will be available.</value>
+  </data>
+  <data name="BackToMaintenance" xml:space="preserve">
+    <value>← Back to maintenance</value>
+  </data>
+  <data name="BienvenidoA" xml:space="preserve">
+    <value>Welcome to</value>
+  </data>
+  <data name="BrewTimeAdmin" xml:space="preserve">
+    <value>Brew Time · Administration</value>
+  </data>
+  <data name="BrewTimeCafeteria" xml:space="preserve">
+    <value>Brew Time · Coffee Shop</value>
+  </data>
+  <data name="BtnAdministrar" xml:space="preserve">
+    <value>Manage processes</value>
+  </data>
+  <data name="BtnAnterior" xml:space="preserve">
+    <value>Previous</value>
+  </data>
+  <data name="BtnSiguiente" xml:space="preserve">
+    <value>Next</value>
+  </data>
+  <data name="BtnVerDetalle" xml:space="preserve">
+    <value>View details</value>
+  </data>
+  <data name="CafeteriaEyebrow" xml:space="preserve">
+    <value>Brew Time · Coffee Shop</value>
+  </data>
+  <data name="Cancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CancelarBtn" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="CantEstacionesCol" xml:space="preserve">
+    <value>Number of Stations</value>
+  </data>
+  <data name="CatBubbleTea" xml:space="preserve">
+    <value>Bubble Tea</value>
+  </data>
+  <data name="CatCafe" xml:space="preserve">
+    <value>Coffee</value>
+  </data>
+  <data name="CategoriaLabel" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="ComboLabel" xml:space="preserve">
+    <value>Combo</value>
+  </data>
+  <data name="Combos" xml:space="preserve">
+    <value>Combos</value>
+  </data>
+  <data name="CombosDelTxt" xml:space="preserve">
+    <value>Combos of the</value>
+  </data>
+  <data name="CombosDesc" xml:space="preserve">
+    <value>Select the combos that will be part of the menu.</value>
+  </data>
+  <data name="CombosTitle" xml:space="preserve">
+    <value>Combos</value>
+  </data>
+  <data name="ConfiguracionEstaciones" xml:space="preserve">
+    <value>Station configuration</value>
+  </data>
+  <data name="ConfiguracionFlujo" xml:space="preserve">
+    <value>Flow configuration</value>
+  </data>
+  <data name="Contacto" xml:space="preserve">
+    <value>Contact</value>
+  </data>
+  <data name="ConteoPasos" xml:space="preserve">
+    <value>{0} registered step(s)</value>
+  </data>
+  <data name="CopiaAutomaticaHint" xml:space="preserve">
+    <value>It will be automatically copied to wwwroot/images.</value>
+  </data>
+  <data name="CorreoLabel" xml:space="preserve">
+    <value>Email address</value>
+  </data>
+  <data name="CreacionProductoLabel" xml:space="preserve">
+    <value>Product creation</value>
+  </data>
+  <data name="CrearProcesoDe" xml:space="preserve">
+    <value>Create Process for</value>
+  </data>
+  <data name="CrearProcesoTitulo" xml:space="preserve">
+    <value>Create Preparation Process</value>
+  </data>
+  <data name="CreateMenuTitle" xml:space="preserve">
+    <value>Create Menu</value>
+  </data>
+  <data name="DesactivarBtn" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="DescBrevePlaceholder" xml:space="preserve">
+    <value>Brief description of the product...</value>
+  </data>
+  <data name="DescConfiguracionEstaciones" xml:space="preserve">
+    <value>Currently active stations appear selected. You can add or remove process steps.</value>
+  </data>
+  <data name="DescDetalleMenu" xml:space="preserve">
+    <value>Complete information of the selected menu.</value>
+  </data>
+  <data name="DescDetalleProducto" xml:space="preserve">
+    <value>Everything you need to know about this preparation.</value>
+  </data>
+  <data name="DescDetalleUsuario" xml:space="preserve">
+    <value>Detailed information of the selected user.</value>
+  </data>
+  <data name="DescEditarProceso" xml:space="preserve">
+    <value>Modify the stations, order, and times of the current product process.</value>
+  </data>
+  <data name="DescEditarProducto" xml:space="preserve">
+    <value>Modify the selected product's details.</value>
+  </data>
+  <data name="DescListadoMenus" xml:space="preserve">
+    <value>General consultation of registered menus.</value>
+  </data>
+  <data name="DescMantenimiento" xml:space="preserve">
+    <value>Create, edit, activate, or deactivate products from the catalog.</value>
+  </data>
+  <data name="DescMantProcesos" xml:space="preserve">
+    <value>Create, edit, and view the preparation processes for each product.</value>
+  </data>
+  <data name="DescNuevoProducto" xml:space="preserve">
+    <value>Fill in the fields to add a product to the catalog.</value>
+  </data>
+  <data name="DescProcesoPreparacion" xml:space="preserve">
+    <value>Select the stations that are part of the process and set the order and estimated time.</value>
+  </data>
+  <data name="DescripcionLabel" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="Description" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="DescriptionPlaceholder" xml:space="preserve">
+    <value>Briefly describe the menu...</value>
+  </data>
+  <data name="DescUsuarios" xml:space="preserve">
+    <value>Consultation and administration of users registered in the system.</value>
+  </data>
+  <data name="DesdeBadge" xml:space="preserve">
+    <value>SINCE</value>
+  </data>
+  <data name="DetalleBtn" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="DetalleDel" xml:space="preserve">
+    <value>Detail of the</value>
+  </data>
+  <data name="DetalleDelTxt" xml:space="preserve">
+    <value>Details of the</value>
+  </data>
+  <data name="DetalleMenuTitulo" xml:space="preserve">
+    <value>Menu Details</value>
+  </data>
+  <data name="DetalleUsuarioTitulo" xml:space="preserve">
+    <value>User Details</value>
+  </data>
+  <data name="DiaNoDefinido" xml:space="preserve">
+    <value>Undefined day</value>
+  </data>
+  <data name="DiasTxt" xml:space="preserve">
+    <value>Days</value>
+  </data>
+  <data name="Diff1" xml:space="preserve">
+    <value>Specialty coffee.</value>
+  </data>
+  <data name="Diff2" xml:space="preserve">
+    <value>Artisanal Bubble Tea.</value>
+  </data>
+  <data name="Diff3" xml:space="preserve">
+    <value>Unique desserts.</value>
+  </data>
+  <data name="Diff4" xml:space="preserve">
+    <value>Fresh ingredients.</value>
+  </data>
+  <data name="Diff5" xml:space="preserve">
+    <value>Personalized service.</value>
+  </data>
+  <data name="DisfrutaSeleccion" xml:space="preserve">
+    <value>Enjoy our selection of products and combos.</value>
+  </data>
+  <data name="DisponibilidadLabel" xml:space="preserve">
+    <value>Availability</value>
+  </data>
+  <data name="DisponibleBadge" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="DisponibleEm" xml:space="preserve">
+    <value>Available</value>
+  </data>
+  <data name="DisponiblesEm" xml:space="preserve">
+    <value>available</value>
+  </data>
+  <data name="Domingo" xml:space="preserve">
+    <value>Sunday</value>
+  </data>
+  <data name="EdicionProductoLabel" xml:space="preserve">
+    <value>Product editing</value>
+  </data>
+  <data name="EditActiveMenuDesc" xml:space="preserve">
+    <value>Determine if it can be displayed as an available menu.</value>
+  </data>
+  <data name="EditarBtn" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditarFlujoDe" xml:space="preserve">
+    <value>Edit Flow for</value>
+  </data>
+  <data name="EditarProcesoTitulo" xml:space="preserve">
+    <value>Edit Preparation Process</value>
+  </data>
+  <data name="EditarProductoTitulo" xml:space="preserve">
+    <value>Edit Product</value>
+  </data>
+  <data name="EditarTxt" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditAvailabilityDesc" xml:space="preserve">
+    <value>Modify the date and time range.</value>
+  </data>
+  <data name="EditAvailableDaysDesc" xml:space="preserve">
+    <value>Check or uncheck the days the menu will be available.</value>
+  </data>
+  <data name="EditCombosDesc" xml:space="preserve">
+    <value>Check or uncheck the menu combos.</value>
+  </data>
+  <data name="EditGeneralInfoDesc" xml:space="preserve">
+    <value>Modify the main menu data.</value>
+  </data>
+  <data name="EditMenuHeading" xml:space="preserve">
+    <value>Edit Menu</value>
+  </data>
+  <data name="EditMenuSubtitle" xml:space="preserve">
+    <value>Update the availability, products, and combos of the menu.</value>
+  </data>
+  <data name="EditMenuTitle" xml:space="preserve">
+    <value>Edit Menu</value>
+  </data>
+  <data name="EditProductsDesc" xml:space="preserve">
+    <value>Check or uncheck the menu products.</value>
+  </data>
+  <data name="EjCremaBatidaPlaceholder" xml:space="preserve">
+    <value>E.g.: Whipped cream</value>
+  </data>
+  <data name="EjEspressoPlaceholder" xml:space="preserve">
+    <value>E.g.: Arabica Espresso</value>
+  </data>
+  <data name="EliminarBtn" xml:space="preserve">
+    <value>Delete</value>
+  </data>
+  <data name="EndDate" xml:space="preserve">
+    <value>End date</value>
+  </data>
+  <data name="EndTime" xml:space="preserve">
+    <value>End time</value>
+  </data>
+  <data name="ErrorAlerta" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="ErrorGuardarAlerta" xml:space="preserve">
+    <value>Could not be saved</value>
+  </data>
+  <data name="EscribaIngredienteHint" xml:space="preserve">
+    <value>Type a new ingredient and press "Add":</value>
+  </data>
+  <data name="EsloganFooter" xml:space="preserve">
+    <value>Specialty coffee and bubble tea, made with love every day.</value>
+  </data>
+  <data name="EstacionesDelProceso" xml:space="preserve">
+    <value>Process stations</value>
+  </data>
+  <data name="EstacionesTiempos" xml:space="preserve">
+    <value>Stations &amp; times</value>
+  </data>
+  <data name="EstacionLabel" xml:space="preserve">
+    <value>Station</value>
+  </data>
+  <data name="EstadoLabel" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="EstrellasTemporada" xml:space="preserve">
+    <value>Stars of the season</value>
+  </data>
+  <data name="EtiquetaProducto" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="ExitoAlerta" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="EyebrowCafeteria" xml:space="preserve">
+    <value>Brew Time · Coffee Shop</value>
+  </data>
+  <data name="FechaCreacionLabel" xml:space="preserve">
+    <value>Creation date</value>
+  </data>
+  <data name="FechasLabel" xml:space="preserve">
+    <value>Dates</value>
+  </data>
+  <data name="Friday" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="GeneralInfoDesc" xml:space="preserve">
+    <value>Main menu data.</value>
+  </data>
+  <data name="GeneralInformation" xml:space="preserve">
+    <value>General information</value>
+  </data>
+  <data name="GestionCatalogoLabel" xml:space="preserve">
+    <value>Catalog management</value>
+  </data>
+  <data name="GestionProcesosLabel" xml:space="preserve">
+    <value>Process Management</value>
+  </data>
+  <data name="SwalEditTitle" xml:space="preserve">
+    <value>It wasn't possible to save the changes</value>
+  </data>
+  <data name="GuardarBtn" xml:space="preserve">
+    <value>Save</value>
+  </data>
+  <data name="GuardarCambiosBtn" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="GuardarProductoBtn" xml:space="preserve">
+    <value>Save product</value>
+  </data>
+  <data name="HastaTxt" xml:space="preserve">
+    <value>until</value>
+  </data>
+  <data name="HechoCon" xml:space="preserve">
+    <value>Made with</value>
+  </data>
+  <data name="HeroEyebrow" xml:space="preserve">
+    <value>Coffee &amp; Bubble · Costa Rica</value>
+  </data>
+  <data name="HeroLineTag" xml:space="preserve">
+    <value>Bubble Tea &amp; Coffee</value>
+  </data>
+  <data name="HeroSub1" xml:space="preserve">
+    <value>Specialty coffee and bubble tea prepared with love.</value>
+  </data>
+  <data name="HeroSub2" xml:space="preserve">
+    <value>Every sip, an experience.</value>
+  </data>
+  <data name="HintNuevaImagen" xml:space="preserve">
+    <value>If you don't delete the current one, the new one is added to the product.</value>
+  </data>
+  <data name="HistoriaTexto" xml:space="preserve">
+    <value>From Costa Rica, Brew Time was born with the idea of uniting specialty coffee and authentic bubble tea in one place.</value>
+  </data>
+  <data name="HistoriaTitulo" xml:space="preserve">
+    <value>We started sharing special moments.</value>
+  </data>
+  <data name="Horario" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
+  <data name="HorarioDomingo" xml:space="preserve">
+    <value>Sun: 9:00am – 3:00pm</value>
+  </data>
+  <data name="HorarioLabel" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
+  <data name="HorarioSabado" xml:space="preserve">
+    <value>Sat: 8:00am – 6:00pm</value>
+  </data>
+  <data name="HorarioSemana" xml:space="preserve">
+    <value>Mon – Fri: 7:00am – 8:00pm</value>
+  </data>
+  <data name="ImagenProductoLabel" xml:space="preserve">
+    <value>Product image</value>
+  </data>
+  <data name="Inactivo" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="InactivoBadge" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="InfoCompletaPreparacion" xml:space="preserve">
+    <value>Complete preparation information</value>
+  </data>
+  <data name="IngredientesCatalogoLabel" xml:space="preserve">
+    <value>Catalog ingredients</value>
+  </data>
+  <data name="IngredientesLabel" xml:space="preserve">
+    <value>Ingredients</value>
+  </data>
+  <data name="IngredientesNuevosLabel" xml:space="preserve">
+    <value>New ingredients</value>
+  </data>
+  <data name="IngredientesPrecio" xml:space="preserve">
+    <value>Ingredients &amp; price</value>
+  </data>
+  <data name="Inicio" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="InicioTitulo" xml:space="preserve">
+    <value>Home</value>
+  </data>
+  <data name="Jueves" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="LimpiarSeleccionBtn" xml:space="preserve">
+    <value>Clear selection</value>
+  </data>
+  <data name="ListadoDeTxt" xml:space="preserve">
+    <value>List of</value>
+  </data>
+  <data name="ListadoGeneralLabel" xml:space="preserve">
+    <value>General list</value>
+  </data>
+  <data name="ListadoMenusTitulo" xml:space="preserve">
+    <value>Menu List</value>
+  </data>
+  <data name="ListadoUsuariosTitulo" xml:space="preserve">
+    <value>User List</value>
+  </data>
+  <data name="LoMasPedido" xml:space="preserve">
+    <value>Best sellers</value>
+  </data>
+  <data name="Lunes" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="MantenimientoDe" xml:space="preserve">
+    <value>Maintenance of</value>
+  </data>
+  <data name="MantenimientoTitulo" xml:space="preserve">
+    <value>Product Maintenance</value>
+  </data>
+  <data name="MantenimientoTxt" xml:space="preserve">
+    <value>Maintenance of</value>
+  </data>
+  <data name="MantProcesosTitulo" xml:space="preserve">
+    <value>Preparation Processes Maintenance</value>
+  </data>
+  <data name="Martes" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="MasQueBebida" xml:space="preserve">
+    <value>More than a drink.</value>
+  </data>
+  <data name="MenuActiveLabel" xml:space="preserve">
+    <value>Active menu</value>
+  </data>
+  <data name="MenuCreation" xml:space="preserve">
+    <value>Menu creation</value>
+  </data>
+  <data name="MenuDisponible" xml:space="preserve">
+    <value>Available Menu</value>
+  </data>
+  <data name="MenuDisponibleTitulo" xml:space="preserve">
+    <value>Available Menu</value>
+  </data>
+  <data name="MenuEdition" xml:space="preserve">
+    <value>Menu edition</value>
+  </data>
+  <data name="MenuEm" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="MenuLabel" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="MenuName" xml:space="preserve">
+    <value>Menu name</value>
+  </data>
+  <data name="MenuNamePlaceholder" xml:space="preserve">
+    <value>Ex: Breakfast menu</value>
+  </data>
+  <data name="MenuPrecios" xml:space="preserve">
+    <value>Menu &amp; prices</value>
+  </data>
+  <data name="Menus" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="MenusEm" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="MenusRegistradosLabel" xml:space="preserve">
+    <value>Registered menus</value>
+  </data>
+  <data name="MenusRegistradosSufijo" xml:space="preserve">
+    <value>registered menu(s)</value>
+  </data>
+  <data name="MenuSubtitle" xml:space="preserve">
+    <value>Define the availability and the items that will make up the menu.</value>
+  </data>
+  <data name="MenuTxt" xml:space="preserve">
+    <value>Menu</value>
+  </data>
+  <data name="Miercoles" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="MinutosAbv" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="Monday" xml:space="preserve">
+    <value>Monday</value>
+  </data>
+  <data name="NewMenuHeading" xml:space="preserve">
+    <value>New Menu</value>
+  </data>
+  <data name="NoCombosAvailable" xml:space="preserve">
+    <value>No active combos available.</value>
+  </data>
+  <data name="NoCombosRegistrados" xml:space="preserve">
+    <value>There are no combos registered for this menu.</value>
+  </data>
+  <data name="NoDefinido" xml:space="preserve">
+    <value>Not defined</value>
+  </data>
+  <data name="NoDiasConfigurados" xml:space="preserve">
+    <value>No days configured</value>
+  </data>
+  <data name="NoDiasRegistrados" xml:space="preserve">
+    <value>There are no days registered for this menu.</value>
+  </data>
+  <data name="NoHayIngredientesCatalogo" xml:space="preserve">
+    <value>There are no ingredients registered in the catalog.</value>
+  </data>
+  <data name="NoHayIngredientesMsj" xml:space="preserve">
+    <value>There are no registered ingredients.</value>
+  </data>
+  <data name="NoHayProcesosMsj" xml:space="preserve">
+    <value>There are no registered preparation processes.</value>
+  </data>
+  <data name="NoHayProductos" xml:space="preserve">
+    <value>No products registered yet.</value>
+  </data>
+  <data name="NombreLabel" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="NoMenuDisponibleFecha" xml:space="preserve">
+    <value>There is no menu available for the current date.</value>
+  </data>
+  <data name="NoMenusRegistrados" xml:space="preserve">
+    <value>There are no registered menus.</value>
+  </data>
+  <data name="NoProductosActivos" xml:space="preserve">
+    <value>There are no active products.</value>
+  </data>
+  <data name="NoProductosCombos" xml:space="preserve">
+    <value>There are no products or combos available for this menu.</value>
+  </data>
+  <data name="NoProductosInactivos" xml:space="preserve">
+    <value>There are no inactive products.</value>
+  </data>
+  <data name="NoProductosRegistrados" xml:space="preserve">
+    <value>There are no products registered for this menu.</value>
+  </data>
+  <data name="NoProductsAvailable" xml:space="preserve">
+    <value>No active products available.</value>
+  </data>
+  <data name="NoRegistrado" xml:space="preserve">
+    <value>Not registered</value>
+  </data>
+  <data name="NosotrosBadge" xml:space="preserve">
+    <value>ABOUT US</value>
+  </data>
+  <data name="NosotrosTexto" xml:space="preserve">
+    <value>At Brew Time we believe that every cup and every bubble tea is an experience. We combine quality ingredients, creativity, and a cozy atmosphere.</value>
+  </data>
+  <data name="NoUsuariosRegistrados" xml:space="preserve">
+    <value>There are no registered users.</value>
+  </data>
+  <data name="NuestrasEstrellas" xml:space="preserve">
+    <value>Our stars</value>
+  </data>
+  <data name="Nuestros" xml:space="preserve">
+    <value>Our</value>
+  </data>
+  <data name="NuevoProcesoBtn" xml:space="preserve">
+    <value>New Process</value>
+  </data>
+  <data name="NuevoProcesoEyebrow" xml:space="preserve">
+    <value>New Process</value>
+  </data>
+  <data name="NuevoProductoBtn" xml:space="preserve">
+    <value>New product</value>
+  </data>
+  <data name="NuevoProductoTitulo" xml:space="preserve">
+    <value>New Product</value>
+  </data>
+  <data name="NuevoTxt" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="OrdenLabel" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="OrdenPasoLabel" xml:space="preserve">
+    <value>Step order</value>
+  </data>
+  <data name="PasosPreparacion" xml:space="preserve">
+    <value>&lt;strong&gt;{0}&lt;/strong&gt; preparation step(s)</value>
+  </data>
+  <data name="PerfilDeTxt" xml:space="preserve">
+    <value>Profile of</value>
+  </data>
+  <data name="Por" xml:space="preserve">
+    <value>by</value>
+  </data>
+  <data name="PrecioColonesLabel" xml:space="preserve">
+    <value>Price (₡)</value>
+  </data>
+  <data name="PrecioEspecialLabel" xml:space="preserve">
+    <value>Special price</value>
+  </data>
+  <data name="PrecioLabel" xml:space="preserve">
+    <value>Price</value>
+  </data>
+  <data name="PreparacionEm" xml:space="preserve">
+    <value>Preparation</value>
+  </data>
+  <data name="Privacidad" xml:space="preserve">
+    <value>Privacy</value>
+  </data>
+  <data name="ProcesoEm" xml:space="preserve">
+    <value>Process</value>
+  </data>
+  <data name="Procesos" xml:space="preserve">
+    <value>Processes</value>
+  </data>
+  <data name="ProcesosPreparacionEm" xml:space="preserve">
+    <value>Preparation Processes</value>
+  </data>
+  <data name="ProcesosRegistradosTitulo" xml:space="preserve">
+    <value>Registered processes</value>
+  </data>
+  <data name="ProductoActivoLabel" xml:space="preserve">
+    <value>Active product</value>
+  </data>
+  <data name="ProductoCol" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="ProductoEm" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="ProductoLabel" xml:space="preserve">
+    <value>Product</value>
+  </data>
+  <data name="ProductoNoModificableInfo" xml:space="preserve">
+    <value>The product cannot be modified when editing the process.</value>
+  </data>
+  <data name="Productos" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductosActivosTitle" xml:space="preserve">
+    <value>Active products</value>
+  </data>
+  <data name="ProductosDelTxt" xml:space="preserve">
+    <value>Products of the</value>
+  </data>
+  <data name="ProductosEm" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductosInactivosTitle" xml:space="preserve">
+    <value>Inactive products</value>
+  </data>
+  <data name="ProductosRegistradosCount" xml:space="preserve">
+    <value>registered product(s)</value>
+  </data>
+  <data name="ProductosTitle" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductosTitulo" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="Products" xml:space="preserve">
+    <value>Products</value>
+  </data>
+  <data name="ProductsDesc" xml:space="preserve">
+    <value>Select the products that will be part of the menu.</value>
+  </data>
+  <data name="QueNosHaceDiferentes" xml:space="preserve">
+    <value>What makes us different?</value>
+  </data>
+  <data name="RolLabel" xml:space="preserve">
+    <value>Role</value>
+  </data>
+  <data name="Sabado" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="Saturday" xml:space="preserve">
+    <value>Saturday</value>
+  </data>
+  <data name="SaveChanges" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="SaveMenu" xml:space="preserve">
+    <value>Save menu</value>
+  </data>
+  <data name="SeleccionarImagenStrong" xml:space="preserve">
+    <value>Select image</value>
+  </data>
+  <data name="SeleccioneCategoriaOption" xml:space="preserve">
+    <value>Select a category</value>
+  </data>
+  <data name="SeleccioneIngredientesHint" xml:space="preserve">
+    <value>Select the ingredients already registered in the coffee shop:</value>
+  </data>
+  <data name="SeleccioneProducto" xml:space="preserve">
+    <value>-- Select a product --</value>
+  </data>
+  <data name="SeleccionIdioma" xml:space="preserve">
+    <value>Language</value>
+  </data>
+  <data name="SinCategoria" xml:space="preserve">
+    <value>No category</value>
+  </data>
+  <data name="SinDescripcion" xml:space="preserve">
+    <value>No description registered</value>
+  </data>
+  <data name="SinImagenDisponible" xml:space="preserve">
+    <value>No image available</value>
+  </data>
+  <data name="SinPasosRegistrados" xml:space="preserve">
+    <value>No steps registered yet.</value>
+  </data>
+  <data name="StartDate" xml:space="preserve">
+    <value>Start date</value>
+  </data>
+  <data name="StartTime" xml:space="preserve">
+    <value>Start time</value>
+  </data>
+  <data name="Subtitulo" xml:space="preserve">
+    <value>Every step, every station, every minute matters.</value>
+  </data>
+  <data name="SubtituloProductos" xml:space="preserve">
+    <value>Every sip, every flavor, every experience.</value>
+  </data>
+  <data name="Sunday" xml:space="preserve">
+    <value>Sunday</value>
+  </data>
+  <data name="SwalButton" xml:space="preserve">
+    <value>Review form</value>
+  </data>
+  <data name="SwalConfirmActivar" xml:space="preserve">
+    <value>Yes, activate</value>
+  </data>
+  <data name="SwalConfirmDesactivar" xml:space="preserve">
+    <value>Yes, deactivate</value>
+  </data>
+  <data name="SwalText" xml:space="preserve">
+    <value>Some fields are empty or contain invalid information.</value>
+  </data>
+  <data name="SwalTextActivar" xml:space="preserve">
+    <value>The product "{0}" will be visible on the menu again.</value>
+  </data>
+  <data name="SwalTextDesactivar" xml:space="preserve">
+    <value>The product "{0}" will no longer be visible on the menu.</value>
+  </data>
+  <data name="SwalTitle" xml:space="preserve">
+    <value>Check the entered data</value>
+  </data>
+  <data name="SwalTitleActivar" xml:space="preserve">
+    <value>Activate product?</value>
+  </data>
+  <data name="SwalTitleDesactivar" xml:space="preserve">
+    <value>Deactivate product?</value>
+  </data>
+  <data name="TagEspecialidad" xml:space="preserve">
+    <value>Specialty</value>
+  </data>
+  <data name="TelefonoLabel" xml:space="preserve">
+    <value>Phone</value>
+  </data>
+  <data name="Thursday" xml:space="preserve">
+    <value>Thursday</value>
+  </data>
+  <data name="TiempoEstimadoLabel" xml:space="preserve">
+    <value>Estimated time</value>
+  </data>
+  <data name="TiempoEstimadoMinLabel" xml:space="preserve">
+    <value>Estimated time (min)</value>
+  </data>
+  <data name="TiempoEstimadoMinutosLabel" xml:space="preserve">
+    <value>Estimated time (minutes)</value>
+  </data>
+  <data name="TituloCafes" xml:space="preserve">
+    <value>Coffees</value>
+  </data>
+  <data name="TituloDetalleProceso" xml:space="preserve">
+    <value>Process Detail</value>
+  </data>
+  <data name="TituloPestana" xml:space="preserve">
+    <value>Preparation Process</value>
+  </data>
+  <data name="TituloPrincipal" xml:space="preserve">
+    <value>Preparation &lt;em&gt;Process&lt;/em&gt;</value>
+  </data>
+  <data name="TotalUsuarios" xml:space="preserve">
+    <value>Total users:</value>
+  </data>
+  <data name="Tuesday" xml:space="preserve">
+    <value>Tuesday</value>
+  </data>
+  <data name="Uncategorized" xml:space="preserve">
+    <value>Uncategorized</value>
+  </data>
+  <data name="UsuarioEm" xml:space="preserve">
+    <value>User</value>
+  </data>
+  <data name="Usuarios" xml:space="preserve">
+    <value>Users</value>
+  </data>
+  <data name="UsuariosEm" xml:space="preserve">
+    <value>Users </value>
+  </data>
+  <data name="VerDetalle" xml:space="preserve">
+    <value>View details</value>
+  </data>
+  <data name="VerDetalleBtn" xml:space="preserve">
+    <value>View details</value>
+  </data>
+  <data name="VerMenuCompleto" xml:space="preserve">
+    <value>View full menu</value>
+  </data>
+  <data name="Viernes" xml:space="preserve">
+    <value>Friday</value>
+  </data>
+  <data name="VistaPreviaImgAlt" xml:space="preserve">
+    <value>Selected image preview</value>
+  </data>
+  <data name="VolverAlListado" xml:space="preserve">
+    <value>Back to list</value>
+  </data>
+  <data name="VolverBtn" xml:space="preserve">
+    <value>Back</value>
+  </data>
+  <data name="VolverCatalogoBtn" xml:space="preserve">
+    <value>Back to catalog</value>
+  </data>
+  <data name="VolverListadoBtn" xml:space="preserve">
+    <value>Back to list</value>
+  </data>
+  <data name="VolverMantenimientoBtn" xml:space="preserve">
+    <value>Back to maintenance</value>
+  </data>
+  <data name="Wednesday" xml:space="preserve">
+    <value>Wednesday</value>
+  </data>
+  <data name="SwalEditText" xml:space="preserve">
+    <value>Review the fields highlighted in the form.</value>
+  </data>
+  <data name="Title_MenuMaintenance" xml:space="preserve">
+    <value>Menu Maintenance</value>
+  </data>
+  <data name="BrewTimeAdministration" xml:space="preserve">
+    <value>Brew Time · Administration</value>
+  </data>
+  <data name="MaintenanceOf" xml:space="preserve">
+    <value>Maintenance of</value>
+  </data>
+  <data name="MenusItalic" xml:space="preserve">
+    <value>Menus</value>
+  </data>
+  <data name="HeroSubtitle" xml:space="preserve">
+    <value>Create, modify and control menu availability.</value>
+  </data>
+  <data name="AdministrativeManagement" xml:space="preserve">
+    <value>Administrative management</value>
+  </data>
+  <data name="RegisteredMenus" xml:space="preserve">
+    <value>Registered menus</value>
+  </data>
+  <data name="TotalOf" xml:space="preserve">
+    <value>total of</value>
+  </data>
+  <data name="MenusRegisteredSuffix" xml:space="preserve">
+    <value>registered menu(s)</value>
+  </data>
+  <data name="CreateMenu" xml:space="preserve">
+    <value>Create menu</value>
+  </data>
+  <data name="NoActiveMenusRegistered" xml:space="preserve">
+    <value>No active menus registered.</value>
+  </data>
+  <data name="ActiveMenus" xml:space="preserve">
+    <value>Active menus</value>
+  </data>
+  <data name="BadgeActive" xml:space="preserve">
+    <value>Active</value>
+  </data>
+  <data name="NoDescriptionRegistered" xml:space="preserve">
+    <value>No description registered.</value>
+  </data>
+  <data name="Dates" xml:space="preserve">
+    <value>Dates</value>
+  </data>
+  <data name="NotDefined" xml:space="preserve">
+    <value>Not defined</value>
+  </data>
+  <data name="Schedule" xml:space="preserve">
+    <value>Schedule</value>
+  </data>
+  <data name="Detail" xml:space="preserve">
+    <value>Detail</value>
+  </data>
+  <data name="Edit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="Deactivate" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="InactiveMenus" xml:space="preserve">
+    <value>Inactive menus</value>
+  </data>
+  <data name="NoInactiveMenus" xml:space="preserve">
+    <value>No inactive menus.</value>
+  </data>
+  <data name="BadgeInactive" xml:space="preserve">
+    <value>Inactive</value>
+  </data>
+  <data name="Activate" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="SwalSuccessTitle" xml:space="preserve">
+    <value>Successful operation</value>
+  </data>
+  <data name="SwalErrorTitle" xml:space="preserve">
+    <value>An error occurred</value>
+  </data>
+  <data name="SwalAcceptButton" xml:space="preserve">
+    <value>Accept</value>
+  </data>
+  <data name="SwalDeactivateMenuTitle" xml:space="preserve">
+    <value>Deactivate menu?</value>
+  </data>
+  <data name="SwalActivateMenuTitle" xml:space="preserve">
+    <value>Activate menu?</value>
+  </data>
+  <data name="SwalYesDeactivate" xml:space="preserve">
+    <value>Yes, deactivate</value>
+  </data>
+  <data name="SwalYesActivate" xml:space="preserve">
+    <value>Yes, activate</value>
+  </data>
+  <data name="SwalCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="SwalConfirmDeactivateText" xml:space="preserve">
+    <value>Are you sure you want to deactivate the menu "{0}"?</value>
+  </data>
+  <data name="SwalConfirmActivateText" xml:space="preserve">
+    <value>Are you sure you want to activate the menu "{0}"?</value>
+  </data>
+  <data name="Title_Combos" xml:space="preserve">
+    <value>Combos</value>
+  </data>
+  <data name="Our" xml:space="preserve">
+    <value>Our</value>
+  </data>
+  <data name="CombosItalic" xml:space="preserve">
+    <value>Combos</value>
+  </data>
+  <data name="OffersAndSpecialPrices" xml:space="preserve">
+    <value>Offers &amp; special prices</value>
+  </data>
+  <data name="ManageCombos" xml:space="preserve">
+    <value>Manage combos</value>
+  </data>
+  <data name="NoCombosRegisteredYet" xml:space="preserve">
+    <value>No combos registered yet.</value>
+  </data>
+  <data name="CombosAvailableSuffix" xml:space="preserve">
+    <value>available combo(s)</value>
+  </data>
+  <data name="ViewDetail" xml:space="preserve">
+    <value>View detail</value>
+  </data>
+  <data name="ComboDetailTitleBefore" xml:space="preserve">
+    <value>Detail of the</value>
+  </data>
+  <data name="ComboDetailTitleItalic" xml:space="preserve">
+    <value>Combo</value>
+  </data>
+  <data name="HeroSubtitleDetail" xml:space="preserve">
+    <value>Everything this special combination includes.</value>
+  </data>
+  <data name="ProductsAndSpecialPrice" xml:space="preserve">
+    <value>Products &amp; special price</value>
+  </data>
+  <data name="BackToList" xml:space="preserve">
+    <value>Back to list</value>
+  </data>
+  <data name="SpecialPrice" xml:space="preserve">
+    <value>Special price</value>
+  </data>
+  <data name="Status" xml:space="preserve">
+    <value>Status</value>
+  </data>
+  <data name="CreationDate" xml:space="preserve">
+    <value>Creation date</value>
+  </data>
+  <data name="IncludedProducts" xml:space="preserve">
+    <value>Included products</value>
+  </data>
+  <data name="NoProductsAssigned" xml:space="preserve">
+    <value>No products assigned.</value>
+  </data>
+  <data name="Title_NewCombo" xml:space="preserve">
+    <value>New Combo</value>
+  </data>
+  <data name="NewTitle" xml:space="preserve">
+    <value>New</value>
+  </data>
+  <data name="NewItalicCombo" xml:space="preserve">
+    <value>Combo</value>
+  </data>
+  <data name="HeroSubtitleNewCombo" xml:space="preserve">
+    <value>Complete the fields to register a new combo.</value>
+  </data>
+  <data name="ComboCreation" xml:space="preserve">
+    <value>Combo creation</value>
+  </data>
+  <data name="LabelName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="PlaceholderName" xml:space="preserve">
+    <value>Ex: Morning Combo</value>
+  </data>
+  <data name="LabelCategory" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="SelectCategoryOption" xml:space="preserve">
+    <value>-- Select a category --</value>
+  </data>
+  <data name="LabelSpecialPrice" xml:space="preserve">
+    <value>Special price (₡)</value>
+  </data>
+  <data name="LabelComboActive" xml:space="preserve">
+    <value>Active combo</value>
+  </data>
+  <data name="LabelDescription" xml:space="preserve">
+    <value>Description</value>
+  </data>
+  <data name="PlaceholderDescription" xml:space="preserve">
+    <value>Combo description...</value>
+  </data>
+  <data name="LabelComboProducts" xml:space="preserve">
+    <value>Combo products</value>
+  </data>
+  <data name="InstructionProducts" xml:space="preserve">
+    <value>Check the products that are part of the combo and indicate the quantity of each.</value>
+  </data>
+  <data name="LabelQuantity" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="BtnCancel" xml:space="preserve">
+    <value>Cancel</value>
+  </data>
+  <data name="BtnSaveCombo" xml:space="preserve">
+    <value>Save combo</value>
+  </data>
+  <data name="Title_EditCombo" xml:space="preserve">
+    <value>Edit Combo</value>
+  </data>
+  <data name="EditTitle" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="EditItalicCombo" xml:space="preserve">
+    <value>Combo</value>
+  </data>
+  <data name="HeroSubtitleEditCombo" xml:space="preserve">
+    <value>Modify the data of the selected combo.</value>
+  </data>
+  <data name="ComboEdition" xml:space="preserve">
+    <value>Combo edition</value>
+  </data>
+  <data name="InstructionEditProducts" xml:space="preserve">
+    <value>Check the products that are part of the combo and indicate the quantity. Already included products appear checked.</value>
+  </data>
+  <data name="BtnSaveChanges" xml:space="preserve">
+    <value>Save changes</value>
+  </data>
+  <data name="Title_ComboMaintenance" xml:space="preserve">
+    <value>Combo Maintenance</value>
+  </data>
+  <data name="MaintenanceTitleBefore" xml:space="preserve">
+    <value>Maintenance of</value>
+  </data>
+  <data name="MaintenanceTitleItalic" xml:space="preserve">
+    <value>Combos</value>
+  </data>
+  <data name="HeroSubtitleMaintenance" xml:space="preserve">
+    <value>Activate or deactivate combos from the catalog.</value>
+  </data>
+  <data name="CombosManagement" xml:space="preserve">
+    <value>Combos management</value>
+  </data>
+  <data name="NewComboBtn" xml:space="preserve">
+    <value>New combo</value>
+  </data>
+  <data name="ActiveCombos" xml:space="preserve">
+    <value>Active combos</value>
+  </data>
+  <data name="NoActiveCombos" xml:space="preserve">
+    <value>No active combos.</value>
+  </data>
+  <data name="InactiveCombos" xml:space="preserve">
+    <value>Inactive combos</value>
+  </data>
+  <data name="NoInactiveCombos" xml:space="preserve">
+    <value>No inactive combos.</value>
+  </data>
+  <data name="ThName" xml:space="preserve">
+    <value>Name</value>
+  </data>
+  <data name="ThCategory" xml:space="preserve">
+    <value>Category</value>
+  </data>
+  <data name="ThSpecialPrice" xml:space="preserve">
+    <value>Special price</value>
+  </data>
+  <data name="ThActions" xml:space="preserve">
+    <value>Actionss</value>
+  </data>
+  <data name="BtnEdit" xml:space="preserve">
+    <value>Edit</value>
+  </data>
+  <data name="BtnViewDetail" xml:space="preserve">
+    <value>View detail</value>
+  </data>
+  <data name="BtnDeactivate" xml:space="preserve">
+    <value>Deactivate</value>
+  </data>
+  <data name="BtnActivate" xml:space="preserve">
+    <value>Activate</value>
+  </data>
+  <data name="SwalTitleDeactivate" xml:space="preserve">
+    <value>Deactivate combo?</value>
+  </data>
+  <data name="SwalTitleActivate" xml:space="preserve">
+    <value>Activate combo?</value>
+  </data>
+  <data name="SwalTextDeactivateBefore" xml:space="preserve">
+    <value>The combo</value>
+  </data>
+  <data name="SwalTextDeactivateAfter" xml:space="preserve">
+    <value>will no longer be visible in the menu.</value>
+  </data>
+  <data name="SwalTextActivateBefore" xml:space="preserve">
+    <value>The combo</value>
+  </data>
+  <data name="SwalTextActivateAfter" xml:space="preserve">
+    <value>will be visible in the menu again.</value>
+  </data>
+  <data name="SwalConfirmDeactivate" xml:space="preserve">
+    <value>Yes, deactivate</value>
+  </data>
+  <data name="SwalConfirmActivate" xml:space="preserve">
+    <value>Yes, activate</value>
+  </data>
+</root>

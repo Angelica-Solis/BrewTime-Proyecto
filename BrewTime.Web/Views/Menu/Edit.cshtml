@@ -1,6 +1,8 @@
 ﻿@model BrewTime.Application.DTOs.MenuFormDTO
 
 @using BrewTime.Application.DTOs
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @section Styles {
     <link rel="stylesheet"
@@ -9,7 +11,7 @@
 }
 
 @{
-    ViewData["Title"] = "Modificar Menú";
+    ViewData["Title"] = SharedLocalizer["EditMenuTitle"];
 
     var productos =
         ViewBag.ProductosDisponibles as IEnumerable<ProductoDTO>
@@ -26,20 +28,20 @@
         <div class="menu-hero-inner">
 
             <p class="menu-eyebrow">
-                Brew Time · Administración
+                @SharedLocalizer["BrewTimeAdmin"]
             </p>
 
             <h1 class="menu-title">
-                Modificar <em>Menú</em>
+                @Html.Raw(SharedLocalizer["EditMenuHeading"])
             </h1>
 
             <p class="menu-subtitle">
-                Actualice la disponibilidad, productos y combos del menú.
+                @SharedLocalizer["EditMenuSubtitle"]
             </p>
 
             <div class="menu-hero-line">
                 <span></span>
-                <i>Edición de menú</i>
+                <i>@SharedLocalizer["MenuEdition"]</i>
                 <span></span>
             </div>
 
@@ -50,7 +52,7 @@
 
         <a asp-action="Maintenance"
            class="menu-btn-secondary">
-            ← Volver al mantenimiento
+            @SharedLocalizer["BackToMaintenance"]
         </a>
 
         <div class="menu-form-card">
@@ -71,8 +73,8 @@
                         <span class="menu-form-step">01</span>
 
                         <div>
-                            <h2>Información general</h2>
-                            <p>Modifique los datos principales del menú.</p>
+                            <h2>@SharedLocalizer["GeneralInformation"]</h2>
+                            <p>@SharedLocalizer["EditGeneralInfoDesc"]</p>
                         </div>
                     </div>
 
@@ -82,7 +84,7 @@
 
                             <label asp-for="Nombre"
                                    class="menu-form-label">
-                                Nombre del menú
+                                @SharedLocalizer["MenuName"]
                             </label>
 
                             <input asp-for="Nombre"
@@ -98,7 +100,7 @@
 
                             <label asp-for="Descripcion"
                                    class="menu-form-label">
-                                Descripción
+                                @SharedLocalizer["Description"]
                             </label>
 
                             <textarea asp-for="Descripcion"
@@ -121,8 +123,8 @@
                         <span class="menu-form-step">02</span>
 
                         <div>
-                            <h2>Disponibilidad</h2>
-                            <p>Modifique el rango de fechas y horas.</p>
+                            <h2>@SharedLocalizer["Availability"]</h2>
+                            <p>@SharedLocalizer["EditAvailabilityDesc"]</p>
                         </div>
                     </div>
 
@@ -132,7 +134,7 @@
 
                             <label asp-for="FechaInicio"
                                    class="menu-form-label">
-                                Fecha de inicio
+                                @SharedLocalizer["StartDate"]
                             </label>
 
                             <input asp-for="FechaInicio"
@@ -149,7 +151,7 @@
 
                             <label asp-for="FechaFin"
                                    class="menu-form-label">
-                                Fecha final
+                                @SharedLocalizer["EndDate"]
                             </label>
 
                             <input asp-for="FechaFin"
@@ -166,7 +168,7 @@
 
                             <label asp-for="HoraInicio"
                                    class="menu-form-label">
-                                Hora de inicio
+                                @SharedLocalizer["StartTime"]
                             </label>
 
                             <input asp-for="HoraInicio"
@@ -183,7 +185,7 @@
 
                             <label asp-for="HoraFin"
                                    class="menu-form-label">
-                                Hora final
+                                @SharedLocalizer["EndTime"]
                             </label>
 
                             <input asp-for="HoraFin"
@@ -205,9 +207,9 @@
                         <span class="menu-status-control"></span>
 
                         <span>
-                            <strong>Menú activo</strong>
+                            <strong>@SharedLocalizer["ActiveMenu"]</strong>
                             <small>
-                                Determine si puede mostrarse como menú disponible.
+                                @SharedLocalizer["EditActiveMenuDesc"]
                             </small>
                         </span>
 
@@ -221,9 +223,9 @@
                         <span class="menu-form-step">03</span>
 
                         <div>
-                            <h2>Días disponibles</h2>
+                            <h2>@SharedLocalizer["AvailableDays"]</h2>
                             <p>
-                                Marque o desmarque los días en que estará disponible el menú.
+                                @SharedLocalizer["EditAvailableDaysDesc"]
                             </p>
                         </div>
                     </div>
@@ -235,14 +237,14 @@
                     @{
                         var diasSemana = new[]
                         {
-                                        new { Id = (byte)1, Nombre = "Lunes" },
-                                        new { Id = (byte)2, Nombre = "Martes" },
-                                        new { Id = (byte)3, Nombre = "Miércoles" },
-                                        new { Id = (byte)4, Nombre = "Jueves" },
-                                        new { Id = (byte)5, Nombre = "Viernes" },
-                                        new { Id = (byte)6, Nombre = "Sábado" },
-                                        new { Id = (byte)7, Nombre = "Domingo" }
-                                        };
+                    new { Id = (byte)1, Nombre = SharedLocalizer["Monday"].Value },
+                    new { Id = (byte)2, Nombre = SharedLocalizer["Tuesday"].Value },
+                    new { Id = (byte)3, Nombre = SharedLocalizer["Wednesday"].Value },
+                    new { Id = (byte)4, Nombre = SharedLocalizer["Thursday"].Value },
+                    new { Id = (byte)5, Nombre = SharedLocalizer["Friday"].Value },
+                    new { Id = (byte)6, Nombre = SharedLocalizer["Saturday"].Value },
+                    new { Id = (byte)7, Nombre = SharedLocalizer["Sunday"].Value }
+                    };
                     }
 
                     <div class="menu-days-grid">
@@ -278,8 +280,8 @@
                         <span class="menu-form-step">04</span>
 
                         <div>
-                            <h2>Productos</h2>
-                            <p>Marque o desmarque los productos del menú.</p>
+                            <h2>@SharedLocalizer["Products"]</h2>
+                            <p>@SharedLocalizer["EditProductsDesc"]</p>
                         </div>
                     </div>
 
@@ -311,12 +313,12 @@
 
                                 <span class="menu-selection-price">
                                     @producto.Precio.ToString(
-                                    "C",
-                                                                new System.Globalization.CultureInfo("es-CR"))
-                            </span>
+                                             "C",
+                                             new System.Globalization.CultureInfo("es-CR"))
+                                </span>
 
-                        </label>
-                                                }
+                            </label>
+                        }
 
                     </div>
 
@@ -328,8 +330,8 @@
                         <span class="menu-form-step">05</span>
 
                         <div>
-                            <h2>Combos</h2>
-                            <p>Marque o desmarque los combos del menú.</p>
+                            <h2>@SharedLocalizer["Combos"]</h2>
+                            <p>@SharedLocalizer["EditCombosDesc"]</p>
                         </div>
                     </div>
 
@@ -359,20 +361,20 @@
 
                                     <small>
                                         @(string.IsNullOrWhiteSpace(
-                                                                            combo.CategoriaNombre)
-                                                                            ? "Sin categoría"
-                                                                            : combo.CategoriaNombre)
-                                </small>
-                            </span>
+                                            combo.CategoriaNombre)
+                                            ? SharedLocalizer["Uncategorized"].Value
+                                            : combo.CategoriaNombre)
+                                    </small>
+                                </span>
 
                                 <span class="menu-selection-price">
                                     @combo.PrecioEspecial.ToString(
-                                                                "C",
-                                                                new System.Globalization.CultureInfo("es-CR"))
-                            </span>
+                                             "C",
+                                             new System.Globalization.CultureInfo("es-CR"))
+                                </span>
 
-                        </label>
-                                                }
+                            </label>
+                        }
 
                     </div>
 
@@ -382,12 +384,12 @@
 
                     <a asp-action="Maintenance"
                        class="menu-btn-cancel">
-                        Cancelar
+                        @SharedLocalizer["Cancel"]
                     </a>
 
                     <button type="submit"
                             class="menu-btn-save">
-                        Guardar cambios
+                        @SharedLocalizer["SaveChanges"]
                     </button>
 
                 </div>
@@ -413,10 +415,9 @@
 
                     Swal.fire({
                         icon: "error",
-                        title: "No fue posible guardar los cambios",
-                        text:
-                            "Revise los campos señalados en el formulario.",
-                        confirmButtonText: "Revisar formulario",
+                        title: "@SharedLocalizer["SwalEditTitle"]",
+                        text: "@SharedLocalizer["SwalEditText"]",
+                        confirmButtonText: "@SharedLocalizer["SwalButton"]",
                         confirmButtonColor: "#8a3030"
                     });
 

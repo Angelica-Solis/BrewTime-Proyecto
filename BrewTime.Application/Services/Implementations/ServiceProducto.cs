@@ -213,5 +213,9 @@ namespace BrewTime.Application.Services.Implementations
 
             return _mapper.Map<ICollection<ProductoDTO>>(productos);
         }
+        public async Task<bool> ExisteNombreAsync(string nombre, int? excludeId = null)
+        {
+            return await _repository.ExisteNombreAsync(nombre, excludeId);
+        }
     }
 }
