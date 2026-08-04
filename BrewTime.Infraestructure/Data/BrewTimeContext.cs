@@ -61,6 +61,7 @@ public partial class BrewTimeContext : DbContext
     public virtual DbSet<Usuario> Usuario { get; set; }
 
     public virtual DbSet<ValorPersonalizacion> ValorPersonalizacion { get; set; }
+    public virtual DbSet<Carrito> Carrito { get; set; }
 
     protected override void OnModelCreating(ModelBuilder modelBuilder)
     {
@@ -637,7 +638,27 @@ public partial class BrewTimeContext : DbContext
                 .OnDelete(DeleteBehavior.ClientSetNull)
                 .HasConstraintName("FK__ValorPers__Opcio__46E78A0C");
         });
+        modelBuilder.Entity<Carrito>(entity =>
+        {
+            entity.HasKey(e => e.CarritoId);
 
+            entity.ToTable("Carrito");
+
+            entity.Property(e => e.FechaAgregado)
+                  .HasColumnType("datetime");
+
+            entity.HasOne(d => d.Usuario)
+                .WithMany(p => p.Carrito)
+                .HasForeignKey(d => d.UsuarioId);
+
+            entity.HasOne(d => d.Producto)
+                .WithMany(p => p.Carrito)
+                .HasForeignKey(d => d.ProductoId);
+
+            entity.HasOne(d => d.Combo)
+                .WithMany(p => p.Carrito)
+                .HasForeignKey(d => d.ComboId);
+        });
         OnModelCreatingPartial(modelBuilder);
     }
 

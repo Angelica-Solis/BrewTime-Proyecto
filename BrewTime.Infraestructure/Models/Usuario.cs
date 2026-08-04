@@ -40,4 +40,5 @@ public partial class Usuario
     public virtual ICollection<PedidoHistorialEstado> PedidoHistorialEstado { get; set; } = new List<PedidoHistorialEstado>();
 
     public virtual Rol Rol { get; set; } = null!;
+    public virtual ICollection<Carrito> Carrito { get; set; } = new List<Carrito>();
 }

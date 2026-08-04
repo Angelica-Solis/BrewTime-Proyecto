@@ -76,6 +76,7 @@ builder.Services.AddTransient<IRepositoryProcesoPreparacion, RepositoryProcesoPr
 builder.Services.AddTransient<IRepositoryUsuario, RepositoryUsuario>();
 builder.Services.AddTransient<IRepositoryEstacionCocina, RepositoryEstacionCocina>();
 builder.Services.AddTransient<IRepositoryIngrediente, RepositoryIngrediente>();
+builder.Services.AddTransient<IRepositoryCarrito, RepositoryCarrito>();
 
 // dependencias del services 
 builder.Services.AddTransient<IServiceProducto, ServiceProducto>();
@@ -90,6 +91,7 @@ builder.Services.AddTransient<IServiceProcesoPreparacion, ServiceProcesoPreparac
 builder.Services.AddTransient<IServiceUsuario, ServiceUsuario>();
 builder.Services.AddTransient<IServiceIngrediente, ServiceIngrediente>();
 builder.Services.AddTransient<IServiceAutenticacion, ServiceAutenticacion>();
+builder.Services.AddTransient<IServiceCarrito, ServiceCarrito>();
 
 // CHATBOT 
 builder.Services.Configure<OpenRouterSettings>(builder.Configuration.GetSection("OpenRouter"));
@@ -108,6 +110,7 @@ builder.Services.AddAutoMapper(config =>
     config.AddProfile<ProcesoPreparacionProfile>();
     config.AddProfile<UsuarioProfile>();
     config.AddProfile<EstacionCocinaProfile>();
+    config.AddProfile<CarritoProfile>();
 });
 
 // bd

@@ -165,6 +165,44 @@
                     }
                 </div>
 
+                <hr class="my-4" />
+
+                <form asp-controller="Carrito"
+                      asp-action="AgregarProducto"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           name="productoId"
+                           value="@Model.ProductoID" />
+
+                    <div class="d-flex align-items-center gap-3">
+
+                        <label class="fw-bold mb-0">
+                            Cantidad
+                        </label>
+
+                        <input type="number"
+                               name="cantidad"
+                               value="1"
+                               min="1"
+                               class="form-control"
+                               style="width:90px;" />
+
+                        <button type="submit"
+                                class="btn btn-success">
+
+                            <i class="bi bi-cart-plus"></i>
+
+                            Agregar al carrito
+
+                        </button>
+
+                    </div>
+
+                </form>
+
             </div>
         </div>
     </div>
