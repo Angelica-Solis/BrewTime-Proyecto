@@ -1,132 +1,12 @@
 @model BrewTime.Application.DTOs.PedidoDetalleDTO
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
-
 @section Styles {
-    <link rel="stylesheet" href="~/css/usuario.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
-    <style>
-        .estado-pendiente { background-color: #f39c12; color: white; }
-        .estado-preparando { background-color: #3498db; color: white; }
-        .estado-listo { background-color: #2ecc71; color: white; }
-        .estado-entregado { background-color: #27ae60; color: white; }
-        .estado-cancelado { background-color: #e74c3c; color: white; }
-        .order-badge {
-            padding: 0.35rem 0.75rem;
-            border-radius: 50px;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            display: inline-block;
-        }
-        .brew-detail-card {
-            background: #ffffff;
-            border: 1px solid rgba(201,149,106,0.25);
-            border-radius: 12px;
-            box-shadow: 0 4px 16px rgba(0,0,0,0.05);
-            margin-bottom: 2rem;
-            overflow: hidden;
-        }
-        .brew-detail-header {
-            background-color: #1a2712;
-            color: #f0e0c0;
-            padding: 1.25rem 1.5rem;
-            display: flex;
-            justify-content: space-between;
-            align-items: center;
-        }
-        .brew-detail-title {
-            font-family: 'Playfair Display', serif;
-            font-size: 1.25rem;
-            margin: 0;
-            font-weight: 600;
-        }
-        .brew-detail-body {
-            padding: 1.5rem;
-        }
-        .brew-meta-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
-            gap: 1.25rem;
-            margin-bottom: 1.5rem;
-        }
-        .brew-meta-item {
-            font-family: 'Inter', sans-serif;
-        }
-        .brew-meta-label {
-            font-size: 0.72rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            color: #6f4e37;
-            margin-bottom: 0.25rem;
-            letter-spacing: 0.05em;
-        }
-        .brew-meta-value {
-            font-size: 0.9rem;
-            color: #333333;
-            font-weight: 500;
-        }
-        .brew-detail-table {
-            width: 100%;
-            border-collapse: collapse;
-            margin-top: 1rem;
-        }
-        .brew-detail-table th {
-            background-color: rgba(201,149,106,0.1);
-            color: #6f4e37;
-            font-family: 'Inter', sans-serif;
-            font-size: 0.75rem;
-            font-weight: 600;
-            text-transform: uppercase;
-            padding: 0.75rem 1rem;
-            border-bottom: 2px solid rgba(201,149,106,0.25);
-            text-align: left;
-        }
-        .brew-detail-table td {
-            padding: 1rem;
-            border-bottom: 1px solid rgba(201,149,106,0.15);
-            font-size: 0.88rem;
-            color: #444;
-        }
-        .brew-summary-box {
-            background-color: rgba(247,240,230,0.5);
-            border-radius: 8px;
-            padding: 1.25rem;
-            width: 320px;
-            margin-left: auto;
-            margin-top: 1.5rem;
-            border: 1px solid rgba(201,149,106,0.15);
-        }
-        .summary-row {
-            display: flex;
-            justify-content: space-between;
-            margin-bottom: 0.5rem;
-            font-size: 0.85rem;
-        }
-        .summary-row.total {
-            border-top: 1px solid rgba(201,149,106,0.3);
-            padding-top: 0.5rem;
-            font-size: 1.05rem;
-            font-weight: 700;
-            color: #1a2712;
-        }
-        .brew-back-btn {
-            background-color: rgba(111,78,55,0.1);
-            color: #6f4e37;
-            border: 1px solid rgba(111,78,55,0.25);
-            padding: 0.5rem 1.5rem;
-            border-radius: 7px;
-            font-weight: 500;
-            text-decoration: none;
-            transition: all 0.2s ease;
-            display: inline-block;
-        }
-        .brew-back-btn:hover {
-            background-color: #6f4e37;
-            color: #ffffff;
-        }
-    </style>
+    <link rel="stylesheet" href="~/css/usuario.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/pedidoDetalle.css" asp-append-version="true" />
 }
+
 @{
     ViewData["Title"] = $"Detalle del Pedido #{Model.PedidoId}";
 }
@@ -203,31 +83,43 @@
                     <table class="brew-detail-table">
                         <thead>
                             <tr>
-                                <th>Item / Producto / Combo</th>
-                                <th style="text-align: right;">Precio Unitario</th>
-                                <th style="text-align: center;">Cantidad</th>
-                                <th style="text-align: right;">Subtotal</th>
+                                <th>Producto / Combo</th>
+                                <th class="text-end">Precio</th>
+                                <th class="text-center">Cantidad</th>
+                                <th class="text-end">Subtotal</th>
+                                <th class="text-end">Impuesto</th>
                                 <th>Observaciones</th>
                             </tr>
                         </thead>
+
                         <tbody>
                             @foreach (var item in Model.Detalles)
                             {
                                 <tr>
-                                    <td style="font-weight: 600; color: #1a2712;">
+                                    <td class="brew-producto">
                                         @item.Producto
                                     </td>
-                                    <td style="text-align: right;">
+
+                                    <td class="text-end">
                                         ₡@item.Precio.ToString("N2")
                                     </td>
-                                    <td style="text-align: center;">
+
+                                    <td class="text-center">
                                         @item.Cantidad
                                     </td>
-                                    <td style="text-align: right; font-weight: 600;">
+
+                                    <td class="text-end">
                                         ₡@item.Subtotal.ToString("N2")
                                     </td>
-                                    <td style="font-style: italic; color: #666; font-size: 0.8rem;">
-                                        @(string.IsNullOrEmpty(item.Observaciones) ? "Ninguna" : item.Observaciones)
+
+                                    <td class="text-end">
+                                        ₡@item.Impuesto.ToString("N2")
+                                    </td>
+
+                                    <td class="brew-observacion">
+                                        @(string.IsNullOrWhiteSpace(item.Observaciones)
+                                            ? "Ninguna"
+                                            : item.Observaciones)
                                     </td>
                                 </tr>
                             }
@@ -237,18 +129,27 @@
 
                 <!-- Totales -->
                 <div class="brew-summary-box">
+
                     <div class="summary-row">
-                        <span style="color: #6f4e37;">Subtotal</span>
+                        <span>Subtotal</span>
                         <span>₡@Model.Subtotal.ToString("N2")</span>
                     </div>
+
                     <div class="summary-row">
-                        <span style="color: #6f4e37;">Impuesto (13%)</span>
+                        <span>Impuesto</span>
                         <span>₡@Model.Impuesto.ToString("N2")</span>
                     </div>
+
+                    <div class="summary-row">
+                        <span>Costo de envío</span>
+                        <span>₡@Model.CostoEnvio.ToString("N2")</span>
+                    </div>
+
                     <div class="summary-row total">
                         <span>Total</span>
                         <span>₡@Model.Total.ToString("N2")</span>
                     </div>
+
                 </div>
             </div>
         </div>
