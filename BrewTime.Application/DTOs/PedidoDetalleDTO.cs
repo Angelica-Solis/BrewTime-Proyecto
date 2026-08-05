@@ -15,6 +15,7 @@ namespace BrewTime.Application.DTOs
         public string ClienteNombre { get; set; }
 
         public string ClienteCorreo { get; set; }
+        public int ClienteId { get; set; }
 
         public string Encargado { get; set; }
 
@@ -27,6 +28,8 @@ namespace BrewTime.Application.DTOs
         public decimal Subtotal { get; set; }
 
         public decimal Impuesto { get; set; }
+
+        public decimal CostoEnvio { get; set; }
 
         public decimal Total { get; set; }
 

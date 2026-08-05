@@ -165,7 +165,112 @@
                     }
                 </div>
 
+                <hr class="my-4" />
+
+                <form asp-controller="Carrito"
+                      asp-action="AgregarProducto"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           name="productoId"
+                           value="@Model.ProductoID" />
+
+                    <div class="brew-carrito-box">
+
+                        <label class="brew-carrito-label">
+                            Cantidad
+                        </label>
+
+                        <input type="number"
+                               id="cantidadProducto"
+                               name="cantidad"
+                               value="1"
+                               min="1"
+                               class="brew-carrito-input" />
+
+                        <button type="button"
+                                id="btnAgregarProducto"
+                                class="brew-btn-carrito"
+                                data-id="@Model.ProductoID">
+
+                            <i class="bi bi-cart-plus"></i>
+                            Agregar al carrito
+
+                        </button>
+
+                    </div>
+
+                </form>
+
             </div>
         </div>
     </div>
+    @section Scripts {
+
+        <script>
+
+                                $(function(){
+
+                $("#btnAgregarProducto").click(function(e){
+
+                    e.preventDefault();
+
+                    $.ajax({
+
+                        url:"/Carrito/AgregarProducto",
+
+                        type:"POST",
+
+                        headers:{
+                            RequestVerificationToken:$('input[name="__RequestVerificationToken"]').val()
+                        },
+
+                        data:{
+
+                            productoId:$(this).data("id"),
+
+                            cantidad:$("#cantidadProducto").val()
+
+                        },
+
+                        success:function(r){
+
+                            if(r.ok){
+
+                                let badge=$("#cantidadCarrito");
+
+                                badge.text(r.cantidad);
+
+                                if(r.cantidad>0)
+                                    badge.show();
+                                else
+                                    badge.hide();
+
+                                Swal.fire({
+
+                                    icon:"success",
+
+                                    title:r.mensaje,
+
+                                    timer:1200,
+
+                                    showConfirmButton:false
+
+                                });
+
+                            }
+
+                        }
+
+                    });
+
+                });
+
+            });
+
+        </script>
+
+    }
 </div>

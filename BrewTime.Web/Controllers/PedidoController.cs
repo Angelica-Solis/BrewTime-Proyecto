@@ -1,10 +1,9 @@
-using BrewTime.Application.DTOs;
-using BrewTime.Application.Services.Interfaces;
-using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
+using BrewTime.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
+using Microsoft.AspNetCore.Mvc;
 
 namespace BrewTime.Web.Controllers
 {
@@ -41,7 +40,7 @@ namespace BrewTime.Web.Controllers
             }
             else
             {
-                // Cliente or other roles see their own orders
+               
                 var pedidos = await _servicePedido.GetHistorialClienteAsync(userId);
                 return View("IndexCliente", pedidos);
             }
@@ -51,28 +50,29 @@ namespace BrewTime.Web.Controllers
         {
             var userRole = User.FindFirst(ClaimTypes.Role)?.Value;
             var userIdClaim = User.FindFirst(ClaimTypes.NameIdentifier)?.Value;
-            
+
             if (string.IsNullOrEmpty(userIdClaim))
             {
                 return RedirectToAction("Index", "Login");
             }
 
+            int userId = int.Parse(userIdClaim);
+
             var pedido = await _servicePedido.GetDetallePedidoAsync(id);
+
             if (pedido == null)
             {
                 TempData["Error"] = "Pedido no encontrado.";
                 return RedirectToAction(nameof(Index));
             }
 
-            // Security: Client can only view their own order
-            if (userRole != "Administrador" && userRole != "Encargado")
+            // Seguridad: un cliente solo puede ver sus propios pedidos
+            if (userRole != "Administrador" &&
+                userRole != "Encargado" &&
+                pedido.ClienteId != userId)
             {
-                var userEmail = User.FindFirst(ClaimTypes.Email)?.Value;
-                if (pedido.ClienteCorreo != userEmail)
-                {
-                    TempData["Error"] = "No tiene permiso para ver el detalle de este pedido.";
-                    return RedirectToAction(nameof(Index));
-                }
+                TempData["Error"] = "No tiene permiso para ver el detalle de este pedido.";
+                return RedirectToAction(nameof(Index));
             }
 
             return View(pedido);

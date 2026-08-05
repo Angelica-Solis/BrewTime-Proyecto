@@ -1282,3 +1282,71 @@
         background: rgba(36,51,24,0.18);
         border-color: var(--musgo);
     }
+
+
+
+.brew-btn-carrito {
+    background: #1d3b1f;
+    color: white;
+    border: none;
+    padding: 12px 22px;
+    border-radius: 12px;
+    font-weight: 600;
+    display: inline-flex;
+    align-items: center;
+    gap: 8px;
+    transition: .25s;
+}
+
+    .brew-btn-carrito:hover {
+        background: #2b5b2f;
+        color: white;
+    }
+
+.brew-carrito-box {
+    display: flex;
+    align-items: center;
+    justify-content: flex-start;
+    gap: 18px;
+    margin-top: 35px;
+    flex-wrap: wrap;
+}
+
+.brew-carrito-label {
+    font-weight: 700;
+    font-size: 1.05rem;
+    color: #1e3a24;
+}
+
+.brew-carrito-input {
+    width: 90px;
+    height: 46px;
+    border-radius: 12px;
+    border: 1px solid #d8c9b1;
+    text-align: center;
+    font-size: 1rem;
+}
+
+.brew-btn-carrito {
+    background: #21442b;
+    color: white;
+    border: none;
+    border-radius: 12px;
+    padding: 12px 24px;
+    display: flex;
+    align-items: center;
+    gap: 10px;
+    font-weight: 700;
+    transition: .25s;
+    cursor: pointer;
+}
+
+    .brew-btn-carrito:hover {
+        background: #356841;
+        color: white;
+        transform: translateY(-2px);
+    }
+
+    .brew-btn-carrito i {
+        font-size: 1.2rem;
+    }
