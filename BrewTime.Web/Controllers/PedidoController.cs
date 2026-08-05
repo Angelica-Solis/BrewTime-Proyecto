@@ -1,9 +1,10 @@
-using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
+using BrewTime.Application.DTOs;
 using BrewTime.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace BrewTime.Web.Controllers
 {

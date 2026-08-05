@@ -13,7 +13,6 @@ namespace BrewTime.Application.Services.Implementations
     {
         private readonly IRepositoryPedido _repository;
         private readonly IMapper _mapper;
-
         public ServicePedido(IRepositoryPedido repository, IMapper mapper)
         {
             _repository = repository;
