@@ -5,6 +5,8 @@
 @using Microsoft.Extensions.Options
 @using Microsoft.AspNetCore.Mvc.Localization
 @using BrewTime.Web
+@using System.Security.Claims
+@inject BrewTime.Application.Services.Interfaces.IServiceCarrito ServiceCarrito
 
 @inject IOptions<RequestLocalizationOptions> LocOptions
 @inject IHtmlLocalizer<SharedResource> SharedLocalizer
@@ -85,7 +87,20 @@
                          <li class="nav-item">
                           <a class="brew-nav-link nav-link" asp-area="" asp-controller="Home" asp-action="Index">@SharedLocalizer["Inicio"]</a>
                         </li>
+                        @{
+                            int cantidadCarrito = 0;
 
+                            if (User.Identity!.IsAuthenticated)
+                            {
+                                var idClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+                                if (idClaim != null)
+                                {
+                                    cantidadCarrito = await ServiceCarrito.CantidadItemsAsync(
+                                    int.Parse(idClaim.Value));
+                                }
+                            }
+                        }
                         @if (User.Identity!.IsAuthenticated)
                         {
                             <li class="nav-item">
@@ -129,37 +144,6 @@
                             </li>
                         }
 
-                        <!-- Separador flexible para empujar la autenticación y selección a la derecha -->
-                        <div class="flex-grow-1"></div>
-
-                        <!-- Selector de Usuario (Simulador de roles) -->
-                        <li class="nav-item brew-lang-item">
-                            @{
-                                var testUsers = await ServiceUsuario.ListAsync();
-                                var currentUserClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
-                                int.TryParse(currentUserClaim, out int currentUserId);
-                            }
-                            <form asp-controller="Login" asp-action="SwitchUser" method="post" id="switchUserForm" class="brew-lang-form">
-                                <span class="brew-lang-label">Usuario/Rol:</span>
-                                <select name="usuarioId" class="brew-lang-select" onchange="document.getElementById('switchUserForm').submit();" style="max-width: 170px;">
-                                    <option value="">-- Cambiar Usuario --</option>
-                                    @foreach (var u in testUsers)
-                                    {
-                                        if (u.Activo)
-                                        {
-                                            if (u.UsuarioId == currentUserId)
-                                            {
-                                                <option value="@u.UsuarioId" selected="selected">@u.Nombre (@u.NombreRol)</option>
-                                            }
-                                            else
-                                            {
-                                                <option value="@u.UsuarioId">@u.Nombre (@u.NombreRol)</option>
-                                            }
-                                        }
-                                    }
-                                </select>
-                            </form>
-                        </li>
 
                         <!-- Selector de Idioma -->
                         <li class="nav-item brew-lang-item">
@@ -184,7 +168,29 @@
                         <!-- Para el login -->
                         @if (User.Identity!.IsAuthenticated)
                         {
+
+                            <li class="nav-item me-3">
+
+                                <a asp-controller="Carrito"
+                                   asp-action="Index"
+                                   class="position-relative brew-nav-link">
+
+                                    <i class="bi bi-cart3 fs-4"></i>
+
+                                    <span id="cantidadCarrito"
+                                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                          style="display:@(cantidadCarrito>0?"inline-block":"none")">
+
+                                        @cantidadCarrito
+
+                                    </span>
+
+                                </a>
+
+                            </li>
+
                             <li class="nav-item d-flex align-items-center">
+
                                 <span class="brew-nav-link" style="cursor: default; opacity: 0.9;">
                                     Hola, @User.Identity.Name
                                 </span>

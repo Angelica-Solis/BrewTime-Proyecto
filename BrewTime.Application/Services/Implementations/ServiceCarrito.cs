@@ -116,5 +116,10 @@ namespace BrewTime.Application.Services.Implementations
 
             await _repository.SaveChangesAsync();
         }
+        public async Task<int> CantidadItemsAsync(int usuarioId)
+        {
+            return await _repository.CantidadItemsAsync(usuarioId);
+        }
     }
+
 }

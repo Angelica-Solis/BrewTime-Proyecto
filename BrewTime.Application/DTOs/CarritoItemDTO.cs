@@ -13,6 +13,7 @@ namespace BrewTime.Application.DTOs
         public int? ProductoId { get; set; }
 
         public int? ComboId { get; set; }
+        public bool EsCombo => ComboId.HasValue;
 
         public string Nombre { get; set; } = "";
 

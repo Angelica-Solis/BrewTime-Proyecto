@@ -88,6 +88,13 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
         {
             await _context.SaveChangesAsync();
         }
+
+        public async Task<int> CantidadItemsAsync(int usuarioId)
+        {
+            return await _context.Carrito
+                .Where(c => c.UsuarioId == usuarioId)
+                .SumAsync(c => c.Cantidad);
+        }
     }
 }
 

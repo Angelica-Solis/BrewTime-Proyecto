@@ -105,26 +105,25 @@
                        name="comboId"
                        value="@Model.ComboID" />
 
-                <div class="d-flex align-items-center gap-3">
+                <div class="brew-carrito-box">
 
-                    <label class="fw-bold mb-0">
+                    <label class="brew-carrito-label">
                         Cantidad
                     </label>
 
                     <input type="number"
+                           id="cantidadCombo"
                            name="cantidad"
                            value="1"
                            min="1"
-                           class="form-control"
-                           style="width:90px;" />
+                           class="brew-carrito-input" />
 
-                    <button type="submit"
-                            class="btn btn-success">
-
+                    <button type="button"
+                            id="btnAgregarCombo"
+                            class="brew-btn-carrito"
+                            data-id="@Model.ComboID">
                         <i class="bi bi-cart-plus"></i>
-
                         Agregar al carrito
-
                     </button>
 
                 </div>
@@ -132,5 +131,63 @@
             </form>
 
         </div>
+
     </div>
 </div>
+
+@section Scripts {
+
+    <script>
+
+                       $(document).ready(function(){
+
+            $("#btnAgregarCombo").click(function(e){
+
+                e.preventDefault();
+
+                $.ajax({
+
+                    url: "/Carrito/AgregarCombo",
+                    type: "POST",
+
+                    headers: {
+                        RequestVerificationToken:
+                        $('input[name="__RequestVerificationToken"]').val()
+                    },
+
+                    data: {
+
+                        comboId: $(this).data("id"),
+                       cantidad: $("#cantidadCombo").val()
+
+                    },
+
+                    success: function(r){
+
+                        if(r.ok){
+
+                            $("#cantidadCarrito").text(r.cantidad);
+
+                            if(r.cantidad>0)
+                                $("#cantidadCarrito").show();
+
+                            Swal.fire({
+                                icon:"success",
+                                title:r.mensaje,
+                                timer:1200,
+                                showConfirmButton:false
+                            });
+
+                        }
+
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
+
+}

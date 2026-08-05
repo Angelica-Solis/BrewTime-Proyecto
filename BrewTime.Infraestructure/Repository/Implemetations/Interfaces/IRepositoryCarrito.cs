@@ -25,5 +25,7 @@ namespace BrewTime.Infraestructure.Repository.Implemetations.Interfaces
 
         Task SaveChangesAsync();
         Task<Carrito?> FindByIdAsync(int carritoId);
+
+        Task<int> CantidadItemsAsync(int usuarioId);
     }
 }

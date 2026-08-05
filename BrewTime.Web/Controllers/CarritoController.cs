@@ -31,9 +31,16 @@ namespace BrewTime.Web.Controllers
                 productoId,
                 cantidad);
 
-            TempData["Success"] = "Producto agregado al carrito.";
+            var carrito = await _service.ObtenerCarritoAsync(UsuarioActual);
 
-            return RedirectToAction(nameof(Index));
+            return Json(new
+            {
+                ok = true,
+                mensaje = "Producto agregado al carrito",
+                cantidad = carrito.Items.Sum(x => x.Cantidad),
+                subtotal = carrito.Subtotal,
+                total = carrito.Total
+            });
         }
         [HttpPost]
         [ValidateAntiForgeryToken]
@@ -44,9 +51,16 @@ namespace BrewTime.Web.Controllers
                 comboId,
                 cantidad);
 
-            TempData["Success"] = "Combo agregado al carrito.";
+            var carrito = await _service.ObtenerCarritoAsync(UsuarioActual);
 
-            return RedirectToAction(nameof(Index));
+            return Json(new
+            {
+                ok = true,
+                mensaje = "Combo agregado al carrito",
+                cantidad = carrito.Items.Sum(x => x.Cantidad),
+                subtotal = carrito.Subtotal,
+                total = carrito.Total
+            });
         }
         [HttpPost]
         public async Task<IActionResult> ActualizarCantidad(int carritoId,int cantidad)

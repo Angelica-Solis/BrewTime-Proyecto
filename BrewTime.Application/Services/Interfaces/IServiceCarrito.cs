@@ -20,5 +20,7 @@ namespace BrewTime.Application.Services.Interfaces
         Task EliminarAsync(int carritoId);
 
         Task VaciarAsync(int usuarioId);
+        Task<int> CantidadItemsAsync(int usuarioId);
+
     }
 }

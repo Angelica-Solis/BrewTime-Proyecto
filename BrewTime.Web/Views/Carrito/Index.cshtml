@@ -1,5 +1,303 @@
-﻿@*
-    For more information on enabling MVC for empty projects, visit https://go.microsoft.com/fwlink/?LinkID=397860
-*@
-@{
+﻿@model BrewTime.Application.DTOs.CarritoDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/carrito.css"
+          asp-append-version="true" />
 }
+
+@{
+    ViewData["Title"] = "Mi Carrito";
+}
+
+<div class="brew-page">
+
+    <partial name="_Chatbot" />
+
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+
+            <p class="brew-hero-eyebrow">
+                BrewTime
+            </p>
+
+            <h1 class="brew-titulo">
+
+                Mi
+
+                <em>Carrito</em>
+
+            </h1>
+
+            <p class="brew-subtitulo">
+
+                Revise los productos antes de realizar el pedido.
+
+            </p>
+
+        </div>
+    </div>
+
+    <div class="brew-content">
+
+        @if (!Model.Items.Any())
+        {
+            <div class="brew-empty">
+
+                <span style="font-size:70px">
+                    🛒
+                </span>
+
+                <h3>
+                    Tu carrito está vacío
+                </h3>
+
+                <p>
+
+                    Agrega productos o combos para comenzar.
+
+                </p>
+
+                <a asp-controller="Producto"
+                   asp-action="Index"
+                   class="btn btn-success">
+
+                    Explorar productos
+
+                </a>
+
+            </div>
+        }
+        else
+        {
+
+            <div class="row">
+
+                <div class="col-lg-8">
+
+                    @foreach (var item in Model.Items)
+                    {
+
+                        <div class="brew-cart-card">
+
+                            <div class="brew-cart-left">
+
+                                <div class="brew-cart-img">
+
+                                    @if (!string.IsNullOrEmpty(item.Imagen))
+                                    {
+                                        <img src="@item.Imagen"
+                                             alt="@item.Nombre" />
+                                    }
+                                    else
+                                    {
+                                        @if (item.EsCombo)
+                                        {
+                                            <span>🥪</span>
+                                        }
+                                        else
+                                        {
+                                            <span>☕</span>
+                                        }
+                                    }
+
+                                </div>
+
+                                <div>
+
+                                    <h4>
+
+                                        @item.Nombre
+
+                                    </h4>
+
+                                    <p>
+
+                                        ₡@item.PrecioUnitario.ToString("N2")
+
+                                    </p>
+
+                                    <div class="brew-tags">
+
+                                        <span class="brew-tag brew-tag-categoria">
+                                            @(item.EsCombo ? "Combos" : "Bebidas")
+                                        </span>
+
+                                        <span class="brew-tag brew-tag-estado">
+                                            Activo
+                                        </span>
+
+                                    </div>
+
+                                </div>
+
+                            </div>
+
+                            <div class="brew-cart-right">
+
+                                <form asp-action="ActualizarCantidad"
+                                      method="post">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <input type="hidden"
+                                           name="carritoId"
+                                           value="@item.CarritoId" />
+
+                                    <div class="brew-qty">
+
+                                        <button type="submit"
+                                                name="cantidad"
+                                                value="@(item.Cantidad-1)"
+                                                class="qty-btn">
+
+                                            -
+
+                                        </button>
+
+                                        <span>
+
+                                            @item.Cantidad
+
+                                        </span>
+
+                                        <button type="submit"
+                                                name="cantidad"
+                                                value="@(item.Cantidad+1)"
+                                                class="qty-btn">
+
+                                            +
+
+                                        </button>
+
+                                    </div>
+
+                                </form>
+
+                                <h5>
+
+                                    ₡@item.Subtotal.ToString("N2")
+
+                                </h5>
+
+                                <form asp-action="Eliminar"
+                                      method="post">
+
+                                    @Html.AntiForgeryToken()
+
+                                    <input type="hidden"
+                                           name="carritoId"
+                                           value="@item.CarritoId" />
+
+                                    <button class="btn btn-danger">
+
+                                        🗑
+
+                                    </button>
+
+                                </form>
+
+                            </div>
+
+                        </div>
+
+                    }
+
+                </div>
+
+                <div class="col-lg-4">
+
+                    <div class="brew-summary">
+
+                        <h3>
+
+                            Resumen
+
+                        </h3>
+
+                        <hr />
+
+                        <div class="d-flex justify-content-between">
+
+                            <span>
+
+                                Subtotal
+
+                            </span>
+
+                            <strong>
+
+                                ₡@Model.Subtotal.ToString("N2")
+
+                            </strong>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between">
+
+                            <span>
+
+                                IVA
+
+                            </span>
+
+                            <strong>
+
+                                ₡@Model.IVA.ToString("N2")
+
+                            </strong>
+
+                        </div>
+
+                        <div class="d-flex justify-content-between mt-3">
+
+                            <span>
+
+                                Total
+
+                            </span>
+
+                            <strong>
+
+                                ₡@Model.Total.ToString("N2")
+
+                            </strong>
+
+                        </div>
+
+                        <hr />
+
+                        <form asp-action="Vaciar"
+                              method="post">
+
+                            @Html.AntiForgeryToken()
+
+                            <button class="btn btn-outline-danger w-100 mb-2">
+
+                                Vaciar carrito
+
+                            </button>
+
+                        </form>
+
+                        <a asp-controller="Pedido"
+                           asp-action="Confirmar"
+                           class="btn btn-success w-100">
+
+                            Continuar pedido
+
+                        </a>
+
+                    </div>
+
+                </div>
+
+            </div>
+
+        }
+
+    </div>
+
+</div>
