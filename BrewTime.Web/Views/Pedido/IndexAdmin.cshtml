@@ -8,7 +8,7 @@
     <link rel="stylesheet" href="~/css/ListadoPedidoAdmin.css" asp-append-version="true" />
 }
 @{
-    ViewData["Title"] = "Gestión de Pedidos";
+    ViewData["Title"] = SharedLocalizer["OrderAdmin_TitlePrefix"].Value + " " + SharedLocalizer["PedidosWord"].Value;
     var estados = ViewBag.Estados as IEnumerable<BrewTime.Application.DTOs.EstadoPedidoDTO> ?? new List<BrewTime.Application.DTOs.EstadoPedidoDTO>();
 
     string fechaSel = ViewBag.SelectedFecha as string;
@@ -21,12 +21,12 @@
 <div class="brew-page">
     <section class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Administración</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["OrderAdmin_Eyebrow"]</p>
             <h1 class="brew-titulo">
-                Listado General de <em>Pedidos</em>
+                @SharedLocalizer["OrderAdmin_TitlePrefix"] <em>@SharedLocalizer["PedidosWord"]</em>
             </h1>
             <p class="brew-subtitulo">
-                Visualice, controle y filtre todos los pedidos del sistema BrewTime.
+                @SharedLocalizer["OrderAdmin_Subtitle"]
             </p>
             <div class="brew-hero-line">
                 <span></span>
@@ -40,22 +40,22 @@
         <!-- Barra de Filtros -->
         <div class="brew-filter-bar">
             <div class="brew-filter-title">
-                <span class="brew-filter-icon"><i class="bi bi-funnel-fill"></i></span> Filtrar Pedidos
+                <span class="brew-filter-icon"><i class="bi bi-funnel-fill"></i></span> @SharedLocalizer["OrderAdmin_FilterTitle"]
             </div>
             <form method="get" asp-action="Index" class="row g-3 align-items-end">
                 <div class="col-md-4">
-                    <label for="fecha" class="brew-filter-label">Fecha de Creación</label>
+                    <label for="fecha" class="brew-filter-label">@SharedLocalizer["OrderAdmin_FilterDate"]</label>
                     <div class="brew-field-wrap">
                         <i class="bi bi-calendar3"></i>
                         <input type="date" name="fecha" id="fecha" class="form-control" value="@fechaSel" />
                     </div>
                 </div>
                 <div class="col-md-4">
-                    <label for="estadoId" class="brew-filter-label">Estado del Pedido</label>
+                    <label for="estadoId" class="brew-filter-label">@SharedLocalizer["OrderAdmin_FilterStatus"]</label>
                     <div class="brew-field-wrap">
                         <i class="bi bi-tag-fill"></i>
                         <select name="estadoId" id="estadoId" class="form-select">
-                            <option value="">Todos los estados</option>
+                            <option value="">@SharedLocalizer["OrderAdmin_AllStatuses"]</option>
                             @foreach (var est in estados)
                             {
                                 if (estadoSelId.HasValue && estadoSelId.Value == est.EstadoId)
@@ -72,10 +72,10 @@
                 </div>
                 <div class="col-md-4 brew-filter-actions">
                     <button type="submit" class="filter-btn-apply w-50">
-                        <i class="bi bi-search"></i> Filtrar
+                        <i class="bi bi-search"></i> @SharedLocalizer["OrderAdmin_FilterBtn"]
                     </button>
                     <a asp-action="Index" class="filter-btn-clear w-50">
-                        <i class="bi bi-x-circle"></i> Limpiar
+                        <i class="bi bi-x-circle"></i> @SharedLocalizer["OrderAdmin_ClearBtn"]
                     </a>
                 </div>
             </form>
@@ -83,7 +83,7 @@
 
         <div class="brew-results-bar">
             <span class="brew-results-count">
-                <i class="bi bi-receipt"></i> <strong>@Model.Count()</strong> pedido@(Model.Count() == 1 ? "" : "s") encontrado@(Model.Count() == 1 ? "" : "s")
+                <i class="bi bi-receipt"></i> <strong>@Model.Count()</strong> @SharedLocalizer["PedidosWord"] @SharedLocalizer["OrderAdmin_ResultsFound"]
             </span>
             @if (hayFiltrosActivos)
             {
@@ -113,12 +113,12 @@
                 <table class="brew-table">
                     <thead>
                         <tr>
-                            <th># Pedido</th>
-                            <th>Cliente</th>
-                            <th>Fecha</th>
-                            <th>Entrega</th>
+                            <th>@SharedLocalizer["OrderAdmin_TableNumber"]</th>
+                            <th>@SharedLocalizer["ClienteLabel"]</th>
+                            <th>@SharedLocalizer["FechaLabel"]</th>
+                            <th>@SharedLocalizer["MetodoEntregaLabel"]</th>
                             <th>Total</th>
-                            <th>Estado</th>
+                            <th>@SharedLocalizer["EstadoLabel"]</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -158,7 +158,7 @@
                                     <a asp-action="Detail"
                                        asp-route-id="@pedido.PedidoId"
                                        class="brew-btn-detalle">
-                                        Ver Detalle
+                                        @SharedLocalizer["VerDetalleBtn"]
                                     </a>
                                 </td>
                             </tr>
@@ -170,7 +170,7 @@
         else
         {
             <div class="brew-empty">
-                No se encontraron pedidos con los filtros aplicados.
+                @SharedLocalizer["OrderAdmin_NoResults"]
             </div>
         }
     </div>

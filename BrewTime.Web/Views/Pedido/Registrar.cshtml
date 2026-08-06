@@ -1,8 +1,10 @@
 ﻿@model BrewTime.Application.DTOs.PedidoCreateDTO
 @using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @{
-    ViewData["Title"] = "Registrar pedido";
+    ViewData["Title"] = SharedLocalizer["Reg_TitlePrefix"].Value + " " + SharedLocalizer["PedidoWord"].Value;
 }
 
 @section Styles {
@@ -13,9 +15,9 @@
 <div class="brew-page">
     <section class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Confirmación de compra</p>
-            <h1 class="brew-titulo">Registrar <em>Pedido</em></h1>
-            <p class="brew-subtitulo">Revise la información antes de registrar y continuar con el pago.</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["Reg_Eyebrow"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["Reg_TitlePrefix"] <em>@SharedLocalizer["PedidoWord"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["Reg_Subtitle"]</p>
         </div>
     </section>
 
@@ -30,23 +32,23 @@
             <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
 
             <div class="pedido-form-card">
-                <h2 class="pedido-section-title">Información general</h2>
+                <h2 class="pedido-section-title">@SharedLocalizer["Reg_GeneralInfoTitle"]</h2>
 
                 <div class="pedido-info-grid">
                     <div>
-                        <div class="pedido-info-label">Fecha</div>
+                        <div class="pedido-info-label">@SharedLocalizer["FechaLabel"]</div>
                         <div class="pedido-info-value">@Model.Fecha.ToString("dd/MM/yyyy hh:mm tt")</div>
                     </div>
 
                     <div>
-                        <div class="pedido-info-label">Estado</div>
+                        <div class="pedido-info-label">@SharedLocalizer["EstadoLabel"]</div>
                         <div class="pedido-info-value">@Model.EstadoNombre</div>
                     </div>
 
                     @if (!string.IsNullOrWhiteSpace(Model.EncargadoNombre))
                     {
                         <div>
-                            <div class="pedido-info-label">Encargado</div>
+                            <div class="pedido-info-label">@SharedLocalizer["EncargadoLabel"]</div>
                             <div class="pedido-info-value">@Model.EncargadoNombre</div>
                         </div>
                     }
@@ -60,12 +62,12 @@
 
                     <div class="pedido-info-grid">
                         <div>
-                            <div class="pedido-info-label">Cliente</div>
+                            <div class="pedido-info-label">@SharedLocalizer["ClienteLabel"]</div>
                             <div class="pedido-info-value">@Model.ClienteNombre</div>
                         </div>
 
                         <div>
-                            <div class="pedido-info-label">Correo</div>
+                            <div class="pedido-info-label">@SharedLocalizer["CorreoLabel"]</div>
                             <div class="pedido-info-value">@Model.ClienteCorreo</div>
                         </div>
                     </div>
@@ -73,10 +75,10 @@
                 else
                 {
                     <div class="mb-3">
-                        <label asp-for="ClienteId" class="form-label fw-semibold">Cliente</label>
+                        <label asp-for="ClienteId" class="form-label fw-semibold">@SharedLocalizer["ClienteLabel"]</label>
 
                         <select asp-for="ClienteId" id="clienteSelect" class="form-select">
-                            <option value="">Seleccione un cliente</option>
+                            <option value="">@SharedLocalizer["Reg_SelectClient"]</option>
 
                             @foreach (var cliente in Model.ClientesDisponibles)
                             {
@@ -95,17 +97,17 @@
                     <div id="clienteInfo" class="pedido-client-info">
                         <div class="pedido-info-grid">
                             <div>
-                                <div class="pedido-info-label">Nombre</div>
-                                <div id="clienteNombre" class="pedido-info-value">Seleccione un cliente</div>
+                                <div class="pedido-info-label">@SharedLocalizer["NombreLabel"]</div>
+                                <div id="clienteNombre" class="pedido-info-value">@SharedLocalizer["Reg_SelectClient"]</div>
                             </div>
 
                             <div>
-                                <div class="pedido-info-label">Correo</div>
+                                <div class="pedido-info-label">@SharedLocalizer["CorreoLabel"]</div>
                                 <div id="clienteCorreo" class="pedido-info-value">—</div>
                             </div>
 
                             <div>
-                                <div class="pedido-info-label">Teléfono</div>
+                                <div class="pedido-info-label">@SharedLocalizer["TelefonoLabel"]</div>
                                 <div id="clienteTelefono" class="pedido-info-value">—</div>
                             </div>
                         </div>
@@ -115,10 +117,10 @@
                 <hr class="my-4" />
 
                 <div class="mb-3">
-                    <label asp-for="MetodoEntregaId" class="form-label fw-semibold"></label>
+                    <label asp-for="MetodoEntregaId" class="form-label fw-semibold">@SharedLocalizer["MetodoEntregaLabel"]</label>
 
                     <select asp-for="MetodoEntregaId" id="metodoEntrega" class="form-select">
-                        <option value="">Seleccione un método de entrega</option>
+                        <option value="">@SharedLocalizer["Reg_SelectDeliveryMethod"]</option>
 
                         @foreach (var metodo in Model.MetodosEntrega)
                         {
@@ -138,31 +140,31 @@
                 </div>
 
                 <div id="direccionContainer" class="mb-3" hidden>
-                    <label asp-for="DireccionEntrega" class="form-label fw-semibold"></label>
+                    <label asp-for="DireccionEntrega" class="form-label fw-semibold">@SharedLocalizer["Reg_DireccionEntregaLabel"]</label>
 
                     <textarea asp-for="DireccionEntrega"
                               id="direccionEntrega"
                               class="form-control"
                               rows="3"
-                              placeholder="Provincia, cantón, distrito y otras señas"></textarea>
+                              placeholder="@SharedLocalizer["Reg_AddressPlaceholder"].Value"></textarea>
 
                     <span asp-validation-for="DireccionEntrega" class="text-danger"></span>
                 </div>
             </div>
 
             <div class="pedido-form-card">
-                <h2 class="pedido-section-title">Detalle del pedido</h2>
+                <h2 class="pedido-section-title">@SharedLocalizer["Reg_OrderDetailTitle"]</h2>
 
                 <div class="table-responsive">
                     <table class="pedido-table">
                         <thead>
                             <tr>
-                                <th>Producto o combo</th>
-                                <th>Precio</th>
-                                <th>Cantidad</th>
+                                <th>@SharedLocalizer["ProductoComboLabel"]</th>
+                                <th>@SharedLocalizer["PrecioLabel"]</th>
+                                <th>@SharedLocalizer["CantidadLabel"]</th>
                                 <th>Subtotal</th>
-                                <th>Impuesto</th>
-                                <th>Observaciones</th>
+                                <th>@SharedLocalizer["ImpuestoLabel"]</th>
+                                <th>@SharedLocalizer["ObservacionesLabel"]</th>
                             </tr>
                         </thead>
 
@@ -197,17 +199,17 @@
 
                 <div class="pedido-total-box">
                     <div class="pedido-total-row">
-                        <span>Subtotal sin impuestos</span>
+                        <span>@SharedLocalizer["SubtotalSinImpuestosLabel"]</span>
                         <strong>₡@Model.Subtotal.ToString("N2")</strong>
                     </div>
 
                     <div class="pedido-total-row">
-                        <span>Impuesto</span>
+                        <span>@SharedLocalizer["ImpuestoLabel"]</span>
                         <strong>₡@Model.Impuesto.ToString("N2")</strong>
                     </div>
 
                     <div class="pedido-total-row">
-                        <span>Costo de envío</span>
+                        <span>@SharedLocalizer["CostoEnvioLabel"]</span>
                         <strong id="costoEnvioTexto">₡@Model.CostoEnvio.ToString("N2")</strong>
                     </div>
 
@@ -221,11 +223,11 @@
                     <a asp-controller="Carrito"
                        asp-action="Index"
                        class="pedido-btn-secondary">
-                        Volver al carrito
+                        @SharedLocalizer["Reg_BackToCart"]
                     </a>
 
                     <button type="submit" class="pedido-btn-primary">
-                        Registrar pedido
+                        @SharedLocalizer["Reg_RegisterOrderBtn"]
                     </button>
                 </div>
             </div>

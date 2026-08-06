@@ -1,9 +1,11 @@
 @model ICollection<BrewTime.Application.DTOs.ProductoInconsistenteEnComboDTO>
 @using BrewTime.Application.Services.Interfaces
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 @{
     var historial = ViewBag.Historial as ICollection<NotificacionEnviadaDTO>
                     ?? Enumerable.Empty<NotificacionEnviadaDTO>().ToList();
-    ViewData["Title"] = "Combos con productos inconsistentes";
+    ViewData["Title"] = SharedLocalizer["CI_TitlePrefix"].Value + " " + SharedLocalizer["CI_TitleItalic"].Value;
 }
 
 @section Styles {
@@ -69,10 +71,10 @@
             padding: 0;
         }
 
-        .brew-historial-toggle:hover {
-            color: var(--musgo);
-            text-decoration: underline;
-        }
+            .brew-historial-toggle:hover {
+                color: var(--musgo);
+                text-decoration: underline;
+            }
     </style>
 }
 
@@ -80,14 +82,13 @@
 
     <div class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Brew Time · Administración</p>
-            <h1 class="brew-titulo">Combos con <em>productos inconsistentes</em></h1>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["CI_Eyebrow"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["CI_TitlePrefix"] <em>@SharedLocalizer["CI_TitleItalic"]</em></h1>
             <p class="brew-subtitulo">
-                Resultado en vivo de la tarea programada que revisa combos activos
-                cuyos productos están inactivos o no tienen ingredientes definidos.
+                @SharedLocalizer["CI_Subtitle"]
             </p>
             <div class="brew-hero-line">
-                <span></span><i>Tarea programada · Revisión de combos</i><span></span>
+                <span></span><i>@SharedLocalizer["CI_HeroLine"]</i><span></span>
             </div>
         </div>
     </div>
@@ -95,13 +96,13 @@
     <div class="brew-content">
 
         <div class="brew-maint-toolbar">
-            <a asp-action="Index" class="brew-btn-volver">← Ver listado de Combos</a>
+            <a asp-action="Index" class="brew-btn-volver">← @SharedLocalizer["CI_BackToList"]</a>
         </div>
 
         @* ── INCONSISTENCIAS ACTUALES ── *@
         <h2 class="brew-section-title">
             <span class="brew-section-dot inactivo"></span>
-            Inconsistencias detectadas
+            @SharedLocalizer["CI_SectionTitle"]
             <span class="brew-section-count">@Model.Count()</span>
         </h2>
 
@@ -109,7 +110,7 @@
         {
             <div class="brew-empty">
                 <span class="brew-empty-icon">✅</span>
-                <p>No hay inconsistencias en este momento. Todos los combos activos tienen productos válidos.</p>
+                <p>@SharedLocalizer["CI_EmptyText"]</p>
             </div>
         }
         else
@@ -119,9 +120,9 @@
                     <thead>
                         <tr>
                             <th>Combo</th>
-                            <th>Producto</th>
-                            <th>Motivo</th>
-                            <th class="text-center">Acciones</th>
+                            <th>@SharedLocalizer["ProductoLabel"]</th>
+                            <th>@SharedLocalizer["CI_TableMotivo"]</th>
+                            <th class="text-center">@SharedLocalizer["AccionesCol"]</th>
                         </tr>
                     </thead>
                     <tbody>
@@ -134,19 +135,19 @@
                                     @if (item.MotivoInconsistencia == "Producto inactivo")
                                     {
                                         <span class="brew-badge-motivo brew-badge-inactivo">
-                                            <i class="bi bi-slash-circle"></i> Producto inactivo
+                                            <i class="bi bi-slash-circle"></i> @SharedLocalizer["CI_ProductInactive"]
                                         </span>
                                     }
                                     else
                                     {
                                         <span class="brew-badge-motivo brew-badge-sin-ingredientes">
-                                            <i class="bi bi-exclamation-triangle"></i> Sin ingredientes
+                                            <i class="bi bi-exclamation-triangle"></i> @SharedLocalizer["CI_NoIngredients"]
                                         </span>
                                     }
                                 </td>
                                 <td class="brew-maint-actions">
                                     <a asp-controller="Combo" asp-action="Edit" asp-route-id="@item.ComboID" class="brew-btn-editar">
-                                        <i class="bi bi-pencil"></i> Editar combo
+                                        <i class="bi bi-pencil"></i> @SharedLocalizer["CI_EditCombo"]
                                     </a>
                                 </td>
                             </tr>
