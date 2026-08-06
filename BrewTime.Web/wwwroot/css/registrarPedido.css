@@ -1,0 +1,264 @@
+﻿@import url('https://fonts.googleapis.com/css2?family=Playfair+Display:wght@500;700&family=Inter:wght@400;500;600;700&display=swap');
+
+:root {
+    --crema-page: #f3e6d0;
+    --crema-card: #f8ecd8;
+    --crema-soft: #fff7e9;
+    --crema-dark: #e5d0ac;
+    --musgo: #1f3a24;
+    --musgo-hover: #315b3d;
+    --cafe: #6f4e37;
+    --cafe-claro: #c9956a;
+    --texto: #30251d;
+    --borde: rgba(111, 78, 55, 0.22);
+    --sombra: 0 10px 28px rgba(72, 45, 20, 0.09);
+    --display: "Playfair Display", Georgia, serif;
+    --body: "Inter", Arial, sans-serif;
+}
+
+.brew-page {
+    background: var(--crema-page);
+    color: var(--texto);
+    font-family: var(--body);
+}
+
+.brew-content {
+    width: min(100% - 2rem, 1050px);
+    margin: 0 auto;
+    padding: 2rem 0 4rem;
+}
+
+/* Cuadros principales */
+.pedido-form-card {
+    margin-bottom: 1.5rem;
+    padding: 1.8rem;
+    background: var(--crema-card);
+    border: 1px solid var(--crema-dark);
+    border-radius: 18px;
+    box-shadow: var(--sombra);
+}
+
+.pedido-section-title {
+    margin: 0 0 1.3rem;
+    color: var(--musgo);
+    font-family: var(--display);
+    font-size: 1.55rem;
+    font-weight: 700;
+}
+
+/* Información */
+.pedido-info-grid {
+    display: grid;
+    grid-template-columns: repeat(auto-fit, minmax(220px, 1fr));
+    gap: 1.2rem 2rem;
+}
+
+.pedido-info-label {
+    margin-bottom: 0.3rem;
+    color: var(--cafe);
+    font-size: 0.7rem;
+    font-weight: 700;
+    letter-spacing: 0.05em;
+    text-transform: uppercase;
+}
+
+.pedido-info-value {
+    color: var(--texto);
+    font-size: 0.92rem;
+    font-weight: 600;
+}
+
+.pedido-client-info {
+    margin-top: 1rem;
+    padding: 1rem;
+    background: var(--crema-soft);
+    border: 1px solid var(--crema-dark);
+    border-radius: 12px;
+}
+
+.pedido-form-card hr {
+    border-color: rgba(111, 78, 55, 0.24);
+    opacity: 1;
+}
+
+/* Formularios */
+.pedido-form-card .form-label {
+    color: var(--cafe);
+    font-size: 0.85rem;
+    font-weight: 700;
+}
+
+.pedido-form-card .form-control,
+.pedido-form-card .form-select {
+    background: var(--crema-soft);
+    border: 1px solid var(--crema-dark);
+    color: var(--texto);
+}
+
+    .pedido-form-card .form-control:focus,
+    .pedido-form-card .form-select:focus {
+        background: #fffaf1;
+        border-color: var(--cafe-claro);
+        box-shadow: 0 0 0 0.2rem rgba(201, 149, 106, 0.18);
+    }
+
+.pedido-form-card textarea {
+    resize: vertical;
+    min-height: 90px;
+}
+
+/* Tabla */
+.table-responsive {
+    border: 1px solid var(--crema-dark);
+    border-radius: 11px;
+    overflow-x: auto;
+}
+
+.pedido-table {
+    width: 100%;
+    min-width: 760px;
+    border-collapse: collapse;
+    background: var(--crema-soft);
+}
+
+    .pedido-table th {
+        padding: 0.85rem;
+        background: var(--musgo);
+        color: #fcebcf;
+        font-size: 0.72rem;
+        font-weight: 700;
+        text-align: left;
+        text-transform: uppercase;
+    }
+
+    .pedido-table td {
+        padding: 0.9rem 0.85rem;
+        border-bottom: 1px solid var(--crema-dark);
+        color: var(--texto);
+        vertical-align: middle;
+    }
+
+    .pedido-table tbody tr:nth-child(even) {
+        background: #f5e6ce;
+    }
+
+    .pedido-table tbody tr:last-child td {
+        border-bottom: none;
+    }
+
+    .pedido-table input {
+        min-width: 170px;
+        background: #fffaf1;
+    }
+
+/* Cuadro de totales */
+.pedido-total-box {
+    width: min(100%, 390px);
+    margin: 1.5rem 0 0 auto;
+    padding: 1.25rem;
+    background: var(--crema-soft);
+    border: 1px solid var(--crema-dark);
+    border-radius: 14px;
+    box-shadow: 0 5px 16px rgba(72, 45, 20, 0.06);
+}
+
+.pedido-total-row {
+    display: flex;
+    justify-content: space-between;
+    gap: 1rem;
+    margin-bottom: 0.75rem;
+    color: var(--texto);
+    font-size: 0.9rem;
+}
+
+.pedido-total-final {
+    margin: 0.9rem 0 0;
+    padding-top: 0.9rem;
+    border-top: 1px solid var(--cafe-claro);
+    color: var(--musgo);
+    font-size: 1.15rem;
+    font-weight: 800;
+}
+
+/* Botones */
+.pedido-actions {
+    display: flex;
+    justify-content: flex-end;
+    gap: 0.75rem;
+    margin-top: 1.5rem;
+}
+
+.pedido-btn-primary,
+.pedido-btn-secondary {
+    display: inline-flex;
+    align-items: center;
+    justify-content: center;
+    min-height: 44px;
+    padding: 0.7rem 1.35rem;
+    border-radius: 9px;
+    font-size: 0.86rem;
+    font-weight: 700;
+    text-decoration: none;
+    transition: 0.2s ease;
+}
+
+.pedido-btn-primary {
+    background: var(--musgo);
+    border: 1px solid var(--musgo);
+    color: #fff2db;
+}
+
+    .pedido-btn-primary:hover {
+        background: var(--musgo-hover);
+        border-color: var(--musgo-hover);
+        color: white;
+        transform: translateY(-1px);
+    }
+
+.pedido-btn-secondary {
+    background: var(--crema-soft);
+    border: 1px solid var(--cafe);
+    color: var(--cafe);
+}
+
+    .pedido-btn-secondary:hover {
+        background: var(--cafe);
+        color: white;
+        transform: translateY(-1px);
+    }
+
+.text-danger {
+    display: block;
+    margin-top: 0.25rem;
+    color: #a53030 !important;
+    font-size: 0.76rem;
+}
+
+@media (max-width: 768px) {
+    .brew-content {
+        width: min(100% - 1rem, 1050px);
+        padding-top: 1rem;
+    }
+
+    .pedido-form-card {
+        padding: 1.1rem;
+        border-radius: 13px;
+    }
+
+    .pedido-info-grid {
+        grid-template-columns: 1fr;
+    }
+
+    .pedido-total-box {
+        width: 100%;
+    }
+
+    .pedido-actions {
+        flex-direction: column-reverse;
+    }
+
+    .pedido-btn-primary,
+    .pedido-btn-secondary {
+        width: 100%;
+    }
+}

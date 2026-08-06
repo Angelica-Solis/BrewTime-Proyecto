@@ -64,26 +64,16 @@ namespace BrewTime.Application.Services.Implementations
                 ClienteCorreo = pedido.Cliente.Correo,
                 ClienteId = pedido.ClienteId,
 
-                Encargado = pedido.Empleado != null
-                    ? $"{pedido.Empleado.Nombre} {pedido.Empleado.Apellidos}"
-                    : "Sin asignar",
+                Encargado = pedido.Empleado != null ? $"{pedido.Empleado.Nombre} {pedido.Empleado.Apellidos}" : "Sin asignar",
 
                 MetodoEntrega = pedido.MetodoEntrega.Nombre,
-
-                MetodoPago = pedido.MetodoPago != null
-                    ? pedido.MetodoPago.Nombre
-                    : "No registrado",
+                MetodoPago = pedido.MetodoPago != null ? pedido.MetodoPago.Nombre : "No registrado",
 
                 Estado = pedido.Estado.Nombre,
-
                 Subtotal = pedido.Subtotal,
-
                 Impuesto = pedido.Impuesto,
-
                 CostoEnvio = pedido.CostoEnvio,
-
                 Total = pedido.Total,
-
                 Detalles = new List<PedidoDetalleLineaDTO>()
             };
 
@@ -91,20 +81,12 @@ namespace BrewTime.Application.Services.Implementations
             {
                 detalle.Detalles.Add(new PedidoDetalleLineaDTO
                 {
-                    Producto = item.Producto != null
-                        ? item.Producto.Nombre
-                        : item.Combo!.Nombre,
+                    Producto = item.Producto != null ? item.Producto.Nombre : item.Combo!.Nombre,
 
                     Precio = item.PrecioUnitario,
-
                     Cantidad = item.Cantidad,
-
                     Subtotal = item.Subtotal,
-
-                    Impuesto = pedido.Subtotal > 0
-                    ? Math.Round((item.Subtotal / pedido.Subtotal) * pedido.Impuesto, 2)
-                    : 0,
-
+                    Impuesto = pedido.Subtotal > 0 ? Math.Round((item.Subtotal / pedido.Subtotal) * pedido.Impuesto, 2) : 0,
                     Observaciones = item.Observaciones ?? ""
                 });
             }
@@ -118,6 +100,8 @@ namespace BrewTime.Application.Services.Implementations
             return _mapper.Map<ICollection<EstadoPedidoDTO>>(estados);
         }
 
+        #region Registrar Pedido
+        //registrar pedido
         public async Task<PedidoCreateDTO> PrepararRegistroAsync(int usuarioActualId, string rolActual)
         {
             var usuarioActual = await _repositoryUsuario.FindByIdAsync(usuarioActualId);
@@ -170,7 +154,6 @@ namespace BrewTime.Application.Services.Implementations
             };
             
             //si está logueado un cliente, se establece automáticamente
-            
             if (esCliente)
             {
                 dto.ClienteId = usuarioActual.UsuarioId;
@@ -181,7 +164,6 @@ namespace BrewTime.Application.Services.Implementations
             }
             else
             {
-         
                 //para encargado o administrador se cargan únicamente los usuarios cliente activos
                 var usuarios = await _repositoryUsuario.ListAsync();
 
@@ -207,7 +189,6 @@ namespace BrewTime.Application.Services.Implementations
                     .ToList();
             }
 
-     
             //selecciona inicialmente el método sin costo, normalmente Recogida en tienda
             var metodoInicial = metodosEntrega.OrderBy(m => m.Costo).First();
             dto.MetodoEntregaId = metodoInicial.MetodoId;
@@ -275,7 +256,7 @@ namespace BrewTime.Application.Services.Implementations
             }
             else
             {
-                //el encargado debe seleccionar al cliente.
+                //el encargado debe seleccionar al cliente
                 if (!dto.ClienteId.HasValue || dto.ClienteId.Value <= 0)
                 {
                     throw new InvalidOperationException("Debe seleccionar el cliente del pedido");
@@ -287,9 +268,7 @@ namespace BrewTime.Application.Services.Implementations
                     clienteSeleccionado != null &&
                     clienteSeleccionado.Activo &&
                     clienteSeleccionado.Rol != null &&
-                    clienteSeleccionado.Rol.Nombre.Equals(
-                        "Cliente",
-                        StringComparison.OrdinalIgnoreCase);
+                    clienteSeleccionado.Rol.Nombre.Equals("Cliente", StringComparison.OrdinalIgnoreCase);
 
                 if (!esClienteValido)
                 {
@@ -330,9 +309,7 @@ namespace BrewTime.Application.Services.Implementations
                 (dto.Detalles ??
                  new List<PedidoLineaCreateDTO>())
                 .GroupBy(d => d.CarritoId)
-                .ToDictionary(
-                    grupo => grupo.Key,
-                    grupo => grupo.Last().Observaciones);
+                .ToDictionary(grupo => grupo.Key, grupo => grupo.Last().Observaciones);
 
             var detallesPedido = new List<PedidoDetalle>();
 
@@ -424,11 +401,8 @@ namespace BrewTime.Application.Services.Implementations
                     new PedidoHistorialEstado
                     {
                         EstadoId = estadoPendiente.EstadoId,
-
                         FechaCambio = ahora,
-
-                        UsuarioId =
-                            usuarioActualId
+                        UsuarioId = usuarioActualId
                     }
                         }
                 };
@@ -447,5 +421,270 @@ namespace BrewTime.Application.Services.Implementations
 
             return pedido.PedidoId;
         }
+        #endregion
+
+        #region Pago del pedido
+        //pago del pedido
+        public async Task<PagoViewDTO?> PrepararPagoAsync(int pedidoId, int usuarioActualId, string rolActual)
+        {
+            var pedido = await _repository.FindByIdAsync(pedidoId);
+
+            if (pedido == null)
+                return null;
+
+            ValidarAccesoPedido(pedido, usuarioActualId, rolActual);
+
+            if (!pedido.Estado.Nombre.Equals("Pendiente de pago", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException("Este pedido ya no se encuentra pendiente de pago");
+            }
+
+            if (pedido.MetodoPagoId.HasValue)
+            {
+                throw new InvalidOperationException("El pago de este pedido ya fue registrado");
+            }
+
+            var metodosPago =await _repository.ListMetodosPagoAsync();
+
+            if (metodosPago == null || !metodosPago.Any())
+            {
+                throw new InvalidOperationException("No existen métodos de pago registrados");
+            }
+
+
+            //reutilizamos el método existente para obtener el desglose completo del pedido.
+            var detalle = await GetDetallePedidoAsync(pedidoId);
+
+            if (detalle == null)
+                return null;
+
+            return new PagoViewDTO
+            {
+                Pedido = detalle,
+
+                Pago = new PagoPedidoDTO
+                {
+                    PedidoId = pedido.PedidoId,
+                    TotalPedido = pedido.Total
+                },
+
+                MetodosPago = metodosPago
+                    .Where(m =>
+                        m.Nombre.Equals("Tarjeta de crédito", StringComparison.OrdinalIgnoreCase) ||
+                        m.Nombre.Equals("Tarjeta de débito", StringComparison.OrdinalIgnoreCase) ||
+                        m.Nombre.Equals("Efectivo", StringComparison.OrdinalIgnoreCase))
+                    .OrderBy(m => m.MetodoPagoId)
+                    .Select(m => new MetodoPagoDTO
+                    {
+                        MetodoPagoId = m.MetodoPagoId,
+                        Nombre = m.Nombre
+                    })
+                    .ToList()
+            };
+        }
+
+        public async Task ProcesarPagoAsync(PagoPedidoDTO dto, int usuarioActualId, string rolActual)
+        {
+            var pedido = await _repository.FindByIdAsync(dto.PedidoId);
+
+            if (pedido == null)
+            {
+                throw new KeyNotFoundException("El pedido seleccionado no existe");
+            }
+
+            ValidarAccesoPedido(pedido, usuarioActualId, rolActual);
+
+            if (!pedido.Estado.Nombre.Equals("Pendiente de pago", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException("El pedido ya no se encuentra pendiente de pago");
+            }
+
+            if (pedido.MetodoPagoId.HasValue)
+            {
+                throw new InvalidOperationException("El pago de este pedido ya fue procesado");
+            }
+
+            if (!dto.MetodoPagoId.HasValue || dto.MetodoPagoId.Value <= 0)
+            {
+                throw new InvalidOperationException("Debe seleccionar un método de pago");
+            }
+
+            var metodoPago = await _repository.FindMetodoPagoByIdAsync(dto.MetodoPagoId.Value);
+
+            if (metodoPago == null)
+            {
+                throw new InvalidOperationException("El método de pago seleccionado no existe");
+            }
+
+            bool esTarjeta = metodoPago.Nombre.Contains("Tarjeta", StringComparison.OrdinalIgnoreCase);
+
+            bool esEfectivo = metodoPago.Nombre.Equals("Efectivo", StringComparison.OrdinalIgnoreCase);
+
+            if (!esTarjeta && !esEfectivo)
+            {
+                throw new InvalidOperationException("El método de pago seleccionado no está permitido");
+            }
+
+            if (esTarjeta)
+            {
+                ProcesarPagoTarjeta(dto, pedido);
+            }
+            else
+            {
+                ProcesarPagoEfectivo(dto, pedido);
+            }
+
+            var estadoAceptada =await _repository.FindEstadoByNombreAsync("Aceptada");
+
+            if (estadoAceptada == null)
+            {
+                throw new InvalidOperationException("No se encontró el estado Aceptada");
+            }
+
+            DateTime ahora = DateTime.Now;
+
+            pedido.MetodoPagoId = metodoPago.MetodoPagoId;
+
+            pedido.EstadoId = estadoAceptada.EstadoId;
+
+            pedido.FechaActualizacion = ahora;
+
+            pedido.PedidoHistorialEstado.Add(
+                new PedidoHistorialEstado
+                {
+                    PedidoId = pedido.PedidoId,
+                    EstadoId = estadoAceptada.EstadoId,
+                    FechaCambio = ahora,
+                    UsuarioId = usuarioActualId
+                });
+
+            await _repository.UpdateAsync(pedido);
+        }
+        #endregion
+
+        #region Metodos para el pago en tarjeta
+        //metodos helper de pago en tarjeta
+        private static void ProcesarPagoTarjeta(PagoPedidoDTO dto, Pedido pedido)
+        {
+            if (string.IsNullOrWhiteSpace(dto.NombreTitular))
+            {
+                throw new InvalidOperationException("Debe ingresar el nombre del titular");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.NumeroTarjeta))
+            {
+                throw new InvalidOperationException("Debe ingresar el número de tarjeta");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.FechaVencimiento))
+            {
+                throw new InvalidOperationException("Debe ingresar la fecha de vencimiento");
+            }
+
+            if (string.IsNullOrWhiteSpace(dto.CodigoSeguridad))
+            {
+                throw new InvalidOperationException("Debe ingresar el código de seguridad");
+            }
+            
+            //verifica que la tarjeta no este vencida
+            if (TarjetaVencida(dto.FechaVencimiento))
+            {
+                throw new InvalidOperationException("La tarjeta se encuentra vencida");
+            }
+
+            string numeroTarjeta = dto.NumeroTarjeta.Trim();
+
+            if (numeroTarjeta.Length < 4)
+            {
+                throw new InvalidOperationException("El número de tarjeta no es válido");
+            }
+
+           //almacena los ultimos 4 digitos del cvv
+            pedido.UltimosDigitosTarjeta =
+                numeroTarjeta[^4..];
+
+            pedido.MontoPagado =
+                pedido.Total;
+
+            pedido.Vuelto =
+                0;
+        }
+
+        private static bool TarjetaVencida(string fechaVencimiento)
+        {
+            string[] partes = fechaVencimiento.Split('/');
+
+            if (partes.Length != 2)
+                return true;
+
+            bool mesValido = int.TryParse(partes[0], out int mes);
+
+            bool anioValido = int.TryParse(partes[1], out int anioCorto);
+
+            if (!mesValido || !anioValido || mes < 1 || mes > 12)
+            {
+                return true;
+            }
+
+            int anioCompleto = 2000 + anioCorto;
+
+            int ultimoDia = DateTime.DaysInMonth(anioCompleto, mes);
+
+            DateTime fechaFinal = new DateTime(anioCompleto,mes, ultimoDia, 23, 59, 59);
+
+            return fechaFinal < DateTime.Now;
+        }
+        #endregion
+
+        #region Metodo para pago en Efectivo
+        //metodo helper para pagp en efectivo
+        private static void ProcesarPagoEfectivo(PagoPedidoDTO dto, Pedido pedido)
+        {
+            if (!dto.MontoPagado.HasValue)
+            {
+                throw new InvalidOperationException("Debe ingresar el monto recibido");
+            }
+
+            if (dto.MontoPagado.Value <= 0)
+            {
+                throw new InvalidOperationException("El monto recibido debe ser mayor a cero");
+            }
+
+            if (dto.MontoPagado.Value < pedido.Total)
+            {
+                throw new InvalidOperationException("El monto recibido no cubre el total del pedido");
+            }
+
+            pedido.MontoPagado = dto.MontoPagado.Value;
+
+            pedido.Vuelto = Math.Round(dto.MontoPagado.Value - pedido.Total, 2, MidpointRounding.AwayFromZero);
+
+            pedido.UltimosDigitosTarjeta = null;
+        }
+
+        #endregion
+
+        #region Metodo para validar acceso al pedido segun el rol
+        //helper para validar acceso al pedido
+        private static void ValidarAccesoPedido(Pedido pedido, int usuarioActualId, string rolActual)
+        {
+            bool esAdministradorOEncargado =
+                rolActual.Equals(
+                    "Administrador",
+                    StringComparison.OrdinalIgnoreCase)
+                ||
+                rolActual.Equals(
+                    "Encargado",
+                    StringComparison.OrdinalIgnoreCase);
+
+            bool esPropietario = pedido.ClienteId == usuarioActualId;
+
+            if (!esAdministradorOEncargado && !esPropietario)
+            {
+                throw new UnauthorizedAccessException("No tiene permiso para gestionar este pedido");
+            }
+        }
+        #endregion
+
     }
 }

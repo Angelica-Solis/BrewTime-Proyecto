@@ -76,11 +76,16 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a asp-action="Detail"
-                                       asp-route-id="@pedido.PedidoId"
-                                       class="brew-btn-detalle">
-                                        Ver Detalle
-                                    </a>
+                                    <div class="d-flex gap-2">
+
+                                        <a asp-action="Detail"
+                                           asp-route-id="@pedido.PedidoId"
+                                           class="brew-btn-detalle">
+                                            Ver detalle
+                                        </a>
+
+
+                                    </div>
                                 </td>
                             </tr>
                         }

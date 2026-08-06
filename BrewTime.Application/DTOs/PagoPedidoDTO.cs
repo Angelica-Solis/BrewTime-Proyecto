@@ -43,7 +43,7 @@ namespace BrewTime.Application.DTOs
         public string? CodigoSeguridad { get; set; }
 
         //campo para pago en efectivo
-        [Range(typeof(decimal), "0.01", "99999999.99", ErrorMessage = "El monto recibido debe ser mayor a cero")]
+        [Range(0.01, 99999999.99, ErrorMessage = "El monto recibido debe ser mayor a cero")]
         [Display(Name = "Monto recibido")]
         public decimal? MontoPagado { get; set; }
 
