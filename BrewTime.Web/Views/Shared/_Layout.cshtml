@@ -29,10 +29,10 @@
 {
     <script>
         Swal.fire({
-            icon: 'success',
-            title: 'Éxito',
-            text: '@TempData["Success"]',
-            confirmButtonColor: '#6F4E37'
+        icon: 'success',
+        title: 'Éxito',
+        text: '@TempData["Success"]',
+        confirmButtonColor: '#6F4E37'
         });
     </script>
 }
@@ -41,10 +41,10 @@
 {
     <script>
         Swal.fire({
-            icon: 'error',
-            title: 'Error',
-            text: '@TempData["Error"]',
-            confirmButtonColor: '#6F4E37'
+        icon: 'error',
+        title: 'Error',
+        text: '@TempData["Error"]',
+        confirmButtonColor: '#6F4E37'
         });
     </script>
 }
@@ -53,10 +53,10 @@
 {
     <script>
         Swal.fire({
-            icon: 'warning',
-            title: 'Atención',
-            text: '@TempData["Warning"]',
-            confirmButtonColor: '#6F4E37'
+        icon: 'warning',
+        title: 'Atención',
+        text: '@TempData["Warning"]',
+        confirmButtonColor: '#6F4E37'
         });
     </script>
 }
@@ -73,19 +73,19 @@
 
                 <!-- Toggler mobile -->
                 <button class="brew-toggler navbar-toggler" type="button"
-                        data-bs-toggle="collapse"
-                        data-bs-target=".navbar-collapse"
-                        aria-controls="navbarSupportedContent"
-                        aria-expanded="false"
-                        aria-label="Toggle navigation">
+                data-bs-toggle="collapse"
+                data-bs-target=".navbar-collapse"
+                aria-controls="navbarSupportedContent"
+                aria-expanded="false"
+                aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
 
                 <!-- Links -->
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 align-items-center flex-wrap">
-                         <li class="nav-item">
-                          <a class="brew-nav-link nav-link" asp-area="" asp-controller="Home" asp-action="Index">@SharedLocalizer["Inicio"]</a>
+                        <li class="nav-item">
+                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Home" asp-action="Index">@SharedLocalizer["Inicio"]</a>
                         </li>
                         @{
                             int cantidadCarrito = 0;
@@ -127,6 +127,12 @@
                                     <li><a class="dropdown-item brew-nav-link" asp-controller="Producto" asp-action="Index">@SharedLocalizer["Productos"]</a></li>
                                     <li><a class="dropdown-item brew-nav-link" asp-controller="Combo" asp-action="Index">@SharedLocalizer["Combos"]</a></li>
                                     <li><a class="dropdown-item brew-nav-link" asp-controller="ProcesoPreparacion" asp-action="Index">@SharedLocalizer["Procesos"]</a></li>
+                                    @if (User.IsInRole("Administrador") || (User.IsInRole("Encargado")))
+                                    {
+                                        <li class="nav-item">
+                                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Combo" asp-action="ProductosInconsistentes"> Combos Inconsistentes </a>
+                                        </li>
+                                    }
                                 </ul>
                             </li>
 

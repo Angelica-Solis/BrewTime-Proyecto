@@ -1,0 +1,173 @@
+@model ICollection<BrewTime.Application.DTOs.ProductoInconsistenteEnComboDTO>
+@using BrewTime.Application.Services.Interfaces
+@{
+    var historial = ViewBag.Historial as ICollection<NotificacionEnviadaDTO>
+                    ?? Enumerable.Empty<NotificacionEnviadaDTO>().ToList();
+    ViewData["Title"] = "Combos con productos inconsistentes";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
+    <style>
+        /* Badges específicos de esta vista (no requieren tocar producto.css) */
+        .brew-badge-motivo {
+            display: inline-flex;
+            align-items: center;
+            gap: 6px;
+            padding: 4px 12px;
+            border-radius: 999px;
+            font-size: 0.78rem;
+            font-weight: 600;
+            font-family: var(--font-body);
+        }
+
+        .brew-badge-inactivo {
+            background: rgba(138, 32, 32, 0.12);
+            color: #8a2020;
+        }
+
+        .brew-badge-sin-ingredientes {
+            background: rgba(201, 149, 106, 0.20);
+            color: var(--cafe-dark);
+        }
+
+        .brew-historial-item {
+            background: var(--bg-card);
+            border: 1px solid var(--border-card);
+            border-radius: var(--radius-sm);
+            padding: 16px 20px;
+            margin-bottom: 12px;
+            box-shadow: var(--shadow-card);
+        }
+
+        .brew-historial-fecha {
+            font-size: 0.8rem;
+            color: var(--text-soft);
+            font-family: var(--font-body);
+        }
+
+        .brew-historial-asunto {
+            font-family: var(--font-display);
+            font-size: 1.05rem;
+            color: var(--text-titulo);
+            margin: 4px 0 10px;
+        }
+
+        .brew-historial-detalle {
+            font-size: 0.88rem;
+            color: var(--text-mid);
+            display: none;
+        }
+
+        .brew-historial-toggle {
+            background: none;
+            border: none;
+            color: var(--musgo-mid);
+            font-weight: 600;
+            font-size: 0.82rem;
+            cursor: pointer;
+            padding: 0;
+        }
+
+        .brew-historial-toggle:hover {
+            color: var(--musgo);
+            text-decoration: underline;
+        }
+    </style>
+}
+
+<div class="brew-page">
+
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">Brew Time · Administración</p>
+            <h1 class="brew-titulo">Combos con <em>productos inconsistentes</em></h1>
+            <p class="brew-subtitulo">
+                Resultado en vivo de la tarea programada que revisa combos activos
+                cuyos productos están inactivos o no tienen ingredientes definidos.
+            </p>
+            <div class="brew-hero-line">
+                <span></span><i>Tarea programada · Revisión de combos</i><span></span>
+            </div>
+        </div>
+    </div>
+
+    <div class="brew-content">
+
+        <div class="brew-maint-toolbar">
+            <a asp-action="Index" class="brew-btn-volver">← Ver listado de Combos</a>
+        </div>
+
+        @* ── INCONSISTENCIAS ACTUALES ── *@
+        <h2 class="brew-section-title">
+            <span class="brew-section-dot inactivo"></span>
+            Inconsistencias detectadas
+            <span class="brew-section-count">@Model.Count()</span>
+        </h2>
+
+        @if (!Model.Any())
+        {
+            <div class="brew-empty">
+                <span class="brew-empty-icon">✅</span>
+                <p>No hay inconsistencias en este momento. Todos los combos activos tienen productos válidos.</p>
+            </div>
+        }
+        else
+        {
+            <div class="brew-maint-table-wrap">
+                <table class="brew-maint-table">
+                    <thead>
+                        <tr>
+                            <th>Combo</th>
+                            <th>Producto</th>
+                            <th>Motivo</th>
+                            <th class="text-center">Acciones</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        @foreach (var item in Model)
+                        {
+                            <tr>
+                                <td>@item.NombreCombo</td>
+                                <td>@item.NombreProducto</td>
+                                <td>
+                                    @if (item.MotivoInconsistencia == "Producto inactivo")
+                                    {
+                                        <span class="brew-badge-motivo brew-badge-inactivo">
+                                            <i class="bi bi-slash-circle"></i> Producto inactivo
+                                        </span>
+                                    }
+                                    else
+                                    {
+                                        <span class="brew-badge-motivo brew-badge-sin-ingredientes">
+                                            <i class="bi bi-exclamation-triangle"></i> Sin ingredientes
+                                        </span>
+                                    }
+                                </td>
+                                <td class="brew-maint-actions">
+                                    <a asp-controller="Combo" asp-action="Edit" asp-route-id="@item.ComboID" class="brew-btn-editar">
+                                        <i class="bi bi-pencil"></i> Editar combo
+                                    </a>
+                                </td>
+                            </tr>
+                        }
+                    </tbody>
+                </table>
+            </div>
+        }
+    </div>
+</div>
+
+@section Scripts {
+    <script>
+        document.querySelectorAll('.brew-historial-toggle').forEach(function (btn) {
+            btn.addEventListener('click', function () {
+                var targetId = this.getAttribute('data-target');
+                var detalle = document.getElementById(targetId);
+                var visible = detalle.style.display === 'block';
+                detalle.style.display = visible ? 'none' : 'block';
+                this.textContent = visible ? 'Ver contenido del correo ▾' : 'Ocultar contenido del correo ▴';
+            });
+        });
+    </script>
+}

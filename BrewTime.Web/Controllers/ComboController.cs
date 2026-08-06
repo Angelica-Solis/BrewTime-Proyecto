@@ -126,5 +126,14 @@ namespace BrewTime.Web.Controllers
                                     .Any(x => x.ProductoID == p.ProductoID)
             }).ToList();
         }
+
+
+        //tarea programada para revisar productos inconsistentes en combos
+        [HttpGet]
+        public async Task<IActionResult> ProductosInconsistentes()
+        {
+            var inconsistencias = await _serviceCombo.ObtenerProductosInconsistentesAsync();
+            return View(inconsistencias);
+        }
     }
 }

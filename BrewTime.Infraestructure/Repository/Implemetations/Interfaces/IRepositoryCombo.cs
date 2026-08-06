@@ -10,5 +10,9 @@ namespace BrewTime.Infraestructure.Repository.Implemetations.Interfaces
         Task CreateAsync(Combo entity);
         Task UpdateAsync(Combo entity);
         Task ToggleActivoAsync(int id);
+
+        //para la tarea programada
+        Task<ICollection<Combo>> ListActivosConProductosEIngredientesAsync();
+
     }
 }
