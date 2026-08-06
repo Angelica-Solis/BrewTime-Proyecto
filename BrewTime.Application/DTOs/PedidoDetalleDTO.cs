@@ -12,18 +12,21 @@ namespace BrewTime.Application.DTOs
 
         public DateTime Fecha { get; set; }
 
-        public string ClienteNombre { get; set; }
-
-        public string ClienteCorreo { get; set; }
         public int ClienteId { get; set; }
 
-        public string Encargado { get; set; }
+        public string ClienteNombre { get; set; } = string.Empty;
 
-        public string MetodoEntrega { get; set; }
+        public string ClienteCorreo { get; set; } = string.Empty;
 
-        public string MetodoPago { get; set; }
+        public string Encargado { get; set; } = string.Empty;
 
-        public string Estado { get; set; }
+        public string MetodoEntrega { get; set; } = string.Empty;
+
+        public string? DireccionEntrega { get; set; }
+
+        public string MetodoPago { get; set; } = string.Empty;
+
+        public string Estado { get; set; } = string.Empty;
 
         public decimal Subtotal { get; set; }
 
@@ -33,6 +36,12 @@ namespace BrewTime.Application.DTOs
 
         public decimal Total { get; set; }
 
-        public List<PedidoDetalleLineaDTO> Detalles { get; set; }
+        public decimal? MontoPagado { get; set; }
+
+        public decimal? Vuelto { get; set; }
+
+        public string? UltimosDigitosTarjeta { get; set; }
+
+        public List<PedidoDetalleLineaDTO> Detalles { get; set; } = new();
     }
 }

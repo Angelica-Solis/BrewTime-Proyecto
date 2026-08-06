@@ -55,9 +55,58 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                 .FirstOrDefaultAsync(p => p.PedidoId == id);
         }
 
-        public async Task<ICollection<EstadoPedido>> ListEstadosAsync()
+        //estado de pedido
+        public async Task<ICollection<EstadoPedido>>ListEstadosAsync()
         {
-            return await _context.EstadoPedido.ToListAsync();
+            return await _context.Set<EstadoPedido>().OrderBy(e => e.EstadoId).ToListAsync();
+        }
+
+        public async Task<EstadoPedido?> FindEstadoByNombreAsync(string nombre)
+        {
+            string nombreNormalizado = nombre.Trim().ToLower();
+
+            return await _context.Set<EstadoPedido>().FirstOrDefaultAsync(e => e.Nombre.ToLower() == nombreNormalizado);
+        }
+
+        //metodos de entrega
+        public async Task<ICollection<MetodoEntrega>>ListMetodosEntregaAsync()
+        {
+            return await _context.Set<MetodoEntrega>().OrderBy(m => m.MetodoId).ToListAsync();
+        }
+
+        public async Task<MetodoEntrega?>FindMetodoEntregaByIdAsync(int metodoEntregaId)
+        {
+            return await _context.Set<MetodoEntrega>().FirstOrDefaultAsync(m => m.MetodoId == metodoEntregaId);
+        }
+
+        //metodos de pago
+        public async Task<ICollection<MetodoPago>>ListMetodosPagoAsync()
+        {
+            return await _context.Set<MetodoPago>().OrderBy(m => m.MetodoPagoId).ToListAsync();
+        }
+
+        public async Task<MetodoPago?>FindMetodoPagoByIdAsync(int metodoPagoId)
+        {
+            return await _context.Set<MetodoPago>().FirstOrDefaultAsync(m => m.MetodoPagoId == metodoPagoId);
+        }
+
+        //registrar pedido
+        public async Task CreateAsync(Pedido pedido)
+        {
+            await _context.Set<Pedido>().AddAsync(pedido);
+            await _context.SaveChangesAsync();
+        }
+
+        //actualizar pedido y pago
+        public async Task UpdateAsync(Pedido pedido)
+        {
+
+            if (_context.Entry(pedido).State == EntityState.Detached)
+            {
+                _context.Set<Pedido>().Update(pedido);
+            }
+
+            await _context.SaveChangesAsync();
         }
     }
 }

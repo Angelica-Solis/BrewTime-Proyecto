@@ -8,7 +8,7 @@ namespace BrewTime.Application.DTOs
 {
     public record PedidoDetalleLineaDTO
     {
-        public string Producto { get; set; }
+        public string Producto { get; set; } = string.Empty;
 
         public decimal Precio { get; set; }
 
@@ -18,6 +18,8 @@ namespace BrewTime.Application.DTOs
 
         public decimal Impuesto { get; set; }
 
-        public string Observaciones { get; set; }
+        public decimal TotalLinea => Subtotal + Impuesto;
+
+        public string Observaciones { get; set; } = string.Empty;
     }
 }

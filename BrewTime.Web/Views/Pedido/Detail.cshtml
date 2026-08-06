@@ -9,6 +9,7 @@
 
 @{
     ViewData["Title"] = $"Detalle del Pedido #{Model.PedidoId}";
+    var mensajeExito = TempData.Peek("Success") as string;
 }
 <div class="brew-page">
     <section class="brew-hero">
@@ -155,9 +156,44 @@
         </div>
 
         <div class="mt-3 mb-5">
-            <a asp-action="Index" class="brew-back-btn">
-                <i class="bi bi-arrow-left"></i> Volver al Listado
+            <a asp-action="Index"
+               class="brew-back-btn">
+                <i class="bi bi-arrow-left"></i>
+                Volver al listado
             </a>
+
+            @if (Model.Estado.Equals(
+                        "Pendiente de pago",
+                        StringComparison.OrdinalIgnoreCase))
+            {
+                <a asp-action="Pago"
+                   asp-route-id="@Model.PedidoId"
+                   class="btn btn-success">
+                    Pagar pedido
+                </a>
+            }
         </div>
     </div>
 </div>
+
+@section Scripts {
+    <script src="https://cdn.jsdelivr.net/npm/sweetalert2@11"></script>
+
+    @if (!string.IsNullOrWhiteSpace(mensajeExito))
+    {
+        <script>
+            document.addEventListener("DOMContentLoaded", () => {
+                const mensaje = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(mensajeExito) );
+
+        Swal.fire({
+            title: "¡Pedido registrado!",
+            text: mensaje,
+            icon: "success",
+            confirmButtonText: "Aceptar",
+            confirmButtonColor: "#1f4a2e",
+            allowOutsideClick: false
+        });
+    });
+</script>
+    }
+}

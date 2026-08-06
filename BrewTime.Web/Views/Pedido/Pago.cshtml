@@ -1,0 +1,317 @@
+﻿@model BrewTime.Application.DTOs.PagoViewDTO
+@using System.Globalization
+
+@{
+    ViewData["Title"] = $"Pago del pedido #{Model.Pedido.PedidoId}";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pagoPedido.css" asp-append-version="true" />
+}
+
+<div class="pago-page">
+    <section class="pago-hero">
+        <p class="pago-eyebrow">Finalizar compra</p>
+        <h1>Pago del pedido <em>#@Model.Pedido.PedidoId</em></h1>
+        <p>Seleccione el método de pago para completar el pedido.</p>
+    </section>
+
+    <div class="pago-content">
+        <form asp-action="Pago"
+              method="post"
+              id="pagoForm"
+              data-total="@Model.Pedido.Total.ToString(CultureInfo.InvariantCulture)">
+
+            @Html.AntiForgeryToken()
+
+            <input asp-for="Pago.PedidoId" type="hidden" />
+            <input asp-for="Pago.TotalPedido" type="hidden" />
+            <input asp-for="Pago.Vuelto" type="hidden" id="vueltoHidden" />
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="pago-layout">
+
+                <!-- FACTURA -->
+                <section class="pago-card">
+                    <div class="pago-card-header">
+                        <div>
+                            <p class="pago-eyebrow">Factura</p>
+                            <h2>Resumen del pedido</h2>
+                        </div>
+
+                        <span class="pago-estado">@Model.Pedido.Estado</span>
+                    </div>
+
+                    <div class="pago-info-grid">
+                        <div class="pago-info">
+                            <span>Fecha</span>
+                            <strong>
+                                @Model.Pedido.Fecha.ToString("dd/MM/yyyy hh:mm tt")
+                            </strong>
+                        </div>
+
+                        <div class="pago-info">
+                            <span>Cliente</span>
+                            <strong>@Model.Pedido.ClienteNombre</strong>
+                            <small>@Model.Pedido.ClienteCorreo</small>
+                        </div>
+
+                        <div class="pago-info">
+                            <span>Método de entrega</span>
+                            <strong>@Model.Pedido.MetodoEntrega</strong>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Pedido.Encargado)
+                                                && Model.Pedido.Encargado != "Sin asignar"
+                                                && Model.Pedido.Encargado != "N/A")
+                        {
+                            <div class="pago-info">
+                                <span>Encargado</span>
+                                <strong>@Model.Pedido.Encargado</strong>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="pago-table">
+                            <thead>
+                                <tr>
+                                    <th>Producto o combo</th>
+                                    <th>Precio</th>
+                                    <th>Cantidad</th>
+                                    <th>Subtotal</th>
+                                    <th>Impuesto</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.Pedido.Detalles)
+                                {
+                                    decimal totalLinea = item.Subtotal + item.Impuesto;
+
+                                    <tr>
+                                        <td>
+                                            <strong>@item.Producto</strong>
+
+                                            @if (!string.IsNullOrWhiteSpace(item.Observaciones))
+                                            {
+                                                <small class="observacion">
+                                                    @item.Observaciones
+                                                </small>
+                                            }
+                                        </td>
+
+                                        <td>₡@item.Precio.ToString("N2")</td>
+                                        <td>@item.Cantidad</td>
+                                        <td>₡@item.Subtotal.ToString("N2")</td>
+                                        <td>₡@item.Impuesto.ToString("N2")</td>
+                                        <td><strong>₡@totalLinea.ToString("N2")</strong></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="pago-totales">
+                        <div>
+                            <span>Subtotal sin impuestos</span>
+                            <strong>₡@Model.Pedido.Subtotal.ToString("N2")</strong>
+                        </div>
+
+                        <div>
+                            <span>Impuesto</span>
+                            <strong>₡@Model.Pedido.Impuesto.ToString("N2")</strong>
+                        </div>
+
+                        <div>
+                            <span>Costo de envío</span>
+                            <strong>₡@Model.Pedido.CostoEnvio.ToString("N2")</strong>
+                        </div>
+
+                        <div class="pago-total-final">
+                            <span>Total</span>
+                            <strong>₡@Model.Pedido.Total.ToString("N2")</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MÉTODO DE PAGO -->
+                <aside class="pago-card pago-card-sticky">
+                    <p class="pago-eyebrow">Forma de pago</p>
+                    <h2>Seleccione un método</h2>
+
+                    <div class="pago-metodos">
+                        @foreach (var metodo in Model.MetodosPago)
+                        {
+                            bool esTarjeta = metodo.Nombre.Contains(
+                            "Tarjeta",
+                            StringComparison.OrdinalIgnoreCase);
+
+                            bool esEfectivo = metodo.Nombre.Equals(
+                            "Efectivo",
+                            StringComparison.OrdinalIgnoreCase);
+
+                            string tipo = esTarjeta
+                            ? "tarjeta"
+                            : esEfectivo
+                            ? "efectivo"
+                            : "otro";
+
+                            <label class="pago-metodo">
+                                <input type="radio"
+                                       asp-for="Pago.MetodoPagoId"
+                                       value="@metodo.MetodoPagoId"
+                                       data-tipo="@tipo" />
+
+                                <span>
+                                    <strong>@metodo.Nombre</strong>
+                                    
+                            </span>
+                        </label>
+                                                }
+                    </div>
+
+                    <span asp-validation-for="Pago.MetodoPagoId"
+                          class="text-danger">
+                    </span>
+
+                    <!-- TARJETA -->
+                    <div id="tarjetaContainer" class="pago-campos" hidden>
+                        <h3>Datos de la tarjeta</h3>
+
+                        <div class="mb-3">
+                            <label asp-for="Pago.NombreTitular" class="form-label"></label>
+
+                            <input asp-for="Pago.NombreTitular"
+                                   id="nombreTitular"
+                                   class="form-control"
+                                   maxlength="100"
+                                   autocomplete="cc-name"
+                                   placeholder="Nombre del titular" />
+
+                            <span asp-validation-for="Pago.NombreTitular"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Pago.NumeroTarjeta" class="form-label"></label>
+
+                            <input asp-for="Pago.NumeroTarjeta"
+                                   id="numeroTarjeta"
+                                   class="form-control"
+                                   maxlength="19"
+                                   inputmode="numeric"
+                                   autocomplete="cc-number"
+                                   placeholder="Solo números" />
+
+                            <span asp-validation-for="Pago.NumeroTarjeta"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="pago-grid-dos">
+                            <div>
+                                <label asp-for="Pago.FechaVencimiento"
+                                       class="form-label">
+                                </label>
+
+                                <input asp-for="Pago.FechaVencimiento"
+                                       id="fechaVencimiento"
+                                       class="form-control"
+                                       maxlength="5"
+                                       inputmode="numeric"
+                                       placeholder="MM/AA" />
+
+                                <span asp-validation-for="Pago.FechaVencimiento"
+                                      class="text-danger">
+                                </span>
+                            </div>
+
+                            <div>
+                                <label asp-for="Pago.CodigoSeguridad"
+                                       class="form-label">
+                                </label>
+
+                                <input asp-for="Pago.CodigoSeguridad"
+                                       id="codigoSeguridad"
+                                       class="form-control"
+                                       maxlength="4"
+                                       inputmode="numeric"
+                                       placeholder="CVV" />
+
+                                <span asp-validation-for="Pago.CodigoSeguridad"
+                                      class="text-danger">
+                                </span>
+                            </div>
+                        </div>
+
+                        <p class="pago-seguridad">
+                            Se guardarán los últimos cuatro dígitos de la tarjeta.
+                            No se almacena el código de seguridad.
+                        </p>
+                    </div>
+
+                    <!-- EFECTIVO -->
+                    <div id="efectivoContainer" class="pago-campos" hidden>
+                        <h3>Pago en efectivo</h3>
+
+                        <div class="mb-3">
+                            <label asp-for="Pago.MontoPagado" class="form-label"></label>
+
+                            <div class="input-group">
+                                <span class="input-group-text">₡</span>
+
+                                <input asp-for="Pago.MontoPagado"
+                                       id="montoPagado"
+                                       class="form-control"
+                                       type="number"
+                                       min="0.01"
+                                       step="0.01"
+                                       placeholder="0.00" />
+                            </div>
+
+                            <span asp-validation-for="Pago.MontoPagado"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="pago-vuelto">
+                            <span>Vuelto</span>
+                            <strong id="vueltoTexto">₡0,00</strong>
+                            <small id="mensajeMonto">
+                                Ingrese el monto recibido.
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="pago-total-lateral">
+                        <span>Total a pagar</span>
+                        <strong>₡@Model.Pedido.Total.ToString("N2")</strong>
+                    </div>
+
+                    <button type="submit" class="pago-btn-confirmar">
+                        Confirmar pago
+                    </button>
+
+                    <a asp-action="Detail"
+                       asp-route-id="@Model.Pedido.PedidoId"
+                       class="pago-btn-volver">
+                        Volver al detalle
+                    </a>
+                </aside>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="~/js/pagoPedido.js"
+            asp-append-version="true">
+    </script>
+}
