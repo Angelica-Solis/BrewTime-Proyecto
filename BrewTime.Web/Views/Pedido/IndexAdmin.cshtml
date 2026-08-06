@@ -10,6 +10,13 @@
 @{
     ViewData["Title"] = "Gestión de Pedidos";
     var estados = ViewBag.Estados as IEnumerable<BrewTime.Application.DTOs.EstadoPedidoDTO> ?? new List<BrewTime.Application.DTOs.EstadoPedidoDTO>();
+
+    string fechaSel = ViewBag.SelectedFecha as string;
+    int? estadoSelId = ViewBag.SelectedEstadoId as int?;
+    string estadoSelNombre = estadoSelId.HasValue
+        ? estados.FirstOrDefault(e => e.EstadoId == estadoSelId.Value)?.Nombre
+        : null;
+    bool hayFiltrosActivos = !string.IsNullOrEmpty(fechaSel) || estadoSelId.HasValue;
 }
 <div class="brew-page">
     <section class="brew-hero">
@@ -33,31 +40,37 @@
         <!-- Barra de Filtros -->
         <div class="brew-filter-bar">
             <div class="brew-filter-title">
-                <i class="bi bi-funnel-fill"></i> Filtrar Pedidos
+                <span class="brew-filter-icon"><i class="bi bi-funnel-fill"></i></span> Filtrar Pedidos
             </div>
             <form method="get" asp-action="Index" class="row g-3 align-items-end">
                 <div class="col-md-4">
-                    <label for="fecha" class="form-label small text-uppercase" style="color: #6f4e37; font-weight: 600;">Fecha de Creación</label>
-                    <input type="date" name="fecha" id="fecha" class="form-control" value="@ViewBag.SelectedFecha" style="border-color: rgba(201,149,106,0.3);" />
+                    <label for="fecha" class="brew-filter-label">Fecha de Creación</label>
+                    <div class="brew-field-wrap">
+                        <i class="bi bi-calendar3"></i>
+                        <input type="date" name="fecha" id="fecha" class="form-control" value="@fechaSel" />
+                    </div>
                 </div>
                 <div class="col-md-4">
-                    <label for="estadoId" class="form-label small text-uppercase" style="color: #6f4e37; font-weight: 600;">Estado del Pedido</label>
-                    <select name="estadoId" id="estadoId" class="form-select" style="border-color: rgba(201,149,106,0.3);">
-                        <option value="">-- Todos los Estados --</option>
-                        @foreach (var est in estados)
-                        {
-                            if (ViewBag.SelectedEstadoId != null && (int)ViewBag.SelectedEstadoId == est.EstadoId)
+                    <label for="estadoId" class="brew-filter-label">Estado del Pedido</label>
+                    <div class="brew-field-wrap">
+                        <i class="bi bi-tag-fill"></i>
+                        <select name="estadoId" id="estadoId" class="form-select">
+                            <option value="">Todos los estados</option>
+                            @foreach (var est in estados)
                             {
-                                <option value="@est.EstadoId" selected="selected">@est.Nombre</option>
+                                if (estadoSelId.HasValue && estadoSelId.Value == est.EstadoId)
+                                {
+                                    <option value="@est.EstadoId" selected="selected">@est.Nombre</option>
+                                }
+                                else
+                                {
+                                    <option value="@est.EstadoId">@est.Nombre</option>
+                                }
                             }
-                            else
-                            {
-                                <option value="@est.EstadoId">@est.Nombre</option>
-                            }
-                        }
-                    </select>
+                        </select>
+                    </div>
                 </div>
-                <div class="col-md-4 d-flex gap-2">
+                <div class="col-md-4 brew-filter-actions">
                     <button type="submit" class="filter-btn-apply w-50">
                         <i class="bi bi-search"></i> Filtrar
                     </button>
@@ -68,8 +81,29 @@
             </form>
         </div>
 
-        <div class="brew-count d-flex justify-content-between align-items-center">
-            <span>Total de Pedidos Coincidentes: @Model.Count()</span>
+        <div class="brew-results-bar">
+            <span class="brew-results-count">
+                <i class="bi bi-receipt"></i> <strong>@Model.Count()</strong> pedido@(Model.Count() == 1 ? "" : "s") encontrado@(Model.Count() == 1 ? "" : "s")
+            </span>
+            @if (hayFiltrosActivos)
+            {
+                <div class="brew-active-filters">
+                    @if (!string.IsNullOrEmpty(fechaSel))
+                    {
+                        <a class="brew-chip" asp-action="Index" asp-route-fecha="" asp-route-estadoId="@estadoSelId">
+                            <i class="bi bi-calendar3"></i> @DateTime.Parse(fechaSel).ToString("dd/MM/yyyy")
+                            <i class="bi bi-x-circle-fill"></i>
+                        </a>
+                    }
+                    @if (estadoSelId.HasValue)
+                    {
+                        <a class="brew-chip" asp-action="Index" asp-route-fecha="@fechaSel" asp-route-estadoId="">
+                            <i class="bi bi-tag-fill"></i> @estadoSelNombre
+                            <i class="bi bi-x-circle-fill"></i>
+                        </a>
+                    }
+                </div>
+            }
         </div>
 
         @if (Model.Any())
