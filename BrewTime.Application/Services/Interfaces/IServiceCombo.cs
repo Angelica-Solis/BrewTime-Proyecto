@@ -11,5 +11,9 @@ namespace BrewTime.Application.Services.Interfaces
         Task CreateAsync(ComboFormDTO dto);
         Task UpdateAsync(ComboFormDTO dto);
         Task ToggleActivoAsync(int id);
+
+        //para la tarea programada 
+        Task<ICollection<ProductoInconsistenteEnComboDTO>> ObtenerProductosInconsistentesAsync();
+        Task<bool> RevisarYNotificarProductosInconsistentesAsync();
     }
 }
