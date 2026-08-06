@@ -6,16 +6,16 @@
     if (window.jQuery?.validator) {
         $.extend($.validator.messages, {
             required: "Este campo es obligatorio.",
-            number: "Ingrese un número válido.",
-            digits: "Ingrese solamente números.",
+            number: "Ingrese un número válido",
+            digits: "Ingrese solamente números",
             maxlength: $.validator.format(
-                "No puede ingresar más de {0} caracteres."
+                "No puede ingresar más de {0} caracteres"
             ),
             minlength: $.validator.format(
-                "Debe ingresar al menos {0} caracteres."
+                "Debe ingresar al menos {0} caracteres"
             ),
             range: $.validator.format(
-                "Ingrese un valor entre {0} y {1}."
+                "Ingrese un valor entre {0} y {1}"
             )
         });
     }

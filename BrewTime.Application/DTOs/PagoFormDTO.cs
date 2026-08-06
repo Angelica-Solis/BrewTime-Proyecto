@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrewTime.Application.DTOs
 {
-    public class PagoViewDTO
+    public class PagoFormDTO
     {
     
         public PedidoDetalleDTO Pedido { get; set; } = new(); 
