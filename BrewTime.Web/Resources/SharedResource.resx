@@ -1326,4 +1326,322 @@
   <data name="SwalConfirmActivate" xml:space="preserve">
     <value>SwalConfirmActivate</value>
   </data>
+	<data name="Cart_TitleMy" xml:space="preserve">
+    <value>Cart_TitleMy</value>
+  </data>
+	<data name="Cart_TitleWord" xml:space="preserve">
+    <value>Cart_TitleWord</value>
+  </data>
+	<data name="Cart_Subtitle" xml:space="preserve">
+    <value>Cart_Subtitle</value>
+  </data>
+	<data name="Cart_EmptyTitle" xml:space="preserve">
+    <value>Cart_EmptyTitle</value>
+  </data>
+	<data name="Cart_EmptyText" xml:space="preserve">
+    <value>Cart_EmptyText</value>
+  </data>
+	<data name="Cart_ExploreProducts" xml:space="preserve">
+    <value>Cart_ExploreProducts</value>
+  </data>
+	<data name="Cart_TagBeverages" xml:space="preserve">
+    <value>Cart_TagBeverages</value>
+  </data>
+	<data name="Cart_Summary" xml:space="preserve">
+    <value>Cart_Summary</value>
+  </data>
+	<data name="Cart_EmptyCartBtn" xml:space="preserve">
+    <value>Cart_EmptyCartBtn</value>
+  </data>
+	<data name="Cart_ContinueOrder" xml:space="preserve">
+    <value>Cart_ContinueOrder</value>
+  </data>
+	<data name="Login_WelcomeBack" xml:space="preserve">
+    <value>Login_WelcomeBack</value>
+  </data>
+	<data name="Login_LoginToContinue" xml:space="preserve">
+    <value>Login_LoginToContinue</value>
+  </data>
+	<data name="Login_Access" xml:space="preserve">
+    <value>Login_Access</value>
+  </data>
+	<data name="Login_SubmitBtn" xml:space="preserve">
+    <value>Login_SubmitBtn</value>
+  </data>
+	<data name="PasswordLabel" xml:space="preserve">
+    <value>PasswordLabel</value>
+  </data>
+	<data name="FechaLabel" xml:space="preserve">
+    <value>FechaLabel</value>
+  </data>
+	<data name="ClienteLabel" xml:space="preserve">
+    <value>ClienteLabel</value>
+  </data>
+	<data name="MetodoEntregaLabel" xml:space="preserve">
+    <value>MetodoEntregaLabel</value>
+  </data>
+	<data name="MetodoPagoLabel" xml:space="preserve">
+    <value>MetodoPagoLabel</value>
+  </data>
+	<data name="EncargadoLabel" xml:space="preserve">
+    <value>EncargadoLabel</value>
+  </data>
+	<data name="CantidadLabel" xml:space="preserve">
+    <value>CantidadLabel</value>
+  </data>
+	<data name="ImpuestoLabel" xml:space="preserve">
+    <value>ImpuestoLabel</value>
+  </data>
+	<data name="CostoEnvioLabel" xml:space="preserve">
+    <value>CostoEnvioLabel</value>
+  </data>
+	<data name="ObservacionesLabel" xml:space="preserve">
+    <value>ObservacionesLabel</value>
+  </data>
+	<data name="ProductoComboLabel" xml:space="preserve">
+    <value>ProductoComboLabel</value>
+  </data>
+	<data name="NingunaTxt" xml:space="preserve">
+    <value>NingunaTxt</value>
+  </data>
+	<data name="PedidoWord" xml:space="preserve">
+    <value>PedidoWord</value>
+  </data>
+	<data name="PedidosWord" xml:space="preserve">
+    <value>PedidosWord</value>
+  </data>
+	<data name="SubtotalSinImpuestosLabel" xml:space="preserve">
+    <value>SubtotalSinImpuestosLabel</value>
+  </data>
+	<data name="OrderAdmin_Eyebrow" xml:space="preserve">
+    <value>OrderAdmin_Eyebrow</value>
+  </data>
+	<data name="OrderAdmin_TitlePrefix" xml:space="preserve">
+    <value>OrderAdmin_TitlePrefix</value>
+  </data>
+	<data name="OrderAdmin_Subtitle" xml:space="preserve">
+    <value>OrderAdmin_Subtitle</value>
+  </data>
+	<data name="OrderAdmin_FilterTitle" xml:space="preserve">
+    <value>OrderAdmin_FilterTitle</value>
+  </data>
+	<data name="OrderAdmin_FilterDate" xml:space="preserve">
+    <value>OrderAdmin_FilterDate</value>
+  </data>
+	<data name="OrderAdmin_FilterStatus" xml:space="preserve">
+    <value>OrderAdmin_FilterStatus</value>
+  </data>
+	<data name="OrderAdmin_AllStatuses" xml:space="preserve">
+    <value>OrderAdmin_AllStatuses</value>
+  </data>
+	<data name="OrderAdmin_FilterBtn" xml:space="preserve">
+    <value>OrderAdmin_FilterBtn</value>
+  </data>
+	<data name="OrderAdmin_ClearBtn" xml:space="preserve">
+    <value>OrderAdmin_ClearBtn</value>
+  </data>
+	<data name="OrderAdmin_ResultsFound" xml:space="preserve">
+    <value>OrderAdmin_ResultsFound</value>
+  </data>
+	<data name="OrderAdmin_TableNumber" xml:space="preserve">
+    <value>OrderAdmin_TableNumber</value>
+  </data>
+	<data name="OrderAdmin_NoResults" xml:space="preserve">
+    <value>OrderAdmin_NoResults</value>
+  </data>
+	<data name="OrderClient_MyAccount" xml:space="preserve">
+    <value>OrderClient_MyAccount</value>
+  </data>
+	<data name="OrderClient_HistoryPrefix" xml:space="preserve">
+    <value>OrderClient_HistoryPrefix</value>
+  </data>
+	<data name="OrderClient_HistorySubtitle" xml:space="preserve">
+    <value>OrderClient_HistorySubtitle</value>
+  </data>
+	<data name="OrderClient_TotalOrders" xml:space="preserve">
+    <value>OrderClient_TotalOrders</value>
+  </data>
+	<data name="OrderClient_NoOrdersYet" xml:space="preserve">
+    <value>OrderClient_NoOrdersYet</value>
+  </data>
+	<data name="OrderDetail_Eyebrow" xml:space="preserve">
+    <value>OrderDetail_Eyebrow</value>
+  </data>
+	<data name="OrderDetail_Subtitle" xml:space="preserve">
+    <value>OrderDetail_Subtitle</value>
+  </data>
+	<data name="OrderDetail_HeroLine" xml:space="preserve">
+    <value>OrderDetail_HeroLine</value>
+  </data>
+	<data name="OrderDetail_InfoTitle" xml:space="preserve">
+    <value>OrderDetail_InfoTitle</value>
+  </data>
+	<data name="OrderDetail_PurchaseDate" xml:space="preserve">
+    <value>OrderDetail_PurchaseDate</value>
+  </data>
+	<data name="OrderDetail_AssignedManager" xml:space="preserve">
+    <value>OrderDetail_AssignedManager</value>
+  </data>
+	<data name="OrderDetail_ProductsInOrder" xml:space="preserve">
+    <value>OrderDetail_ProductsInOrder</value>
+  </data>
+	<data name="OrderDetail_TableProductCombo" xml:space="preserve">
+    <value>OrderDetail_TableProductCombo</value>
+  </data>
+	<data name="OrderDetail_PayOrder" xml:space="preserve">
+    <value>OrderDetail_PayOrder</value>
+  </data>
+	<data name="OrderDetail_SwalRegisteredTitle" xml:space="preserve">
+    <value>OrderDetail_SwalRegisteredTitle</value>
+  </data>
+	<data name="Pago_Eyebrow" xml:space="preserve">
+    <value>Pago_Eyebrow</value>
+  </data>
+	<data name="Pago_TitlePrefix" xml:space="preserve">
+    <value>Pago_TitlePrefix</value>
+  </data>
+	<data name="Pago_Subtitle" xml:space="preserve">
+    <value>Pago_Subtitle</value>
+  </data>
+	<data name="Pago_InvoiceLabel" xml:space="preserve">
+    <value>Pago_InvoiceLabel</value>
+  </data>
+	<data name="Pago_OrderSummary" xml:space="preserve">
+    <value>Pago_OrderSummary</value>
+  </data>
+	<data name="Pago_PaymentMethodFormTitle" xml:space="preserve">
+    <value>Pago_PaymentMethodFormTitle</value>
+  </data>
+	<data name="Pago_SelectMethod" xml:space="preserve">
+    <value>Pago_SelectMethod</value>
+  </data>
+	<data name="Pago_CardDataTitle" xml:space="preserve">
+    <value>Pago_CardDataTitle</value>
+  </data>
+	<data name="Pago_CardSecurityNote" xml:space="preserve">
+    <value>Pago_CardSecurityNote</value>
+  </data>
+	<data name="Pago_CashTitle" xml:space="preserve">
+    <value>Pago_CashTitle</value>
+  </data>
+	<data name="Pago_Change" xml:space="preserve">
+    <value>Pago_Change</value>
+  </data>
+	<data name="Pago_EnterAmountHint" xml:space="preserve">
+    <value>Pago_EnterAmountHint</value>
+  </data>
+	<data name="Pago_TotalToPay" xml:space="preserve">
+    <value>Pago_TotalToPay</value>
+  </data>
+	<data name="Pago_ConfirmBtn" xml:space="preserve">
+    <value>Pago_ConfirmBtn</value>
+  </data>
+	<data name="Pago_BackToDetail" xml:space="preserve">
+    <value>Pago_BackToDetail</value>
+  </data>
+	<data name="Pago_NombreTitular" xml:space="preserve">
+    <value>Pago_NombreTitular</value>
+  </data>
+	<data name="Pago_NumeroTarjeta" xml:space="preserve">
+    <value>Pago_NumeroTarjeta</value>
+  </data>
+	<data name="Pago_FechaVencimiento" xml:space="preserve">
+    <value>Pago_FechaVencimiento</value>
+  </data>
+	<data name="Pago_CodigoSeguridad" xml:space="preserve">
+    <value>Pago_CodigoSeguridad</value>
+  </data>
+	<data name="Pago_MontoPagado" xml:space="preserve">
+    <value>Pago_MontoPagado</value>
+  </data>
+	<data name="Reg_Eyebrow" xml:space="preserve">
+    <value>Reg_Eyebrow</value>
+  </data>
+	<data name="Reg_TitlePrefix" xml:space="preserve">
+    <value>Reg_TitlePrefix</value>
+  </data>
+	<data name="Reg_Subtitle" xml:space="preserve">
+    <value>Reg_Subtitle</value>
+  </data>
+	<data name="Reg_GeneralInfoTitle" xml:space="preserve">
+    <value>Reg_GeneralInfoTitle</value>
+  </data>
+	<data name="Reg_SelectClient" xml:space="preserve">
+    <value>Reg_SelectClient</value>
+  </data>
+	<data name="Reg_SelectDeliveryMethod" xml:space="preserve">
+    <value>Reg_SelectDeliveryMethod</value>
+  </data>
+	<data name="Reg_DireccionEntregaLabel" xml:space="preserve">
+    <value>Reg_DireccionEntregaLabel</value>
+  </data>
+	<data name="Reg_AddressPlaceholder" xml:space="preserve">
+    <value>Reg_AddressPlaceholder</value>
+  </data>
+	<data name="Reg_OrderDetailTitle" xml:space="preserve">
+    <value>Reg_OrderDetailTitle</value>
+  </data>
+	<data name="Reg_BackToCart" xml:space="preserve">
+    <value>Reg_BackToCart</value>
+  </data>
+	<data name="Reg_RegisterOrderBtn" xml:space="preserve">
+    <value>Reg_RegisterOrderBtn</value>
+  </data>
+	<data name="CI_Eyebrow" xml:space="preserve">
+    <value>CI_Eyebrow</value>
+  </data>
+	<data name="CI_TitlePrefix" xml:space="preserve">
+    <value>CI_TitlePrefix</value>
+  </data>
+	<data name="CI_TitleItalic" xml:space="preserve">
+    <value>CI_TitleItalic</value>
+  </data>
+	<data name="CI_Subtitle" xml:space="preserve">
+    <value>CI_Subtitle</value>
+  </data>
+	<data name="CI_HeroLine" xml:space="preserve">
+    <value>CI_HeroLine</value>
+  </data>
+	<data name="CI_BackToList" xml:space="preserve">
+    <value>CI_BackToList</value>
+  </data>
+	<data name="CI_SectionTitle" xml:space="preserve">
+    <value>CI_SectionTitle</value>
+  </data>
+	<data name="CI_EmptyText" xml:space="preserve">
+    <value>CI_EmptyText</value>
+  </data>
+	<data name="CI_TableMotivo" xml:space="preserve">
+    <value>CI_TableMotivo</value>
+  </data>
+	<data name="CI_ProductInactive" xml:space="preserve">
+    <value>CI_ProductInactive</value>
+  </data>
+	<data name="CI_NoIngredients" xml:space="preserve">
+    <value>CI_NoIngredients</value>
+  </data>
+	<data name="CI_EditCombo" xml:space="preserve">
+    <value>CI_EditCombo</value>
+  </data>
+	<data name="Chat_Title" xml:space="preserve">
+    <value>Chat_Title</value>
+  </data>
+	<data name="Chat_Status" xml:space="preserve">
+    <value>Chat_Status</value>
+  </data>
+	<data name="Chat_WelcomeMsg" xml:space="preserve">
+    <value>Chat_WelcomeMsg</value>
+  </data>
+	<data name="Chat_QPayments" xml:space="preserve">
+    <value>Chat_QPayments</value>
+  </data>
+	<data name="Chat_QDelivery" xml:space="preserve">
+    <value>Chat_QDelivery</value>
+  </data>
+	<data name="Chat_InputPlaceholder" xml:space="preserve">
+    <value>Chat_InputPlaceholder</value>
+  </data>
+	<data name="Chat_SendBtn" xml:space="preserve">
+    <value>Chat_SendBtn</value>
+  </data>
 </root>

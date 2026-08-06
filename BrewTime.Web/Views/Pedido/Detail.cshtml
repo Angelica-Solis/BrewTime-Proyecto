@@ -8,22 +8,22 @@
 }
 
 @{
-    ViewData["Title"] = $"Detalle del Pedido #{Model.PedidoId}";
+    ViewData["Title"] = $"{SharedLocalizer["DetalleDelTxt"].Value} {SharedLocalizer["PedidoWord"].Value} #{Model.PedidoId}";
     var mensajeExito = TempData.Peek("Success") as string;
 }
 <div class="brew-page">
     <section class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Detalles</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["OrderDetail_Eyebrow"]</p>
             <h1 class="brew-titulo">
-                Pedido #<em>@Model.PedidoId</em>
+                @SharedLocalizer["PedidoWord"] #<em>@Model.PedidoId</em>
             </h1>
             <p class="brew-subtitulo">
-                Información completa del pedido registrado en BrewTime.
+                @SharedLocalizer["OrderDetail_Subtitle"]
             </p>
             <div class="brew-hero-line">
                 <span></span>
-                <i>BrewTime Detalle</i>
+                <i>@SharedLocalizer["OrderDetail_HeroLine"]</i>
                 <span></span>
             </div>
         </div>
@@ -33,7 +33,7 @@
         <div class="brew-detail-card">
             <!-- Header -->
             <div class="brew-detail-header">
-                <h2 class="brew-detail-title">Información del Pedido</h2>
+                <h2 class="brew-detail-title">@SharedLocalizer["OrderDetail_InfoTitle"]</h2>
                 @{
                     string badgeClass = "estado-pendiente";
                     var est = Model.Estado.ToLower();
@@ -51,45 +51,45 @@
             <div class="brew-detail-body">
                 <div class="brew-meta-grid">
                     <div class="brew-meta-item">
-                        <div class="brew-meta-label">Fecha de Compra</div>
+                        <div class="brew-meta-label">@SharedLocalizer["OrderDetail_PurchaseDate"]</div>
                         <div class="brew-meta-value">@Model.Fecha.ToString("dd/MM/yyyy hh:mm tt")</div>
                     </div>
                     <div class="brew-meta-item">
-                        <div class="brew-meta-label">Cliente</div>
+                        <div class="brew-meta-label">@SharedLocalizer["ClienteLabel"]</div>
                         <div class="brew-meta-value">@Model.ClienteNombre</div>
                     </div>
                     <div class="brew-meta-item">
-                        <div class="brew-meta-label">Correo</div>
+                        <div class="brew-meta-label">@SharedLocalizer["CorreoLabel"]</div>
                         <div class="brew-meta-value">@Model.ClienteCorreo</div>
                     </div>
                     <div class="brew-meta-item">
-                        <div class="brew-meta-label">Encargado Asignado</div>
+                        <div class="brew-meta-label">@SharedLocalizer["OrderDetail_AssignedManager"]</div>
                         <div class="brew-meta-value">@Model.Encargado</div>
                     </div>
                     <div class="brew-meta-item">
-                        <div class="brew-meta-label">Método de Entrega</div>
+                        <div class="brew-meta-label">@SharedLocalizer["MetodoEntregaLabel"]</div>
                         <div class="brew-meta-value">@Model.MetodoEntrega</div>
                     </div>
                     <div class="brew-meta-item">
-                        <div class="brew-meta-label">Método de Pago</div>
+                        <div class="brew-meta-label">@SharedLocalizer["MetodoPagoLabel"]</div>
                         <div class="brew-meta-value">@Model.MetodoPago</div>
                     </div>
                 </div>
 
                 <hr style="border-color: rgba(201,149,106,0.25); margin: 2rem 0;" />
 
-                <h3 class="brew-detail-title" style="color: #1a2712; margin-bottom: 1rem; font-size: 1.1rem;">Productos en el Pedido</h3>
-                
+                <h3 class="brew-detail-title" style="color: #1a2712; margin-bottom: 1rem; font-size: 1.1rem;">@SharedLocalizer["OrderDetail_ProductsInOrder"]</h3>
+
                 <div class="table-responsive">
                     <table class="brew-detail-table">
                         <thead>
                             <tr>
-                                <th>Producto / Combo</th>
-                                <th class="text-end">Precio</th>
-                                <th class="text-center">Cantidad</th>
+                                <th>@SharedLocalizer["OrderDetail_TableProductCombo"]</th>
+                                <th class="text-end">@SharedLocalizer["PrecioLabel"]</th>
+                                <th class="text-center">@SharedLocalizer["CantidadLabel"]</th>
                                 <th class="text-end">Subtotal</th>
-                                <th class="text-end">Impuesto</th>
-                                <th>Observaciones</th>
+                                <th class="text-end">@SharedLocalizer["ImpuestoLabel"]</th>
+                                <th>@SharedLocalizer["ObservacionesLabel"]</th>
                             </tr>
                         </thead>
 
@@ -119,7 +119,7 @@
 
                                     <td class="brew-observacion">
                                         @(string.IsNullOrWhiteSpace(item.Observaciones)
-                                            ? "Ninguna"
+                                            ? SharedLocalizer["NingunaTxt"].Value
                                             : item.Observaciones)
                                     </td>
                                 </tr>
@@ -137,12 +137,12 @@
                     </div>
 
                     <div class="summary-row">
-                        <span>Impuesto</span>
+                        <span>@SharedLocalizer["ImpuestoLabel"]</span>
                         <span>₡@Model.Impuesto.ToString("N2")</span>
                     </div>
 
                     <div class="summary-row">
-                        <span>Costo de envío</span>
+                        <span>@SharedLocalizer["CostoEnvioLabel"]</span>
                         <span>₡@Model.CostoEnvio.ToString("N2")</span>
                     </div>
 
@@ -159,17 +159,17 @@
             <a asp-action="Index"
                class="brew-back-btn">
                 <i class="bi bi-arrow-left"></i>
-                Volver al listado
+                @SharedLocalizer["VolverAlListado"]
             </a>
 
             @if (Model.Estado.Equals(
-                        "Pendiente de pago",
-                        StringComparison.OrdinalIgnoreCase))
+            "Pendiente de pago",
+            StringComparison.OrdinalIgnoreCase))
             {
                 <a asp-action="Pago"
                    asp-route-id="@Model.PedidoId"
                    class="btn btn-success">
-                    Pagar pedido
+                    @SharedLocalizer["OrderDetail_PayOrder"]
                 </a>
             }
         </div>
@@ -182,18 +182,18 @@
     @if (!string.IsNullOrWhiteSpace(mensajeExito))
     {
         <script>
-            document.addEventListener("DOMContentLoaded", () => {
-                const mensaje = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(mensajeExito) );
+                    document.addEventListener("DOMContentLoaded", () => {
+                        const mensaje = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(mensajeExito));
 
-        Swal.fire({
-            title: "¡Pedido registrado!",
-            text: mensaje,
-            icon: "success",
-            confirmButtonText: "Aceptar",
-            confirmButtonColor: "#1f4a2e",
-            allowOutsideClick: false
-        });
-    });
-</script>
+                Swal.fire({
+                    title: "@SharedLocalizer["OrderDetail_SwalRegisteredTitle"].Value",
+                    text: mensaje,
+                    icon: "success",
+                    confirmButtonText: "@SharedLocalizer["AceptarBtn"].Value",
+                    confirmButtonColor: "#1f4a2e",
+                    allowOutsideClick: false
+                });
+            });
+        </script>
     }
 }
