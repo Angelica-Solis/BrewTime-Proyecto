@@ -11,5 +11,8 @@ namespace BrewTime.Application.Services.Interfaces
         Task<ICollection<PedidoListDTO>> GetTodosPedidosAsync(DateTime? fecha, int? estadoId);
         Task<PedidoDetalleDTO?> GetDetallePedidoAsync(int pedidoId);
         Task<ICollection<EstadoPedidoDTO>> GetEstadosAsync();
+
+        Task<PedidoCreateDTO>PrepararRegistroAsync(int usuarioActualId, string rolActual);
+        Task<int>RegistrarDesdeCarritoAsync(PedidoCreateDTO dto, int usuarioActualId, string rolActual);
     }
 }
