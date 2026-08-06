@@ -2,7 +2,7 @@
     const formulario = document.getElementById("pagoForm");
     if (!formulario) return;
 
-    // Validaciones de jQuery en español
+    //validaciones de jQuery 
     if (window.jQuery?.validator) {
         formulario.setAttribute("novalidate", "novalidate");
 

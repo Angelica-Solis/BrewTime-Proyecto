@@ -425,7 +425,7 @@ namespace BrewTime.Application.Services.Implementations
 
         #region Pago del pedido
         //pago del pedido
-        public async Task<PagoViewDTO?> PrepararPagoAsync(int pedidoId, int usuarioActualId, string rolActual)
+        public async Task<PagoFormDTO?> PrepararPagoAsync(int pedidoId, int usuarioActualId, string rolActual)
         {
             var pedido = await _repository.FindByIdAsync(pedidoId);
 
@@ -458,7 +458,7 @@ namespace BrewTime.Application.Services.Implementations
             if (detalle == null)
                 return null;
 
-            return new PagoViewDTO
+            return new PagoFormDTO
             {
                 Pedido = detalle,
 

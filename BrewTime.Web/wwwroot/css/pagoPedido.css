@@ -16,6 +16,7 @@
     --body: "Inter", Arial, sans-serif;
 }
 
+/* Página */
 .pago-page {
     min-height: 100vh;
     background: var(--crema-page);
@@ -69,7 +70,7 @@
     align-items: start;
 }
 
-/* Tarjetas principales */
+/* Tarjetas */
 .pago-card {
     padding: 1.5rem;
     background: var(--crema-card);
@@ -154,9 +155,9 @@
 
 /* Tabla */
 .table-responsive {
+    overflow-x: auto;
     border: 1px solid var(--crema-dark);
     border-radius: 11px;
-    overflow-x: auto;
 }
 
 .pago-table {
@@ -240,6 +241,7 @@
     .pago-metodo input {
         position: absolute;
         opacity: 0;
+        pointer-events: none;
     }
 
     .pago-metodo > span {
@@ -302,6 +304,10 @@
     color: var(--texto);
 }
 
+.pago-campos .form-control {
+    min-height: 44px;
+}
+
     .pago-campos .form-control:focus {
         background: #fffaf1;
         border-color: var(--cafe-claro);
@@ -318,7 +324,7 @@
     font-size: 0.76rem;
 }
 
-/* Caja de vuelto */
+/* Vuelto */
 .pago-vuelto {
     padding: 1rem;
     background: var(--musgo);
@@ -396,17 +402,50 @@
         transform: translateY(-1px);
     }
 
-.text-danger {
+/* Validaciones */
+.pago-card .text-danger,
+.pago-card .field-validation-error,
+.pago-card label.error {
     display: block;
-    margin-top: 0.2rem;
-    color: #a53030 !important;
-    font-size: 0.76rem;
+    margin-top: 0.25rem;
+    color: #b02a37 !important;
+    font-family: var(--body);
+    font-size: 0.74rem !important;
+    font-weight: 500 !important;
+    line-height: 1.3;
+    letter-spacing: normal;
+    text-transform: none;
+}
+
+.pago-card .field-validation-valid {
+    display: none;
+}
+
+.pago-card .input-validation-error,
+.pago-card .form-control.error {
+    border-color: #b02a37 !important;
+    box-shadow: 0 0 0 0.15rem rgba(176, 42, 55, 0.12) !important;
+}
+
+    .pago-card .input-validation-error:focus,
+    .pago-card .form-control.error:focus {
+        border-color: #b02a37 !important;
+        box-shadow: 0 0 0 0.2rem rgba(176, 42, 55, 0.16) !important;
+    }
+
+/* Validación del método de pago */
+#metodoPagoError {
+    margin-top: 0.45rem;
+    color: #b02a37 !important;
+    font-size: 0.74rem !important;
+    font-weight: 500 !important;
 }
 
 [hidden] {
     display: none !important;
 }
 
+/* Responsive */
 @media (max-width: 980px) {
     .pago-layout {
         grid-template-columns: 1fr;

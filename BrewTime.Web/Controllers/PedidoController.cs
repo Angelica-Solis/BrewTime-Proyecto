@@ -187,7 +187,7 @@ namespace BrewTime.Web.Controllers
 
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public async Task<IActionResult> Pago(PagoViewDTO model)
+        public async Task<IActionResult> Pago(PagoFormDTO model)
         {
             PagoPedidoDTO dto = model.Pago;
 
