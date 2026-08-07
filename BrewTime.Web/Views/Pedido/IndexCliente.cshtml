@@ -8,17 +8,17 @@
     <link rel="stylesheet" href="~/css/ListadoPedidoCliente.css" asp-append-version="true" />
 }
 @{
-    ViewData["Title"] = "Mi Historial de Pedidos";
+    ViewData["Title"] = SharedLocalizer["OrderClient_HistoryPrefix"].Value + " " + SharedLocalizer["PedidosWord"].Value;
 }
 <div class="brew-page">
     <section class="brew-hero">
         <div class="brew-hero-inner">
-            <p class="brew-hero-eyebrow">Mi Cuenta</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["OrderClient_MyAccount"]</p>
             <h1 class="brew-titulo">
-                Historial de <em>Pedidos</em>
+                @SharedLocalizer["OrderClient_HistoryPrefix"] <em>@SharedLocalizer["PedidosWord"]</em>
             </h1>
             <p class="brew-subtitulo">
-                Consulte el estado y detalle de sus pedidos anteriores en BrewTime.
+                @SharedLocalizer["OrderClient_HistorySubtitle"]
             </p>
             <div class="brew-hero-line">
                 <span></span>
@@ -29,7 +29,7 @@
     </section>
     <div class="brew-content">
         <div class="brew-count">
-            Total de Pedidos: @Model.Count()
+            @SharedLocalizer["OrderClient_TotalOrders"]: @Model.Count()
         </div>
         @if (Model.Any())
         {
@@ -38,11 +38,11 @@
                 <table class="brew-table">
                     <thead>
                         <tr>
-                            <th># Pedido</th>
-                            <th>Fecha</th>
-                            <th>Entrega</th>
+                            <th>@SharedLocalizer["OrderAdmin_TableNumber"]</th>
+                            <th>@SharedLocalizer["FechaLabel"]</th>
+                            <th>@SharedLocalizer["MetodoEntregaLabel"]</th>
                             <th>Total</th>
-                            <th>Estado</th>
+                            <th>@SharedLocalizer["EstadoLabel"]</th>
                             <th></th>
                         </tr>
                     </thead>
@@ -76,11 +76,16 @@
                                     </span>
                                 </td>
                                 <td>
-                                    <a asp-action="Detail"
-                                       asp-route-id="@pedido.PedidoId"
-                                       class="brew-btn-detalle">
-                                        Ver Detalle
-                                    </a>
+                                    <div class="d-flex gap-2">
+
+                                        <a asp-action="Detail"
+                                           asp-route-id="@pedido.PedidoId"
+                                           class="brew-btn-detalle">
+                                            @SharedLocalizer["VerDetalleBtn"]
+                                        </a>
+
+
+                                    </div>
                                 </td>
                             </tr>
                         }
@@ -91,7 +96,7 @@
         else
         {
             <div class="brew-empty">
-                No tiene pedidos registrados todavía. ¡Anímese a realizar su primer pedido!
+                @SharedLocalizer["OrderClient_NoOrdersYet"]
             </div>
         }
     </div>

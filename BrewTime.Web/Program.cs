@@ -17,6 +17,9 @@ using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
 using BrewTime.Web;
+using BrewTime.Infraestructure.Services;
+using BrewTime.Web.Jobs;
+
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -108,6 +111,18 @@ builder.Services.AddScoped<IServiceChatBot, ServiceChatBot>();
 builder.Services.AddScoped<IOpenRouterService, OpenRouterService>();
 // Singleton porque el PDF se lee y se cachea una sola vez en memoria.
 builder.Services.AddSingleton<IServiceFaqKnowledgeBase, ServiceFaqKnowledgeBase>();
+
+
+//Dependencias para la tarea programada
+builder.Services.AddTransient<IServiceCorreo, ServiceCorreo>();
+
+// Singleton: necesita conservar el historial en memoria entre ejecuciones
+builder.Services.AddSingleton<IHistorialNotificaciones, HistorialNotificacionesEnMemoria>();
+
+// Registrar la tarea programada
+builder.Services.AddHostedService<CombosInconsistentesBackgroundService>();
+
+//fin de dependencias para la tarea programada
 
 // automapper
 builder.Services.AddAutoMapper(config =>

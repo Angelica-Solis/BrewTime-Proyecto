@@ -9,7 +9,8 @@
 }
 
 @{
-    ViewData["Title"] = SharedLocalizer["MyCart"];
+
+    ViewData["Title"] = SharedLocalizer["Cart_TitleMy"].Value + " " + SharedLocalizer["Cart_TitleWord"].Value;
 }
 
 <div class="brew-page">
@@ -25,15 +26,17 @@
 
             <h1 class="brew-titulo">
 
-                @SharedLocalizer["My"]
+                
+                @SharedLocalizer["Cart_TitleMy"]
 
-                <em>@SharedLocalizer["Cart"]</em>
+                <em>@SharedLocalizer["Cart_TitleWord"]</em>
 
             </h1>
 
             <p class="brew-subtitulo">
 
-                @SharedLocalizer["CartSubtitle"]
+        
+                @SharedLocalizer["Cart_Subtitle"]
 
             </p>
 
@@ -51,12 +54,13 @@
                 </span>
 
                 <h3>
-                    @SharedLocalizer["EmptyCart"]
+               
+                    @SharedLocalizer["Cart_EmptyTitle"]
                 </h3>
 
                 <p>
-
-                    @SharedLocalizer["EmptyCartDescription"]
+                 
+                    @SharedLocalizer["Cart_EmptyText"]
 
                 </p>
 
@@ -64,7 +68,7 @@
                    asp-action="Index"
                    class="btn btn-success">
 
-                    @SharedLocalizer["BrowseProducts"]
+                    @SharedLocalizer["Cart_ExploreProducts"]
 
                 </a>
 
@@ -128,6 +132,11 @@
 
                                         <span class="brew-tag brew-tag-estado">
                                             @SharedLocalizer["Active"]
+                                            @(item.EsCombo ? SharedLocalizer["Combos"].Value : SharedLocalizer["Cart_TagBeverages"].Value)
+                                        </span>
+
+                                        <span class="brew-tag brew-tag-estado">
+                                            @SharedLocalizer["Activo"]
                                         </span>
 
                                     </div>
@@ -215,6 +224,7 @@
                         <h3>
 
                             @SharedLocalizer["Summary"]
+                            @SharedLocalizer["Cart_Summary"]
 
                         </h3>
 
@@ -276,18 +286,18 @@
                             @Html.AntiForgeryToken()
 
                             <button class="btn btn-outline-danger w-100 mb-2">
-
                                 @SharedLocalizer["ClearCart"]
+                                @SharedLocalizer["Cart_EmptyCartBtn"]
 
                             </button>
 
                         </form>
 
                         <a asp-controller="Pedido"
-                           asp-action="Confirmar"
+                           asp-action="Registrar"
                            class="btn btn-success w-100">
-
                             @SharedLocalizer["ContinueOrder"]
+                            @SharedLocalizer["Cart_ContinueOrder"]
 
                         </a>
 

@@ -10,5 +10,7 @@ public partial class MetodoEntrega
     public string Nombre { get; set; } = null!;
     public decimal Costo { get; set; }
 
+    public decimal Costo { get; set; }
+
     public virtual ICollection<Pedido> Pedido { get; set; } = new List<Pedido>();
 }

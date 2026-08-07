@@ -1,4 +1,5 @@
-﻿
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 @*  ChatBot BrewTime  *@
 <div id="brew-chatbot">
     <!-- Ventana del Chat -->
@@ -10,9 +11,9 @@
                     <i class="bi bi-cup-hot-fill"></i>
                 </div>
                 <div class="chat-title">
-                    <h5>Asistente BrewTime</h5>
+                    <h5>@SharedLocalizer["Chat_Title"]</h5>
                     <span>
-                        En línea • Café y Bubble
+                        @SharedLocalizer["Chat_Status"]
                     </span>
                 </div>
             </div>
@@ -30,8 +31,7 @@
                     BT
                 </div>
                 <div class="message-content">
-                    Bienvenido a BrewTime.
-                    ¿En qué puedo ayudarte hoy?
+                    @SharedLocalizer["Chat_WelcomeMsg"]
                 </div>
             </div>
             <!-- Mensajes -->
@@ -42,19 +42,19 @@
         <div class="chat-options">
 
             <button type="button" class="quick-question">
-                Combos
+                @SharedLocalizer["Combos"]
             </button>
 
             <button type="button" class="quick-question">
-                Pagos
+                @SharedLocalizer["Chat_QPayments"]
             </button>
 
             <button type="button" class="quick-question">
-                Entrega
+                @SharedLocalizer["Chat_QDelivery"]
             </button>
 
             <button type="button" class="quick-question">
-                Pedido
+                @SharedLocalizer["PedidoWord"]
             </button>
 
         </div>
@@ -62,10 +62,10 @@
         <div class="chat-footer">
             <input type="text"
                    id="txtPregunta"
-                   placeholder="Escriba su pregunta..." />
+                   placeholder="@SharedLocalizer["Chat_InputPlaceholder"].Value" />
             <button type="button"
                     id="btnEnviar" onclick="enviarMensaje()">
-                ENVIAR
+                @SharedLocalizer["Chat_SendBtn"]
             </button>
         </div>
     </div>

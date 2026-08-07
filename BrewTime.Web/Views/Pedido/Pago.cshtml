@@ -1,0 +1,320 @@
+﻿@model BrewTime.Application.DTOs.PagoFormDTO
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
+@{
+    ViewData["Title"] = $"{SharedLocalizer["Pago_TitlePrefix"].Value} #{Model.Pedido.PedidoId}";
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/pagoPedido.css" asp-append-version="true" />
+}
+
+<div class="pago-page">
+    <section class="pago-hero">
+        <p class="pago-eyebrow">@SharedLocalizer["Pago_Eyebrow"]</p>
+        <h1>@SharedLocalizer["Pago_TitlePrefix"] <em>#@Model.Pedido.PedidoId</em></h1>
+        <p>@SharedLocalizer["Pago_Subtitle"]</p>
+    </section>
+
+    <div class="pago-content">
+        <form asp-action="Pago"
+              method="post"
+              id="pagoForm"
+              data-total="@Model.Pedido.Total.ToString(CultureInfo.InvariantCulture)">
+
+            @Html.AntiForgeryToken()
+
+            <input asp-for="Pago.PedidoId" type="hidden" />
+            <input asp-for="Pago.TotalPedido" type="hidden" />
+            <input asp-for="Pago.Vuelto" type="hidden" id="vueltoHidden" />
+
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="pago-layout">
+
+                <!-- FACTURA -->
+                <section class="pago-card">
+                    <div class="pago-card-header">
+                        <div>
+                            <p class="pago-eyebrow">@SharedLocalizer["Pago_InvoiceLabel"]</p>
+                            <h2>@SharedLocalizer["Pago_OrderSummary"]</h2>
+                        </div>
+
+                        <span class="pago-estado">@Model.Pedido.Estado</span>
+                    </div>
+
+                    <div class="pago-info-grid">
+                        <div class="pago-info">
+                            <span>@SharedLocalizer["FechaLabel"]</span>
+                            <strong>
+                                @Model.Pedido.Fecha.ToString("dd/MM/yyyy hh:mm tt")
+                            </strong>
+                        </div>
+
+                        <div class="pago-info">
+                            <span>@SharedLocalizer["ClienteLabel"]</span>
+                            <strong>@Model.Pedido.ClienteNombre</strong>
+                            <small>@Model.Pedido.ClienteCorreo</small>
+                        </div>
+
+                        <div class="pago-info">
+                            <span>@SharedLocalizer["MetodoEntregaLabel"]</span>
+                            <strong>@Model.Pedido.MetodoEntrega</strong>
+                        </div>
+
+                        @if (!string.IsNullOrWhiteSpace(Model.Pedido.Encargado)
+                        && Model.Pedido.Encargado != "Sin asignar"
+                        && Model.Pedido.Encargado != "N/A")
+                        {
+                            <div class="pago-info">
+                                <span>@SharedLocalizer["EncargadoLabel"]</span>
+                                <strong>@Model.Pedido.Encargado</strong>
+                            </div>
+                        }
+                    </div>
+
+                    <div class="table-responsive">
+                        <table class="pago-table">
+                            <thead>
+                                <tr>
+                                    <th>@SharedLocalizer["ProductoComboLabel"]</th>
+                                    <th>@SharedLocalizer["PrecioLabel"]</th>
+                                    <th>@SharedLocalizer["CantidadLabel"]</th>
+                                    <th>Subtotal</th>
+                                    <th>@SharedLocalizer["ImpuestoLabel"]</th>
+                                    <th>Total</th>
+                                </tr>
+                            </thead>
+
+                            <tbody>
+                                @foreach (var item in Model.Pedido.Detalles)
+                                {
+                                    decimal totalLinea = item.Subtotal + item.Impuesto;
+
+                                    <tr>
+                                        <td>
+                                            <strong>@item.Producto</strong>
+
+                                            @if (!string.IsNullOrWhiteSpace(item.Observaciones))
+                                            {
+                                                <small class="observacion">
+                                                    @item.Observaciones
+                                                </small>
+                                            }
+                                        </td>
+
+                                        <td>₡@item.Precio.ToString("N2")</td>
+                                        <td>@item.Cantidad</td>
+                                        <td>₡@item.Subtotal.ToString("N2")</td>
+                                        <td>₡@item.Impuesto.ToString("N2")</td>
+                                        <td><strong>₡@totalLinea.ToString("N2")</strong></td>
+                                    </tr>
+                                }
+                            </tbody>
+                        </table>
+                    </div>
+
+                    <div class="pago-totales">
+                        <div>
+                            <span>@SharedLocalizer["SubtotalSinImpuestosLabel"]</span>
+                            <strong>₡@Model.Pedido.Subtotal.ToString("N2")</strong>
+                        </div>
+
+                        <div>
+                            <span>@SharedLocalizer["ImpuestoLabel"]</span>
+                            <strong>₡@Model.Pedido.Impuesto.ToString("N2")</strong>
+                        </div>
+
+                        <div>
+                            <span>@SharedLocalizer["CostoEnvioLabel"]</span>
+                            <strong>₡@Model.Pedido.CostoEnvio.ToString("N2")</strong>
+                        </div>
+
+                        <div class="pago-total-final">
+                            <span>Total</span>
+                            <strong>₡@Model.Pedido.Total.ToString("N2")</strong>
+                        </div>
+                    </div>
+                </section>
+
+                <!-- MÉTODO DE PAGO -->
+                <aside class="pago-card pago-card-sticky">
+                    <p class="pago-eyebrow">@SharedLocalizer["Pago_PaymentMethodFormTitle"]</p>
+                    <h2>@SharedLocalizer["Pago_SelectMethod"]</h2>
+
+                    <div class="pago-metodos">
+                        @foreach (var metodo in Model.MetodosPago)
+                        {
+                            bool esTarjeta = metodo.Nombre.Contains(
+                            "Tarjeta",
+                            StringComparison.OrdinalIgnoreCase);
+
+                            bool esEfectivo = metodo.Nombre.Equals(
+                            "Efectivo",
+                            StringComparison.OrdinalIgnoreCase);
+
+                            string tipo = esTarjeta
+                            ? "tarjeta"
+                            : esEfectivo
+                            ? "efectivo"
+                            : "otro";
+
+                            <label class="pago-metodo">
+                                <input type="radio"
+                                       asp-for="Pago.MetodoPagoId"
+                                       value="@metodo.MetodoPagoId"
+                                       data-tipo="@tipo" />
+
+                                <span>
+                                    <strong>@metodo.Nombre</strong>
+
+                                </span>
+                            </label>
+                        }
+                    </div>
+
+                    <span asp-validation-for="Pago.MetodoPagoId"
+                          id="metodoPagoError"
+                          class="text-danger"></span>
+
+                    <!-- TARJETA -->
+                    <div id="tarjetaContainer" class="pago-campos" hidden>
+                        <h3>@SharedLocalizer["Pago_CardDataTitle"]</h3>
+
+                        <div class="mb-3">
+                            <label asp-for="Pago.NombreTitular" class="form-label">@SharedLocalizer["Pago_NombreTitular"]</label>
+
+                            <input asp-for="Pago.NombreTitular"
+                                   id="nombreTitular"
+                                   class="form-control"
+                                   maxlength="100"
+                                   autocomplete="cc-name"
+                                   placeholder="Nombre del titular" />
+
+                            <span asp-validation-for="Pago.NombreTitular"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="mb-3">
+                            <label asp-for="Pago.NumeroTarjeta" class="form-label">@SharedLocalizer["Pago_NumeroTarjeta"]</label>
+
+                            <input asp-for="Pago.NumeroTarjeta"
+                                   id="numeroTarjeta"
+                                   class="form-control"
+                                   maxlength="19"
+                                   inputmode="numeric"
+                                   autocomplete="cc-number"
+                                   placeholder="Solo números" />
+
+                            <span asp-validation-for="Pago.NumeroTarjeta"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="pago-grid-dos">
+                            <div>
+                                <label asp-for="Pago.FechaVencimiento"
+                                       class="form-label">
+                                    @SharedLocalizer["Pago_FechaVencimiento"]
+                                </label>
+
+                                <input asp-for="Pago.FechaVencimiento"
+                                       id="fechaVencimiento"
+                                       class="form-control"
+                                       maxlength="5"
+                                       inputmode="numeric"
+                                       placeholder="MM/AA" />
+
+                                <span asp-validation-for="Pago.FechaVencimiento"
+                                      class="text-danger">
+                                </span>
+                            </div>
+
+                            <div>
+                                <label asp-for="Pago.CodigoSeguridad"
+                                       class="form-label">
+                                    @SharedLocalizer["Pago_CodigoSeguridad"]
+                                </label>
+
+                                <input asp-for="Pago.CodigoSeguridad"
+                                       id="codigoSeguridad"
+                                       class="form-control"
+                                       maxlength="4"
+                                       inputmode="numeric"
+                                       placeholder="CVV" />
+
+                                <span asp-validation-for="Pago.CodigoSeguridad"
+                                      class="text-danger">
+                                </span>
+                            </div>
+                        </div>
+
+                        <p class="pago-seguridad">
+                            @SharedLocalizer["Pago_CardSecurityNote"]
+                        </p>
+                    </div>
+
+                    <!-- EFECTIVO -->
+                    <div id="efectivoContainer" class="pago-campos" hidden>
+                        <h3>@SharedLocalizer["Pago_CashTitle"]</h3>
+
+                        <div class="mb-3">
+                            <label asp-for="Pago.MontoPagado" class="form-label">@SharedLocalizer["Pago_MontoPagado"]</label>
+
+                            <div class="input-group">
+                                <span class="input-group-text">₡</span>
+
+                                <input asp-for="Pago.MontoPagado"
+                                       id="montoPagado"
+                                       class="form-control"
+                                       type="number"
+                                       min="0.01"
+                                       step="0.01"
+                                       placeholder="0.00" />
+                            </div>
+
+                            <span asp-validation-for="Pago.MontoPagado"
+                                  class="text-danger">
+                            </span>
+                        </div>
+
+                        <div class="pago-vuelto">
+                            <span>@SharedLocalizer["Pago_Change"]</span>
+                            <strong id="vueltoTexto">₡0,00</strong>
+                            <small id="mensajeMonto">
+                                @SharedLocalizer["Pago_EnterAmountHint"]
+                            </small>
+                        </div>
+                    </div>
+
+                    <div class="pago-total-lateral">
+                        <span>@SharedLocalizer["Pago_TotalToPay"]</span>
+                        <strong>₡@Model.Pedido.Total.ToString("N2")</strong>
+                    </div>
+
+                    <button type="submit" class="pago-btn-confirmar">
+                        @SharedLocalizer["Pago_ConfirmBtn"]
+                    </button>
+
+                    <a asp-action="Detail"
+                       asp-route-id="@Model.Pedido.PedidoId"
+                       class="pago-btn-volver">
+                        @SharedLocalizer["Pago_BackToDetail"]
+                    </a>
+                </aside>
+
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+
+    <script src="~/js/pagoPedido.js"
+            asp-append-version="true">
+    </script>
+}

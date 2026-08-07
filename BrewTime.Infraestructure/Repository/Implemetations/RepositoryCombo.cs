@@ -66,5 +66,16 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                 await _context.SaveChangesAsync();
             }
         }
+
+        //para la tarea programada
+        public async Task<ICollection<Combo>> ListActivosConProductosEIngredientesAsync()
+        {
+            return await _context.Set<Combo>()
+                .Where(c => c.Activo == true)
+                .Include(c => c.ComboProducto)
+                    .ThenInclude(cp => cp.Producto)
+                        .ThenInclude(p => p.Ingrediente)
+                .ToListAsync();
+        }
     }
 }

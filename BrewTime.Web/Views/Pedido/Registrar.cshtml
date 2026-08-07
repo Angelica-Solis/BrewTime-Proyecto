@@ -1,0 +1,241 @@
+﻿@model BrewTime.Application.DTOs.PedidoCreateDTO
+@using System.Globalization
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
+@{
+    ViewData["Title"] = SharedLocalizer["Reg_TitlePrefix"].Value + " " + SharedLocalizer["PedidoWord"].Value;
+}
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/carrito.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/registrarPedido.css" asp-append-version="true" />
+}
+
+<div class="brew-page">
+    <section class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">@SharedLocalizer["Reg_Eyebrow"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["Reg_TitlePrefix"] <em>@SharedLocalizer["PedidoWord"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["Reg_Subtitle"]</p>
+        </div>
+    </section>
+
+    <div class="brew-content">
+        <form asp-action="Registrar"
+              method="post"
+              id="pedidoForm"
+              data-subtotal="@Model.Subtotal.ToString(CultureInfo.InvariantCulture)"
+              data-impuesto="@Model.Impuesto.ToString(CultureInfo.InvariantCulture)">
+
+            @Html.AntiForgeryToken()
+            <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>
+
+            <div class="pedido-form-card">
+                <h2 class="pedido-section-title">@SharedLocalizer["Reg_GeneralInfoTitle"]</h2>
+
+                <div class="pedido-info-grid">
+                    <div>
+                        <div class="pedido-info-label">@SharedLocalizer["FechaLabel"]</div>
+                        <div class="pedido-info-value">@Model.Fecha.ToString("dd/MM/yyyy hh:mm tt")</div>
+                    </div>
+
+                    <div>
+                        <div class="pedido-info-label">@SharedLocalizer["EstadoLabel"]</div>
+                        <div class="pedido-info-value">@Model.EstadoNombre</div>
+                    </div>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.EncargadoNombre))
+                    {
+                        <div>
+                            <div class="pedido-info-label">@SharedLocalizer["EncargadoLabel"]</div>
+                            <div class="pedido-info-value">@Model.EncargadoNombre</div>
+                        </div>
+                    }
+                </div>
+
+                <hr class="my-4" />
+
+                @if (Model.EsClienteLogueado)
+                {
+                    <input asp-for="ClienteId" type="hidden" />
+
+                    <div class="pedido-info-grid">
+                        <div>
+                            <div class="pedido-info-label">@SharedLocalizer["ClienteLabel"]</div>
+                            <div class="pedido-info-value">@Model.ClienteNombre</div>
+                        </div>
+
+                        <div>
+                            <div class="pedido-info-label">@SharedLocalizer["CorreoLabel"]</div>
+                            <div class="pedido-info-value">@Model.ClienteCorreo</div>
+                        </div>
+                    </div>
+                }
+                else
+                {
+                    <div class="mb-3">
+                        <label asp-for="ClienteId" class="form-label fw-semibold">@SharedLocalizer["ClienteLabel"]</label>
+
+                        <select asp-for="ClienteId" id="clienteSelect" class="form-select">
+                            <option value="">@SharedLocalizer["Reg_SelectClient"]</option>
+
+                            @foreach (var cliente in Model.ClientesDisponibles)
+                            {
+                                <option value="@cliente.UsuarioId"
+                                        data-nombre="@($"{cliente.Nombre} {cliente.Apellidos}")"
+                                        data-correo="@cliente.Correo"
+                                        data-telefono="@cliente.Telefono">
+                                    @cliente.Nombre @cliente.Apellidos
+                                </option>
+                            }
+                        </select>
+
+                        <span asp-validation-for="ClienteId" class="text-danger"></span>
+                    </div>
+
+                    <div id="clienteInfo" class="pedido-client-info">
+                        <div class="pedido-info-grid">
+                            <div>
+                                <div class="pedido-info-label">@SharedLocalizer["NombreLabel"]</div>
+                                <div id="clienteNombre" class="pedido-info-value">@SharedLocalizer["Reg_SelectClient"]</div>
+                            </div>
+
+                            <div>
+                                <div class="pedido-info-label">@SharedLocalizer["CorreoLabel"]</div>
+                                <div id="clienteCorreo" class="pedido-info-value">—</div>
+                            </div>
+
+                            <div>
+                                <div class="pedido-info-label">@SharedLocalizer["TelefonoLabel"]</div>
+                                <div id="clienteTelefono" class="pedido-info-value">—</div>
+                            </div>
+                        </div>
+                    </div>
+                }
+
+                <hr class="my-4" />
+
+                <div class="mb-3">
+                    <label asp-for="MetodoEntregaId" class="form-label fw-semibold">@SharedLocalizer["MetodoEntregaLabel"]</label>
+
+                    <select asp-for="MetodoEntregaId" id="metodoEntrega" class="form-select">
+                        <option value="">@SharedLocalizer["Reg_SelectDeliveryMethod"]</option>
+
+                        @foreach (var metodo in Model.MetodosEntrega)
+                        {
+                            bool domicilio = metodo.Nombre.Contains(
+                            "domicilio",
+                            StringComparison.OrdinalIgnoreCase);
+
+                            <option value="@metodo.MetodoId"
+                                    data-costo="@metodo.Costo.ToString(CultureInfo.InvariantCulture)"
+                                    data-domicilio="@domicilio.ToString().ToLower()">
+                                @metodo.Nombre — ₡@metodo.Costo.ToString("N2")
+                            </option>
+                        }
+                    </select>
+
+                    <span asp-validation-for="MetodoEntregaId" class="text-danger"></span>
+                </div>
+
+                <div id="direccionContainer" class="mb-3" hidden>
+                    <label asp-for="DireccionEntrega" class="form-label fw-semibold">@SharedLocalizer["Reg_DireccionEntregaLabel"]</label>
+
+                    <textarea asp-for="DireccionEntrega"
+                              id="direccionEntrega"
+                              class="form-control"
+                              rows="3"
+                              placeholder="@SharedLocalizer["Reg_AddressPlaceholder"].Value"></textarea>
+
+                    <span asp-validation-for="DireccionEntrega" class="text-danger"></span>
+                </div>
+            </div>
+
+            <div class="pedido-form-card">
+                <h2 class="pedido-section-title">@SharedLocalizer["Reg_OrderDetailTitle"]</h2>
+
+                <div class="table-responsive">
+                    <table class="pedido-table">
+                        <thead>
+                            <tr>
+                                <th>@SharedLocalizer["ProductoComboLabel"]</th>
+                                <th>@SharedLocalizer["PrecioLabel"]</th>
+                                <th>@SharedLocalizer["CantidadLabel"]</th>
+                                <th>Subtotal</th>
+                                <th>@SharedLocalizer["ImpuestoLabel"]</th>
+                                <th>@SharedLocalizer["ObservacionesLabel"]</th>
+                            </tr>
+                        </thead>
+
+                        <tbody>
+                            @for (int i = 0; i < Model.Detalles.Count; i++)
+                            {
+                                <tr>
+                                    <td>
+                                        <strong>@Model.Detalles[i].Nombre</strong>
+                                        <div class="small text-muted">@Model.Detalles[i].Tipo</div>
+                                        <input asp-for="Detalles[i].CarritoId" type="hidden" />
+                                    </td>
+
+                                    <td>₡@Model.Detalles[i].PrecioUnitario.ToString("N2")</td>
+                                    <td>@Model.Detalles[i].Cantidad</td>
+                                    <td>₡@Model.Detalles[i].Subtotal.ToString("N2")</td>
+                                    <td>₡@Model.Detalles[i].Impuesto.ToString("N2")</td>
+
+                                    <td>
+                                        <input asp-for="Detalles[i].Observaciones"
+                                               class="form-control"
+                                               placeholder="Ej.: sin azúcar" />
+
+                                        <span asp-validation-for="Detalles[i].Observaciones"
+                                              class="text-danger"></span>
+                                    </td>
+                                </tr>
+                            }
+                        </tbody>
+                    </table>
+                </div>
+
+                <div class="pedido-total-box">
+                    <div class="pedido-total-row">
+                        <span>@SharedLocalizer["SubtotalSinImpuestosLabel"]</span>
+                        <strong>₡@Model.Subtotal.ToString("N2")</strong>
+                    </div>
+
+                    <div class="pedido-total-row">
+                        <span>@SharedLocalizer["ImpuestoLabel"]</span>
+                        <strong>₡@Model.Impuesto.ToString("N2")</strong>
+                    </div>
+
+                    <div class="pedido-total-row">
+                        <span>@SharedLocalizer["CostoEnvioLabel"]</span>
+                        <strong id="costoEnvioTexto">₡@Model.CostoEnvio.ToString("N2")</strong>
+                    </div>
+
+                    <div class="pedido-total-row pedido-total-final">
+                        <span>Total</span>
+                        <span id="totalPedidoTexto">₡@Model.Total.ToString("N2")</span>
+                    </div>
+                </div>
+
+                <div class="pedido-actions">
+                    <a asp-controller="Carrito"
+                       asp-action="Index"
+                       class="pedido-btn-secondary">
+                        @SharedLocalizer["Reg_BackToCart"]
+                    </a>
+
+                    <button type="submit" class="pedido-btn-primary">
+                        @SharedLocalizer["Reg_RegisterOrderBtn"]
+                    </button>
+                </div>
+            </div>
+        </form>
+    </div>
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+    <script src="~/js/registrarPedido.js" asp-append-version="true"></script>
+}
