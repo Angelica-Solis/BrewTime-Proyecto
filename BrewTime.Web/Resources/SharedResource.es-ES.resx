@@ -1327,4 +1327,16 @@
   <data name="SwalConfirmActivate" xml:space="preserve">
     <value>Sí, activar</value>
   </data>
+  <data name="MyCart" xml:space="preserve">
+    <value>Mi Carrito</value>
+  </data>
+  <data name="My" xml:space="preserve">
+    <value>Mi</value>
+  </data>
+  <data name="Cart" xml:space="preserve">
+    <value>Carrito</value>
+  </data>
+  <data name="CartSubtitle" xml:space="preserve">
+    <value>Revise los productos antes de realizar el pedido.</value>
+  </data>
 </root>

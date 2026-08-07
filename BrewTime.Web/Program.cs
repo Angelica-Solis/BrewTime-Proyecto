@@ -16,6 +16,7 @@ using Microsoft.AspNetCore.Mvc.Razor;
 using Microsoft.AspNetCore.Builder;
 using Microsoft.AspNetCore.Authentication.Cookies;
 using Microsoft.AspNetCore.Authentication;
+using BrewTime.Web;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -52,13 +53,17 @@ builder.Services.AddAuthentication(CookieAuthenticationDefaults.AuthenticationSc
         options.SlidingExpiration = true;
     });
 
-builder.Services.AddControllersWithViews()
+builder.Services
+    .AddControllersWithViews()
     .AddViewLocalization(LanguageViewLocationExpanderFormat.Suffix)
     .AddDataAnnotationsLocalization();
 
+builder.Services.AddSingleton<SharedResource>();
+
+
 builder.Services.Configure<RequestLocalizationOptions>(options =>
 {
-    var supportedCultures = new[] { "en-US", "es-ES" };
+    var supportedCultures = new[] { "es-ES", "en-US" };
     options.SetDefaultCulture(supportedCultures[0])
         .AddSupportedCultures(supportedCultures)
         .AddSupportedUICultures(supportedCultures);
@@ -133,7 +138,11 @@ var app = builder.Build();
 // configuracion pipeline
 
 // middleware de idiomas (Debe ir antes del enrutamiento)
-app.UseRequestLocalization();
+var localizationOptions =
+    app.Services.GetRequiredService<
+        Microsoft.Extensions.Options.IOptions<RequestLocalizationOptions>>();
+
+app.UseRequestLocalization(localizationOptions.Value);
 
 if (!app.Environment.IsDevelopment())
 {

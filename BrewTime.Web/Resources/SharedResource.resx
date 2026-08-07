@@ -1326,4 +1326,16 @@
   <data name="SwalConfirmActivate" xml:space="preserve">
     <value>SwalConfirmActivate</value>
   </data>
+  <data name="MyCart" xml:space="preserve">
+    <value>MyCart</value>
+  </data>
+  <data name="My" xml:space="preserve">
+    <value>My</value>
+  </data>
+  <data name="Cart" xml:space="preserve">
+    <value>Cart</value>
+  </data>
+  <data name="CartSubtitle" xml:space="preserve">
+    <value>CartSubtitle</value>
+  </data>
 </root>

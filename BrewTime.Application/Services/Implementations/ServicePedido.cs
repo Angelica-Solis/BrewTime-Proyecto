@@ -74,9 +74,11 @@ namespace BrewTime.Application.Services.Implementations
 
                 Impuesto = pedido.Impuesto,
 
-                CostoEnvio = pedido.CostoEnvio,
+                CostoEnvio = pedido.MetodoEntrega.Costo,
 
-                Total = pedido.Total,
+                Total = pedido.Subtotal
+                  + pedido.Impuesto
+                  + pedido.MetodoEntrega.Costo,
 
                 Detalles = new List<PedidoDetalleLineaDTO>()
             };

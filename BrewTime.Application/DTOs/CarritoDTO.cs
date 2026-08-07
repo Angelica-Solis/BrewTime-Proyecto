@@ -6,7 +6,7 @@ using System.Threading.Tasks;
 
 namespace BrewTime.Application.DTOs
 {
-    public record CarritoDTO
+    public class CarritoDTO
     {
         public List<CarritoItemDTO> Items { get; set; } = new();
 
