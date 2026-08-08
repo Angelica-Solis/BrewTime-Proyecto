@@ -1,0 +1,414 @@
+﻿/* ==========================================================================
+   BREW TIME · COCINA
+   Hoja de estilos desde cero (no depende de Bootstrap para la apariencia)
+   ========================================================================== */
+
+:root {
+    --bt-green-900: #14231a;
+    --bt-green-800: #1b2f21;
+    --bt-green-700: #24402a;
+    --bt-cream-bg: #f1e4cf;
+    --bt-cream-card: #f7ecd9;
+    --bt-white: #ffffff;
+    --bt-gold: #cf9f5f;
+    --bt-gold-light: #e3c088;
+    --bt-orange: #c97b4a;
+    --bt-text-dark: #2a2a1f;
+    --bt-text-muted: #857a67;
+    --bt-border: #e3d3b4;
+    --bt-pendiente-bg: #ece2cd;
+    --bt-pendiente-fg: #7d7261;
+    --bt-proceso-bg: #f6d998;
+    --bt-proceso-fg: #7a5a12;
+    --bt-listo-bg: #d9ead4;
+    --bt-listo-fg: #3c6b3f;
+    --bt-radius-lg: 18px;
+    --bt-radius-md: 12px;
+    --bt-radius-sm: 8px;
+    --bt-shadow: 0 12px 30px rgba(20, 35, 26, 0.10);
+    --bt-shadow-sm: 0 4px 12px rgba(20, 35, 26, 0.08);
+    --bt-font-heading: "Playfair Display", Georgia, "Times New Roman", serif;
+    --bt-font-body: "Poppins", -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+}
+
+/* ---------- Base de la página ---------- */
+
+.bt-page {
+    background-color: var(--bt-cream-bg);
+    background-image: radial-gradient(rgba(20, 35, 26, 0.05) 1px, transparent 1px);
+    background-size: 22px 22px;
+    min-height: 100vh;
+    font-family: var(--bt-font-body);
+    color: var(--bt-text-dark);
+    padding-bottom: 64px;
+}
+
+.bt-container {
+    max-width: 1240px;
+    margin: 0 auto;
+    padding: 0 32px;
+}
+
+/* ---------- Hero ---------- */
+
+.bt-hero {
+    background: radial-gradient(ellipse at top left, #24402a 0%, #14231a 65%), linear-gradient(135deg, #1b2f21, #0f1a12);
+    color: var(--bt-white);
+    padding: 72px 32px 56px;
+    margin-bottom: 40px;
+}
+
+.bt-hero__kicker {
+    font-family: var(--bt-font-body);
+    text-transform: uppercase;
+    letter-spacing: 3px;
+    font-size: 0.8rem;
+    font-weight: 700;
+    color: var(--bt-gold-light);
+    margin: 0 0 14px;
+}
+
+.bt-hero__title {
+    font-family: var(--bt-font-heading);
+    font-weight: 700;
+    font-size: clamp(2.2rem, 4vw, 3.2rem);
+    margin: 0;
+    line-height: 1.1;
+}
+
+.bt-hero__accent {
+    font-style: italic;
+    font-weight: 500;
+    color: var(--bt-gold-light);
+}
+
+.bt-hero__subtitle {
+    font-size: 1.05rem;
+    color: rgba(255, 255, 255, 0.72);
+    margin: 12px 0 0;
+}
+
+.bt-hero__divider {
+    display: flex;
+    align-items: center;
+    gap: 16px;
+    margin-top: 28px;
+    max-width: 420px;
+}
+
+.bt-hero__divider-line {
+    flex: 1;
+    height: 1px;
+    background: rgba(230, 197, 140, 0.4);
+}
+
+.bt-hero__divider-label {
+    font-size: 0.75rem;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    color: var(--bt-gold);
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+/* ---------- Estado vacío ---------- */
+
+.bt-empty-page {
+    background: var(--bt-cream-card);
+    border: 1px solid var(--bt-border);
+    border-radius: var(--bt-radius-lg);
+    text-align: center;
+    padding: 48px 24px;
+    box-shadow: var(--bt-shadow-sm);
+}
+
+.bt-empty-page__title {
+    font-family: var(--bt-font-heading);
+    color: var(--bt-green-900);
+    font-size: 1.4rem;
+    margin: 0 0 8px;
+}
+
+.bt-empty-page__text {
+    color: var(--bt-text-muted);
+    margin: 0;
+}
+
+.bt-count {
+    color: var(--bt-text-muted);
+    font-size: 0.95rem;
+    margin: 0 0 24px;
+}
+
+/* ---------- Tarjeta de pedido ---------- */
+
+.bt-pedido-card {
+    position: relative;
+    background: var(--bt-cream-card);
+    border-radius: var(--bt-radius-lg);
+    overflow: hidden;
+    box-shadow: var(--bt-shadow);
+    margin-bottom: 36px;
+    border: 1px solid var(--bt-border);
+}
+
+    .bt-pedido-card::before {
+        content: "";
+        position: absolute;
+        top: 0;
+        left: 0;
+        right: 0;
+        height: 4px;
+        background: linear-gradient(90deg, var(--bt-orange), var(--bt-green-700));
+        z-index: 2;
+    }
+
+.bt-pedido-header {
+    background: linear-gradient(135deg, var(--bt-green-800), var(--bt-green-900));
+    color: var(--bt-white);
+    padding: 20px 28px;
+    margin-top: 4px;
+}
+
+.bt-pedido-header__row {
+    display: flex;
+    flex-wrap: wrap;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.bt-pedido-header__id {
+    font-family: var(--bt-font-heading);
+    font-weight: 700;
+    font-size: 1.15rem;
+    color: var(--bt-gold-light);
+}
+
+.bt-pedido-header__cliente {
+    font-size: 0.95rem;
+}
+
+.bt-pedido-header__label {
+    color: var(--bt-gold-light);
+    font-weight: 600;
+    margin-right: 6px;
+}
+
+.bt-pedido-header__fecha {
+    font-size: 0.82rem;
+    color: rgba(255, 255, 255, 0.65);
+}
+
+.bt-pedido-body {
+    padding: 28px;
+}
+
+/* ---------- Columnas (Comida / Café / Bubble Tea) ---------- */
+
+.bt-columns {
+    display: grid;
+    grid-template-columns: repeat(3, 1fr);
+    gap: 20px;
+}
+
+@media (max-width: 992px) {
+    .bt-columns {
+        grid-template-columns: 1fr;
+    }
+}
+
+.bt-group {
+    background: var(--bt-white);
+    border: 1px solid var(--bt-border);
+    border-radius: var(--bt-radius-md);
+    padding: 22px;
+    height: 100%;
+}
+
+.bt-group__title {
+    font-family: var(--bt-font-heading);
+    text-align: center;
+    font-size: 1.25rem;
+    color: var(--bt-green-900);
+    margin: 0 0 20px;
+    position: relative;
+    padding-bottom: 12px;
+}
+
+    .bt-group__title::after {
+        content: "";
+        position: absolute;
+        bottom: 0;
+        left: 50%;
+        transform: translateX(-50%);
+        width: 44px;
+        height: 2px;
+        background: var(--bt-gold);
+    }
+
+.bt-empty {
+    text-align: center;
+    color: var(--bt-text-muted);
+    font-style: italic;
+    padding: 16px 0;
+    margin: 0;
+}
+
+.bt-empty--inline {
+    display: block;
+    text-align: left;
+    padding: 4px 0 0;
+}
+
+/* ---------- Tarjeta de producto ---------- */
+
+.bt-item {
+    background: var(--bt-cream-bg);
+    border: 1px solid var(--bt-border);
+    border-radius: var(--bt-radius-sm);
+    padding: 16px 18px;
+    margin-bottom: 14px;
+}
+
+    .bt-item:last-child {
+        margin-bottom: 0;
+    }
+
+.bt-item__header {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 10px;
+}
+
+.bt-item__name {
+    font-weight: 600;
+    color: var(--bt-text-dark);
+}
+
+.bt-badge-qty {
+    background: var(--bt-green-900);
+    color: var(--bt-white);
+    padding: 3px 12px;
+    border-radius: 20px;
+    font-size: 0.75rem;
+    font-weight: 700;
+    white-space: nowrap;
+}
+
+.bt-combo {
+    display: block;
+    color: var(--bt-text-muted);
+    font-size: 0.78rem;
+    margin-top: 6px;
+}
+
+.bt-divider {
+    border: none;
+    border-top: 1px solid var(--bt-border);
+    margin: 14px 0;
+}
+
+.bt-stations-title {
+    display: block;
+    text-transform: uppercase;
+    letter-spacing: 0.5px;
+    font-size: 0.78rem;
+    font-weight: 700;
+    color: var(--bt-green-800);
+    margin-bottom: 10px;
+}
+
+.bt-station-list {
+    list-style: decimal;
+    padding-left: 20px;
+    margin: 0;
+}
+
+.bt-station {
+    margin-bottom: 12px;
+}
+
+    .bt-station:last-child {
+        margin-bottom: 0;
+    }
+
+.bt-station__name {
+    font-weight: 600;
+    color: var(--bt-text-dark);
+    font-size: 0.92rem;
+}
+
+.bt-station__time {
+    color: var(--bt-text-muted);
+    font-size: 0.78rem;
+}
+
+/* ---------- Badges de estado ---------- */
+
+.bt-status {
+    display: inline-flex;
+    align-items: center;
+    gap: 6px;
+    padding: 4px 12px;
+    border-radius: 20px;
+    font-size: 0.72rem;
+    font-weight: 700;
+    margin-top: 6px;
+}
+
+    .bt-status::before {
+        content: "";
+        width: 6px;
+        height: 6px;
+        border-radius: 50%;
+        background: currentColor;
+    }
+
+.bt-status--pendiente {
+    background: var(--bt-pendiente-bg);
+    color: var(--bt-pendiente-fg);
+}
+
+.bt-status--proceso {
+    background: var(--bt-proceso-bg);
+    color: var(--bt-proceso-fg);
+}
+
+.bt-status--listo {
+    background: var(--bt-listo-bg);
+    color: var(--bt-listo-fg);
+}
+
+/* ---------- Acciones ---------- */
+
+.bt-actions {
+    display: flex;
+    justify-content: flex-end;
+    margin-top: 28px;
+}
+
+.bt-btn {
+    background: var(--bt-green-900);
+    color: var(--bt-white);
+    border: none;
+    padding: 13px 30px;
+    border-radius: var(--bt-radius-sm);
+    font-family: var(--bt-font-body);
+    font-weight: 700;
+    letter-spacing: 0.5px;
+    text-transform: uppercase;
+    font-size: 0.82rem;
+    cursor: pointer;
+    transition: background-color 0.2s ease, transform 0.2s ease;
+}
+
+    .bt-btn:hover {
+        background: var(--bt-green-700);
+        transform: translateY(-2px);
+    }
+
+    .bt-btn:active {
+        transform: translateY(0);
+    }

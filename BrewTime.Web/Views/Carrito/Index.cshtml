@@ -131,13 +131,12 @@
                                         </span>
 
                                         <span class="brew-tag brew-tag-estado">
-                                            @SharedLocalizer["Active"]
-                                            @(item.EsCombo ? SharedLocalizer["Combos"].Value : SharedLocalizer["Cart_TagBeverages"].Value)
+                                            @(item.EsCombo
+                                                ? SharedLocalizer["ActiveCombo"]
+                                                : SharedLocalizer["ActiveBeverage"])
                                         </span>
 
-                                        <span class="brew-tag brew-tag-estado">
-                                            @SharedLocalizer["Activo"]
-                                        </span>
+                                     
 
                                     </div>
 
@@ -223,7 +222,7 @@
 
                         <h3>
 
-                            @SharedLocalizer["Summary"]
+                     
                             @SharedLocalizer["Cart_Summary"]
 
                         </h3>
@@ -287,7 +286,7 @@
 
                             <button class="btn btn-outline-danger w-100 mb-2">
                                 @SharedLocalizer["ClearCart"]
-                                @SharedLocalizer["Cart_EmptyCartBtn"]
+                              
 
                             </button>
 
@@ -296,7 +295,7 @@
                         <a asp-controller="Pedido"
                            asp-action="Registrar"
                            class="btn btn-success w-100">
-                            @SharedLocalizer["ContinueOrder"]
+                       
                             @SharedLocalizer["Cart_ContinueOrder"]
 
                         </a>

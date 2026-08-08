@@ -142,6 +142,15 @@
                                     <a class="brew-nav-link nav-link" asp-controller="Usuario" asp-action="Index">@SharedLocalizer["Usuarios"]</a>
                                 </li>
                             }
+                            @if (User.IsInRole("Cocina") || User.IsInRole("Administrador"))
+                            {
+                                <li class="nav-item">
+                                    <a class="brew-nav-link nav-link" asp-controller="Cocina" asp-action="Index">
+                                        @SharedLocalizer["Cocina"]
+                                        
+                                    </a>
+                                </li>
+                            }
                         }
                         else
                         {

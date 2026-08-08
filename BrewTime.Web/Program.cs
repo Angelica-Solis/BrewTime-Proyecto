@@ -86,6 +86,7 @@ builder.Services.AddTransient<IRepositoryEstacionCocina, RepositoryEstacionCocin
 builder.Services.AddTransient<IRepositoryIngrediente, RepositoryIngrediente>();
 builder.Services.AddTransient<IRepositoryCarrito, RepositoryCarrito>();
 builder.Services.AddTransient<IRepositoryPedido, RepositoryPedido>();
+builder.Services.AddTransient<IRepositoryCocina, RepositoryCocina>();
 
 
 // dependencias del services 
@@ -103,6 +104,7 @@ builder.Services.AddTransient<IServiceIngrediente, ServiceIngrediente>();
 builder.Services.AddTransient<IServiceAutenticacion, ServiceAutenticacion>();
 builder.Services.AddTransient<IServiceCarrito, ServiceCarrito>();
 builder.Services.AddTransient<IServicePedido, ServicePedido>();
+builder.Services.AddTransient<IServiceCocina, ServiceCocina>();
 
 // CHATBOT 
 builder.Services.Configure<OpenRouterSettings>(builder.Configuration.GetSection("OpenRouter"));
