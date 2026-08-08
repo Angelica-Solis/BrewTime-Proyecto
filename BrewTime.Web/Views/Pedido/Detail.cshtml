@@ -5,6 +5,7 @@
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/usuario.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/pedidoDetalle.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/tracking.css" asp-append-version="true" />
 }
 
 @{
@@ -30,6 +31,78 @@
     </section>
 
     <div class="brew-content">
+        @{
+            int currentStep = 0;
+            string estadoTracker = Model.Estado.ToLower();
+            if (estadoTracker.Contains("aceptad")) currentStep = 1;
+            else if (estadoTracker.Contains("prepar")) currentStep = 2;
+            else if (estadoTracker.Contains("camino")) currentStep = 3;
+            else if (estadoTracker.Contains("entreg")) currentStep = 4;
+        }
+
+        <!-- Stepper de Seguimiento de Pedido -->
+        <div class="tracking-stepper-container">
+            <h2 class="tracking-stepper-title">
+                <span class="polling-loader" id="pollingLoader"></span>
+                @SharedLocalizer["Tracking_OrderTracker"]
+            </h2>
+            
+            <div class="tracking-stepper" id="orderStepper">
+                <div class="tracking-progress-line" id="progressLine"></div>
+                
+                <!-- Paso 1: Pendiente de Pago -->
+                <div class="step-item @(currentStep >= 0 ? (currentStep == 0 ? "active" : "completed") : "")" data-step="0">
+                    <div class="step-icon">
+                        <i class="bi bi-wallet2"></i>
+                    </div>
+                    <div class="step-label">@SharedLocalizer["Tracking_PendingPayment"]</div>
+                </div>
+
+                <!-- Paso 2: Aceptada -->
+                <div class="step-item @(currentStep >= 1 ? (currentStep == 1 ? "active" : "completed") : "")" data-step="1">
+                    <div class="step-icon">
+                        <i class="bi bi-check-circle"></i>
+                    </div>
+                    <div class="step-label">@SharedLocalizer["Tracking_Accepted"]</div>
+                </div>
+
+                <!-- Paso 3: En preparación -->
+                <div class="step-item @(currentStep >= 2 ? (currentStep == 2 ? "active" : "completed") : "")" data-step="2">
+                    <div class="step-icon">
+                        <i class="bi bi-cup-hot"></i>
+                    </div>
+                    <div class="step-label">@SharedLocalizer["Tracking_Preparing"]</div>
+                </div>
+
+                <!-- Paso 4: En camino / Listo -->
+                <div class="step-item @(currentStep >= 3 ? (currentStep == 3 ? "active" : "completed") : "")" data-step="3">
+                    <div class="step-icon">
+                        @if (Model.MetodoEntrega.Contains("Recogida", StringComparison.OrdinalIgnoreCase))
+                        {
+                            <i class="bi bi-bag-check" id="step4Icon"></i>
+                        }
+                        else
+                        {
+                            <i class="bi bi-truck" id="step4Icon"></i>
+                        }
+                    </div>
+                    <div class="step-label" id="step4Label">
+                        @(Model.MetodoEntrega.Contains("Recogida", StringComparison.OrdinalIgnoreCase) 
+                            ? SharedLocalizer["Tracking_ReadyPickup"].Value 
+                            : SharedLocalizer["Tracking_OnTheWay"].Value)
+                    </div>
+                </div>
+
+                <!-- Paso 5: Entregada -->
+                <div class="step-item @(currentStep >= 4 ? (currentStep == 4 ? "active" : "completed") : "")" data-step="4">
+                    <div class="step-icon">
+                        <i class="bi bi-gift"></i>
+                    </div>
+                    <div class="step-label">@SharedLocalizer["Tracking_Delivered"]</div>
+                </div>
+            </div>
+        </div>
+
         <div class="brew-detail-card">
             <!-- Header -->
             <div class="brew-detail-header">
@@ -182,8 +255,8 @@
     @if (!string.IsNullOrWhiteSpace(mensajeExito))
     {
         <script>
-                    document.addEventListener("DOMContentLoaded", () => {
-                        const mensaje = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(mensajeExito));
+            document.addEventListener("DOMContentLoaded", () => {
+                const mensaje = @Html.Raw(System.Text.Json.JsonSerializer.Serialize(mensajeExito));
 
                 Swal.fire({
                     title: "@SharedLocalizer["OrderDetail_SwalRegisteredTitle"].Value",
@@ -196,4 +269,130 @@
             });
         </script>
     }
+
+    <script>
+        document.addEventListener("DOMContentLoaded", () => {
+            const pedidoId = @Model.PedidoId;
+            const pollingLoader = document.getElementById("pollingLoader");
+            const progressLine = document.getElementById("progressLine");
+            const stepItems = document.querySelectorAll(".step-item");
+            const statusBadge = document.querySelector(".order-badge");
+            const step4Icon = document.getElementById("step4Icon");
+            const step4Label = document.getElementById("step4Label");
+
+            // Traduccines para el paso 4 dinámico
+            const txtReadyPickup = "@SharedLocalizer["Tracking_ReadyPickup"].Value";
+            const txtOnTheWay = "@SharedLocalizer["Tracking_OnTheWay"].Value";
+
+            function updateProgressLine(stepIndex) {
+                const totalSteps = stepItems.length;
+                let pct = 0;
+                if (stepIndex > 0) {
+                    pct = (stepIndex / (totalSteps - 1)) * 100;
+                }
+                
+                const isMobile = window.innerWidth <= 768;
+                if (isMobile) {
+                    progressLine.style.width = "4px";
+                    progressLine.style.height = `${pct}%`;
+                    progressLine.style.transform = "scaleX(1)";
+                } else {
+                    progressLine.style.height = "4px";
+                    progressLine.style.transform = `scaleX(${pct / 100})`;
+                    progressLine.style.width = "auto";
+                }
+            }
+
+            let currentStep = @currentStep;
+            updateProgressLine(currentStep);
+
+            window.addEventListener("resize", () => {
+                updateProgressLine(currentStep);
+            });
+
+            function getStepIndex(estadoNombre) {
+                const est = estadoNombre.toLowerCase();
+                if (est.includes("pendiente")) return 0;
+                if (est.includes("aceptad")) return 1;
+                if (est.includes("prepar")) return 2;
+                if (est.includes("camino")) return 3;
+                if (est.includes("entreg")) return 4;
+                return -1;
+            }
+
+            function updateStepperUI(stepIndex) {
+                if (stepIndex === -1) return;
+                currentStep = stepIndex;
+
+                stepItems.forEach(item => {
+                    const step = parseInt(item.getAttribute("data-step"));
+                    item.className = "step-item";
+
+                    if (step === stepIndex) {
+                        item.classList.add("active");
+                    } else if (step < stepIndex) {
+                        item.classList.add("completed");
+                    }
+                });
+
+                updateProgressLine(stepIndex);
+            }
+
+            function checkStatus() {
+                pollingLoader.classList.add("active");
+
+                fetch(`/Pedido/GetStatusJson/${pedidoId}`)
+                    .then(response => {
+                        if (!response.ok) throw new Error("Error en la petición");
+                        return response.json();
+                    })
+                    .then(data => {
+                        pollingLoader.classList.remove("active");
+                        
+                        if (statusBadge && data.estado) {
+                            statusBadge.textContent = data.estado;
+                            
+                            statusBadge.className = "order-badge";
+                            const est = data.estado.toLowerCase();
+                            if (est.includes("prepar")) statusBadge.classList.add("estado-preparando");
+                            else if (est.includes("list")) statusBadge.classList.add("estado-listo");
+                            else if (est.includes("entreg")) statusBadge.classList.add("estado-entregado");
+                            else if (est.includes("cancel")) statusBadge.classList.add("estado-cancelado");
+                            else statusBadge.classList.add("estado-pendiente");
+                        }
+
+                        // Actualizar icono y texto del paso 4 dinámicamente si es necesario
+                        if (data.metodoEntrega) {
+                            const isPickup = data.metodoEntrega.toLowerCase().includes("recogida");
+                            if (isPickup) {
+                                if (step4Icon) step4Icon.className = "bi bi-bag-check";
+                                if (step4Label) step4Label.textContent = txtReadyPickup;
+                            } else {
+                                if (step4Icon) step4Icon.className = "bi bi-truck";
+                                if (step4Label) step4Label.textContent = txtOnTheWay;
+                            }
+                        }
+
+                        const newStep = getStepIndex(data.estado);
+                        if (newStep !== -1 && newStep !== currentStep) {
+                            updateStepperUI(newStep);
+                            
+                            // Recargar si finalizó el pedido o cambió el estado de pago
+                            if (newStep === 4 || (currentStep === 0 && newStep > 0)) {
+                                setTimeout(() => { window.location.reload(); }, 1500);
+                            }
+                        }
+                    })
+                    .catch(err => {
+                        console.error("Error al consultar el estado:", err);
+                        pollingLoader.classList.remove("active");
+                    });
+            }
+
+            const estadoInicial = "@Model.Estado".toLowerCase();
+            if (!estadoInicial.includes("entreg") && !estadoInicial.includes("cancel")) {
+                setInterval(checkStatus, 10000);
+            }
+        });
+    </script>
 }

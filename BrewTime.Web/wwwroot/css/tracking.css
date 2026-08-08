@@ -1,0 +1,369 @@
+/* Stepper Styles for Order Tracking */
+.tracking-stepper-container {
+    background: #ffffff;
+    border-radius: 16px;
+    padding: 2rem;
+    margin-bottom: 2rem;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.05);
+    border: 1px solid rgba(201, 149, 106, 0.15);
+}
+
+.tracking-stepper-title {
+    font-family: 'Playfair Display', serif;
+    color: #1a2712;
+    font-size: 1.4rem;
+    margin-bottom: 1.5rem;
+    text-align: center;
+    font-weight: 700;
+}
+
+.tracking-stepper {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    position: relative;
+    margin: 2.5rem 0 1.5rem 0;
+    padding: 0 1rem;
+}
+
+.tracking-stepper::before {
+    content: '';
+    position: absolute;
+    top: 25px;
+    left: 40px;
+    right: 40px;
+    height: 4px;
+    background-color: #e9ecef;
+    z-index: 1;
+}
+
+.tracking-progress-line {
+    position: absolute;
+    top: 25px;
+    left: 40px;
+    right: 40px;
+    height: 4px;
+    background-color: #6f4e37; /* Café/Marrón color de progreso */
+    z-index: 2;
+    transform-origin: left center;
+    transform: scaleX(0);
+    transition: transform 0.8s cubic-bezier(0.4, 0, 0.2, 1);
+}
+
+.step-item {
+    position: relative;
+    z-index: 3;
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+    text-align: center;
+    flex: 1;
+}
+
+.step-icon {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: #ffffff;
+    border: 3px solid #dee2e6;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    font-size: 1.2rem;
+    color: #adb5bd;
+    transition: all 0.4s ease;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.04);
+}
+
+.step-item.active .step-icon {
+    border-color: #1a2712;
+    background-color: #1a2712;
+    color: #f0e0c0;
+    transform: scale(1.15);
+    box-shadow: 0 0 20px rgba(26, 39, 18, 0.35);
+}
+
+.step-item.completed .step-icon {
+    border-color: #6f4e37;
+    background-color: #6f4e37;
+    color: #ffffff;
+}
+
+.step-label {
+    margin-top: 0.75rem;
+    font-family: 'Poppins', sans-serif;
+    font-size: 0.8rem;
+    font-weight: 600;
+    color: #6c757d;
+    transition: color 0.4s ease;
+}
+
+.step-item.active .step-label {
+    color: #1a2712;
+    font-weight: 700;
+}
+
+.step-item.completed .step-label {
+    color: #6f4e37;
+}
+
+.step-time {
+    font-size: 0.7rem;
+    color: #adb5bd;
+    margin-top: 0.15rem;
+}
+
+/* Home Page Active Order Widget */
+.active-order-widget {
+    background: rgba(255, 255, 255, 0.85);
+    backdrop-filter: blur(12px);
+    -webkit-backdrop-filter: blur(12px);
+    border: 1px solid rgba(201, 149, 106, 0.3);
+    border-radius: 16px;
+    box-shadow: 0 8px 30px rgba(0, 0, 0, 0.05);
+    padding: 1.5rem 2rem;
+    margin: 2rem auto;
+    max-width: 900px;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    flex-wrap: wrap;
+    gap: 1.5rem;
+    animation: widgetSlideDown 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+    position: relative;
+    overflow: hidden;
+}
+
+.active-order-widget::before {
+    content: '';
+    position: absolute;
+    top: 0;
+    left: 0;
+    width: 6px;
+    height: 100%;
+    background: #6f4e37;
+}
+
+@keyframes widgetSlideDown {
+    from {
+        transform: translateY(-20px);
+        opacity: 0;
+    }
+    to {
+        transform: translateY(0);
+        opacity: 1;
+    }
+}
+
+.active-order-info {
+    display: flex;
+    align-items: center;
+    gap: 1.25rem;
+}
+
+.active-order-icon-container {
+    width: 50px;
+    height: 50px;
+    border-radius: 50%;
+    background-color: rgba(111, 78, 55, 0.1);
+    display: flex;
+    justify-content: center;
+    align-items: center;
+}
+
+.active-order-icon {
+    font-size: 1.6rem;
+    color: #6f4e37;
+    animation: cupBounce 2s infinite ease-in-out;
+}
+
+@keyframes cupBounce {
+    0%, 100% { transform: translateY(0) rotate(0deg); }
+    50% { transform: translateY(-4px) rotate(3deg); }
+}
+
+.active-order-details {
+    display: flex;
+    flex-direction: column;
+}
+
+.active-order-title {
+    font-family: 'Playfair Display', serif;
+    font-size: 1.2rem;
+    margin: 0;
+    color: #1a2712;
+    font-weight: 700;
+}
+
+.active-order-subtitle {
+    margin: 0.25rem 0 0 0;
+    font-size: 0.85rem;
+    color: #495057;
+    font-family: 'Poppins', sans-serif;
+}
+
+.active-order-status-badge {
+    display: inline-block;
+    padding: 0.2rem 0.6rem;
+    font-size: 0.7rem;
+    font-weight: 700;
+    border-radius: 50px;
+    text-transform: uppercase;
+    margin-left: 0.75rem;
+    letter-spacing: 0.05em;
+}
+
+.status-badge-aceptada {
+    background-color: rgba(52, 152, 219, 0.15);
+    color: #2980b9;
+}
+
+.status-badge-preparando {
+    background-color: rgba(243, 156, 18, 0.15);
+    color: #d35400;
+}
+
+.status-badge-camino {
+    background-color: rgba(46, 204, 113, 0.15);
+    color: #27ae60;
+}
+
+.active-order-action {
+    display: flex;
+    align-items: center;
+}
+
+.btn-track-active {
+    background-color: #6f4e37;
+    color: #ffffff;
+    border: none;
+    padding: 0.6rem 1.4rem;
+    border-radius: 8px;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 600;
+    font-size: 0.85rem;
+    transition: all 0.25s ease;
+    text-decoration: none;
+    display: flex;
+    align-items: center;
+    gap: 0.5rem;
+    box-shadow: 0 4px 10px rgba(111, 78, 55, 0.15);
+}
+
+.btn-track-active:hover {
+    background-color: #1a2712;
+    color: #f0e0c0;
+    box-shadow: 0 4px 12px rgba(26, 39, 18, 0.25);
+    transform: translateY(-2px);
+}
+
+/* Polling Loader indicator */
+.polling-loader {
+    display: inline-block;
+    width: 12px;
+    height: 12px;
+    border: 2px solid rgba(26, 39, 18, 0.2);
+    border-radius: 50%;
+    border-top-color: #1a2712;
+    animation: spin 0.8s linear infinite;
+    vertical-align: middle;
+    margin-right: 6px;
+    opacity: 0;
+    transition: opacity 0.3s ease;
+}
+
+.polling-loader.active {
+    opacity: 1;
+}
+
+@keyframes spin {
+    to { transform: rotate(360deg); }
+}
+
+/* Pulse animation for active step */
+.step-item.active .step-icon i {
+    animation: iconPulse 1.5s infinite alternate;
+}
+
+@keyframes iconPulse {
+    from { opacity: 0.8; }
+    to { opacity: 1; transform: scale(1.05); }
+}
+
+/* Responsive Styles */
+@media (max-width: 768px) {
+    .tracking-stepper {
+        flex-direction: column;
+        align-items: flex-start;
+        padding-left: 2rem;
+        margin: 1.5rem 0;
+    }
+
+    .tracking-stepper::before {
+        top: 15px;
+        left: 25px;
+        bottom: 15px;
+        width: 4px;
+        height: auto;
+    }
+
+    .tracking-progress-line {
+        top: 15px;
+        left: 25px;
+        width: 4px;
+        height: auto;
+        transform-origin: center top;
+        transform: scaleY(0);
+    }
+
+    .step-item {
+        flex-direction: row;
+        align-items: center;
+        text-align: left;
+        margin-bottom: 2rem;
+        width: 100%;
+    }
+
+    .step-item:last-child {
+        margin-bottom: 0;
+    }
+
+    .step-icon {
+        width: 44px;
+        height: 44px;
+        font-size: 1rem;
+        flex-shrink: 0;
+    }
+
+    .step-item.active .step-icon {
+        transform: scale(1.1);
+    }
+
+    .step-label {
+        margin-top: 0;
+        margin-left: 1.25rem;
+        font-size: 0.85rem;
+    }
+
+    .step-time {
+        margin-top: 0.1rem;
+        margin-left: 1.25rem;
+        display: block;
+    }
+
+    .active-order-widget {
+        flex-direction: column;
+        align-items: flex-start;
+        padding: 1.25rem 1.5rem;
+    }
+
+    .active-order-action {
+        width: 100%;
+        margin-top: 0.5rem;
+    }
+
+    .btn-track-active {
+        width: 100%;
+        justify-content: center;
+    }
+}
