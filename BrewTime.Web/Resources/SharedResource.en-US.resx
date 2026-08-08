@@ -1809,4 +1809,11 @@
 	<data name="Tracking_OrderTracker" xml:space="preserve">
     <value>Order Tracker</value>
   </data>
+<data name="OrderDetail_MarkDelivered" xml:space="preserve">
+  <value>Mark as Delivered</value>
+</data>
+
+<data name="OrderDetail_ReceivedOrder" xml:space="preserve">
+  <value>I received my order!</value>
+</data>
 </root>

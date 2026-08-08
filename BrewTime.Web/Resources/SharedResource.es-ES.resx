@@ -1810,4 +1810,11 @@
 	<data name="Tracking_OrderTracker" xml:space="preserve">
     <value>Seguimiento de tu Pedido</value>
   </data>
+	<data name="OrderDetail_MarkDelivered" xml:space="preserve">
+  <value>Marcar como Entregado</value>
+</data>
+
+	<data name="OrderDetail_ReceivedOrder" xml:space="preserve">
+  <value>¡Ya recibí mi pedido!</value>
+</data>
 </root>
