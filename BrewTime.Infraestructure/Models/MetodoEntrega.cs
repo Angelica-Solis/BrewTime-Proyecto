@@ -8,7 +8,6 @@ public partial class MetodoEntrega
     public int MetodoId { get; set; }
 
     public string Nombre { get; set; } = null!;
-
     public decimal Costo { get; set; }
 
     public virtual ICollection<Pedido> Pedido { get; set; } = new List<Pedido>();

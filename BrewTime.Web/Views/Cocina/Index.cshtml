@@ -1,0 +1,345 @@
+﻿@model IEnumerable<BrewTime.Application.DTOs.PedidoCocinaDTO>
+
+@{
+    ViewData["Title"] = "Cocina";
+}
+
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:ital,wght@0,600;0,700;1,500&family=Poppins:wght@400;500;600;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="~/css/cocina.css" asp-append-version="true" />
+
+<div class="bt-page">
+
+    <!-- HERO -->
+    <div class="bt-hero">
+        <p class="bt-hero__kicker">Brew Time &middot; Cocina</p>
+        <h1 class="bt-hero__title">Pedidos en <span class="bt-hero__accent">cocina</span></h1>
+        <p class="bt-hero__subtitle">Pedidos pendientes de preparación</p>
+        <div class="bt-hero__divider">
+            <span class="bt-hero__divider-line"></span>
+            <span class="bt-hero__divider-label">Gestión &amp; Estaciones</span>
+            <span class="bt-hero__divider-line"></span>
+        </div>
+    </div>
+
+    <div class="bt-container">
+
+        @if (!Model.Any())
+        {
+            <div class="bt-empty-page">
+                <h5 class="bt-empty-page__title">No hay pedidos pendientes</h5>
+                <p class="bt-empty-page__text">Actualmente no hay pedidos en preparación.</p>
+            </div>
+        }
+        else
+        {
+            <p class="bt-count">@Model.Count() pedido(s) en preparación</p>
+
+            @foreach (var pedido in Model)
+            {
+                <div class="bt-pedido-card">
+
+                    <!-- pedido encabezado-->
+                    <div class="bt-pedido-header">
+                        <div class="bt-pedido-header__row">
+
+                            <div class="bt-pedido-header__id">
+                                Pedido #@pedido.PedidoId
+                            </div>
+
+                            <div class="bt-pedido-header__cliente">
+                                <span class="bt-pedido-header__label">Cliente:</span>
+                                @pedido.NombreCliente
+                            </div>
+
+                            <div class="bt-pedido-header__fecha">
+                                @pedido.FechaCreacion.ToString("dd/MM/yyyy HH:mm")
+                            </div>
+
+                        </div>
+                    </div>
+
+                    <!-- contenido del pedido -->
+                    <div class="bt-pedido-body">
+
+                        <div class="bt-columns">
+
+                            <!-- comida-->
+                            <div class="bt-column">
+                                <div class="bt-group">
+
+                                    <h4 class="bt-group__title">Comida</h4>
+
+                                    @if (!pedido.Comida.Any())
+                                    {
+                                        <p class="bt-empty">No hay productos</p>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in pedido.Comida)
+                                        {
+                                            <div class="bt-item">
+
+                                                <div class="bt-item__header">
+                                                    <strong class="bt-item__name">@item.Nombre</strong>
+                                                    <span class="bt-badge-qty">x @item.Cantidad</span>
+                                                </div>
+
+                                                @if (item.EsCombo)
+                                                {
+                                                    <small class="bt-combo">
+                                                        Parte del combo: @item.NombreCombo
+                                                    </small>
+                                                }
+
+                                                <hr class="bt-divider" />
+
+                                                <strong class="bt-stations-title">Estaciones</strong>
+
+                                                @if (!item.Estaciones.Any())
+                                                {
+                                                    <small class="bt-empty bt-empty--inline">
+                                                        No hay estaciones configuradas.
+                                                    </small>
+                                                }
+                                                else
+                                                {
+                                                    <ol class="bt-station-list">
+
+                                                        @foreach (var estacion in item.Estaciones.OrderBy(e => e.Orden))
+                                                        {
+                                                            <li class="bt-station">
+
+                                                                <div class="bt-station__name">
+                                                                    @estacion.Nombre
+                                                                </div>
+
+                                                                <span class="bt-station__time">
+                                                                    @estacion.TiempoEstimadoMin min
+                                                                </span>
+
+                                                                <div>
+                                                                    @if (estacion.Estado == "Pendiente")
+                                                                    {
+                                                                        <span class="bt-status bt-status--pendiente">Pendiente</span>
+                                                                    }
+                                                                    else if (estacion.Estado == "En proceso")
+                                                                    {
+                                                                        <span class="bt-status bt-status--proceso">En proceso</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="bt-status bt-status--listo">@estacion.Estado</span>
+                                                                    }
+                                                                </div>
+
+                                                            </li>
+                                                        }
+
+                                                    </ol>
+                                                }
+
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+
+                            <!-- cafe -->
+                            <div class="bt-column">
+                                <div class="bt-group">
+
+                                    <h4 class="bt-group__title">Café</h4>
+
+                                    @if (!pedido.Cafe.Any())
+                                    {
+                                        <p class="bt-empty">No hay productos</p>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in pedido.Cafe)
+                                        {
+                                            <div class="bt-item">
+
+                                                <div class="bt-item__header">
+                                                    <strong class="bt-item__name">@item.Nombre</strong>
+                                                    <span class="bt-badge-qty">x @item.Cantidad</span>
+                                                </div>
+
+                                                @if (item.EsCombo)
+                                                {
+                                                    <small class="bt-combo">
+                                                        Parte del combo: @item.NombreCombo
+                                                    </small>
+                                                }
+
+                                                <hr class="bt-divider" />
+
+                                                <strong class="bt-stations-title">Estaciones</strong>
+
+                                                @if (!item.Estaciones.Any())
+                                                {
+                                                    <small class="bt-empty bt-empty--inline">
+                                                        No hay estaciones configuradas.
+                                                    </small>
+                                                }
+                                                else
+                                                {
+                                                    <ol class="bt-station-list">
+
+                                                        @foreach (var estacion in item.Estaciones.OrderBy(e => e.Orden))
+                                                        {
+                                                            <li class="bt-station">
+
+                                                                <div class="bt-station__name">
+                                                                    @estacion.Nombre
+                                                                </div>
+
+                                                                <span class="bt-station__time">
+                                                                    @estacion.TiempoEstimadoMin min
+                                                                </span>
+
+                                                                <div>
+                                                                    @if (estacion.Estado == "Pendiente")
+                                                                    {
+                                                                        <span class="bt-status bt-status--pendiente">Pendiente</span>
+                                                                    }
+                                                                    else if (estacion.Estado == "En proceso")
+                                                                    {
+                                                                        <span class="bt-status bt-status--proceso">En proceso</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="bt-status bt-status--listo">@estacion.Estado</span>
+                                                                    }
+                                                                </div>
+
+                                                            </li>
+                                                        }
+
+                                                    </ol>
+                                                }
+
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+
+                            <!-- bubble -->
+                            <div class="bt-column">
+                                <div class="bt-group">
+
+                                    <h4 class="bt-group__title">Bubble Tea</h4>
+
+                                    @if (!pedido.BubbleTea.Any())
+                                    {
+                                        <p class="bt-empty">No hay productos</p>
+                                    }
+                                    else
+                                    {
+                                        @foreach (var item in pedido.BubbleTea)
+                                        {
+                                            <div class="bt-item">
+
+                                                <div class="bt-item__header">
+                                                    <strong class="bt-item__name">@item.Nombre</strong>
+                                                    <span class="bt-badge-qty">x @item.Cantidad</span>
+                                                </div>
+
+                                                @if (item.EsCombo)
+                                                {
+                                                    <small class="bt-combo">
+                                                        Parte del combo: @item.NombreCombo
+                                                    </small>
+                                                }
+
+                                                <hr class="bt-divider" />
+
+                                                <strong class="bt-stations-title">Estaciones</strong>
+
+                                                @if (!item.Estaciones.Any())
+                                                {
+                                                    <small class="bt-empty bt-empty--inline">
+                                                        No hay estaciones configuradas.
+                                                    </small>
+                                                }
+                                                else
+                                                {
+                                                    <ol class="bt-station-list">
+
+                                                        @foreach (var estacion in item.Estaciones.OrderBy(e => e.Orden))
+                                                        {
+                                                            <li class="bt-station">
+
+                                                                <div class="bt-station__name">
+                                                                    @estacion.Nombre
+                                                                </div>
+
+                                                                <span class="bt-station__time">
+                                                                    @estacion.TiempoEstimadoMin min
+                                                                </span>
+
+                                                                <div>
+                                                                    @if (estacion.Estado == "Pendiente")
+                                                                    {
+                                                                        <span class="bt-status bt-status--pendiente">Pendiente</span>
+                                                                    }
+                                                                    else if (estacion.Estado == "En proceso")
+                                                                    {
+                                                                        <span class="bt-status bt-status--proceso">En proceso</span>
+                                                                    }
+                                                                    else
+                                                                    {
+                                                                        <span class="bt-status bt-status--listo">@estacion.Estado</span>
+                                                                    }
+                                                                </div>
+
+                                                            </li>
+                                                        }
+
+                                                    </ol>
+                                                }
+
+                                            </div>
+                                        }
+                                    }
+
+                                </div>
+                            </div>
+
+                        </div>
+
+                        <!-- boton -->
+                        <div class="bt-actions">
+
+                            <form asp-controller="Cocina"
+                                  asp-action="Realizado"
+                                  method="post">
+
+                                @Html.AntiForgeryToken()
+
+                                <input type="hidden"
+                                       name="pedidoId"
+                                       value="@pedido.PedidoId" />
+
+                                <button type="submit" class="bt-btn">
+                                    ✓ Realizado
+                                </button>
+
+                            </form>
+
+                        </div>
+
+                    </div>
+
+                </div>
+            }
+        }
+
+    </div>
+
+</div>
