@@ -115,6 +115,37 @@ namespace BrewTime.Web.Controllers
                 total = pedido.Total
             });
         }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Entregar(int pedidoId)
+        {
+            if (pedidoId <= 0)
+            {
+                TempData["Error"] = "El pedido indicado no es v\u00e1lido.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
+                await _servicePedido.CambiarEstadoPedidoAsync(pedidoId, UsuarioActual, RolActual);
+                TempData["Success"] = "El pedido se marc\u00f3 como entregado.";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction(nameof(Detail), new { id = pedidoId });
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> Registrar()

@@ -11,6 +11,8 @@
 @{
     ViewData["Title"] = $"{SharedLocalizer["DetalleDelTxt"].Value} {SharedLocalizer["PedidoWord"].Value} #{Model.PedidoId}";
     var mensajeExito = TempData.Peek("Success") as string;
+    var esPersonal = User.IsInRole("Administrador") || User.IsInRole("Encargado");
+    var pedidoEnCamino = Model.Estado.Equals("En camino", StringComparison.OrdinalIgnoreCase);
 }
 <div class="brew-page">
     <section class="brew-hero">
@@ -244,6 +246,27 @@
                    class="btn btn-success">
                     @SharedLocalizer["OrderDetail_PayOrder"]
                 </a>
+            }
+
+            @if (pedidoEnCamino)
+            {
+                <form asp-action="Entregar" method="post" class="d-inline">
+                    @Html.AntiForgeryToken()
+                    <input type="hidden" name="pedidoId" value="@Model.PedidoId" />
+
+                    <button type="submit" class="btn @(esPersonal ? "btn-success" : "btn-entrega-cliente")">
+                        <i class="bi @(esPersonal ? "bi-check2-circle" : "bi-bag-check")"></i>
+
+                        @if (esPersonal)
+                        {
+                            @SharedLocalizer["OrderDetail_MarkDelivered"]
+                        }
+                        else
+                        {
+                            @SharedLocalizer["OrderDetail_ReceivedOrder"]
+                        }
+                    </button>
+                </form>
             }
         </div>
     </div>

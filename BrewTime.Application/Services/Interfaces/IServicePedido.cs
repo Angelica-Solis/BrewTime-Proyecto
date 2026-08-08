@@ -18,6 +18,9 @@ namespace BrewTime.Application.Services.Interfaces
 
         //pago
         Task<PagoFormDTO?> PrepararPagoAsync(int pedidoId, int usuarioActualId, string rolActual);
+
+        //entrega
+        Task CambiarEstadoPedidoAsync(int pedidoId, int usuarioActualId, string rolActual);
         Task ProcesarPagoAsync(PagoPedidoDTO dto, int usuarioActualId, string rolActual);
     }
 }
