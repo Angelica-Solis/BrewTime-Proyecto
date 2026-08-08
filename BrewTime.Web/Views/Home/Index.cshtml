@@ -1,4 +1,4 @@
-﻿@using Microsoft.AspNetCore.Mvc.Localization
+@using Microsoft.AspNetCore.Mvc.Localization
 @inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @{
@@ -7,11 +7,49 @@
 
 @section Styles {
     <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/tracking.css" asp-append-version="true" />
 }
 
 <div class="home-page">
     @* Chatbot  *@
     <partial name="_Chatbot" />
+
+    @* Pedido Activo Widget *@
+    @if (ViewBag.PedidosActivos != null)
+    {
+        var pedidosActivos = (List<BrewTime.Application.DTOs.PedidoListDTO>)ViewBag.PedidosActivos;
+        if (pedidosActivos.Any())
+        {
+            var principalActive = pedidosActivos.First();
+            string badgeClass = "status-badge-aceptada";
+            var est = principalActive.EstadoNombre.ToLower();
+            if (est.Contains("prepar")) badgeClass = "status-badge-preparando";
+            else if (est.Contains("camino")) badgeClass = "status-badge-camino";
+            
+            <div class="active-order-widget">
+                <div class="active-order-info">
+                    <div class="active-order-icon-container">
+                        <i class="bi bi-cup-hot active-order-icon"></i>
+                    </div>
+                    <div class="active-order-details">
+                        <h3 class="active-order-title">
+                            @SharedLocalizer["Tracking_ActiveOrder"]
+                            <span class="active-order-status-badge @badgeClass">@principalActive.EstadoNombre</span>
+                        </h3>
+                        <p class="active-order-subtitle">
+                            <strong>#@principalActive.PedidoId</strong> - @principalActive.FechaCreacion.ToString("dd/MM/yyyy hh:mm tt")
+                        </p>
+                    </div>
+                </div>
+                <div class="active-order-action">
+                    <a href="/Pedido/Detail/@principalActive.PedidoId" class="btn-track-active">
+                        <i class="bi bi-clock-history"></i>
+                        @SharedLocalizer["Tracking_FollowOrder"]
+                    </a>
+                </div>
+            </div>
+        }
+    }
 
     @* Hero  *@
     <div class="home-hero">
