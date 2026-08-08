@@ -10,11 +10,15 @@ namespace BrewTime.Application.Services.Implementations
     {
         private readonly IRepositoryCombo _repository;
         private readonly IMapper _mapper;
+        private readonly IServiceCorreo _serviceCorreo;
+        private readonly IHistorialNotificaciones _historialNotificaciones;
 
-        public ServiceCombo(IRepositoryCombo repository, IMapper mapper)
+        public ServiceCombo(IRepositoryCombo repository, IMapper mapper, IServiceCorreo serviceCorreo, IHistorialNotificaciones historialNotificaciones)
         {
             _repository = repository;
             _mapper = mapper;
+            _serviceCorreo = serviceCorreo;
+            _historialNotificaciones = historialNotificaciones;
         }
 
         // ── Lectura ──────────────────────────────────────────
@@ -89,6 +93,78 @@ namespace BrewTime.Application.Services.Implementations
         public async Task ToggleActivoAsync(int id)
         {
             await _repository.ToggleActivoAsync(id);
+        }
+
+        public async Task<ICollection<ProductoInconsistenteEnComboDTO>> ObtenerProductosInconsistentesAsync()
+        {
+            var combos = await _repository.ListActivosConProductosEIngredientesAsync();
+            var resultado = new List<ProductoInconsistenteEnComboDTO>();
+
+            foreach (var combo in combos)
+            {
+                foreach (var comboProducto in combo.ComboProducto)
+                {
+                    var producto = comboProducto.Producto;
+
+                    if (!producto.Activo)
+                    {
+                        resultado.Add(new ProductoInconsistenteEnComboDTO
+                        {
+                            ComboID = combo.ComboId,
+                            NombreCombo = combo.Nombre,
+                            ProductoID = producto.ProductoId,
+                            NombreProducto = producto.Nombre,
+                            MotivoInconsistencia = "Producto inactivo"
+                        });
+                    }
+                    else if (!producto.Ingrediente.Any())
+                    {
+                        resultado.Add(new ProductoInconsistenteEnComboDTO
+                        {
+                            ComboID = combo.ComboId,
+                            NombreCombo = combo.Nombre,
+                            ProductoID = producto.ProductoId,
+                            NombreProducto = producto.Nombre,
+                            MotivoInconsistencia = "Producto sin ingredientes"
+                        });
+                    }
+                }
+            }
+
+            return resultado;
+        }
+
+        public async Task<bool> RevisarYNotificarProductosInconsistentesAsync()
+        {
+            // CONDICIÓN: consulta la BD para decidir si la tarea debe actuar
+            var inconsistencias = await ObtenerProductosInconsistentesAsync();
+
+            if (!inconsistencias.Any())
+                return false;
+
+            // TAREA: enviar la notificación
+            var cuerpo = ConstruirCuerpoCorreo(inconsistencias);
+            var asunto = "Combos con productos inconsistentes - BrewTime";
+
+            await _serviceCorreo.EnviarAsync("fabzamoramendez13@gmail.com", asunto, cuerpo);
+
+            _historialNotificaciones.Registrar(new NotificacionEnviadaDTO
+            {
+                FechaEnvio = DateTime.Now,
+                Asunto = asunto,
+                Detalle = cuerpo
+            });
+
+            return true;
+        }
+
+        private static string ConstruirCuerpoCorreo(ICollection<ProductoInconsistenteEnComboDTO> items)
+        {
+            var sb = new System.Text.StringBuilder("<h3>Combos con productos inconsistentes:</h3><ul>");
+            foreach (var i in items)
+                sb.Append($"<li><b>{i.NombreCombo}</b> — Producto: {i.NombreProducto} — Motivo: {i.MotivoInconsistencia}</li>");
+            sb.Append("</ul>");
+            return sb.ToString();
         }
     }
 }

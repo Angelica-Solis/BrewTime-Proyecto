@@ -1,6 +1,8 @@
 ﻿@model BrewTime.Application.DTOs.LoginDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 @{
-    ViewData["Title"] = "Iniciar Sesión";
+    ViewData["Title"] = SharedLocalizer["Login_SubmitBtn"].Value;
     Layout = "_Layout";
 }
 
@@ -9,11 +11,11 @@
 <div class="brew-page">
     <div class="brew-hero" style="padding-bottom: 2.5rem;">
         <div class="brew-hero-inner" style="text-align:center;">
-            <p class="brew-hero-eyebrow">Bienvenido de vuelta</p>
+            <p class="brew-hero-eyebrow">@SharedLocalizer["Login_WelcomeBack"]</p>
             <h1 class="brew-titulo">Brew<em>Time</em></h1>
-            <p class="brew-subtitulo">Inicia sesión para continuar</p>
+            <p class="brew-subtitulo">@SharedLocalizer["Login_LoginToContinue"]</p>
             <div class="brew-hero-line" style="justify-content:center;">
-                <span></span><i>Acceso</i><span></span>
+                <span></span><i>@SharedLocalizer["Login_Access"]</i><span></span>
             </div>
         </div>
     </div>
@@ -26,19 +28,19 @@
                         <div asp-validation-summary="ModelOnly" class="text-danger mb-3"></div>
 
                         <div class="mb-3">
-                            <label asp-for="Correo" class="brew-detail-label" style="display:block; margin-bottom:0.5rem;"></label>
+                            <label asp-for="Correo" class="brew-detail-label" style="display:block; margin-bottom:0.5rem;">@SharedLocalizer["CorreoLabel"]</label>
                             <input asp-for="Correo" class="form-control brew-input" />
                             <span asp-validation-for="Correo" class="text-danger"></span>
                         </div>
 
                         <div class="mb-3">
-                            <label asp-for="Password" class="brew-detail-label" style="display:block; margin-bottom:0.5rem;"></label>
+                            <label asp-for="Password" class="brew-detail-label" style="display:block; margin-bottom:0.5rem;">@SharedLocalizer["PasswordLabel"]</label>
                             <input asp-for="Password" type="password" class="form-control brew-input" />
                             <span asp-validation-for="Password" class="text-danger"></span>
                         </div>
 
                         <button type="submit" class="brew-btn-detalle" style="width:100%; justify-content:center; padding:0.7rem 1rem; font-size:0.75rem; margin-top:0.5rem;">
-                            Iniciar Sesión 
+                            @SharedLocalizer["Login_SubmitBtn"]
                         </button>
                     </form>
                 </div>

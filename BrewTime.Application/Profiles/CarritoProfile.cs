@@ -24,7 +24,14 @@ namespace BrewTime.Application.Profiles
                     opt => opt.MapFrom(src =>
                         src.Producto != null
                             ? src.Producto.Precio
-                            : src.Combo!.PrecioEspecial));
+                            : src.Combo!.PrecioEspecial))
+                .ForMember(dest => dest.Imagen,
+                    opt => opt.MapFrom(src =>
+                        src.Producto != null
+                        ? src.Producto.ProductoImagen
+                        .OrderByDescending(i => i.EsPrincipal)
+                        .Select(i => i.RutaImagen)
+                        .FirstOrDefault() : null));
         }
     }
 }

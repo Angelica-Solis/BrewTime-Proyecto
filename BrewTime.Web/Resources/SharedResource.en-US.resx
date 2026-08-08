@@ -787,7 +787,7 @@
     <value>Preparation</value>
   </data>
   <data name="Privacidad" xml:space="preserve">
-    <value>Privacy</value>
+    <value>Privacy Policy</value>
   </data>
   <data name="ProcesoEm" xml:space="preserve">
     <value>Process</value>
@@ -1325,5 +1325,377 @@
   </data>
   <data name="SwalConfirmActivate" xml:space="preserve">
     <value>Yes, activate</value>
+  </data>
+  <data name="Cart_TitleMy" xml:space="preserve">
+    <value>My</value>
+  </data>
+  <data name="Cart_TitleWord" xml:space="preserve">
+    <value>Cart</value>
+  </data>
+  <data name="Cart_Subtitle" xml:space="preserve">
+    <value>Review the products before placing your order.</value>
+  </data>
+  <data name="Cart_EmptyTitle" xml:space="preserve">
+    <value>Your cart is empty</value>
+  </data>
+  <data name="Cart_EmptyText" xml:space="preserve">
+    <value>Add products or combos to get started.</value>
+  </data>
+  <data name="Cart_ExploreProducts" xml:space="preserve">
+    <value>Explore products</value>
+  </data>
+  <data name="Cart_TagBeverages" xml:space="preserve">
+    <value>Beverages</value>
+  </data>
+  <data name="Cart_Summary" xml:space="preserve">
+    <value>Summary</value>
+  </data>
+  <data name="Cart_EmptyCartBtn" xml:space="preserve">
+    <value>Empty cart</value>
+  </data>
+  <data name="Cart_ContinueOrder" xml:space="preserve">
+    <value>Continue order</value>
+  </data>
+  <data name="Login_WelcomeBack" xml:space="preserve">
+    <value>Welcome back</value>
+  </data>
+  <data name="Login_LoginToContinue" xml:space="preserve">
+    <value>Log in to continue</value>
+  </data>
+  <data name="Login_Access" xml:space="preserve">
+    <value>Access</value>
+  </data>
+  <data name="Login_SubmitBtn" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="PasswordLabel" xml:space="preserve">
+    <value>Password</value>
+  </data>
+  <data name="FechaLabel" xml:space="preserve">
+    <value>Date</value>
+  </data>
+  <data name="ClienteLabel" xml:space="preserve">
+    <value>Client</value>
+  </data>
+  <data name="MetodoEntregaLabel" xml:space="preserve">
+    <value>Delivery Method</value>
+  </data>
+  <data name="MetodoPagoLabel" xml:space="preserve">
+    <value>Payment Method</value>
+  </data>
+  <data name="EncargadoLabel" xml:space="preserve">
+    <value>Manager</value>
+  </data>
+  <data name="CantidadLabel" xml:space="preserve">
+    <value>Quantity</value>
+  </data>
+  <data name="ImpuestoLabel" xml:space="preserve">
+    <value>Tax</value>
+  </data>
+  <data name="CostoEnvioLabel" xml:space="preserve">
+    <value>Shipping cost</value>
+  </data>
+  <data name="ObservacionesLabel" xml:space="preserve">
+    <value>Observations</value>
+  </data>
+  <data name="ProductoComboLabel" xml:space="preserve">
+    <value>Product or combo</value>
+  </data>
+  <data name="NingunaTxt" xml:space="preserve">
+    <value>None</value>
+  </data>
+  <data name="PedidoWord" xml:space="preserve">
+    <value>Order</value>
+  </data>
+  <data name="PedidosWord" xml:space="preserve">
+    <value>Orders</value>
+  </data>
+  <data name="SubtotalSinImpuestosLabel" xml:space="preserve">
+    <value>Subtotal without tax</value>
+  </data>
+  <data name="OrderAdmin_Eyebrow" xml:space="preserve">
+    <value>Administration</value>
+  </data>
+  <data name="OrderAdmin_TitlePrefix" xml:space="preserve">
+    <value>General List of</value>
+  </data>
+  <data name="OrderAdmin_Subtitle" xml:space="preserve">
+    <value>View, control and filter all orders in the BrewTime system.</value>
+  </data>
+  <data name="OrderAdmin_FilterTitle" xml:space="preserve">
+    <value>Filter Orders</value>
+  </data>
+  <data name="OrderAdmin_FilterDate" xml:space="preserve">
+    <value>Creation Date</value>
+  </data>
+  <data name="OrderAdmin_FilterStatus" xml:space="preserve">
+    <value>Order Status</value>
+  </data>
+  <data name="OrderAdmin_AllStatuses" xml:space="preserve">
+    <value>All statuses</value>
+  </data>
+  <data name="OrderAdmin_FilterBtn" xml:space="preserve">
+    <value>Filter</value>
+  </data>
+  <data name="OrderAdmin_ClearBtn" xml:space="preserve">
+    <value>Clear</value>
+  </data>
+  <data name="OrderAdmin_ResultsFound" xml:space="preserve">
+    <value>results found</value>
+  </data>
+  <data name="OrderAdmin_TableNumber" xml:space="preserve">
+    <value># Order</value>
+  </data>
+  <data name="OrderAdmin_NoResults" xml:space="preserve">
+    <value>No orders found matching the applied filters.</value>
+  </data>
+  <data name="OrderClient_MyAccount" xml:space="preserve">
+    <value>My Account</value>
+  </data>
+  <data name="OrderClient_HistoryPrefix" xml:space="preserve">
+    <value>History of</value>
+  </data>
+  <data name="OrderClient_HistorySubtitle" xml:space="preserve">
+    <value>Check the status and details of your previous orders at BrewTime.</value>
+  </data>
+  <data name="OrderClient_TotalOrders" xml:space="preserve">
+    <value>Total Orders</value>
+  </data>
+  <data name="OrderClient_NoOrdersYet" xml:space="preserve">
+    <value>You have no orders registered yet. Go ahead and place your first order!</value>
+  </data>
+  <data name="OrderDetail_Eyebrow" xml:space="preserve">
+    <value>Details</value>
+  </data>
+  <data name="OrderDetail_Subtitle" xml:space="preserve">
+    <value>Complete information of the order registered in BrewTime.</value>
+  </data>
+  <data name="OrderDetail_HeroLine" xml:space="preserve">
+    <value>BrewTime Detail</value>
+  </data>
+  <data name="OrderDetail_InfoTitle" xml:space="preserve">
+    <value>Order Information</value>
+  </data>
+  <data name="OrderDetail_PurchaseDate" xml:space="preserve">
+    <value>Purchase Date</value>
+  </data>
+  <data name="OrderDetail_AssignedManager" xml:space="preserve">
+    <value>Assigned Manager</value>
+  </data>
+  <data name="OrderDetail_ProductsInOrder" xml:space="preserve">
+    <value>Products in the Order</value>
+  </data>
+  <data name="OrderDetail_TableProductCombo" xml:space="preserve">
+    <value>Product / Combo</value>
+  </data>
+  <data name="OrderDetail_PayOrder" xml:space="preserve">
+    <value>Pay order</value>
+  </data>
+  <data name="OrderDetail_SwalRegisteredTitle" xml:space="preserve">
+    <value>Order registered!</value>
+  </data>
+  <data name="Pago_Eyebrow" xml:space="preserve">
+    <value>Complete purchase</value>
+  </data>
+  <data name="Pago_TitlePrefix" xml:space="preserve">
+    <value>Payment for order</value>
+  </data>
+  <data name="Pago_Subtitle" xml:space="preserve">
+    <value>Select the payment method to complete the order.</value>
+  </data>
+  <data name="Pago_InvoiceLabel" xml:space="preserve">
+    <value>Invoice</value>
+  </data>
+  <data name="Pago_OrderSummary" xml:space="preserve">
+    <value>Order summary</value>
+  </data>
+  <data name="Pago_PaymentMethodFormTitle" xml:space="preserve">
+    <value>Payment method</value>
+  </data>
+  <data name="Pago_SelectMethod" xml:space="preserve">
+    <value>Select a method</value>
+  </data>
+  <data name="Pago_CardDataTitle" xml:space="preserve">
+    <value>Card details</value>
+  </data>
+  <data name="Pago_CardSecurityNote" xml:space="preserve">
+    <value>The last four digits of the card will be saved. The security code is not stored.</value>
+  </data>
+  <data name="Pago_CashTitle" xml:space="preserve">
+    <value>Cash payment</value>
+  </data>
+  <data name="Pago_Change" xml:space="preserve">
+    <value>Change</value>
+  </data>
+  <data name="Pago_EnterAmountHint" xml:space="preserve">
+    <value>Enter the amount received.</value>
+  </data>
+  <data name="Pago_TotalToPay" xml:space="preserve">
+    <value>Total to pay</value>
+  </data>
+  <data name="Pago_ConfirmBtn" xml:space="preserve">
+    <value>Confirm payment</value>
+  </data>
+  <data name="Pago_BackToDetail" xml:space="preserve">
+    <value>Back to detail</value>
+  </data>
+  <data name="Pago_NombreTitular" xml:space="preserve">
+    <value>Cardholder Name</value>
+  </data>
+  <data name="Pago_NumeroTarjeta" xml:space="preserve">
+    <value>Card Number</value>
+  </data>
+  <data name="Pago_FechaVencimiento" xml:space="preserve">
+    <value>Expiration Date</value>
+  </data>
+  <data name="Pago_CodigoSeguridad" xml:space="preserve">
+    <value>Security Code</value>
+  </data>
+  <data name="Pago_MontoPagado" xml:space="preserve">
+    <value>Amount Paid</value>
+  </data>
+  <data name="Reg_Eyebrow" xml:space="preserve">
+    <value>Purchase confirmation</value>
+  </data>
+  <data name="Reg_TitlePrefix" xml:space="preserve">
+    <value>Register</value>
+  </data>
+  <data name="Reg_Subtitle" xml:space="preserve">
+    <value>Review the information before registering and proceeding to payment.</value>
+  </data>
+  <data name="Reg_GeneralInfoTitle" xml:space="preserve">
+    <value>General Information</value>
+  </data>
+  <data name="Reg_SelectClient" xml:space="preserve">
+    <value>Select a client</value>
+  </data>
+  <data name="Reg_SelectDeliveryMethod" xml:space="preserve">
+    <value>Select a delivery method</value>
+  </data>
+  <data name="Reg_DireccionEntregaLabel" xml:space="preserve">
+    <value>Delivery Address</value>
+  </data>
+  <data name="Reg_AddressPlaceholder" xml:space="preserve">
+    <value>Province, canton, district and other details</value>
+  </data>
+  <data name="Reg_OrderDetailTitle" xml:space="preserve">
+    <value>Order Details</value>
+  </data>
+  <data name="Reg_BackToCart" xml:space="preserve">
+    <value>Back to cart</value>
+  </data>
+  <data name="Reg_RegisterOrderBtn" xml:space="preserve">
+    <value>Register order</value>
+  </data>
+  <data name="CI_Eyebrow" xml:space="preserve">
+    <value>Brew Time · Administration</value>
+  </data>
+  <data name="CI_TitlePrefix" xml:space="preserve">
+    <value>Combos with</value>
+  </data>
+  <data name="CI_TitleItalic" xml:space="preserve">
+    <value>inconsistent products</value>
+  </data>
+  <data name="CI_Subtitle" xml:space="preserve">
+    <value>Live result of the scheduled task that reviews active combos whose products are inactive or have no ingredients defined.</value>
+  </data>
+  <data name="CI_HeroLine" xml:space="preserve">
+    <value>Scheduled task · Combo review</value>
+  </data>
+  <data name="CI_BackToList" xml:space="preserve">
+    <value>View Combo list</value>
+  </data>
+  <data name="CI_SectionTitle" xml:space="preserve">
+    <value>Detected inconsistencies</value>
+  </data>
+  <data name="CI_EmptyText" xml:space="preserve">
+    <value>There are no inconsistencies at this time. All active combos have valid products.</value>
+  </data>
+  <data name="CI_TableMotivo" xml:space="preserve">
+    <value>Reason</value>
+  </data>
+  <data name="CI_ProductInactive" xml:space="preserve">
+    <value>Inactive product</value>
+  </data>
+  <data name="CI_NoIngredients" xml:space="preserve">
+    <value>No ingredients</value>
+  </data>
+  <data name="CI_EditCombo" xml:space="preserve">
+    <value>Edit combo</value>
+  </data>
+  <data name="Chat_Title" xml:space="preserve">
+    <value>BrewTime Assistant</value>
+  </data>
+  <data name="Chat_Status" xml:space="preserve">
+    <value>Online  Coffee  Bubble</value>
+  </data>
+  <data name="Chat_WelcomeMsg" xml:space="preserve">
+    <value>Welcome to BrewTime. How can I help you today?</value>
+  </data>
+  <data name="Chat_QPayments" xml:space="preserve">
+    <value>Payments</value>
+  </data>
+  <data name="Chat_QDelivery" xml:space="preserve">
+    <value>Delivery</value>
+  </data>
+  <data name="Chat_InputPlaceholder" xml:space="preserve">
+    <value>Type your question...</value>
+  </data>
+  <data name="Chat_SendBtn" xml:space="preserve">
+    <value>SEND</value>
+  </data>
+  <data name="Pedidos" xml:space="preserve">
+    <value>Orders</value>
+  </data>
+  <data name="HistorialMenus" xml:space="preserve">
+    <value>Menu History</value>
+  </data>
+  <data name="Explorar" xml:space="preserve">
+    <value>Explore</value>
+  </data>
+  <data name="CombosInconsistentes" xml:space="preserve">
+    <value>Inconsistent Combos</value>
+  </data>
+  <data name="Hola" xml:space="preserve">
+    <value>Hello,</value>
+  </data>
+  <data name="CerrarSesion" xml:space="preserve">
+    <value>Log Out</value>
+  </data>
+  <data name="IniciarSesion" xml:space="preserve">
+    <value>Log In</value>
+  </data>
+  <data name="SweetAlert_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="SweetAlert_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="SweetAlert_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Footer_Tagline" xml:space="preserve">
+    <value>Specialty coffee and bubble tea, prepared with love every day.</value>
+  </data>
+  <data name="Ubicacion" xml:space="preserve">
+    <value>San Jose, Costa Rica</value>
+  </data>
+  <data name="Horario_Semana" xml:space="preserve">
+    <value>Mon – Fri: 7:00am – 8:00pm</value>
+  </data>
+  <data name="Horario_Sabado" xml:space="preserve">
+    <value>Sat: 8:00am – 6:00pm</value>
+  </data>
+  <data name="Horario_Domingo" xml:space="preserve">
+    <value>Sun: 9:00am – 3:00pm</value>
+  </data>
+  <data name="Footer_Copy" xml:space="preserve">
+    <value>© 2026 BrewTime — Coffee &amp; Bubble</value>
+  </data>
+  <data name="AgregarCarritoBtn" xml:space="preserve">
+    <value>Add to cart</value>
+  </data>
+  <data name="lblCantidad" xml:space="preserve">
+    <value>Number</value>
   </data>
 </root>

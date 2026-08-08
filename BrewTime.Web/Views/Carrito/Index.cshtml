@@ -9,7 +9,7 @@
 }
 
 @{
-    ViewData["Title"] = "Mi Carrito";
+    ViewData["Title"] = SharedLocalizer["Cart_TitleMy"].Value + " " + SharedLocalizer["Cart_TitleWord"].Value;
 }
 
 <div class="brew-page">
@@ -25,15 +25,15 @@
 
             <h1 class="brew-titulo">
 
-                Mi
+                @SharedLocalizer["Cart_TitleMy"]
 
-                <em>Carrito</em>
+                <em>@SharedLocalizer["Cart_TitleWord"]</em>
 
             </h1>
 
             <p class="brew-subtitulo">
 
-                Revise los productos antes de realizar el pedido.
+                @SharedLocalizer["Cart_Subtitle"]
 
             </p>
 
@@ -51,12 +51,12 @@
                 </span>
 
                 <h3>
-                    Tu carrito está vacío
+                    @SharedLocalizer["Cart_EmptyTitle"]
                 </h3>
 
                 <p>
 
-                    Agrega productos o combos para comenzar.
+                    @SharedLocalizer["Cart_EmptyText"]
 
                 </p>
 
@@ -64,7 +64,7 @@
                    asp-action="Index"
                    class="btn btn-success">
 
-                    Explorar productos
+                    @SharedLocalizer["Cart_ExploreProducts"]
 
                 </a>
 
@@ -121,11 +121,11 @@
                                     <div class="brew-tags">
 
                                         <span class="brew-tag brew-tag-categoria">
-                                            @(item.EsCombo ? "Combos" : "Bebidas")
+                                            @(item.EsCombo ? SharedLocalizer["Combos"].Value : SharedLocalizer["Cart_TagBeverages"].Value)
                                         </span>
 
                                         <span class="brew-tag brew-tag-estado">
-                                            Activo
+                                            @SharedLocalizer["Activo"]
                                         </span>
 
                                     </div>
@@ -212,7 +212,7 @@
 
                         <h3>
 
-                            Resumen
+                            @SharedLocalizer["Cart_Summary"]
 
                         </h3>
 
@@ -275,7 +275,7 @@
 
                             <button class="btn btn-outline-danger w-100 mb-2">
 
-                                Vaciar carrito
+                                @SharedLocalizer["Cart_EmptyCartBtn"]
 
                             </button>
 
@@ -285,7 +285,7 @@
                            asp-action="Registrar"
                            class="btn btn-success w-100">
 
-                            Continuar pedido
+                            @SharedLocalizer["Cart_ContinueOrder"]
 
                         </a>
 
