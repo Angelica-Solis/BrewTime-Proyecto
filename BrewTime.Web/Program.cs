@@ -154,7 +154,7 @@ var app = builder.Build();
 
 // configuracion pipeline
 
-// middleware de idiomas (Debe ir antes del enrutamiento)
+// middleware de idiomas (el encargado de determinar la cultura de la solicitud)
 var localizationOptions =
     app.Services.GetRequiredService<
         Microsoft.Extensions.Options.IOptions<RequestLocalizationOptions>>();
