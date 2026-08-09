@@ -1,4 +1,4 @@
-<?xml version="1.0" encoding="utf-8"?>
+﻿<?xml version="1.0" encoding="utf-8"?>
 <root>
   <!-- 
     Microsoft ResX Schema 
@@ -1267,7 +1267,7 @@
   <data name="NewComboBtn" xml:space="preserve">
     <value>Nuevo combo</value>
   </data>
-  <data name="ActiveCombo" xml:space="preserve">
+  <data name="ActiveCombos" xml:space="preserve">
     <value>Combos activos</value>
   </data>
   <data name="NoActiveCombos" xml:space="preserve">
@@ -1327,17 +1327,11 @@
   <data name="SwalConfirmActivate" xml:space="preserve">
     <value>Sí, activar</value>
   </data>
-  <data name="MyCart" xml:space="preserve">
-    <value>Mi Carrito</value>
-  </data>
-  <data name="My" xml:space="preserve">
+  <data name="Cart_TitleMy" xml:space="preserve">
     <value>Mi</value>
   </data>
-  <data name="Cart" xml:space="preserve">
+  <data name="Cart_TitleWord" xml:space="preserve">
     <value>Carrito</value>
-  </data>
-  <data name="CartSubtitle" xml:space="preserve">
-    <value>Revise los productos antes de realizar el pedido.</value>
   </data>
   <data name="Cart_Subtitle" xml:space="preserve">
     <value>Revise los productos antes de realizar el pedido.</value>
@@ -1699,122 +1693,10 @@
   <data name="Footer_Copy" xml:space="preserve">
     <value>© 2026 BrewTime — Café y Bubble</value>
   </data>
-  <data name="Cart_TitleMy" xml:space="preserve">
-    <value>Mi</value>
+  <data name="AgregarCarritoBtn" xml:space="preserve">
+    <value>Agregar al carrito</value>
   </data>
-  <data name="Cart_TitleWord" xml:space="preserve">
-    <value>Carrito</value>
+  <data name="lblCantidad" xml:space="preserve">
+    <value>Cantidad</value>
   </data>
-  <data name="ClearCart" xml:space="preserve">
-    <value>Vaciar Carrito</value>
-  </data>
-  <data name="Drinks" xml:space="preserve">
-    <value>Bebidas</value>
-  </data>
-  <data name="ActiveBeverage" xml:space="preserve">
-    <value>Bebida Activa</value>
-  </data>
-  <data name="Cocina" xml:space="preserve">
-    <value>Cocina</value>
-  </data>
-	<data name="Title" xml:space="preserve">
-    <value>Cocina</value>
-  </data>
-	<data name="OrdersIn" xml:space="preserve">
-    <value>Pedidos en</value>
-  </data>
-	<data name="Kitchen" xml:space="preserve">
-    <value>cocina</value>
-  </data>
-	<data name="PendingOrders" xml:space="preserve">
-    <value>Pedidos pendientes de preparación</value>
-  </data>
-	<data name="ManagementAndStations" xml:space="preserve">
-    <value>Gestión &amp; Estaciones</value>
-  </data>
-	<data name="NoPendingOrdersTitle" xml:space="preserve">
-    <value>No hay pedidos pendientes</value>
-  </data>
-	<data name="NoPendingOrdersText" xml:space="preserve">
-    <value>Actualmente no hay pedidos en preparación.</value>
-  </data>
-	<data name="OrdersInPreparation" xml:space="preserve">
-    <value>pedido(s) en preparación</value>
-  </data>
-	<data name="OrderNumber" xml:space="preserve">
-    <value>Pedido #</value>
-  </data>
-	<data name="Client" xml:space="preserve">
-    <value>Cliente:</value>
-  </data>
-	<data name="Food" xml:space="preserve">
-    <value>Comida</value>
-  </data>
-	<data name="Coffee" xml:space="preserve">
-    <value>Café</value>
-  </data>
-	<data name="BubbleTea" xml:space="preserve">
-    <value>Bubble Tea</value>
-  </data>
-	<data name="NoProducts" xml:space="preserve">
-    <value>No hay productos</value>
-  </data>
-	<data name="PartOfCombo" xml:space="preserve">
-    <value>Parte del combo:</value>
-  </data>
-	<data name="Stations" xml:space="preserve">
-    <value>Estaciones</value>
-  </data>
-	<data name="NoStations" xml:space="preserve">
-    <value>No hay estaciones configuradas.</value>
-  </data>
-	<data name="Min" xml:space="preserve">
-    <value>min</value>
-  </data>
-	<data name="Pending" xml:space="preserve">
-    <value>Pendiente</value>
-  </data>
-	<data name="InProcess" xml:space="preserve">
-    <value>En proceso</value>
-  </data>
-	<data name="Done" xml:space="preserve">
-    <value>Realizado</value>
-  </data>
-	<data name="Tracking_PendingPayment" xml:space="preserve">
-    <value>Pendiente de Pago</value>
-  </data>
-	<data name="Tracking_Accepted" xml:space="preserve">
-    <value>Pago Recibido</value>
-  </data>
-	<data name="Tracking_Preparing" xml:space="preserve">
-    <value>En Preparación</value>
-  </data>
-	<data name="Tracking_ReadyPickup" xml:space="preserve">
-    <value>Listo para Retirar</value>
-  </data>
-	<data name="Tracking_OnTheWay" xml:space="preserve">
-    <value>En Camino</value>
-  </data>
-	<data name="Tracking_Delivered" xml:space="preserve">
-    <value>Entregado</value>
-  </data>
-	<data name="Tracking_ActiveOrder" xml:space="preserve">
-    <value>Tienes un pedido activo</value>
-  </data>
-	<data name="Tracking_FollowOrder" xml:space="preserve">
-    <value>Seguir Pedido</value>
-  </data>
-	<data name="Tracking_OrderDetails" xml:space="preserve">
-    <value>Detalles del Pedido</value>
-  </data>
-	<data name="Tracking_OrderTracker" xml:space="preserve">
-    <value>Seguimiento de tu Pedido</value>
-  </data>
-	<data name="OrderDetail_MarkDelivered" xml:space="preserve">
-  <value>Marcar como Entregado</value>
-</data>
-
-	<data name="OrderDetail_ReceivedOrder" xml:space="preserve">
-  <value>¡Ya recibí mi pedido!</value>
-</data>
 </root>

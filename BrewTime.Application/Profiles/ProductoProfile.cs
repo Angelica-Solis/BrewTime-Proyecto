@@ -14,6 +14,11 @@ namespace BrewTime.Application.Profiles
                            opt => opt.MapFrom(src => src.Categoria != null
                                                      ? src.Categoria.Nombre
                                                      : "Sin categoría"))
+                .ForMember(dest => dest.RutaImagenPrincipal,
+                           opt => opt.MapFrom(src => src.ProductoImagen
+                           .OrderByDescending(i => i.EsPrincipal)
+                           .Select(i => i.RutaImagen)
+                           .FirstOrDefault()))
                 .ReverseMap();
 
             // Mapeo del detalle 

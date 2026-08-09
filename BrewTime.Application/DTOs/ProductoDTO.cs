@@ -19,5 +19,8 @@ namespace BrewTime.Application.DTOs
         // Datos de la Categoría (viene del Include)
         public int CategoriaID { get; set; }
         public string CategoriaNombre { get; set; } = null!;
+
+        //imagen del producto
+        public string? RutaImagenPrincipal { get; set; }
     }
 }

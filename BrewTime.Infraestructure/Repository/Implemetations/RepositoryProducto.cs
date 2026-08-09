@@ -32,6 +32,7 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
             // SELECT con Include para traer la Categoria relacionada
             var collection = await _context.Set<Producto>()
                 .Include(p => p.Categoria)
+                .Include(p => p.ProductoImagen)
                 .Where(p => p.Activo == true)
                 .ToListAsync();
 
