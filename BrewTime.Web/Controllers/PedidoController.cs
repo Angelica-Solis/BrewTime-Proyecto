@@ -1,4 +1,4 @@
-using System;
+ï»¿using System;
 using System.Security.Claims;
 using System.Threading.Tasks;
 using BrewTime.Application.Services.Interfaces;
@@ -77,8 +77,75 @@ namespace BrewTime.Web.Controllers
             }
 
             return View(pedido);
-
         }
+
+        [HttpGet]
+        public async Task<IActionResult> GetStatusJson(int id)
+        {
+            var userRole = User.FindFirst(System.Security.Claims.ClaimTypes.Role)?.Value;
+            var userIdClaim = User.FindFirst(System.Security.Claims.ClaimTypes.NameIdentifier)?.Value;
+
+            if (string.IsNullOrEmpty(userIdClaim))
+            {
+                return Unauthorized();
+            }
+
+            int userId = int.Parse(userIdClaim);
+            var pedido = await _servicePedido.GetDetallePedidoAsync(id);
+
+            if (pedido == null)
+            {
+                return NotFound();
+            }
+
+            // Seguridad: un cliente solo puede ver sus propios pedidos
+            if (userRole != "Administrador" &&
+                userRole != "Encargado" &&
+                pedido.ClienteId != userId)
+            {
+                return Forbid();
+            }
+
+            return Json(new
+            {
+                pedidoId = pedido.PedidoId,
+                estado = pedido.Estado,
+                metodoEntrega = pedido.MetodoEntrega,
+                fecha = pedido.Fecha.ToString("dd/MM/yyyy hh:mm tt"),
+                total = pedido.Total
+            });
+        }
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Entregar(int pedidoId)
+        {
+            if (pedidoId <= 0)
+            {
+                TempData["Error"] = "El pedido indicado no es v\u00e1lido.";
+                return RedirectToAction(nameof(Index));
+            }
+
+            try
+            {
+                await _servicePedido.CambiarEstadoPedidoAsync(pedidoId, UsuarioActual, RolActual);
+                TempData["Success"] = "El pedido se marc\u00f3 como entregado.";
+            }
+            catch (UnauthorizedAccessException)
+            {
+                return Forbid();
+            }
+            catch (KeyNotFoundException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+            catch (InvalidOperationException ex)
+            {
+                TempData["Error"] = ex.Message;
+            }
+
+            return RedirectToAction(nameof(Detail), new { id = pedidoId });
+        }
+
 
         [HttpGet]
         public async Task<IActionResult> Registrar()
@@ -115,7 +182,7 @@ namespace BrewTime.Web.Controllers
                 }
                 catch (Exception)
                 {
-                    TempData["Error"] = "No fue posible volver a cargar " + "la información del pedido";
+                    TempData["Error"] = "No fue posible volver a cargar " + "la informaciï¿½n del pedido";
 
                     return RedirectToAction("Index", "Carrito");
                 }
@@ -124,7 +191,7 @@ namespace BrewTime.Web.Controllers
             try
             {
                 int pedidoId = await _servicePedido.RegistrarDesdeCarritoAsync(dto, UsuarioActual, RolActual);
-                TempData["Success"] = "El pedido se registró correctamente. Ahora puedes continuar con el pago";
+                TempData["Success"] = "El pedido se registrï¿½ correctamente. Ahora puedes continuar con el pago";
                 return RedirectToAction(nameof(Detail),new { id = pedidoId });
             }
             catch (InvalidOperationException ex)
@@ -142,7 +209,7 @@ namespace BrewTime.Web.Controllers
             catch (Exception)
             {
                 ModelState.AddModelError(
-                    string.Empty, "Ocurrió un error al registrar el pedido");
+                    string.Empty, "Ocurriï¿½ un error al registrar el pedido");
 
                 await RecargarRegistroAsync(dto);
 
@@ -155,7 +222,7 @@ namespace BrewTime.Web.Controllers
         {
             if (id <= 0)
             {
-                TempData["Error"] = "El pedido indicado no es válido";
+                TempData["Error"] = "El pedido indicado no es vï¿½lido";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -193,7 +260,7 @@ namespace BrewTime.Web.Controllers
 
             if (dto == null || dto.PedidoId <= 0)
             {
-                TempData["Error"] = "El pedido indicado no es válido";
+                TempData["Error"] = "El pedido indicado no es vï¿½lido";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -207,7 +274,7 @@ namespace BrewTime.Web.Controllers
             {
                 await _servicePedido.ProcesarPagoAsync(dto, UsuarioActual, RolActual);
 
-                TempData["Success"] = "El pago se procesó correctamente";
+                TempData["Success"] = "El pago se procesï¿½ correctamente";
 
                 return RedirectToAction(nameof(Detail), new { id = dto.PedidoId });
             }
@@ -229,7 +296,7 @@ namespace BrewTime.Web.Controllers
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "Ocurrió un error al procesar el pago");
+                ModelState.AddModelError(string.Empty, "Ocurriï¿½ un error al procesar el pago");
 
                 return await RecargarPagoAsync(dto);
             }
@@ -240,10 +307,10 @@ namespace BrewTime.Web.Controllers
         private async Task RecargarRegistroAsync(PedidoCreateDTO dto)
         {
 
-           //se vuelve a consultar el carrito y toda la información proveniente de la base de datos.
+           //se vuelve a consultar el carrito y toda la informaciï¿½n proveniente de la base de datos.
             var reconstruido = await _servicePedido.PrepararRegistroAsync(UsuarioActual, RolActual);
 
-            //conservamos únicamente las observaciones escritas por el usuario.
+            //conservamos ï¿½nicamente las observaciones escritas por el usuario.
             var observaciones =
                 (dto.Detalles ??
                  new List<PedidoLineaCreateDTO>())
@@ -271,7 +338,7 @@ namespace BrewTime.Web.Controllers
                 }
             }
 
-            //si el usuario es cliente, sus datos se establecen automáticamente
+            //si el usuario es cliente, sus datos se establecen automï¿½ticamente
             if (dto.EsClienteLogueado)
             {
                 dto.ClienteId = reconstruido.ClienteId;
@@ -292,7 +359,7 @@ namespace BrewTime.Web.Controllers
                 }
             }
 
-            //se vuelve a consultar el costo real del método seleccionado
+            //se vuelve a consultar el costo real del mï¿½todo seleccionado
             var metodoSeleccionado = dto.MetodosEntrega.FirstOrDefault(m => m.MetodoId == dto.MetodoEntregaId);
 
             dto.MetodoEntregaNombre = metodoSeleccionado?.Nombre ?? string.Empty;
@@ -328,7 +395,7 @@ namespace BrewTime.Web.Controllers
                     return RedirectToAction(nameof(Index));
                 }
 
-                //conserva los datos introducidos por el usuario, mientras que el detalle y los métodos de pago vuelven a obtenerse desde la base de datos
+                //conserva los datos introducidos por el usuario, mientras que el detalle y los mï¿½todos de pago vuelven a obtenerse desde la base de datos
                 model.Pago = dto;
 
                 model.Pago.TotalPedido = model.Pedido.Total;
