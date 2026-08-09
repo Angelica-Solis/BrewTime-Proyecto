@@ -9,7 +9,6 @@
 }
 
 @{
-
     ViewData["Title"] = SharedLocalizer["Cart_TitleMy"].Value + " " + SharedLocalizer["Cart_TitleWord"].Value;
 }
 
@@ -21,12 +20,11 @@
         <div class="brew-hero-inner">
 
             <p class="brew-hero-eyebrow">
-                @SharedLocalizer["BrewTimeCafeteria"]
+                BrewTime
             </p>
 
             <h1 class="brew-titulo">
 
-                
                 @SharedLocalizer["Cart_TitleMy"]
 
                 <em>@SharedLocalizer["Cart_TitleWord"]</em>
@@ -35,7 +33,6 @@
 
             <p class="brew-subtitulo">
 
-        
                 @SharedLocalizer["Cart_Subtitle"]
 
             </p>
@@ -54,12 +51,11 @@
                 </span>
 
                 <h3>
-               
                     @SharedLocalizer["Cart_EmptyTitle"]
                 </h3>
 
                 <p>
-                 
+
                     @SharedLocalizer["Cart_EmptyText"]
 
                 </p>
@@ -125,18 +121,12 @@
                                     <div class="brew-tags">
 
                                         <span class="brew-tag brew-tag-categoria">
-                                            @(item.EsCombo
-                                                ? SharedLocalizer["Combos"]
-                                                : SharedLocalizer["Drinks"])
+                                            @(item.EsCombo ? SharedLocalizer["Combos"].Value : SharedLocalizer["Cart_TagBeverages"].Value)
                                         </span>
 
                                         <span class="brew-tag brew-tag-estado">
-                                            @(item.EsCombo
-                                                ? SharedLocalizer["ActiveCombo"]
-                                                : SharedLocalizer["ActiveBeverage"])
+                                            @SharedLocalizer["Activo"]
                                         </span>
-
-                                     
 
                                     </div>
 
@@ -222,7 +212,6 @@
 
                         <h3>
 
-                     
                             @SharedLocalizer["Cart_Summary"]
 
                         </h3>
@@ -233,7 +222,7 @@
 
                             <span>
 
-                                @SharedLocalizer["Subtotal"]
+                                Subtotal
 
                             </span>
 
@@ -249,7 +238,7 @@
 
                             <span>
 
-                                @SharedLocalizer["VAT"]
+                                IVA
 
                             </span>
 
@@ -265,7 +254,7 @@
 
                             <span>
 
-                                @SharedLocalizer["Total"]
+                                Total
 
                             </span>
 
@@ -285,8 +274,8 @@
                             @Html.AntiForgeryToken()
 
                             <button class="btn btn-outline-danger w-100 mb-2">
-                                @SharedLocalizer["ClearCart"]
-                              
+
+                                @SharedLocalizer["Cart_EmptyCartBtn"]
 
                             </button>
 
@@ -295,7 +284,7 @@
                         <a asp-controller="Pedido"
                            asp-action="Registrar"
                            class="btn btn-success w-100">
-                       
+
                             @SharedLocalizer["Cart_ContinueOrder"]
 
                         </a>
