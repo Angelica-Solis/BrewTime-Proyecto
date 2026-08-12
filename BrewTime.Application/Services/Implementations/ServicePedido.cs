@@ -567,6 +567,47 @@ namespace BrewTime.Application.Services.Implementations
             await _repository.UpdateAsync(pedido);
         }
         #endregion
+        #region Entrega del pedido
+        public async Task CambiarEstadoPedidoAsync(int pedidoId, int usuarioActualId, string rolActual)
+        {
+            var pedido = await _repository.FindByIdAsync(pedidoId);
+
+            if (pedido == null)
+            {
+                throw new KeyNotFoundException("El pedido seleccionado no existe");
+            }
+
+            ValidarAccesoPedido(pedido, usuarioActualId, rolActual);
+
+            if (!pedido.Estado.Nombre.Equals("En camino", StringComparison.OrdinalIgnoreCase))
+            {
+                throw new InvalidOperationException("Solo se pueden entregar pedidos que est\u00e9n en camino o listos para retirar");
+            }
+
+            var estadoEntregada = await _repository.FindEstadoByNombreAsync("Entregada");
+
+            if (estadoEntregada == null)
+            {
+                throw new InvalidOperationException("No se encontr\u00f3 el estado Entregada");
+            }
+
+            DateTime ahora = DateTime.Now;
+
+            pedido.EstadoId = estadoEntregada.EstadoId;
+            pedido.FechaActualizacion = ahora;
+            pedido.PedidoHistorialEstado.Add(
+                new PedidoHistorialEstado
+                {
+                    PedidoId = pedido.PedidoId,
+                    EstadoId = estadoEntregada.EstadoId,
+                    FechaCambio = ahora,
+                    UsuarioId = usuarioActualId
+                });
+
+            await _repository.UpdateAsync(pedido);
+        }
+        #endregion
+
 
         #region Metodos para el pago en tarjeta
         //metodos helper de pago en tarjeta

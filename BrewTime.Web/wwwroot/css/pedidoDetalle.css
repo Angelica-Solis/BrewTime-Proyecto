@@ -389,4 +389,19 @@
     .brew-detail-actions {
         flex-wrap: wrap;
     }
+<<<<<<< HEAD
+}
+
+.btn-entrega-cliente {
+    background-color: #6f4e37;
+    border-color: #6f4e37;
+    color: #ffffff;
+}
+
+.btn-entrega-cliente:hover {
+    background-color: #593d2a;
+    border-color: #593d2a;
+    color: #ffffff;
+=======
+>>>>>>> Erin
 }

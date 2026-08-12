@@ -1,7 +1,9 @@
-﻿@model IEnumerable<BrewTime.Application.DTOs.PedidoCocinaDTO>
+﻿@using Microsoft.AspNetCore.Mvc.Localization
+@model IEnumerable<BrewTime.Application.DTOs.PedidoCocinaDTO>
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
 @{
-    ViewData["Title"] = "Cocina";
+    ViewData["Title"] = SharedLocalizer["Title"];
 }
 
 <link rel="preconnect" href="https://fonts.googleapis.com">
@@ -13,12 +15,12 @@
 
     <!-- HERO -->
     <div class="bt-hero">
-        <p class="bt-hero__kicker">Brew Time &middot; Cocina</p>
-        <h1 class="bt-hero__title">Pedidos en <span class="bt-hero__accent">cocina</span></h1>
-        <p class="bt-hero__subtitle">Pedidos pendientes de preparación</p>
+        <p class="bt-hero__kicker">Brew Time &middot; @SharedLocalizer["Title"]</p>
+        <h1 class="bt-hero__title">@SharedLocalizer["OrdersIn"] <span class="bt-hero__accent">@SharedLocalizer["Kitchen"]</span></h1>
+        <p class="bt-hero__subtitle">@SharedLocalizer["PendingOrders"]</p>
         <div class="bt-hero__divider">
             <span class="bt-hero__divider-line"></span>
-            <span class="bt-hero__divider-label">Gestión &amp; Estaciones</span>
+            <span class="bt-hero__divider-label">@SharedLocalizer["ManagementAndStations"]</span>
             <span class="bt-hero__divider-line"></span>
         </div>
     </div>
@@ -28,13 +30,13 @@
         @if (!Model.Any())
         {
             <div class="bt-empty-page">
-                <h5 class="bt-empty-page__title">No hay pedidos pendientes</h5>
-                <p class="bt-empty-page__text">Actualmente no hay pedidos en preparación.</p>
+                <h5 class="bt-empty-page__title">@SharedLocalizer["NoPendingOrdersTitle"]</h5>
+                <p class="bt-empty-page__text">@SharedLocalizer["NoPendingOrdersText"]</p>
             </div>
         }
         else
         {
-            <p class="bt-count">@Model.Count() pedido(s) en preparación</p>
+            <p class="bt-count">@Model.Count() @SharedLocalizer["OrdersInPreparation"]</p>
 
             @foreach (var pedido in Model)
             {
@@ -45,11 +47,11 @@
                         <div class="bt-pedido-header__row">
 
                             <div class="bt-pedido-header__id">
-                                Pedido #@pedido.PedidoId
+                                @SharedLocalizer["OrderNumber"]@pedido.PedidoId
                             </div>
 
                             <div class="bt-pedido-header__cliente">
-                                <span class="bt-pedido-header__label">Cliente:</span>
+                                <span class="bt-pedido-header__label">@SharedLocalizer["Client"]</span>
                                 @pedido.NombreCliente
                             </div>
 
@@ -69,11 +71,11 @@
                             <div class="bt-column">
                                 <div class="bt-group">
 
-                                    <h4 class="bt-group__title">Comida</h4>
+                                    <h4 class="bt-group__title">@SharedLocalizer["Food"]</h4>
 
                                     @if (!pedido.Comida.Any())
                                     {
-                                        <p class="bt-empty">No hay productos</p>
+                                        <p class="bt-empty">@SharedLocalizer["NoProducts"]</p>
                                     }
                                     else
                                     {
@@ -89,18 +91,18 @@
                                                 @if (item.EsCombo)
                                                 {
                                                     <small class="bt-combo">
-                                                        Parte del combo: @item.NombreCombo
+                                                        @SharedLocalizer["PartOfCombo"] @item.NombreCombo
                                                     </small>
                                                 }
 
                                                 <hr class="bt-divider" />
 
-                                                <strong class="bt-stations-title">Estaciones</strong>
+                                                <strong class="bt-stations-title">@SharedLocalizer["Stations"]</strong>
 
                                                 @if (!item.Estaciones.Any())
                                                 {
                                                     <small class="bt-empty bt-empty--inline">
-                                                        No hay estaciones configuradas.
+                                                        @SharedLocalizer["NoStations"]
                                                     </small>
                                                 }
                                                 else
@@ -116,21 +118,21 @@
                                                                 </div>
 
                                                                 <span class="bt-station__time">
-                                                                    @estacion.TiempoEstimadoMin min
+                                                                    @estacion.TiempoEstimadoMin @SharedLocalizer["Min"]
                                                                 </span>
 
                                                                 <div>
                                                                     @if (estacion.Estado == "Pendiente")
                                                                     {
-                                                                        <span class="bt-status bt-status--pendiente">Pendiente</span>
+                                                                        <span class="bt-status bt-status--pendiente">@SharedLocalizer["Pending"]</span>
                                                                     }
                                                                     else if (estacion.Estado == "En proceso")
                                                                     {
-                                                                        <span class="bt-status bt-status--proceso">En proceso</span>
+                                                                        <span class="bt-status bt-status--proceso">@SharedLocalizer["InProcess"]</span>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <span class="bt-status bt-status--listo">@estacion.Estado</span>
+                                                                        <span class="bt-status bt-status--listo">@SharedLocalizer[estacion.Estado]</span>
                                                                     }
                                                                 </div>
 
@@ -151,11 +153,11 @@
                             <div class="bt-column">
                                 <div class="bt-group">
 
-                                    <h4 class="bt-group__title">Café</h4>
+                                    <h4 class="bt-group__title">@SharedLocalizer["Coffee"]</h4>
 
                                     @if (!pedido.Cafe.Any())
                                     {
-                                        <p class="bt-empty">No hay productos</p>
+                                        <p class="bt-empty">@SharedLocalizer["NoProducts"]</p>
                                     }
                                     else
                                     {
@@ -171,18 +173,18 @@
                                                 @if (item.EsCombo)
                                                 {
                                                     <small class="bt-combo">
-                                                        Parte del combo: @item.NombreCombo
+                                                        @SharedLocalizer["PartOfCombo"] @item.NombreCombo
                                                     </small>
                                                 }
 
                                                 <hr class="bt-divider" />
 
-                                                <strong class="bt-stations-title">Estaciones</strong>
+                                                <strong class="bt-stations-title">@SharedLocalizer["Stations"]</strong>
 
                                                 @if (!item.Estaciones.Any())
                                                 {
                                                     <small class="bt-empty bt-empty--inline">
-                                                        No hay estaciones configuradas.
+                                                        @SharedLocalizer["NoStations"]
                                                     </small>
                                                 }
                                                 else
@@ -198,21 +200,21 @@
                                                                 </div>
 
                                                                 <span class="bt-station__time">
-                                                                    @estacion.TiempoEstimadoMin min
+                                                                    @estacion.TiempoEstimadoMin @SharedLocalizer["Min"]
                                                                 </span>
 
                                                                 <div>
                                                                     @if (estacion.Estado == "Pendiente")
                                                                     {
-                                                                        <span class="bt-status bt-status--pendiente">Pendiente</span>
+                                                                        <span class="bt-status bt-status--pendiente">@SharedLocalizer["Pending"]</span>
                                                                     }
                                                                     else if (estacion.Estado == "En proceso")
                                                                     {
-                                                                        <span class="bt-status bt-status--proceso">En proceso</span>
+                                                                        <span class="bt-status bt-status--proceso">@SharedLocalizer["InProcess"]</span>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <span class="bt-status bt-status--listo">@estacion.Estado</span>
+                                                                        <span class="bt-status bt-status--listo">@SharedLocalizer[estacion.Estado]</span>
                                                                     }
                                                                 </div>
 
@@ -233,11 +235,11 @@
                             <div class="bt-column">
                                 <div class="bt-group">
 
-                                    <h4 class="bt-group__title">Bubble Tea</h4>
+                                    <h4 class="bt-group__title">@SharedLocalizer["BubbleTea"]</h4>
 
                                     @if (!pedido.BubbleTea.Any())
                                     {
-                                        <p class="bt-empty">No hay productos</p>
+                                        <p class="bt-empty">@SharedLocalizer["NoProducts"]</p>
                                     }
                                     else
                                     {
@@ -253,18 +255,18 @@
                                                 @if (item.EsCombo)
                                                 {
                                                     <small class="bt-combo">
-                                                        Parte del combo: @item.NombreCombo
+                                                        @SharedLocalizer["PartOfCombo"] @item.NombreCombo
                                                     </small>
                                                 }
 
                                                 <hr class="bt-divider" />
 
-                                                <strong class="bt-stations-title">Estaciones</strong>
+                                                <strong class="bt-stations-title">@SharedLocalizer["Stations"]</strong>
 
                                                 @if (!item.Estaciones.Any())
                                                 {
                                                     <small class="bt-empty bt-empty--inline">
-                                                        No hay estaciones configuradas.
+                                                        @SharedLocalizer["NoStations"]
                                                     </small>
                                                 }
                                                 else
@@ -280,21 +282,21 @@
                                                                 </div>
 
                                                                 <span class="bt-station__time">
-                                                                    @estacion.TiempoEstimadoMin min
+                                                                    @estacion.TiempoEstimadoMin @SharedLocalizer["Min"]
                                                                 </span>
 
                                                                 <div>
                                                                     @if (estacion.Estado == "Pendiente")
                                                                     {
-                                                                        <span class="bt-status bt-status--pendiente">Pendiente</span>
+                                                                        <span class="bt-status bt-status--pendiente">@SharedLocalizer["Pending"]</span>
                                                                     }
                                                                     else if (estacion.Estado == "En proceso")
                                                                     {
-                                                                        <span class="bt-status bt-status--proceso">En proceso</span>
+                                                                        <span class="bt-status bt-status--proceso">@SharedLocalizer["InProcess"]</span>
                                                                     }
                                                                     else
                                                                     {
-                                                                        <span class="bt-status bt-status--listo">@estacion.Estado</span>
+                                                                        <span class="bt-status bt-status--listo">@SharedLocalizer[estacion.Estado]</span>
                                                                     }
                                                                 </div>
 
@@ -327,7 +329,7 @@
                                        value="@pedido.PedidoId" />
 
                                 <button type="submit" class="bt-btn">
-                                    ✓ Realizado
+                                    ✓ @SharedLocalizer["Done"]
                                 </button>
 
                             </form>

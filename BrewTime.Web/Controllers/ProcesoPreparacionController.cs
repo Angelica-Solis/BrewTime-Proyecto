@@ -8,6 +8,7 @@ using Microsoft.EntityFrameworkCore.Metadata.Conventions;
 
 namespace BrewTime.Web.Controllers
 {
+    [Authorize(Roles = "Administrador,Cocina")]
     [Authorize]
     public class ProcesoPreparacionController : Controller
     {

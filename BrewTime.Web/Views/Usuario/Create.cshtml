@@ -1,0 +1,259 @@
+﻿@model BrewTime.Application.DTOs.UsuarioCreateDTO
+
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
+@section Styles {
+    <link rel="stylesheet"
+          href="~/css/usuario.css"
+          asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = "Crear usuario";
+}
+
+<div class="brew-page">
+
+    <section class="brew-hero">
+        <div class="brew-hero-inner">
+
+            <p class="brew-hero-eyebrow">
+                Administración
+            </p>
+
+            <h1 class="brew-titulo">
+                Crear <em>usuario</em>
+            </h1>
+
+            <p class="brew-subtitulo">
+                Registra un nuevo usuario de BrewTime
+                asignándole el rol correspondiente.
+            </p>
+
+            <div class="brew-hero-line">
+                <span></span>
+                <i>BrewTime</i>
+                <span></span>
+            </div>
+
+        </div>
+    </section>
+
+    <div class="brew-content">
+
+        <div class="brew-detail-container">
+
+            <div class="brew-detail-card"
+                 style="max-width: 780px;">
+
+                <div class="brew-detail-header">
+
+                    <div class="brew-detail-avatar">
+                        <i class="bi bi-person-plus"></i>
+                    </div>
+
+                    <div class="brew-detail-name">
+                        Nuevo usuario
+                    </div>
+
+                    <div class="brew-detail-role">
+                        <span class="brew-card-chip">
+                            Solo Encargado o Cocina
+                        </span>
+                    </div>
+
+                </div>
+
+                <div class="brew-detail-body">
+
+                    <form asp-action="Create"
+                          method="post">
+
+                        <div asp-validation-summary="ModelOnly"
+                             class="alert alert-danger mb-4">
+                        </div>
+
+                        <div class="row g-4">
+
+                            <!-- nombre -->
+                            <div class="col-md-6">
+
+                                <label asp-for="Nombre"
+                                       class="brew-detail-label">
+                                    Nombre
+                                </label>
+
+                                <input asp-for="Nombre"
+                                       class="form-control brew-input"
+                                       placeholder="Ej. Carlos" />
+
+                                <span asp-validation-for="Nombre"
+                                      class="text-danger small">
+                                </span>
+
+                            </div>
+
+                            <!-- apellidos -->
+                            <div class="col-md-6">
+
+                                <label asp-for="Apellidos"
+                                       class="brew-detail-label">
+                                    Apellidos
+                                </label>
+
+                                <input asp-for="Apellidos"
+                                       class="form-control brew-input"
+                                       placeholder="Ej. Rodríguez Mora" />
+
+                                <span asp-validation-for="Apellidos"
+                                      class="text-danger small">
+                                </span>
+
+                            </div>
+
+                            <!-- correo -->
+                            <div class="col-md-6">
+
+                                <label asp-for="Correo"
+                                       class="brew-detail-label">
+                                    Correo electrónico
+                                </label>
+
+                                <input asp-for="Correo"
+                                       type="email"
+                                       class="form-control brew-input"
+                                       placeholder="usuario@correo.com" />
+
+                                <span asp-validation-for="Correo"
+                                      class="text-danger small">
+                                </span>
+
+                            </div>
+
+                            <!-- telefono -->
+                            <div class="col-md-6">
+
+                                <label asp-for="Telefono"
+                                       class="brew-detail-label">
+                                    Teléfono
+                                </label>
+
+                                <input asp-for="Telefono"
+                                       class="form-control brew-input"
+                                       placeholder="8888-8888" />
+
+                                <span asp-validation-for="Telefono"
+                                      class="text-danger small">
+                                </span>
+
+                            </div>
+
+                            <!-- rol -->
+                            <div class="col-12">
+
+                                <label asp-for="NombreRol"
+                                       class="brew-detail-label">
+                                    Rol
+                                </label>
+
+                                <select asp-for="NombreRol"
+                                        class="form-select brew-input">
+
+                                    <option value="">
+                                        Seleccione un rol
+                                    </option>
+
+                                    @foreach (string rol
+                                    in ViewBag.Roles)
+                                    {
+                                        <option value="@rol">
+                                            @rol
+                                        </option>
+                                    }
+
+                                </select>
+
+                                <span asp-validation-for="NombreRol"
+                                      class="text-danger small">
+                                </span>
+
+                                <div class="form-text mt-2">
+                                    El administrador únicamente puede
+                                    crear usuarios con rol Encargado
+                                    o Cocina.
+                                </div>
+
+                            </div>
+
+                            <!-- contra -->
+                            <div class="col-md-6">
+
+                                <label asp-for="Password"
+                                       class="brew-detail-label">
+                                    Contraseña
+                                </label>
+
+                                <input asp-for="Password"
+                                       type="password"
+                                       class="form-control brew-input"
+                                       placeholder="Mínimo 8 caracteres" />
+
+                                <span asp-validation-for="Password"
+                                      class="text-danger small">
+                                </span>
+
+                            </div>
+
+                            <!-- confirmar contra -->
+                            <div class="col-md-6">
+
+                                <label asp-for="ConfirmarPassword"
+                                       class="brew-detail-label">
+                                    Confirmar contraseña
+                                </label>
+
+                                <input asp-for="ConfirmarPassword"
+                                       type="password"
+                                       class="form-control brew-input"
+                                       placeholder="Repita la contraseña" />
+
+                                <span asp-validation-for="ConfirmarPassword"
+                                      class="text-danger small">
+                                </span>
+
+                            </div>
+
+                        </div>
+
+                        <div class="brew-detail-footer"
+                             style="justify-content: flex-end; gap: 0.75rem;">
+
+                            <a asp-action="Index"
+                               class="brew-btn-volver">
+                                Cancelar
+                            </a>
+
+                            <button type="submit"
+                                    class="brew-btn-detalle"
+                                    style="border: none; cursor: pointer;">
+                                Guardar usuario
+                            </button>
+
+                        </div>
+
+                    </form>
+
+                </div>
+
+            </div>
+
+        </div>
+
+    </div>
+
+</div>
+
+@section Scripts {
+    <partial name="_ValidationScriptsPartial" />
+}

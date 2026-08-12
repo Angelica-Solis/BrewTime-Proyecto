@@ -24,7 +24,7 @@ namespace BrewTime.Web.Controllers
         }
 
         // ── Público ──────────────────────────────────────────
-
+        [Authorize(Roles = "Administrador,Encargado")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
@@ -32,7 +32,7 @@ namespace BrewTime.Web.Controllers
 
             return View(collection);
         }
-
+        [Authorize(Roles = "Administrador,Encargado")]
         [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
@@ -44,6 +44,7 @@ namespace BrewTime.Web.Controllers
             return View(menu);
         }
 
+        [Authorize(Roles = "Cliente,Encargado,Cocina,Administrador")]
         [HttpGet]
         public async Task<IActionResult> Disponible()
         {
