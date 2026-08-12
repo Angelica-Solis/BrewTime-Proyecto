@@ -1,12 +1,11 @@
-﻿using BrewTime.Application.Services.Implementations;
+﻿using BrewTime.Application.DTOs;
 using BrewTime.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
-using Microsoft.AspNetCore.Http;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrewTime.Web.Controllers
 {
-    [Authorize]
+    
     public class UsuarioController : Controller
     {
         private readonly IServiceUsuario _serviceUsuario;
@@ -15,81 +14,183 @@ namespace BrewTime.Web.Controllers
         {
             _serviceUsuario = serviceUsuario;
         }
-        // GET: UsuarioController
-        public async Task<IActionResult> Index()
+        // registro de clientes
+
+        [AllowAnonymous]
+        [HttpGet]
+        public IActionResult Register()
+        {
+            return View(new RegistroClienteDTO());
+        }
+
+        [AllowAnonymous]
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> Register(RegistroClienteDTO dto)
+        {
+            if (!ModelState.IsValid)
+            {
+                return View(dto);
+            }
+
+            var resultado = await _serviceUsuario.RegistrarClienteAsync(dto);
+
+            if (!resultado.Exito)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    resultado.Mensaje);
+
+                return View(dto);
+            }
+
+            TempData["Success"] = resultado.Mensaje;
+
+            return RedirectToAction("Index", "Login");
+        }
+
+        // listado de usuarios
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public async Task<IActionResult> Index(string? buscar)
         {
             var collection = await _serviceUsuario.ListAsync();
+
+            if (!string.IsNullOrWhiteSpace(buscar))
+            {
+                buscar = buscar.Trim();
+
+                collection = collection
+                    .Where(u =>
+                        u.Nombre.Contains(
+                            buscar,
+                            StringComparison.OrdinalIgnoreCase)
+                        ||
+                        u.Apellidos.Contains(
+                            buscar,
+                            StringComparison.OrdinalIgnoreCase)
+                        ||
+                        u.NombreRol.Contains(
+                            buscar,
+                            StringComparison.OrdinalIgnoreCase))
+                    .ToList();
+            }
+
+            ViewBag.Buscar = buscar;
+
             return View(collection);
         }
 
-        // GET: UsuarioController/Details/5
+        // detalle usuario
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
             var usuario = await _serviceUsuario.FindByIdAsync(id);
+
+            if (usuario == null)
+            {
+                TempData["Error"] ="El usuario no existe.";
+
+                return RedirectToAction(nameof(Index));
+            }
+
             return View(usuario);
         }
 
-        // GET: UsuarioController/Create
-        public ActionResult Create()
+        // crear usuario
+
+        [HttpGet]
+        public async Task<IActionResult> Create()
         {
-            return View();
+            ViewBag.Roles = await _serviceUsuario.ObtenerRolesAdministrativosAsync();
+
+            return View(new UsuarioCreateDTO());
         }
 
-        // POST: UsuarioController/Create
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Create(IFormCollection collection)
+        public async Task<IActionResult> Create(
+            UsuarioCreateDTO dto)
         {
-            try
+            ViewBag.Roles = await _serviceUsuario.ObtenerRolesAdministrativosAsync();
+
+            if (!ModelState.IsValid)
             {
+                return View(dto);
+            }
+
+            var resultado = await _serviceUsuario.CrearEmpleadoAsync(dto);
+
+            if (!resultado.Exito)
+            {
+                ModelState.AddModelError(
+                    string.Empty,
+                    resultado.Mensaje);
+
+                return View(dto);
+            }
+
+            TempData["Success"] = resultado.Mensaje;
+
+            return RedirectToAction(nameof(Index));
+        }
+
+        // editar usuario
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public async Task<IActionResult> Edit(int id)
+        {
+            var usuario = await _serviceUsuario.ObtenerParaEditarAsync(id);
+
+            if (usuario == null)
+            {
+                TempData["Error"] = "El usuario no existe.";
+
                 return RedirectToAction(nameof(Index));
             }
-            catch
+
+            ViewBag.Roles = new List<string>
             {
-                return View();
-            }
+                "Cliente",
+                "Encargado",
+                "Cocina"
+            };
+
+            return View(usuario);
         }
 
-        // GET: UsuarioController/Edit/5
-        public ActionResult Edit(int id)
-        {
-            return View();
-        }
-
-        // POST: UsuarioController/Edit/5
         [HttpPost]
         [ValidateAntiForgeryToken]
-        public ActionResult Edit(int id, IFormCollection collection)
+        [Authorize(Roles = "Administrador")]
+        public async Task<IActionResult> Edit(UsuarioEditDTO dto)
         {
-            try
+            ViewBag.Roles = new List<string>
             {
-                return RedirectToAction(nameof(Index));
-            }
-            catch
-            {
-                return View();
-            }
-        }
+                "Cliente",
+                "Encargado",
+                "Cocina"
+            };
 
-        // GET: UsuarioController/Delete/5
-        public ActionResult Delete(int id)
-        {
-            return View();
-        }
+            if (!ModelState.IsValid)
+            {
+                return View(dto);
+            }
 
-        // POST: UsuarioController/Delete/5
-        [HttpPost]
-        [ValidateAntiForgeryToken]
-        public ActionResult Delete(int id, IFormCollection collection)
-        {
-            try
+            var resultado = await _serviceUsuario.EditarAsync(dto);
+
+            if (!resultado.Exito)
             {
-                return RedirectToAction(nameof(Index));
+                ModelState.AddModelError(
+                    string.Empty,
+                    resultado.Mensaje);
+
+                return View(dto);
             }
-            catch
-            {
-                return View();
-            }
+
+            TempData["Success"] = resultado.Mensaje;
+
+            return RedirectToAction(nameof(Index));
         }
     }
 }

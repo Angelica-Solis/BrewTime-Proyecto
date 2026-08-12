@@ -1,9 +1,11 @@
 ﻿using BrewTime.Application.DTOs;
 using BrewTime.Application.Services.Interfaces;
+using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 
 namespace BrewTime.Web.Controllers
 {
+    [Authorize(Roles = "Cliente")]
     public class ChatBotController : Controller
     {
         private readonly IServiceChatBot _service;

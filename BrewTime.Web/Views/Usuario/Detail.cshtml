@@ -115,11 +115,20 @@
 
                     </div>
 
-                    <div class="brew-detail-footer">
+                    <div class="brew-detail-footer"
+                         style="gap: 0.75rem;">
+
                         <a asp-action="Index"
                            class="brew-btn-volver">
-                            @SharedLocalizer["VolverListadoBtn"]
+                            Volver
                         </a>
+
+                        <a asp-action="Edit"
+                           asp-route-id="@Model.UsuarioId"
+                           class="brew-btn-detalle">
+                            Editar usuario
+                        </a>
+
                     </div>
 
                 </div>

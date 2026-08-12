@@ -6,7 +6,7 @@ using System.Security.Claims;
 
 namespace BrewTime.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Cliente,Encargado")]
     public class CarritoController : Controller
     {
         private readonly IServiceCarrito _service;

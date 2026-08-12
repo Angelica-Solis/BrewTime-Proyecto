@@ -10,7 +10,7 @@ namespace BrewTime.Application.Services.Interfaces
 {
     public interface IServiceAutenticacion
     {
-        Task<Usuario?> LoginAsync(LoginDTO dto);
+        Task<LoginResult> LoginAsync(LoginDTO dto);
         Task<Usuario?> GetUsuarioByIdAsync(int id);
     }
 }

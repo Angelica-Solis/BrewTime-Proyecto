@@ -787,7 +787,7 @@
     <value>Preparation</value>
   </data>
   <data name="Privacidad" xml:space="preserve">
-    <value>Privacy Policy</value>
+    <value>&gt;&gt;&gt;&gt;&gt;&gt;&gt; def5c594a889f0ae35c70f0bdda871ca0eb4475e</value>
   </data>
   <data name="ProcesoEm" xml:space="preserve">
     <value>Process</value>
@@ -1266,7 +1266,7 @@
   <data name="NewComboBtn" xml:space="preserve">
     <value>New combo</value>
   </data>
-  <data name="ActiveCombos" xml:space="preserve">
+  <data name="ActiveCombo" xml:space="preserve">
     <value>Active combos</value>
   </data>
   <data name="NoActiveCombos" xml:space="preserve">
@@ -1326,11 +1326,17 @@
   <data name="SwalConfirmActivate" xml:space="preserve">
     <value>Yes, activate</value>
   </data>
-  <data name="Cart_TitleMy" xml:space="preserve">
+  <data name="MyCart" xml:space="preserve">
+    <value>My Cart </value>
+  </data>
+  <data name="My" xml:space="preserve">
     <value>My</value>
   </data>
-  <data name="Cart_TitleWord" xml:space="preserve">
+  <data name="Cart" xml:space="preserve">
     <value>Cart</value>
+  </data>
+  <data name="CartSubtitle" xml:space="preserve">
+    <value>Review your products before placing your order.</value>
   </data>
   <data name="Cart_Subtitle" xml:space="preserve">
     <value>Review the products before placing your order.</value>
@@ -1692,122 +1698,118 @@
   <data name="Footer_Copy" xml:space="preserve">
     <value>© 2026 BrewTime — Coffee &amp; Bubble</value>
   </data>
-  <data name="AgregarCarritoBtn" xml:space="preserve">
-    <value>Add to cart</value>
+  <data name="Cart_TitleMy" xml:space="preserve">
+    <value>My</value>
   </data>
-  <data name="lblCantidad" xml:space="preserve">
-    <value>Number</value>
+  <data name="Cart_TitleWord" xml:space="preserve">
+    <value>Cart</value>
   </data>
-	<data name="Tracking_ActiveOrder" xml:space="preserve">
-  <value>Active order</value>
-</data>
-	<data name="Tracking_FollowOrder" xml:space="preserve">
-  <value>Track order</value>
-</data>
-	<data name="Tracking_OrderTracker" xml:space="preserve">
-  <value>Order Tracking</value>
-</data>
-
-	<data name="Tracking_PendingPayment" xml:space="preserve">
-  <value>Pending Payment</value>
-</data>
-
-	<data name="Tracking_Accepted" xml:space="preserve">
-  <value>Accepted</value>
-</data>
-
-	<data name="Tracking_Preparing" xml:space="preserve">
-  <value>Preparing</value>
-</data>
-
-	<data name="Tracking_ReadyPickup" xml:space="preserve">
-  <value>Ready for Pickup</value>
-</data>
-
-	<data name="Tracking_OnTheWay" xml:space="preserve">
-  <value>On the Way</value>
-</data>
-
-	<data name="Tracking_Delivered" xml:space="preserve">
-  <value>Delivered</value>
-</data>
-
-	<data name="OrderDetail_MarkDelivered" xml:space="preserve">
-  <value>Mark as Delivered</value>
-</data>
-
-	<data name="OrderDetail_ReceivedOrder" xml:space="preserve">
-  <value>I Received My Order</value>
-</data>
-
-	<data name="Subtotal" xml:space="preserve">
-  <value>Subtotal</value>
-</data>
-
-	<data name="Total" xml:space="preserve">
-  <value>Total</value>
-</data>
-	<data name="Title" xml:space="preserve">
+  <data name="ClearCart" xml:space="preserve">
+    <value>Clear Cart</value>
+  </data>
+  <data name="Drinks" xml:space="preserve">
+    <value>Drinks</value>
+  </data>
+  <data name="ActiveBeverage" xml:space="preserve">
+    <value>Active Beverage</value>
+  </data>
+  <data name="Cocina" xml:space="preserve">
     <value>Kitchen</value>
   </data>
-	<data name="OrdersIn" xml:space="preserve">
-    <value>Orders in the</value>
+  <data name="OrdersIn" xml:space="preserve">
+    <value>Orders In </value>
   </data>
-	<data name="Kitchen" xml:space="preserve">
+  <data name="Kitchen" xml:space="preserve">
     <value>Kitchen</value>
   </data>
-	<data name="PendingOrders" xml:space="preserve">
-    <value>Pending orders ready to prepare</value>
+  <data name="PendingOrders" xml:space="preserve">
+    <value>Orders Pending Preparation</value>
   </data>
-	<data name="ManagementAndStations" xml:space="preserve">
-    <value>Management and stations</value>
+  <data name="ManagementAndStations" xml:space="preserve">
+    <value>Management &amp; Stations</value>
   </data>
-	<data name="NoPendingOrdersTitle" xml:space="preserve">
-    <value>No pending orders</value>
+  <data name="NoPendingOrdersTitle" xml:space="preserve">
+    <value>There are no pending orders.</value>
   </data>
-	<data name="NoPendingOrdersText" xml:space="preserve">
-    <value>All orders have been completed</value>
+  <data name="NoPendingOrdersText" xml:space="preserve">
+    <value>Actually there are not pending orders.</value>
   </data>
-	<data name="OrdersInPreparation" xml:space="preserve">
-    <value>orders in preparation</value>
+  <data name="OrdersInPreparation" xml:space="preserve">
+    <value>order(s) in preparation </value>
   </data>
-	<data name="OrderNumber" xml:space="preserve">
+  <data name="OrderNumber" xml:space="preserve">
     <value>Order #</value>
   </data>
-	<data name="Client" xml:space="preserve">
-    <value>Client:</value>
+  <data name="Client" xml:space="preserve">
+    <value>Client</value>
   </data>
-	<data name="Food" xml:space="preserve">
+  <data name="Food" xml:space="preserve">
     <value>Food</value>
   </data>
-	<data name="NoProducts" xml:space="preserve">
-    <value>No products</value>
-  </data>
-	<data name="PartOfCombo" xml:space="preserve">
-    <value>Part of combo:</value>
-  </data>
-	<data name="Stations" xml:space="preserve">
-    <value>Stations</value>
-  </data>
-	<data name="NoStations" xml:space="preserve">
-    <value>No stations assigned</value>
-  </data>
-	<data name="Min" xml:space="preserve">
-    <value>min</value>
-  </data>
-	<data name="Pending" xml:space="preserve">
-    <value>Pending</value>
-  </data>
-	<data name="InProcess" xml:space="preserve">
-    <value>In process</value>
-  </data>
-	<data name="Coffee" xml:space="preserve">
+  <data name="Coffee" xml:space="preserve">
     <value>Coffee</value>
   </data>
-	<data name="BubbleTea" xml:space="preserve">
-    <value>Bubble Tea</value>
+  <data name="BubbleTea" xml:space="preserve">
+    <value>BubbleTea</value>
   </data>
-	<data name="Done" xml:space="preserve">
+  <data name="NoProducts" xml:space="preserve">
+    <value>There are no products.</value>
+  </data>
+  <data name="PartOfCombo" xml:space="preserve">
+    <value>Part of Combo:</value>
+  </data>
+  <data name="Stations" xml:space="preserve">
+    <value>Stations</value>
+  </data>
+  <data name="NoStations" xml:space="preserve">
+    <value>There are no configurate stations.</value>
+  </data>
+  <data name="Min" xml:space="preserve">
+    <value>min</value>
+  </data>
+  <data name="Pending" xml:space="preserve">
+    <value>Pending</value>
+  </data>
+  <data name="InProcess" xml:space="preserve">
+    <value>In Process</value>
+  </data>
+  <data name="Done" xml:space="preserve">
     <value>Done</value>
+  </data>
+  <data name="Tracking_PendingPayment" xml:space="preserve">
+    <value>Pending Payment </value>
+  </data>
+  <data name="Tracking_Accepted" xml:space="preserve">
+    <value>Payment Received</value>
+  </data>
+  <data name="Tracking_Preparing" xml:space="preserve">
+    <value>In preparation </value>
+  </data>
+  <data name="Tracking_ReadyPickup" xml:space="preserve">
+    <value>Ready to pick up </value>
+  </data>
+  <data name="Tracking_OnTheWay" xml:space="preserve">
+    <value>On the way</value>
+  </data>
+  <data name="Tracking_Delivered" xml:space="preserve">
+    <value>Delivered</value>
+  </data>
+  <data name="Tracking_ActiveOrder" xml:space="preserve">
+    <value>You have  an active order</value>
+  </data>
+  <data name="Tracking_FollowOrder" xml:space="preserve">
+    <value>Follow Order</value>
+  </data>
+  <data name="Tracking_OrderDetails" xml:space="preserve">
+    <value>Order Details </value>
+  </data>
+  <data name="Tracking_OrderTracker" xml:space="preserve">
+    <value>Tracking your order</value>
+  </data>
+  <data name="OrderDetail_MarkDelivered" xml:space="preserve">
+    <value>Mark Delivered</value>
+  </data>
+  <data name="OrderDetail_ReceivedOrder" xml:space="preserve">
+    <value>I already received my order!</value>
   </data>
 </root>

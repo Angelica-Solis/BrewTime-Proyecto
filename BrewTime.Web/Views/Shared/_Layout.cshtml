@@ -61,6 +61,22 @@
     </script>
 }
 <body class="brew-body">
+    @{
+        int cantidadCarrito = 0;
+
+        if (User.Identity?.IsAuthenticated == true &&
+        (User.IsInRole("Cliente") || User.IsInRole("Encargado")))
+        {
+            var idClaim = User.FindFirst(ClaimTypes.NameIdentifier);
+
+            if (idClaim != null &&
+            int.TryParse(idClaim.Value, out int usuarioId))
+            {
+                cantidadCarrito =
+                await ServiceCarrito.CantidadItemsAsync(usuarioId);
+            }
+        }
+    }
     <header>
         <nav class="brew-navbar navbar navbar-expand-sm navbar-toggleable-sm">
             <div class="container-fluid">
@@ -84,148 +100,226 @@
                 <!-- Links -->
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
                     <ul class="navbar-nav flex-grow-1 align-items-center flex-wrap">
-                        <li class="nav-item">
-                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Home" asp-action="Index">@SharedLocalizer["Inicio"]</a>
-                        </li>
-                        @{
-                            int cantidadCarrito = 0;
-
-                            if (User.Identity!.IsAuthenticated)
-                            {
-                                var idClaim = User.FindFirst(ClaimTypes.NameIdentifier);
-
-                                if (idClaim != null)
-                                {
-                                    cantidadCarrito = await ServiceCarrito.CantidadItemsAsync(
-                                    int.Parse(idClaim.Value));
-                                }
-                            }
-                        }
                         @if (User.Identity!.IsAuthenticated)
                         {
-                            <li class="nav-item">
-                                <a class="brew-nav-link nav-link" asp-area="" asp-controller="Pedido" asp-action="Index">@SharedLocalizer["Pedidos"]</a>
-                            </li>
+                            var esCliente = User.IsInRole("Cliente");
+                            var esEncargado = User.IsInRole("Encargado");
+                            var esCocina = User.IsInRole("Cocina");
+                            var esAdministrador = User.IsInRole("Administrador");
 
-                            <!-- Dropdown de Menús -->
-                            <li class="nav-item dropdown">
-                                <a class="brew-nav-link nav-link dropdown-toggle" href="#" id="navbarDropdownMenus" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    @SharedLocalizer["Menus"]
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownMenus" style="background-color: #1a2712; border-color: rgba(201,149,106,0.3);">
-                                    <li><a class="dropdown-item brew-nav-link" asp-controller="Menu" asp-action="Disponible">@SharedLocalizer["MenuDisponible"]</a></li>
-                                    <li><a class="dropdown-item brew-nav-link" asp-controller="Menu" asp-action="Index">@SharedLocalizer["HistorialMenus"]</a></li>
-                                </ul>
-                            </li>
-
-                            <!-- Dropdown de Explorar -->
-                            <li class="nav-item dropdown">
-                                <a class="brew-nav-link nav-link dropdown-toggle" href="#" id="navbarDropdownExplorar" role="button" data-bs-toggle="dropdown" aria-expanded="false">
-                                    @SharedLocalizer["Explorar"]
-                                </a>
-                                <ul class="dropdown-menu dropdown-menu-dark" aria-labelledby="navbarDropdownExplorar" style="background-color: #1a2712; border-color: rgba(201,149,106,0.3);">
-                                    <li><a class="dropdown-item brew-nav-link" asp-controller="Producto" asp-action="Index">@SharedLocalizer["Productos"]</a></li>
-                                    <li><a class="dropdown-item brew-nav-link" asp-controller="Combo" asp-action="Index">@SharedLocalizer["Combos"]</a></li>
-                                    <li><a class="dropdown-item brew-nav-link" asp-controller="ProcesoPreparacion" asp-action="Index">@SharedLocalizer["Procesos"]</a></li>
-                                    @if (User.IsInRole("Administrador") || (User.IsInRole("Encargado")))
-                                    {
-                                        <li class="nav-item">
-                                            <a class="brew-nav-link nav-link" asp-area="" asp-controller="Combo" asp-action="ProductosInconsistentes"> @SharedLocalizer["CombosInconsistentes"] </a>
-                                        </li>
-                                    }
-                                </ul>
-                            </li>
-
-                            @if (User.IsInRole("Administrador"))
+                            // Pedidos
+                            @if (esCliente || esEncargado || esAdministrador)
                             {
                                 <li class="nav-item">
-                                    <a class="brew-nav-link nav-link" asp-controller="Usuario" asp-action="Index">@SharedLocalizer["Usuarios"]</a>
-                                </li>
-                            }
-                            @if (User.IsInRole("Cocina") || User.IsInRole("Administrador"))
-                            {
-                                <li class="nav-item">
-                                    <a class="brew-nav-link nav-link" asp-controller="Cocina" asp-action="Index">
-                                        @SharedLocalizer["Cocina"]
-                                        
+                                    <a class="brew-nav-link nav-link"
+                                       asp-controller="Pedido"
+                                       asp-action="Index">
+                                        @SharedLocalizer["Pedidos"]
                                     </a>
                                 </li>
                             }
-                        }
-                        else
-                        {
-                            <li class="nav-item">
-                                <a class="brew-nav-link nav-link" asp-area="" asp-controller="Menu" asp-action="Disponible">@SharedLocalizer["MenuDisponible"]</a>
+
+                            // Menus
+                            <li class="nav-item dropdown">
+                                <a class="brew-nav-link nav-link dropdown-toggle"
+                                   href="#"
+                                   id="navbarDropdownMenus"
+                                   role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+
+                                    @SharedLocalizer["Menus"]
+
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-dark"
+                                    aria-labelledby="navbarDropdownMenus"
+                                    style="background-color:#1a2712;
+                   border-color:rgba(201,149,106,0.3);">
+
+                                    <li>
+                                        <a class="dropdown-item brew-nav-link"
+                                           asp-controller="Menu"
+                                           asp-action="Disponible">
+                                            @SharedLocalizer["MenuDisponible"]
+                                        </a>
+                                    </li>
+
+                                    @if (esEncargado || esAdministrador)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item brew-nav-link"
+                                               asp-controller="Menu"
+                                               asp-action="Index">
+                                                @SharedLocalizer["HistorialMenus"]
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
                             </li>
-                        }
 
+                            // productos y combos
+                            <li class="nav-item dropdown">
 
-                        <!-- Selector de Idioma -->
-                        <li class="nav-item brew-lang-item">
-                            @{
-                                var requestCulture = Context.Features.Get<IRequestCultureFeature>();
-                                var cultureItems = LocOptions.Value.SupportedUICultures
-                                .Select(c => new SelectListItem { Value = c.Name, Text = c.NativeName })
-                                .ToList();
+                                <a class="brew-nav-link nav-link dropdown-toggle"
+                                   href="#"
+                                   id="navbarDropdownExplorar"
+                                   role="button"
+                                   data-bs-toggle="dropdown"
+                                   aria-expanded="false">
+
+                                    @SharedLocalizer["Explorar"]
+
+                                </a>
+
+                                <ul class="dropdown-menu dropdown-menu-dark"
+                                    aria-labelledby="navbarDropdownExplorar"
+                                    style="background-color:#1a2712;
+                   border-color:rgba(201,149,106,0.3);">
+
+                                    @if (esCliente || esEncargado || esAdministrador)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item brew-nav-link"
+                                               asp-controller="Producto"
+                                               asp-action="Index">
+                                                @SharedLocalizer["Productos"]
+                                            </a>
+                                        </li>
+
+                                        <li>
+                                            <a class="dropdown-item brew-nav-link"
+                                               asp-controller="Combo"
+                                               asp-action="Index">
+                                                @SharedLocalizer["Combos"]
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (esCocina || esAdministrador)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item brew-nav-link"
+                                               asp-controller="ProcesoPreparacion"
+                                               asp-action="Index">
+                                                @SharedLocalizer["Procesos"]
+                                            </a>
+                                        </li>
+                                    }
+
+                                    @if (esAdministrador || esEncargado)
+                                    {
+                                        <li>
+                                            <a class="dropdown-item brew-nav-link"
+                                               asp-controller="Combo"
+                                               asp-action="ProductosInconsistentes">
+                                                @SharedLocalizer["CombosInconsistentes"]
+                                            </a>
+                                        </li>
+                                    }
+
+                                </ul>
+                            </li>
+
+                            // usuarios
+                            @if (esAdministrador)
+                            {
+                                <li class="nav-item">
+
+                                    <a class="brew-nav-link nav-link"
+                                       asp-controller="Usuario"
+                                       asp-action="Index">
+
+                                        @SharedLocalizer["Usuarios"]
+
+                                    </a>
+
+                                </li>
                             }
-                            <form asp-controller="Language" asp-action="SetLanguage"
-                                  asp-route-returnUrl="@Context.Request.Path"
-                                  method="post" class="brew-lang-form">
-                                <span class="brew-lang-label">@SharedLocalizer["SeleccionIdioma"]</span>
-                                <select name="culture" class="brew-lang-select"
-                                        onchange="this.form.submit();"
-                                        asp-for="@requestCulture.RequestCulture.UICulture.Name"
-                                        asp-items="cultureItems">
-                                </select>
-                            </form>
-                        </li>
 
-                        <!-- Para el login -->
-                        @if (User.Identity!.IsAuthenticated)
-                        {
+                            // cocina
+                            @if (esCocina)
+                            {
+                                <li class="nav-item">
 
-                            <li class="nav-item me-3">
+                                    <a class="brew-nav-link nav-link"
+                                       asp-controller="Cocina"
+                                       asp-action="Index">
 
-                                <a asp-controller="Carrito"
-                                   asp-action="Index"
-                                   class="position-relative brew-nav-link">
+                                        <i class="bi bi-fire me-1"></i>
+                                        @SharedLocalizer["Cocina"]
 
-                                    <i class="bi bi-cart3 fs-4"></i>
+                                    </a>
 
-                                    <span id="cantidadCarrito"
-                                          class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
-                                          style="display:@(cantidadCarrito>0?"inline-block":"none")">
+                                </li>
+                            }
 
-                                        @cantidadCarrito
+                            // carrito
+                            @if (esCliente || esEncargado)
+                            {
+                                <li class="nav-item me-3">
 
+                                    <a asp-controller="Carrito"
+                                       asp-action="Index"
+                                       class="position-relative brew-nav-link">
+
+                                        <i class="bi bi-cart3 fs-4"></i>
+
+                                        <span id="cantidadCarrito"
+                                              class="position-absolute top-0 start-100 translate-middle badge rounded-pill bg-danger"
+                                              style="display:@(cantidadCarrito > 0 ? "inline-block" : "none")">
+
+                                            @cantidadCarrito
+
+                                        </span>
+
+                                    </a>
+
+                                </li>
+                            }
+
+                            // usuario actual 
+                            <li class="nav-item d-flex align-items-center">
+
+                                <span class="brew-nav-link"
+                                      style="cursor:default; opacity:0.9;">
+
+                                    @SharedLocalizer["Hola"] @User.Identity.Name
+
+                                </span>
+
+                            </li>
+
+                            // cerrar sesion
+                            <li class="nav-item ms-2">
+
+                                <a asp-controller="Login"
+                                   asp-action="Logout"
+                                   class="brew-logout-btn">
+
+                                    <i class="bi bi-box-arrow-right"></i>
+
+                                    <span>
+                                        @SharedLocalizer["CerrarSesion"]
                                     </span>
 
                                 </a>
 
                             </li>
-
-                            <li class="nav-item d-flex align-items-center">
-
-                                <span class="brew-nav-link" style="cursor: default; opacity: 0.9;">
-                                    @SharedLocalizer["Hola"] @User.Identity.Name
-                                </span>
-                            </li>
-                            <li class="nav-item">
-                                <a asp-controller="Login"
-                                   asp-action="Logout"
-                                   class="brew-nav-link">
-                                    @SharedLocalizer["CerrarSesion"]
-                                </a>
-                            </li>
                         }
                         else
                         {
                             <li class="nav-item">
+
                                 <a asp-controller="Login"
                                    asp-action="Index"
                                    class="brew-nav-link">
+
                                     @SharedLocalizer["IniciarSesion"]
+
                                 </a>
+
                             </li>
                         }
 
