@@ -524,3 +524,16 @@
         background: rgba(255,248,240,0.9);
         box-shadow: 0 0 0 3px rgba(74,106,50,0.12);
     }
+
+.brew-register-link {
+    color: var(--cafe-dark);
+    font-weight: 600;
+    text-decoration: none;
+    margin-left: 0.3rem;
+    transition: color 0.18s ease;
+}
+
+    .brew-register-link:hover {
+        color: var(--musgo);
+        text-decoration: underline;
+    }

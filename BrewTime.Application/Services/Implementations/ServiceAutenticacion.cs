@@ -20,21 +20,36 @@ namespace BrewTime.Application.Services.Implementations
             _repository = repository;
         }
 
-        public async Task<Usuario?> LoginAsync(LoginDTO dto)
+        public async Task<LoginResult> LoginAsync(LoginDTO dto)
         {
-            // buscar usuario por correo
             var usuario = await _repository.FindByCorreoAsync(dto.Correo);
 
             if (usuario == null)
-                return null;
+            {
+                return new LoginResult
+                {
+                    Exitoso = false,
+                    Mensaje = "El correo ingresado no está registrado."
+                };
+            }
 
-            // validar contraseña
-            bool passwordCorrecta = PasswordHelper.VerifyPassword(usuario, dto.Password);
+            bool passwordCorrecta =
+                PasswordHelper.VerifyPassword(usuario, dto.Password);
 
             if (!passwordCorrecta)
-                return null;
+            {
+                return new LoginResult
+                {
+                    Exitoso = false,
+                    Mensaje = "La contraseña ingresada es incorrecta."
+                };
+            }
 
-            return usuario;
+            return new LoginResult
+            {
+                Exitoso = true,
+                Usuario = usuario
+            };
         }
 
         public async Task<Usuario?> GetUsuarioByIdAsync(int id)

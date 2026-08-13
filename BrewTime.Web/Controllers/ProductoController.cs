@@ -42,20 +42,21 @@ namespace BrewTime.Web.Controllers
             // Catálogo completo de ingredientes activos, para los checkboxes del formulario
             ViewBag.IngredientesDisponibles = await _serviceIngrediente.ListActivasAsync();
         }
-
+        [Authorize(Roles = "Cliente,Encargado,Administrador")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var collection = await _serviceProducto.ListAsync();
             return View(collection);
         }
-
+        [Authorize(Roles = "Cliente,Encargado,Administrador")]
         [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
             var producto = await _serviceProducto.FindByIdAsync(id);
             return View(producto);
         }
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> Maintenance()
         {
@@ -65,7 +66,7 @@ namespace BrewTime.Web.Controllers
             ViewBag.Inactivos = inactivos;
             return View(activos);   // Model = activos, ViewBag.Inactivos = inactivos
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
@@ -73,7 +74,7 @@ namespace BrewTime.Web.Controllers
             await CargarIngredientesAsync();
             return View(new ProductoFormDTO());
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> Create(ProductoFormDTO dto)
         {
@@ -94,7 +95,7 @@ namespace BrewTime.Web.Controllers
             await _serviceProducto.CreateAsync(dto, _webHostEnvironment.WebRootPath);
             return RedirectToAction(nameof(Maintenance));
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -103,7 +104,7 @@ namespace BrewTime.Web.Controllers
             await CargarIngredientesAsync();
             return View(dto);
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> Edit(ProductoFormDTO dto)
         {
@@ -124,7 +125,7 @@ namespace BrewTime.Web.Controllers
             await _serviceProducto.UpdateAsync(dto, _webHostEnvironment.WebRootPath);
             return RedirectToAction(nameof(Maintenance));
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> ToggleActivo(int id)
         {

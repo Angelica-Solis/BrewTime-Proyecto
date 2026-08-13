@@ -40,5 +40,33 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                 .Include(u => u.Rol)
                 .FirstOrDefaultAsync(u => u.Correo == correo && u.Activo);
         }
+
+        public async Task<bool> ExistsByCorreoAsync(string correo)
+        {
+            correo = correo.Trim();
+
+            return await _context.Usuario
+                .AnyAsync(u => u.Correo == correo);
+        }
+
+        public async Task<Rol?> FindRolByNombreAsync(string nombreRol)
+        {
+            nombreRol = nombreRol.Trim();
+
+            return await _context.Rol
+                .FirstOrDefaultAsync(r => r.Nombre == nombreRol);
+        }
+
+        public async Task AddAsync(Usuario usuario)
+        {
+            await _context.Usuario.AddAsync(usuario);
+            await _context.SaveChangesAsync();
+        }
+
+        public async Task UpdateAsync(Usuario usuario)
+        {
+            _context.Usuario.Update(usuario);
+            await _context.SaveChangesAsync();
+        }
     }
 }

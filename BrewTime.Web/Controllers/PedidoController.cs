@@ -8,7 +8,7 @@ using BrewTime.Application.DTOs;
 
 namespace BrewTime.Web.Controllers
 {
-    [Authorize]
+    [Authorize(Roles = "Cliente,Encargado,Administrador")]
     public class PedidoController : Controller
     {
         private readonly IServicePedido _servicePedido;

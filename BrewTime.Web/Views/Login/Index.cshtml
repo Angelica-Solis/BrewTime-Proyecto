@@ -42,6 +42,20 @@
                         <button type="submit" class="brew-btn-detalle" style="width:100%; justify-content:center; padding:0.7rem 1rem; font-size:0.75rem; margin-top:0.5rem;">
                             @SharedLocalizer["Login_SubmitBtn"]
                         </button>
+                        
+                        <div class="text-center mt-4">
+
+                            <span class="text-muted">
+                                ¿No tienes una cuenta?
+                            </span>
+
+                            <a asp-controller="Usuario"
+                               asp-action="Register"
+                               class="brew-register-link">
+                                Regístrate aquí
+                            </a>
+
+                        </div>
                     </form>
                 </div>
             </div>

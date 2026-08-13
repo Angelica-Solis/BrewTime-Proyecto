@@ -31,13 +31,15 @@ namespace BrewTime.Web.Controllers
             if (!ModelState.IsValid)
                 return View(dto);
 
-            var usuario = await _service.LoginAsync(dto);
+            var resultado = await _service.LoginAsync(dto);
 
-            if (usuario == null)
+            if (!resultado.Exitoso)
             {
-                TempData["Error"] = "Correo o contraseña incorrectos.";
+                ModelState.AddModelError(string.Empty, resultado.Mensaje);
                 return View(dto);
             }
+
+            var usuario = resultado.Usuario;
 
             var claims = new List<Claim>
             {

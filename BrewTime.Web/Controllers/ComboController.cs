@@ -27,14 +27,14 @@ namespace BrewTime.Web.Controllers
         }
 
         // ── Público ──────────────────────────────────────────
-
+        [Authorize(Roles = "Administrador,Cliente,Encargado")]
         [HttpGet]
         public async Task<IActionResult> Index()
         {
             var collection = await _serviceCombo.ListAsync();
             return View(collection);
         }
-
+        [Authorize(Roles = "Administrador,Cliente,Encargado")]
         [HttpGet]
         public async Task<IActionResult> Detail(int id)
         {
@@ -43,7 +43,7 @@ namespace BrewTime.Web.Controllers
         }
 
         // ── Mantenimiento ─────────────────────────────────────
-
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> Maintenance()
         {
@@ -52,14 +52,14 @@ namespace BrewTime.Web.Controllers
             ViewBag.Inactivos = inactivos;
             return View(activos);
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> Create()
         {
             await CargarDatosFormulario(null);
             return View(new ComboFormDTO());
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> Create(ComboFormDTO dto)
         {
@@ -74,7 +74,7 @@ namespace BrewTime.Web.Controllers
             await _serviceCombo.CreateAsync(dto, _webHostEnvironment.WebRootPath);
             return RedirectToAction(nameof(Maintenance));
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> Edit(int id)
         {
@@ -82,7 +82,7 @@ namespace BrewTime.Web.Controllers
             await CargarDatosFormulario(dto);
             return View(dto);
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> Edit(ComboFormDTO dto)
         {
@@ -97,7 +97,7 @@ namespace BrewTime.Web.Controllers
             await _serviceCombo.UpdateAsync(dto, _webHostEnvironment.WebRootPath);
             return RedirectToAction(nameof(Maintenance));
         }
-
+        [Authorize(Roles = "Administrador")]
         [HttpPost]
         public async Task<IActionResult> ToggleActivo(int id)
         {
