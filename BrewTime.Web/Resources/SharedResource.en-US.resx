@@ -1779,4 +1779,31 @@
   <data name="OrderDetail_ReceivedOrder" xml:space="preserve">
     <value>I already received my order!</value>
   </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="CostoBaseEnvioLabel" xml:space="preserve">
+    <value>Base delivery cost</value>
+  </data>
+  <data name="CostoPorDistanciaLabel" xml:space="preserve">
+    <value>Distance cost</value>
+  </data>
+  <data name="CostoTotalEnvioLabel" xml:space="preserve">
+    <value>Total delivery cost</value>
+  </data>
+  <data name="Reg_BuscarDireccionPlaceholder" xml:space="preserve">
+    <value>Enter or search delivery address</value>
+  </data>
+  <data name="Reg_CalcularEntregaBtn" xml:space="preserve">
+    <value>Calculate delivery cost</value>
+  </data>
+  <data name="Reg_DireccionEncontradaLabel" xml:space="preserve">
+    <value>Address found</value>
+  </data>
+  <data name="Reg_DistanciaLabel" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="Reg_TiempoEstimadoLabel" xml:space="preserve">
+    <value>Estimated time</value>
+  </data>
 </root>
