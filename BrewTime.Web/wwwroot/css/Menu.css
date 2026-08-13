@@ -1886,113 +1886,123 @@
         .menu-maintenance-card-inactive:hover {
             opacity: 0.9;
         }
+}
+/* cierre de @media (max-width: 650px) que quedaba abierto */
 
-
-    /* 
+/* 
    RESPONSIVE
  */
 
-    @media (max-width: 768px) {
-        .menu-hero {
-            padding: 2.5rem 1.5rem 2rem;
-        }
-
-        .menu-content {
-            padding: 2rem 1.25rem 3rem;
-        }
-
-        .menu-table-card,
-        .menu-table-wrapper {
-            padding: 0.8rem;
-            overflow-x: auto;
-        }
-
-        .menu-table {
-            min-width: 720px;
-            font-size: 0.85rem;
-        }
-
-        .menu-detail-body {
-            padding: 1.4rem;
-        }
-
-        .menu-detail-title {
-            font-size: 1.9rem;
-        }
-
-        .menu-restaurant-body {
-            padding: 1.3rem;
-        }
-
-        .menu-restaurant-header h2,
-        .menu-board-title {
-            font-size: 2rem;
-        }
-
-        .menu-modern-header {
-            padding: 1.7rem 1.2rem 1.3rem;
-        }
-
-        .menu-modern-range {
-            grid-template-columns: 1fr;
-        }
-
-        .menu-modern-body {
-            padding: 1.4rem 1.15rem 1.8rem;
-        }
-
-        .menu-modern-grid {
-            grid-template-columns: 1fr;
-            column-gap: 0;
-        }
-
-        .menu-list-item p {
-            max-width: 100%;
-        }
-
-        .menu-index-header {
-            flex-direction: column;
-            align-items: flex-start;
-        }
+@media (max-width: 768px) {
+    .menu-hero {
+        padding: 2.5rem 1.5rem 2rem;
     }
 
-    /*
+    .menu-content {
+        padding: 2rem 1.25rem 3rem;
+    }
+
+    .menu-table-card,
+    .menu-table-wrapper {
+        padding: 0.8rem;
+        overflow-x: auto;
+    }
+
+    .menu-table {
+        min-width: 720px;
+        font-size: 0.85rem;
+    }
+
+    .menu-detail-body {
+        padding: 1.4rem;
+    }
+
+    .menu-detail-title {
+        font-size: 1.9rem;
+    }
+
+    .menu-restaurant-body {
+        padding: 1.3rem;
+    }
+
+    .menu-restaurant-header h2,
+    .menu-board-title {
+        font-size: 2rem;
+    }
+
+    .menu-modern-header {
+        padding: 1.7rem 1.2rem 1.3rem;
+    }
+
+    .menu-modern-range {
+        grid-template-columns: 1fr;
+    }
+
+    .menu-modern-body {
+        padding: 1.4rem 1.15rem 1.8rem;
+    }
+
+    .menu-modern-grid {
+        grid-template-columns: 1fr;
+        column-gap: 0;
+    }
+
+    .menu-list-item p {
+        max-width: 100%;
+    }
+
+    .menu-index-header {
+        flex-direction: column;
+        align-items: flex-start;
+    }
+
+    .menu-item-image,
+    .menu-item-image-empty {
+        width: 52px;
+        height: 52px;
+    }
+}
+
+/*
    IMAGEN EN LISTA DE MENÚ
 */
 
-    .menu-list-item {
-        display: flex;
-        align-items: flex-start;
-        gap: 0.9rem;
-    }
+.menu-list-item {
+    display: flex;
+    align-items: flex-start;
+    gap: 1rem;
+}
 
-    .menu-list-media {
-        flex-shrink: 0;
-    }
+.menu-list-media {
+    flex-shrink: 0;
+}
 
-    .menu-item-image {
-        display: block;
-        width: 58px;
-        height: 58px;
-        border-radius: 10px;
-        object-fit: cover;
-        border: 1px solid rgba(120,80,30,0.18);
-    }
+.menu-item-image {
+    display: block;
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    object-fit: cover;
+    border: 1px solid rgba(120,80,30,0.18);
+    box-shadow: 0 3px 8px rgba(60,40,20,0.14);
+}
 
-    .menu-item-image-empty {
-        display: flex;
-        align-items: center;
-        justify-content: center;
-        width: 58px;
-        height: 58px;
-        border-radius: 10px;
-        background: rgba(201,149,106,0.14);
-        border: 1px solid rgba(120,80,30,0.18);
-        color: var(--cafe-dark);
-        font-size: 1.2rem;
-    }
+.menu-item-image-empty {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    width: 72px;
+    height: 72px;
+    border-radius: 12px;
+    background: linear-gradient(135deg, rgba(201,149,106,0.22), rgba(201,149,106,0.08));
+    border: 1px solid rgba(120,80,30,0.18);
+}
 
-    .menu-list-item .menu-list-info {
-        flex: 1;
-        min-width: 0;
-    }
+.menu-list-item .menu-list-info {
+    flex: 1;
+    min-width: 0;
+}
+
+.menu-list-title-row h5 {
+    white-space: normal;
+}
