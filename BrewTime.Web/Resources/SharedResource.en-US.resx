@@ -1576,7 +1576,7 @@
     <value>Delivery Address</value>
   </data>
   <data name="Reg_AddressPlaceholder" xml:space="preserve">
-    <value>Province, canton, district and other details, Example: Alajuela, Alajuela, Villabonita...</value>
+    <value>Example: National Technical University, Main Campus in Alajuela</value>
   </data>
   <data name="Reg_OrderDetailTitle" xml:space="preserve">
     <value>Order Details</value>

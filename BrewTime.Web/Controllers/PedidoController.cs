@@ -277,7 +277,7 @@ namespace BrewTime.Web.Controllers
             {
                 await _servicePedido.ProcesarPagoAsync(dto, UsuarioActual, RolActual);
 
-                TempData["Success"] = "El pago se proces� correctamente";
+                TempData["Success"] = "El pago se procesó correctamente";
 
                 return RedirectToAction(nameof(Detail), new { id = dto.PedidoId });
             }

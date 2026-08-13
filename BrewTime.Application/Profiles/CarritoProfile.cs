@@ -31,7 +31,10 @@ namespace BrewTime.Application.Profiles
                         ? src.Producto.ProductoImagen
                         .OrderByDescending(i => i.EsPrincipal)
                         .Select(i => i.RutaImagen)
-                        .FirstOrDefault() : null));
+                        .FirstOrDefault()
+                        : src.Combo != null
+                        ? src.Combo.RutaImagen
+                        : null));
         }
     }
 }

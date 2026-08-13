@@ -28,6 +28,10 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                     .ThenInclude(x => x.Producto)
                         .ThenInclude(x => x.Categoria)
 
+                .Include(x => x.MenuProducto)
+                    .ThenInclude(x => x.Producto)
+                        .ThenInclude(x => x.ProductoImagen)
+
                 .Include(x => x.MenuCombo)
                     .ThenInclude(x => x.Combo)
                         .ThenInclude(x => x.Categoria);
@@ -178,7 +182,7 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                     .Distinct()
                     .ToHashSet();
 
-                // ── Productos eliminados ─────────────────────
+                // ── Productos eliminados
 
                 var productosEliminar = entity.MenuProducto
                     .Where(x =>
@@ -188,7 +192,7 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                 _context.Set<MenuProducto>()
                     .RemoveRange(productosEliminar);
 
-                // ── Productos nuevos ─────────────────────────
+                // ── Productos nuevos
 
                 var productosActuales = entity.MenuProducto
                     .Select(x => x.ProductoId)
@@ -204,7 +208,7 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                     });
                 }
 
-                // ── Combos eliminados ────────────────────────
+                // ── Combos eliminados
 
                 var combosEliminar = entity.MenuCombo
                     .Where(x =>
@@ -214,7 +218,7 @@ namespace BrewTime.Infraestructure.Repository.Implemetations
                 _context.Set<MenuCombo>()
                     .RemoveRange(combosEliminar);
 
-                // ── Combos nuevos ────────────────────────────
+                // ── Combos nuevos 
 
                 var combosActuales = entity.MenuCombo
                     .Select(x => x.ComboId)
