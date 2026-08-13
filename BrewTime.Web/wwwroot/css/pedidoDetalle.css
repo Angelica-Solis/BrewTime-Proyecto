@@ -104,64 +104,9 @@
 .brew-meta-value {
     font-size: 0.9rem;
     font-weight: 500;
-    color: var(--texto);
-    overflow-wrap: anywhere;
 }
 
-
-/* ─────────────────────────────
-   ESTADOS
-───────────────────────────── */
-
-.order-badge {
-    display: inline-flex;
-    align-items: center;
-    padding: 0.3rem 0.75rem;
-    border-radius: 50px;
-    font-size: 0.7rem;
-    font-weight: 700;
-    text-transform: uppercase;
-    letter-spacing: 0.04em;
-    white-space: nowrap;
-}
-
-.estado-pendiente {
-    background-color: #d99624;
-    color: white;
-}
-
-.estado-preparando {
-    background-color: #477ca0;
-    color: white;
-}
-
-.estado-listo {
-    background-color: #4d804d;
-    color: white;
-}
-
-.estado-entregado {
-    background-color: var(--musgo);
-    color: white;
-}
-
-.estado-cancelado {
-    background-color: #a8463f;
-    color: white;
-}
-
-
-/* ─────────────────────────────
-   TABLA
-───────────────────────────── */
-
-.table-responsive {
-    width: 100%;
-    overflow-x: auto;
-    border-radius: 12px;
-    border: 1px solid var(--borde);
-}
-
+/* Tabla: header verde oscuro + stripe, igual que el listado */
 .brew-detail-table {
     width: 100%;
     border-collapse: collapse;
@@ -201,54 +146,8 @@
     }
 
     .brew-detail-table tbody tr:hover {
-        background: rgba(201, 149, 106, 0.12);
+        background-color: rgba(201,149,106,0.1);
     }
-
-
-    /* Distribución de columnas */
-
-    .brew-detail-table th:nth-child(1),
-    .brew-detail-table td:nth-child(1) {
-        width: 24%;
-    }
-
-    .brew-detail-table th:nth-child(2),
-    .brew-detail-table td:nth-child(2) {
-        width: 13%;
-    }
-
-    .brew-detail-table th:nth-child(3),
-    .brew-detail-table td:nth-child(3) {
-        width: 11%;
-    }
-
-    .brew-detail-table th:nth-child(4),
-    .brew-detail-table td:nth-child(4) {
-        width: 15%;
-    }
-
-    .brew-detail-table th:nth-child(5),
-    .brew-detail-table td:nth-child(5) {
-        width: 13%;
-    }
-
-    .brew-detail-table th:nth-child(6),
-    .brew-detail-table td:nth-child(6) {
-        width: 24%;
-    }
-
-.brew-producto {
-    font-weight: 600;
-}
-
-.brew-observacion {
-    color: var(--texto-soft);
-}
-
-
-/* ─────────────────────────────
-   RESUMEN / TOTALES
-───────────────────────────── */
 
 .brew-summary-box {
     width: 340px;
@@ -267,7 +166,6 @@
     gap: 1rem;
     margin-bottom: 0.55rem;
     font-size: 0.85rem;
-    color: var(--texto);
 }
 
     .summary-row:last-child {
@@ -281,24 +179,10 @@
         font-family: var(--display);
         font-size: 1.05rem;
         font-weight: 700;
-        color: var(--musgo);
+        color: #1a2712;
     }
 
-
-/* ─────────────────────────────
-   BOTONES
-───────────────────────────── */
-
-.brew-detail-actions {
-    display: flex;
-    align-items: center;
-    gap: 0.6rem;
-    margin-top: 1rem;
-}
-
-
-/* Volver */
-
+/* Botón "Volver": sólido verde oscuro, igual que "VER DETALLE" / "Filtrar" */
 .brew-back-btn {
     display: inline-flex;
     align-items: center;
@@ -355,53 +239,8 @@
 
 @media (max-width: 768px) {
 
-    .brew-content {
-        padding: 1.5rem 1rem 3rem;
-    }
-
-    .brew-detail-header {
-        padding: 1rem 1.1rem;
-    }
-
-    .brew-detail-body {
-        padding: 1.25rem 1rem;
-    }
-
-    .brew-meta-grid {
-        grid-template-columns: 1fr;
-        gap: 1rem;
-    }
-
-    .brew-summary-box {
-        width: 100%;
-    }
-
-    .brew-detail-table {
-        min-width: 800px;
-        table-layout: auto;
-    }
-
-        .brew-detail-table th,
-        .brew-detail-table td {
-            padding: 0.75rem;
-        }
-
-    .brew-detail-actions {
-        flex-wrap: wrap;
-    }
-<<<<<<< HEAD
-}
-
-.btn-entrega-cliente {
-    background-color: #6f4e37;
-    border-color: #6f4e37;
-    color: #ffffff;
-}
-
-.btn-entrega-cliente:hover {
-    background-color: #593d2a;
-    border-color: #593d2a;
-    color: #ffffff;
-=======
->>>>>>> Erin
+.brew-content {
+    max-width: 900px; /* ajusta según qué tan angosta la quieras */
+    margin: 0 auto; /* esto centra el bloque completo */
+    padding: 2.5rem 2rem;
 }
