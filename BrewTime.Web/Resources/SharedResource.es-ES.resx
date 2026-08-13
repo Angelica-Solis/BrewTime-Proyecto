@@ -180,9 +180,9 @@
   <data name="BienvenidoA" xml:space="preserve">
     <value>Bienvenido a</value>
   </data>
-  <data name="BrewTimeAdmin" xml:space="preserve">
-    <value>Brew Time · Administration</value>
-  </data>
+	<data name="BrewTimeAdmin" xml:space="preserve">
+  <value>Brew Time · Administración</value>
+</data>
   <data name="BrewTimeCafeteria" xml:space="preserve">
     <value>Brew Time · Cafetería</value>
   </data>
@@ -286,7 +286,7 @@
     <value>Modifique las estaciones, orden y tiempos del proceso actual del producto.</value>
   </data>
   <data name="DescEditarProducto" xml:space="preserve">
-    <value>Modificá los datos del producto seleccionado.</value>
+    <value>Modifique los datos del producto seleccionado.</value>
   </data>
   <data name="DescListadoMenus" xml:space="preserve">
     <value>Consulta general de los menús registrados.</value>
@@ -1577,7 +1577,7 @@
     <value>Dirección de Entrega</value>
   </data>
   <data name="Reg_AddressPlaceholder" xml:space="preserve">
-    <value>Provincia, cantón, distrito y otras señas, Ejemplo: Alajuela, Alajuela, Villabonita...</value>
+    <value>Provincia, cantón, distrito y otras señas</value>
   </data>
   <data name="Reg_OrderDetailTitle" xml:space="preserve">
     <value>Detalle del pedido</value>
@@ -1645,6 +1645,9 @@
   <data name="Chat_SendBtn" xml:space="preserve">
     <value>ENVIAR</value>
   </data>
+  <data name="Pedidos" xml:space="preserve">
+    <value>Pedidos</value>
+  </data>
   <data name="HistorialMenus" xml:space="preserve">
     <value>Historial de Menús</value>
   </data>
@@ -1663,8 +1666,20 @@
   <data name="IniciarSesion" xml:space="preserve">
     <value>Iniciar sesión</value>
   </data>
+  <data name="SweetAlert_Success" xml:space="preserve">
+    <value>Éxito</value>
+  </data>
+  <data name="SweetAlert_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="SweetAlert_Warning" xml:space="preserve">
+    <value>Atención</value>
+  </data>
   <data name="Footer_Tagline" xml:space="preserve">
     <value>Café de especialidad y bubble tea, preparado con cariño todos los días.</value>
+  </data>
+  <data name="Ubicacion" xml:space="preserve">
+    <value>San José, Costa Rica</value>
   </data>
   <data name="Horario_Semana" xml:space="preserve">
     <value>Lun – Vie: 7:00am – 8:00pm</value>
@@ -1684,145 +1699,158 @@
   <data name="lblCantidad" xml:space="preserve">
     <value>Cantidad</value>
   </data>
-  <data name="Title" xml:space="preserve">
+	<data name="Tracking_ActiveOrder" xml:space="preserve">
+  <value>Pedido activo</value>
+</data>
+	<data name="Tracking_FollowOrder" xml:space="preserve">
+  <value>Seguir pedido</value>
+</data>
+	<data name="Tracking_OrderTracker" xml:space="preserve">
+  <value>Seguimiento del Pedido</value>
+</data>
+
+	<data name="Tracking_PendingPayment" xml:space="preserve">
+  <value>Pendiente de pago</value>
+</data>
+
+	<data name="Tracking_Accepted" xml:space="preserve">
+  <value>Aceptada</value>
+</data>
+
+	<data name="Tracking_Preparing" xml:space="preserve">
+  <value>En preparación</value>
+</data>
+
+	<data name="Tracking_ReadyPickup" xml:space="preserve">
+  <value>Lista para recoger</value>
+</data>
+
+	<data name="Tracking_OnTheWay" xml:space="preserve">
+  <value>En camino</value>
+</data>
+
+	<data name="Tracking_Delivered" xml:space="preserve">
+  <value>Entregada</value>
+</data>
+
+	<data name="OrderDetail_MarkDelivered" xml:space="preserve">
+  <value>Marcar como entregado</value>
+</data>
+
+	<data name="OrderDetail_ReceivedOrder" xml:space="preserve">
+  <value>He recibido mi pedido</value>
+</data>
+
+	<data name="Subtotal" xml:space="preserve">
+  <value>Subtotal</value>
+</data>
+
+	<data name="Total" xml:space="preserve">
+  <value>Total</value>
+</data>
+	<data name="Title" xml:space="preserve">
     <value>Cocina</value>
   </data>
-  <data name="OrdersIn" xml:space="preserve">
+	<data name="OrdersIn" xml:space="preserve">
     <value>Pedidos en la</value>
   </data>
-  <data name="Kitchen" xml:space="preserve">
+	<data name="Kitchen" xml:space="preserve">
     <value>Cocina</value>
   </data>
-  <data name="PendingOrders" xml:space="preserve">
+	<data name="PendingOrders" xml:space="preserve">
     <value>Pedidos pendientes por preparar</value>
   </data>
-  <data name="ManagementAndStations" xml:space="preserve">
+	<data name="ManagementAndStations" xml:space="preserve">
     <value>Gestión y estaciones</value>
   </data>
-  <data name="NoPendingOrdersTitle" xml:space="preserve">
+	<data name="NoPendingOrdersTitle" xml:space="preserve">
     <value>No hay pedidos pendientes</value>
   </data>
-  <data name="NoPendingOrdersText" xml:space="preserve">
+	<data name="NoPendingOrdersText" xml:space="preserve">
     <value>Todos los pedidos han sido completados</value>
   </data>
-  <data name="OrdersInPreparation" xml:space="preserve">
+	<data name="OrdersInPreparation" xml:space="preserve">
     <value>pedidos en preparación</value>
   </data>
-  <data name="OrderNumber" xml:space="preserve">
+	<data name="OrderNumber" xml:space="preserve">
     <value>Pedido #</value>
   </data>
-  <data name="Client" xml:space="preserve">
+	<data name="Client" xml:space="preserve">
     <value>Cliente:</value>
   </data>
-  <data name="Food" xml:space="preserve">
+	<data name="Food" xml:space="preserve">
     <value>Comida</value>
   </data>
-  <data name="Coffee" xml:space="preserve">
-    <value>Café</value>
-  </data>
-  <data name="BubbleTea" xml:space="preserve">
-    <value>Bubble Tea</value>
-  </data>
-  <data name="NoProducts" xml:space="preserve">
+	<data name="NoProducts" xml:space="preserve">
     <value>Sin productos</value>
   </data>
-  <data name="PartOfCombo" xml:space="preserve">
+	<data name="PartOfCombo" xml:space="preserve">
     <value>Parte del combo:</value>
   </data>
-  <data name="Stations" xml:space="preserve">
+	<data name="Stations" xml:space="preserve">
     <value>Estaciones</value>
   </data>
-  <data name="NoStations" xml:space="preserve">
+	<data name="NoStations" xml:space="preserve">
     <value>Sin estaciones asignadas</value>
   </data>
-  <data name="Min" xml:space="preserve">
+	<data name="Min" xml:space="preserve">
     <value>min</value>
   </data>
-  <data name="Pending" xml:space="preserve">
+	<data name="Pending" xml:space="preserve">
     <value>Pendiente</value>
   </data>
-  <data name="InProcess" xml:space="preserve">
+	<data name="InProcess" xml:space="preserve">
     <value>En proceso</value>
   </data>
-  <data name="Done" xml:space="preserve">
+	<data name="Coffee" xml:space="preserve">
+    <value>Café</value>
+  </data>
+	<data name="BubbleTea" xml:space="preserve">
+    <value>Bubble Tea</value>
+  </data>
+	<data name="Done" xml:space="preserve">
     <value>Listo</value>
   </data>
-  <data name="Tracking_PendingPayment" xml:space="preserve">
-    <value>Pendiente de pago</value>
+	<data name="LabelComboImage" xml:space="preserve">
+  <value>Imagen del combo</value>
+</data>
+	<data name="BtnDeleteCurrentImage" xml:space="preserve">
+  <value>Eliminar imagen actual</value>
+</data>
+	<data name="UploadImageTitle" xml:space="preserve">
+  <value>Subir imagen</value>
+</data>
+	<data name="ReplaceImageHint" xml:space="preserve">
+  <value>Seleccioná una nueva imagen para reemplazar la actual.</value>
+</data>
+	<data name="TitleDashboard" xml:space="preserve">
+    <value>Dashboard</value>
   </data>
-  <data name="Tracking_Accepted" xml:space="preserve">
-    <value>Aceptada</value>
+	<data name="ReportesDelDia" xml:space="preserve">
+    <value>REPORTES DEL DÍA</value>
   </data>
-  <data name="Tracking_Preparing" xml:space="preserve">
-    <value>En preparación</value>
+	<data name="DashboardDe" xml:space="preserve">
+    <value>Dashboard de</value>
   </data>
-  <data name="Tracking_ReadyPickup" xml:space="preserve">
-    <value>Lista para recoger</value>
+	<data name="Pedidos" xml:space="preserve">
+    <value>pedidos</value>
   </data>
-  <data name="Tracking_OnTheWay" xml:space="preserve">
-    <value>En camino</value>
+	<data name="ProductosMasPedidos" xml:space="preserve">
+    <value>Productos más pedidos</value>
   </data>
-  <data name="Tracking_Delivered" xml:space="preserve">
-    <value>Entregada</value>
+	<data name="Top3DeHoy" xml:space="preserve">
+    <value>Top 3 de hoy</value>
   </data>
-  <data name="Tracking_ActiveOrder" xml:space="preserve">
-    <value>Pedido activo</value>
+	<data name="SinProductosHoy" xml:space="preserve">
+    <value>Aún no hay productos pedidos hoy.</value>
   </data>
-  <data name="Tracking_FollowOrder" xml:space="preserve">
-    <value>Seguir pedido</value>
+	<data name="PedidosPorEstado" xml:space="preserve">
+    <value>Pedidos por estado</value>
   </data>
-  <data name="Tracking_OrderTracker" xml:space="preserve">
-    <value>Seguimiento del Pedido</value>
+	<data name="EstadoActual" xml:space="preserve">
+    <value>Estado actual</value>
   </data>
-  <data name="OrderDetail_MarkDelivered" xml:space="preserve">
-    <value>Marcar como entregado</value>
-  </data>
-  <data name="OrderDetail_ReceivedOrder" xml:space="preserve">
-    <value>He recibido mi pedido</value>
-  </data>
-  <data name="Pedidos" xml:space="preserve">
-    <value>Pedidos</value>
-  </data>
-  <data name="SweetAlert_Success" xml:space="preserve">
-    <value>Éxito</value>
-  </data>
-  <data name="SweetAlert_Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="SweetAlert_Warning" xml:space="preserve">
-    <value>Atención</value>
-  </data>
-  <data name="Ubicacion" xml:space="preserve">
-    <value>San José, Costa Rica</value>
-  </data>
-  <data name="Subtotal" xml:space="preserve">
-    <value>Subtotal</value>
-  </data>
-  <data name="Total" xml:space="preserve">
-    <value>Total</value>
-  </data>
-  <data name="CostoBaseEnvioLabel" xml:space="preserve">
-    <value>Costo base de envío</value>
-  </data>
-  <data name="CostoPorDistanciaLabel" xml:space="preserve">
-    <value>Costo por distancia</value>
-  </data>
-  <data name="CostoTotalEnvioLabel" xml:space="preserve">
-    <value>Costo total de envío</value>
-  </data>
-  <data name="Reg_BuscarDireccionPlaceholder" xml:space="preserve">
-    <value>Busque un lugar, provincia, cantón o distrito...</value>
-  </data>
-  <data name="Reg_CalcularEntregaBtn" xml:space="preserve">
-    <value>Calcular entrega</value>
-  </data>
-  <data name="Reg_DireccionEncontradaLabel" xml:space="preserve">
-    <value>Dirección encontrada:</value>
-  </data>
-  <data name="Reg_DistanciaLabel" xml:space="preserve">
-    <value>Distancia</value>
-  </data>
-  <data name="Reg_TiempoEstimadoLabel" xml:space="preserve">
-    <value>Tiempo estimado</value>
+	<data name="UnidadesPedidas" xml:space="preserve">
+    <value>Unidades pedidas</value>
   </data>
 </root>

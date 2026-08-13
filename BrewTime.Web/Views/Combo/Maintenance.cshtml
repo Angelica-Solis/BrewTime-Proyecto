@@ -1,4 +1,4 @@
-﻿@model IEnumerable<BrewTime.Application.DTOs.ComboDTO>
+@model IEnumerable<BrewTime.Application.DTOs.ComboDTO>
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
@@ -9,7 +9,7 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/combo.css" asp-append-version="true" />
 }
 
 <div class="brew-page">
@@ -60,7 +60,7 @@
                         @foreach (var item in Model)
                         {
                             <tr>
-                                <td>@item.Nombre</td>
+                                <td>@if (!string.IsNullOrWhiteSpace(item.RutaImagen)) { <img src="@item.RutaImagen" class="brew-combo-thumb" alt="" /> } @item.Nombre</td>
                                 <td><span class="brew-card-chip">@item.CategoriaNombre</span></td>
                                 <td>@item.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
                                 <td class="brew-maint-actions">
@@ -113,7 +113,7 @@
                         @foreach (var item in inactivos)
                         {
                             <tr class="brew-row-inactiva">
-                                <td>@item.Nombre</td>
+                                <td>@if (!string.IsNullOrWhiteSpace(item.RutaImagen)) { <img src="@item.RutaImagen" class="brew-combo-thumb" alt="" /> } @item.Nombre</td>
                                 <td><span class="brew-card-chip">@item.CategoriaNombre</span></td>
                                 <td>@item.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))</td>
                                 <td class="brew-maint-actions">

@@ -787,7 +787,7 @@
     <value>Preparation</value>
   </data>
   <data name="Privacidad" xml:space="preserve">
-    <value>Privacy Policy</value>
+    <value>&gt;&gt;&gt;&gt;&gt;&gt;&gt; def5c594a889f0ae35c70f0bdda871ca0eb4475e</value>
   </data>
   <data name="ProcesoEm" xml:space="preserve">
     <value>Process</value>
@@ -1266,7 +1266,7 @@
   <data name="NewComboBtn" xml:space="preserve">
     <value>New combo</value>
   </data>
-  <data name="ActiveCombos" xml:space="preserve">
+  <data name="ActiveCombo" xml:space="preserve">
     <value>Active combos</value>
   </data>
   <data name="NoActiveCombos" xml:space="preserve">
@@ -1288,7 +1288,7 @@
     <value>Special price</value>
   </data>
   <data name="ThActions" xml:space="preserve">
-    <value>Actionss</value>
+    <value>Actions</value>
   </data>
   <data name="BtnEdit" xml:space="preserve">
     <value>Edit</value>
@@ -1326,11 +1326,17 @@
   <data name="SwalConfirmActivate" xml:space="preserve">
     <value>Yes, activate</value>
   </data>
-  <data name="Cart_TitleMy" xml:space="preserve">
+  <data name="MyCart" xml:space="preserve">
+    <value>My Cart </value>
+  </data>
+  <data name="My" xml:space="preserve">
     <value>My</value>
   </data>
-  <data name="Cart_TitleWord" xml:space="preserve">
+  <data name="Cart" xml:space="preserve">
     <value>Cart</value>
+  </data>
+  <data name="CartSubtitle" xml:space="preserve">
+    <value>Review your products before placing your order.</value>
   </data>
   <data name="Cart_Subtitle" xml:space="preserve">
     <value>Review the products before placing your order.</value>
@@ -1576,7 +1582,7 @@
     <value>Delivery Address</value>
   </data>
   <data name="Reg_AddressPlaceholder" xml:space="preserve">
-    <value>Province, canton, district and other details, Example: Alajuela, Alajuela, Villabonita...</value>
+    <value>Province, canton, district and other details</value>
   </data>
   <data name="Reg_OrderDetailTitle" xml:space="preserve">
     <value>Order Details</value>
@@ -1644,6 +1650,9 @@
   <data name="Chat_SendBtn" xml:space="preserve">
     <value>SEND</value>
   </data>
+  <data name="Pedidos" xml:space="preserve">
+    <value>Orders</value>
+  </data>
   <data name="HistorialMenus" xml:space="preserve">
     <value>Menu History</value>
   </data>
@@ -1662,8 +1671,20 @@
   <data name="IniciarSesion" xml:space="preserve">
     <value>Log In</value>
   </data>
+  <data name="SweetAlert_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="SweetAlert_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="SweetAlert_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
   <data name="Footer_Tagline" xml:space="preserve">
     <value>Specialty coffee and bubble tea, prepared with love every day.</value>
+  </data>
+  <data name="Ubicacion" xml:space="preserve">
+    <value>San Jose, Costa Rica</value>
   </data>
   <data name="Horario_Semana" xml:space="preserve">
     <value>Mon – Fri: 7:00am – 8:00pm</value>
@@ -1677,11 +1698,23 @@
   <data name="Footer_Copy" xml:space="preserve">
     <value>© 2026 BrewTime — Coffee &amp; Bubble</value>
   </data>
-  <data name="AgregarCarritoBtn" xml:space="preserve">
-    <value>Add to cart</value>
+  <data name="Cart_TitleMy" xml:space="preserve">
+    <value>My</value>
   </data>
-  <data name="lblCantidad" xml:space="preserve">
-    <value>Number</value>
+  <data name="Cart_TitleWord" xml:space="preserve">
+    <value>Cart</value>
+  </data>
+  <data name="ClearCart" xml:space="preserve">
+    <value>Clear Cart</value>
+  </data>
+  <data name="Drinks" xml:space="preserve">
+    <value>Drinks</value>
+  </data>
+  <data name="ActiveBeverage" xml:space="preserve">
+    <value>Active Beverage</value>
+  </data>
+  <data name="Cocina" xml:space="preserve">
+    <value>Kitchen</value>
   </data>
   <data name="OrdersIn" xml:space="preserve">
     <value>Orders In </value>
@@ -1779,46 +1812,46 @@
   <data name="OrderDetail_ReceivedOrder" xml:space="preserve">
     <value>I already received my order!</value>
   </data>
-  <data name="Pedidos" xml:space="preserve">
-    <value>Orders</value>
+	<data name="LabelComboImage" xml:space="preserve">
+  <value>Combo image</value>
+</data>
+	<data name="BtnDeleteCurrentImage" xml:space="preserve">
+  <value>Delete current image</value>
+</data>
+	<data name="UploadImageTitle" xml:space="preserve">
+  <value>Upload image</value>
+</data>
+	<data name="ReplaceImageHint" xml:space="preserve">
+  <value>Select a new image to replace the current one.</value>
+</data>
+	<data name="TitleDashboard" xml:space="preserve">
+    <value>Dashboard</value>
   </data>
-  <data name="SweetAlert_Success" xml:space="preserve">
-    <value>Success</value>
+	<data name="ReportesDelDia" xml:space="preserve">
+    <value>DAILY REPORTS</value>
   </data>
-  <data name="SweetAlert_Error" xml:space="preserve">
-    <value>Error</value>
+	<data name="DashboardDe" xml:space="preserve">
+    <value>Dashboard of</value>
   </data>
-  <data name="SweetAlert_Warning" xml:space="preserve">
-    <value>Warning</value>
+	<data name="Pedidos" xml:space="preserve">
+    <value>orders</value>
   </data>
-  <data name="Ubicacion" xml:space="preserve">
-    <value>San Jose, Costa Rica</value>
+	<data name="ProductosMasPedidos" xml:space="preserve">
+    <value>Most ordered products</value>
   </data>
-  <data name="Subtotal" xml:space="preserve">
-    <value>Subtotal</value>
+	<data name="Top3DeHoy" xml:space="preserve">
+    <value>Today's top 3</value>
   </data>
-  <data name="CostoBaseEnvioLabel" xml:space="preserve">
-    <value>Base delivery cost</value>
+	<data name="SinProductosHoy" xml:space="preserve">
+    <value>No products ordered today yet.</value>
   </data>
-  <data name="CostoPorDistanciaLabel" xml:space="preserve">
-    <value>Distance cost</value>
+	<data name="PedidosPorEstado" xml:space="preserve">
+    <value>Orders by status</value>
   </data>
-  <data name="CostoTotalEnvioLabel" xml:space="preserve">
-    <value>Total delivery cost</value>
+	<data name="EstadoActual" xml:space="preserve">
+    <value>Current status</value>
   </data>
-  <data name="Reg_BuscarDireccionPlaceholder" xml:space="preserve">
-    <value>Search for a place, province, canton, or district...</value>
-  </data>
-  <data name="Reg_CalcularEntregaBtn" xml:space="preserve">
-    <value>Calculate delivery</value>
-  </data>
-  <data name="Reg_DireccionEncontradaLabel" xml:space="preserve">
-    <value> Address found:</value>
-  </data>
-  <data name="Reg_DistanciaLabel" xml:space="preserve">
-    <value>Distance</value>
-  </data>
-  <data name="Reg_TiempoEstimadoLabel" xml:space="preserve">
-    <value>Estimated time</value>
+	<data name="UnidadesPedidas" xml:space="preserve">
+    <value>Units ordered</value>
   </data>
 </root>

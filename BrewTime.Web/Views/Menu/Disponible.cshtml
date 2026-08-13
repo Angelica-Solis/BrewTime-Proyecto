@@ -1,4 +1,4 @@
-﻿@model BrewTime.Application.DTOs.MenuDTO?
+@model BrewTime.Application.DTOs.MenuDTO?
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
@@ -170,6 +170,17 @@
                                         {
                                             <article class="menu-list-item">
 
+                                                <div class="menu-list-media">
+                                                    @if (!string.IsNullOrWhiteSpace(item.Producto.RutaImagenPrincipal))
+                                                    {
+                                                        <img src="@item.Producto.RutaImagenPrincipal" class="menu-item-image" alt="@item.Producto.Nombre" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="menu-item-image-empty"><i class="bi bi-cup-hot"></i></span>
+                                                    }
+                                                </div>
+
                                                 <div class="menu-list-info">
 
                                                     <div class="menu-list-title-row">
@@ -243,6 +254,17 @@
                                         @foreach (var item in grupo)
                                         {
                                             <article class="menu-list-item">
+
+                                                <div class="menu-list-media">
+                                                    @if (!string.IsNullOrWhiteSpace(item.Combo.RutaImagen))
+                                                    {
+                                                        <img src="@item.Combo.RutaImagen" class="menu-item-image" alt="@item.Combo.Nombre" />
+                                                    }
+                                                    else
+                                                    {
+                                                        <span class="menu-item-image-empty"><i class="bi bi-cup-hot"></i></span>
+                                                    }
+                                                </div>
 
                                                 <div class="menu-list-info">
 

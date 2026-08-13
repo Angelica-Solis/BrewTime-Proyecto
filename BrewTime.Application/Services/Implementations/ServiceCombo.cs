@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using BrewTime.Application.DTOs;
 using BrewTime.Application.Services.Interfaces;
 using BrewTime.Infraestructure.Models;
@@ -49,7 +49,7 @@ namespace BrewTime.Application.Services.Implementations
 
         // ── Escritura ─────────────────────────────────────────
 
-        public async Task CreateAsync(ComboFormDTO dto)
+        public async Task CreateAsync(ComboFormDTO dto, string wwwRootPath)
         {
             // Mapear DTO → entidad base
             var entity = _mapper.Map<Combo>(dto);
@@ -65,9 +65,11 @@ namespace BrewTime.Application.Services.Implementations
                 .ToList();
 
             await _repository.CreateAsync(entity);
+            await ActualizarImagenAsync(entity, dto.Imagen, false, wwwRootPath);
+            await _repository.UpdateAsync(entity);
         }
 
-        public async Task UpdateAsync(ComboFormDTO dto)
+        public async Task UpdateAsync(ComboFormDTO dto, string wwwRootPath)
         {
             // Obtener entidad original con sus productos (patrón del profe)
             var entity = await _repository.FindByIdAsync(dto.ComboID);
@@ -87,7 +89,34 @@ namespace BrewTime.Application.Services.Implementations
                 });
             }
 
+            await ActualizarImagenAsync(entity, dto.Imagen, dto.EliminarImagen, wwwRootPath);
             await _repository.UpdateAsync(entity);
+        }
+
+        private static async Task ActualizarImagenAsync(Combo entity, Microsoft.AspNetCore.Http.IFormFile? imagen, bool eliminarImagen, string wwwRootPath)
+        {
+            if (imagen == null || imagen.Length == 0)
+            {
+                if (eliminarImagen)
+                    EliminarArchivoImagen(entity, wwwRootPath);
+                return;
+            }
+            var extension = Path.GetExtension(imagen.FileName).ToLowerInvariant();
+            if (extension is not ".jpg" and not ".jpeg" and not ".png" and not ".webp") throw new InvalidOperationException("La imagen debe ser JPG, PNG o WEBP.");
+            var carpeta = Path.Combine(wwwRootPath, "images", "combos");
+            Directory.CreateDirectory(carpeta);
+            var nombre = $"combo_{entity.ComboId}_{Guid.NewGuid()}{extension}";
+            using (var stream = new FileStream(Path.Combine(carpeta, nombre), FileMode.Create)) await imagen.CopyToAsync(stream);
+            EliminarArchivoImagen(entity, wwwRootPath);
+            entity.RutaImagen = $"/images/combos/{nombre}";
+        }
+
+        private static void EliminarArchivoImagen(Combo entity, string wwwRootPath)
+        {
+            if (string.IsNullOrWhiteSpace(entity.RutaImagen)) return;
+            var rutaFisica = Path.Combine(wwwRootPath, entity.RutaImagen.TrimStart('/').Replace('/', Path.DirectorySeparatorChar));
+            if (File.Exists(rutaFisica)) File.Delete(rutaFisica);
+            entity.RutaImagen = null;
         }
 
         public async Task ToggleActivoAsync(int id)

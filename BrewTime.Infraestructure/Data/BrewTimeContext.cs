@@ -123,6 +123,9 @@ public partial class BrewTimeContext : DbContext
             entity.Property(e => e.Descripcion)
                 .HasMaxLength(500)
                 .IsUnicode(false);
+            entity.Property(e => e.RutaImagen)
+                .HasMaxLength(500)
+                .IsUnicode(false);
             entity.Property(e => e.FechaCreacion)
                 .HasDefaultValueSql("(getdate())")
                 .HasColumnType("datetime");

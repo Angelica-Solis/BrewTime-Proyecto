@@ -1,4 +1,4 @@
-﻿@model BrewTime.Application.DTOs.ComboFormDTO
+@model BrewTime.Application.DTOs.ComboFormDTO
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
@@ -24,10 +24,10 @@
     </div>
 
     <div class="brew-content">
-        <a asp-action="Maintenance" class="brew-btn-volver">← @SharedLocalizer["BackToMaintenance"]</a>
+        <a asp-action="Maintenance" class="brew-btn-volver"> @SharedLocalizer["BackToMaintenance"]</a>
 
         <div class="brew-form-card">
-            <form asp-action="Edit" method="post">
+            <form asp-action="Edit" method="post" enctype="multipart/form-data">
                 @Html.AntiForgeryToken()
                 <input asp-for="ComboID" type="hidden" />
 
@@ -64,7 +64,39 @@
                     <span asp-validation-for="Descripcion" class="brew-form-error"></span>
                 </div>
 
-                @* ── Selección de productos ── *@
+                <div class="brew-form-group">
+                    <label asp-for="Imagen" class="brew-form-label">@SharedLocalizer["LabelComboImage"]</label>
+
+                    @if (!string.IsNullOrWhiteSpace(Model.RutaImagenActual))
+                    {
+                        <div class="brew-current-images">
+                            <div class="brew-current-image">
+                                <img src="@Model.RutaImagenActual" alt="@Model.Nombre" />
+                                <span>
+                                    <input asp-for="EliminarImagen" class="brew-form-check" id="eliminarImagenCheck" />
+                                    <label for="eliminarImagenCheck">@SharedLocalizer["BtnDeleteCurrentImage"]</label>
+                                </span>
+                            </div>
+                        </div>
+                    }
+
+                    <div class="brew-upload-box">
+                        <span class="brew-upload-icon"><i class="bi bi-camera"></i></span>
+                        <div class="brew-upload-copy">
+                            <strong>@SharedLocalizer["UploadImageTitle"]</strong>
+                            <span>@SharedLocalizer["ReplaceImageHint"]</span>
+                        </div>
+                        <input asp-for="Imagen" type="file" accept="image/png,image/jpeg,image/webp"
+                               class="brew-file-input" onchange="previsualizarImagen(this)" />
+                    </div>
+
+                    <div class="brew-image-preview" id="imagenPreviewBox" hidden>
+                        <img id="imagenPreview" src="" alt="" />
+                        <span id="imagenPreviewNombre"></span>
+                    </div>
+
+                    <span asp-validation-for="Imagen" class="brew-form-error"></span>
+                </div>                @* ── Selección de productos ── *@
                 <div class="brew-form-group">
                     <label class="brew-form-label">@SharedLocalizer["LabelComboProducts"]</label>
                     <small style="color:var(--text-soft);font-size:0.78rem;display:block;margin-bottom:0.75rem;">
@@ -124,6 +156,27 @@
         function toggleCantidad(checkbox, cantidadId) {
             const wrap = document.getElementById(cantidadId);
             wrap.style.display = checkbox.checked ? 'block' : 'none';
+        }
+
+        function previsualizarImagen(input) {
+            const box = document.getElementById('imagenPreviewBox');
+            const img = document.getElementById('imagenPreview');
+            const nombre = document.getElementById('imagenPreviewNombre');
+
+            if (input.files && input.files[0]) {
+                const file = input.files[0];
+                const reader = new FileReader();
+                reader.onload = e => {
+                    img.src = e.target.result;
+                    nombre.textContent = file.name;
+                    box.hidden = false;
+                };
+                reader.readAsDataURL(file);
+            } else {
+                img.src = '';
+                nombre.textContent = '';
+                box.hidden = true;
+            }
         }
     </script>
 }

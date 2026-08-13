@@ -1,4 +1,4 @@
-﻿using BrewTime.Application.DTOs;
+using BrewTime.Application.DTOs;
 using BrewTime.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
@@ -12,15 +12,18 @@ namespace BrewTime.Web.Controllers
         private readonly IServiceCombo _serviceCombo;
         private readonly IServiceCategoria _serviceCategoria;
         private readonly IServiceProducto _serviceProducto;
+        private readonly IWebHostEnvironment _webHostEnvironment;
 
         public ComboController(
             IServiceCombo serviceCombo,
             IServiceCategoria serviceCategoria,
-            IServiceProducto serviceProducto)
+            IServiceProducto serviceProducto,
+            IWebHostEnvironment webHostEnvironment)
         {
             _serviceCombo = serviceCombo;
             _serviceCategoria = serviceCategoria;
             _serviceProducto = serviceProducto;
+            _webHostEnvironment = webHostEnvironment;
         }
 
         // ── Público ──────────────────────────────────────────
@@ -68,7 +71,7 @@ namespace BrewTime.Web.Controllers
                 return View(dto);
             }
 
-            await _serviceCombo.CreateAsync(dto);
+            await _serviceCombo.CreateAsync(dto, _webHostEnvironment.WebRootPath);
             return RedirectToAction(nameof(Maintenance));
         }
         [Authorize(Roles = "Administrador")]
@@ -91,7 +94,7 @@ namespace BrewTime.Web.Controllers
                 return View(dto);
             }
 
-            await _serviceCombo.UpdateAsync(dto);
+            await _serviceCombo.UpdateAsync(dto, _webHostEnvironment.WebRootPath);
             return RedirectToAction(nameof(Maintenance));
         }
         [Authorize(Roles = "Administrador")]

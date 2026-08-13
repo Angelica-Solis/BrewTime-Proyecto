@@ -1,4 +1,4 @@
-﻿using BrewTime.Application.DTOs;
+using BrewTime.Application.DTOs;
 
 namespace BrewTime.Application.Services.Interfaces
 {
@@ -8,8 +8,8 @@ namespace BrewTime.Application.Services.Interfaces
         Task<ICollection<ComboDTO>> ListInactivosAsync();
         Task<ComboDetalleDTO> FindByIdAsync(int id);
         Task<ComboFormDTO> FindFormByIdAsync(int id);
-        Task CreateAsync(ComboFormDTO dto);
-        Task UpdateAsync(ComboFormDTO dto);
+        Task CreateAsync(ComboFormDTO dto, string wwwRootPath);
+        Task UpdateAsync(ComboFormDTO dto, string wwwRootPath);
         Task ToggleActivoAsync(int id);
 
         //para la tarea programada 
