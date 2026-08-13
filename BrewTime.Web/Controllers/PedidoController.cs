@@ -124,14 +124,14 @@ namespace BrewTime.Web.Controllers
         {
             if (pedidoId <= 0)
             {
-                TempData["Error"] = "El pedido indicado no es v\u00e1lido.";
+                TempData["Error"] = "El pedido indicado no es válido.";
                 return RedirectToAction(nameof(Index));
             }
 
             try
             {
                 await _servicePedido.CambiarEstadoPedidoAsync(pedidoId, UsuarioActual, RolActual);
-                TempData["Success"] = "El pedido se marc\u00f3 como entregado.";
+                TempData["Success"] = "El pedido se marcó como entregado.";
             }
             catch (UnauthorizedAccessException)
             {
@@ -225,7 +225,7 @@ namespace BrewTime.Web.Controllers
         {
             if (id <= 0)
             {
-                TempData["Error"] = "El pedido indicado no es v�lido";
+                TempData["Error"] = "El pedido indicado no es válido";
 
                 return RedirectToAction(nameof(Index));
             }

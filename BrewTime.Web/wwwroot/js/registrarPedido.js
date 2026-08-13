@@ -5,7 +5,7 @@
     if (window.jQuery?.validator) {
         $.extend($.validator.messages, {
             required: "Este campo es obligatorio.",
-            number: "Ingrese un número v\u00E1lido",
+            number: "Ingrese un número válido",
             digits: "Ingrese solamente números"
         });
     }
@@ -162,7 +162,7 @@
         if (!direccion) {
             Swal.fire(
                 "Dirección requerida",
-                "Debe seleccionar o ingresar una direcci\u00F3n.",
+                "Debe seleccionar o ingresar una dirección.",
                 "warning"
             );
             return;
@@ -301,10 +301,10 @@
 
         const resultado = await Swal.fire({
             title: "¿Registrar el pedido?",
-            text: "El pedido se guardar\u00F1 como pendiente de pago.",
+            text: "El pedido se guardará como pendiente de pago.",
             icon: "question",
             showCancelButton: true,
-            confirmButtonText: "S\u00ED, registrar",
+            confirmButtonText: "Sí, registrar",
             cancelButtonText: "No, revisar",
             confirmButtonColor: "#1f4a2e",
             cancelButtonColor: "#6f4e37",

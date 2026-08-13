@@ -1779,4 +1779,55 @@
   <data name="OrderDetail_ReceivedOrder" xml:space="preserve">
     <value>I already received my order!</value>
   </data>
+	<data name="Reg_CalcularEntregaBtn" xml:space="preserve">
+    <value>Calculate Route</value>
+  </data>
+	<data name="Reg_DireccionEncontradaLabel" xml:space="preserve">
+    <value>Found Address:</value>
+  </data>
+	<data name="Reg_DistanciaLabel" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+	<data name="Reg_TiempoEstimadoLabel" xml:space="preserve">
+    <value>Estimated Time</value>
+  </data>
+	<data name="CostoPorDistanciaLabel" xml:space="preserve">
+    <value>Cost per Distance</value>
+  </data>
+	<data name="CostoBaseEnvioLabel" xml:space="preserve">
+    <value>Base shipping cost</value>
+  </data>
+	<data name="CostoTotalEnvioLabel" xml:space="preserve">
+    <value>Total Cost</value>
+  </data>
+	<data name="TitleDashboard" xml:space="preserve">
+    <value>Dashboard</value>
+</data>
+	<data name="ReportesDelDia" xml:space="preserve">
+    <value>Daily Reports</value>
+</data>
+	<data name="DashboardDe" xml:space="preserve">
+    <value>Order </value>
+</data>
+	<data name="Pedidos" xml:space="preserve">
+    <value>Dashboard</value>
+</data>
+	<data name="ProductosMasPedidos" xml:space="preserve">
+    <value>Most Ordered Products</value>
+</data>
+	<data name="Top3DeHoy" xml:space="preserve">
+    <value>Top 3 Today</value>
+</data>
+	<data name="SinProductosHoy" xml:space="preserve">
+    <value>No products ordered today.</value>
+</data>
+	<data name="PedidosPorEstado" xml:space="preserve">
+    <value>Orders by Status</value>
+</data>
+	<data name="EstadoActual" xml:space="preserve">
+    <value>Current Status</value>
+</data>
+	<data name="UnidadesPedidas" xml:space="preserve">
+    <value>Units Ordered</value>
+</data>
 </root>
