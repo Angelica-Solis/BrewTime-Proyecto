@@ -1,4 +1,4 @@
-﻿namespace BrewTime.Application.DTOs
+namespace BrewTime.Application.DTOs
 {
     public record ComboDetalleDTO
     {
@@ -9,6 +9,7 @@
         public bool Activo { get; set; }
         public DateTime FechaCreacion { get; set; }
         public string CategoriaNombre { get; set; } = null!;
+        public string? RutaImagen { get; set; }
         public List<ComboProductoDTO> Productos { get; set; } = new();
     }
 }

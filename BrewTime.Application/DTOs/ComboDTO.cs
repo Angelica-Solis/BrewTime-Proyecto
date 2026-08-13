@@ -1,4 +1,4 @@
-﻿namespace BrewTime.Application.DTOs
+namespace BrewTime.Application.DTOs
 {
     public record ComboDTO
     {
@@ -7,5 +7,6 @@
         public string CategoriaNombre { get; set; } = null!;
         public decimal PrecioEspecial { get; set; }
         public string? Descripcion { get; set; }
+        public string? RutaImagen { get; set; }
     }
 }

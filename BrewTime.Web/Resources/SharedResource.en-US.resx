@@ -1288,7 +1288,7 @@
     <value>Special price</value>
   </data>
   <data name="ThActions" xml:space="preserve">
-    <value>Actionss</value>
+    <value>Actions</value>
   </data>
   <data name="BtnEdit" xml:space="preserve">
     <value>Edit</value>
@@ -1812,4 +1812,16 @@
   <data name="OrderDetail_ReceivedOrder" xml:space="preserve">
     <value>I already received my order!</value>
   </data>
+	<data name="LabelComboImage" xml:space="preserve">
+  <value>Combo image</value>
+</data>
+	<data name="BtnDeleteCurrentImage" xml:space="preserve">
+  <value>Delete current image</value>
+</data>
+	<data name="UploadImageTitle" xml:space="preserve">
+  <value>Upload image</value>
+</data>
+	<data name="ReplaceImageHint" xml:space="preserve">
+  <value>Select a new image to replace the current one.</value>
+</data>
 </root>

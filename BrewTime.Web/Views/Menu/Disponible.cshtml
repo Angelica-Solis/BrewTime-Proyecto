@@ -1,4 +1,4 @@
-﻿@model BrewTime.Application.DTOs.MenuDTO?
+@model BrewTime.Application.DTOs.MenuDTO?
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 
@@ -170,7 +170,7 @@
                                         {
                                             <article class="menu-list-item">
 
-                                                <div class="menu-list-info">
+                                                <div class="menu-list-info">@if (!string.IsNullOrWhiteSpace(item.Producto.RutaImagenPrincipal)) { <img src="@item.Producto.RutaImagenPrincipal" class="menu-item-image" alt="@item.Producto.Nombre" /> }@if (!string.IsNullOrWhiteSpace(item.Producto.RutaImagenPrincipal)) { <img src="@item.Producto.RutaImagenPrincipal" class="menu-item-image" alt="@item.Producto.Nombre" /> }
 
                                                     <div class="menu-list-title-row">
 
@@ -244,7 +244,7 @@
                                         {
                                             <article class="menu-list-item">
 
-                                                <div class="menu-list-info">
+                                                <div class="menu-list-info">@if (!string.IsNullOrWhiteSpace(item.Combo.RutaImagen)) { <img src="@item.Combo.RutaImagen" class="menu-item-image" alt="@item.Combo.Nombre" /> }@if (!string.IsNullOrWhiteSpace(item.Combo.RutaImagen)) { <img src="@item.Combo.RutaImagen" class="menu-item-image" alt="@item.Combo.Nombre" /> }
 
                                                     <div class="menu-list-title-row">
 

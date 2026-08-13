@@ -1,4 +1,4 @@
-﻿using AutoMapper;
+using AutoMapper;
 using BrewTime.Application.DTOs;
 using BrewTime.Infraestructure.Models;
 
@@ -34,6 +34,7 @@ namespace BrewTime.Application.Profiles
             CreateMap<Combo, ComboFormDTO>()
             .ForMember(dest => dest.CategoriaID,
                 opt => opt.MapFrom(src => src.CategoriaId))
+            .ForMember(dest => dest.RutaImagenActual, opt => opt.MapFrom(src => src.RutaImagen))
             .ForMember(dest => dest.ProductosSeleccionados,
                 opt => opt.MapFrom(src => src.ComboProducto));
 
@@ -41,6 +42,7 @@ namespace BrewTime.Application.Profiles
             CreateMap<ComboFormDTO, Combo>()
             .ForMember(dest => dest.CategoriaId,
                        opt => opt.MapFrom(src => src.CategoriaID))
+            .ForMember(dest => dest.RutaImagen, opt => opt.Ignore())
             .ForMember(dest => dest.ComboProducto, opt => opt.Ignore())
             .ForMember(dest => dest.Categoria, opt => opt.Ignore())
             .ForMember(dest => dest.MenuCombo, opt => opt.Ignore())

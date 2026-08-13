@@ -1955,3 +1955,7 @@
             align-items: flex-start;
         }
     }
+
+.menu-item-image{width:64px;height:64px;border-radius:10px;object-fit:cover;float:right;margin:0 0 .5rem 1rem}
+
+.menu-item-image{width:64px;height:64px;border-radius:10px;object-fit:cover;float:right;margin:0 0 .5rem 1rem}

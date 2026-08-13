@@ -1,4 +1,4 @@
-﻿@model BrewTime.Application.DTOs.ComboDetalleDTO
+@model BrewTime.Application.DTOs.ComboDetalleDTO
 @using Microsoft.AspNetCore.Mvc.Localization
 @inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 @section Styles {
@@ -34,7 +34,7 @@
         <div class="brew-detail-card">
 
             @* Panel izquierdo: info principal *@
-            <div class="brew-detail-info">
+            <div class="brew-detail-info">@if (!string.IsNullOrWhiteSpace(Model.RutaImagen)) { <img src="@Model.RutaImagen" class="brew-combo-detail-image" alt="@Model.Nombre" /> }
 
                 <h2 class="brew-detail-nombre">@Model.Nombre</h2>
 
