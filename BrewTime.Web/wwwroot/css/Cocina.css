@@ -205,10 +205,12 @@
 }
 
 /* ---------- Columnas (Comida / Café / Bubble Tea) ---------- */
+/* auto-fit: las columnas presentes se reparten el ancho disponible;
+   si un pedido solo trae 1 o 2 categorías, no quedan huecos vacíos. */
 
 .bt-columns {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(auto-fit, minmax(240px, 1fr));
     gap: 20px;
 }
 

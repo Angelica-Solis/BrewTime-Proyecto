@@ -68,17 +68,13 @@
                         <div class="bt-columns">
 
                             <!-- comida-->
-                            <div class="bt-column">
-                                <div class="bt-group">
+                            @if (pedido.Comida.Any())
+                            {
+                                <div class="bt-column">
+                                    <div class="bt-group">
 
-                                    <h4 class="bt-group__title">@SharedLocalizer["Food"]</h4>
+                                        <h4 class="bt-group__title">@SharedLocalizer["Food"]</h4>
 
-                                    @if (!pedido.Comida.Any())
-                                    {
-                                        <p class="bt-empty">@SharedLocalizer["NoProducts"]</p>
-                                    }
-                                    else
-                                    {
                                         @foreach (var item in pedido.Comida)
                                         {
                                             <div class="bt-item">
@@ -144,23 +140,19 @@
 
                                             </div>
                                         }
-                                    }
 
+                                    </div>
                                 </div>
-                            </div>
+                            }
 
                             <!-- cafe -->
-                            <div class="bt-column">
-                                <div class="bt-group">
+                            @if (pedido.Cafe.Any())
+                            {
+                                <div class="bt-column">
+                                    <div class="bt-group">
 
-                                    <h4 class="bt-group__title">@SharedLocalizer["Coffee"]</h4>
+                                        <h4 class="bt-group__title">@SharedLocalizer["Coffee"]</h4>
 
-                                    @if (!pedido.Cafe.Any())
-                                    {
-                                        <p class="bt-empty">@SharedLocalizer["NoProducts"]</p>
-                                    }
-                                    else
-                                    {
                                         @foreach (var item in pedido.Cafe)
                                         {
                                             <div class="bt-item">
@@ -226,23 +218,19 @@
 
                                             </div>
                                         }
-                                    }
 
+                                    </div>
                                 </div>
-                            </div>
+                            }
 
                             <!-- bubble -->
-                            <div class="bt-column">
-                                <div class="bt-group">
+                            @if (pedido.BubbleTea.Any())
+                            {
+                                <div class="bt-column">
+                                    <div class="bt-group">
 
-                                    <h4 class="bt-group__title">@SharedLocalizer["BubbleTea"]</h4>
+                                        <h4 class="bt-group__title">@SharedLocalizer["BubbleTea"]</h4>
 
-                                    @if (!pedido.BubbleTea.Any())
-                                    {
-                                        <p class="bt-empty">@SharedLocalizer["NoProducts"]</p>
-                                    }
-                                    else
-                                    {
                                         @foreach (var item in pedido.BubbleTea)
                                         {
                                             <div class="bt-item">
@@ -308,10 +296,10 @@
 
                                             </div>
                                         }
-                                    }
 
+                                    </div>
                                 </div>
-                            </div>
+                            }
 
                         </div>
 
