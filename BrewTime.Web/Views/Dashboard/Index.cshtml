@@ -1,28 +1,95 @@
 @model BrewTime.Application.DTOs.ReporteDashboardDTO
 @using System.Text.Json
-@{ ViewData["Title"] = "Dashboard"; }
-@section Styles { <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" /> }
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+@{
+    ViewData["Title"] = SharedLocalizer["TitleDashboard"];
+}
+@section Styles {
+    <link rel="stylesheet" href="~/css/dashboard.css" asp-append-version="true" />
+ }
 <div class="dashboard-page">
-    <div class="dashboard-header"><p>REPORTES DEL DÍA</p><h1>Dashboard de <em>pedidos</em></h1><span>@Model.Fecha.ToString("dd/MM/yyyy")</span></div>
+    <div class="dashboard-header">
+        <p>@SharedLocalizer["ReportesDelDia"]</p>
+        <h1>@SharedLocalizer["DashboardDe"] <em>@SharedLocalizer["Pedidos"]</em></h1>
+        <span>@Model.Fecha.ToString("dd/MM/yyyy")</span>
+    </div>
     <section class="dashboard-grid">
         <article class="dashboard-card">
-            <div class="dashboard-card-title"><div><span class="dashboard-icon"><i class="bi bi-trophy"></i></span><h2>Productos más pedidos</h2></div><small>Top 3 de hoy</small></div>
-            @if (!Model.ProductosMasPedidos.Any()) { <p class="dashboard-empty">Aún no hay productos pedidos hoy.</p> } else { <canvas id="productosChart"></canvas> }
+            <div class="dashboard-card-title">
+                <div>
+                    <span class="dashboard-icon"><i class="bi bi-trophy"></i></span>
+                    <h2>@SharedLocalizer["ProductosMasPedidos"]</h2>
+                </div>
+                <small>@SharedLocalizer["Top3DeHoy"]</small>
+            </div>
+            @if (!Model.ProductosMasPedidos.Any())
+            {
+                <p class="dashboard-empty">@SharedLocalizer["SinProductosHoy"]</p>
+            }
+            else
+            {
+                <canvas id="productosChart"></canvas>
+            }
         </article>
         <article class="dashboard-card">
-            <div class="dashboard-card-title"><div><span class="dashboard-icon"><i class="bi bi-pie-chart"></i></span><h2>Pedidos por estado</h2></div><small>Estado actual</small></div>
+            <div class="dashboard-card-title">
+                <div>
+                    <span class="dashboard-icon"><i class="bi bi-pie-chart"></i></span>
+                    <h2>@SharedLocalizer["PedidosPorEstado"]</h2>
+                </div>
+                <small>@SharedLocalizer["EstadoActual"]</small>
+            </div>
             <canvas id="estadosChart"></canvas>
         </article>
     </section>
 </div>
 @section Scripts {
-<script src="~/lib/chart.js/chart.umd.js" asp-append-version="true"></script>
-<script>
-    const productos = @Html.Raw(JsonSerializer.Serialize(Model.ProductosMasPedidos));
-    const estados = @Html.Raw(JsonSerializer.Serialize(Model.PedidosPorEstado));
-    const palette = ['#bd7b45','#d7a15b','#6f4e37','#456345','#9d6650','#cdb590'];
-    Chart.defaults.font.family = 'system-ui, -apple-system, Segoe UI, sans-serif';
-    if (productos.length) new Chart(document.getElementById('productosChart'), { type: 'bar', data: { labels: productos.map(x => x.Etiqueta), datasets: [{ label: 'Unidades pedidas', data: productos.map(x => x.Cantidad), backgroundColor: palette.slice(0, productos.length), borderRadius: 7 }] }, options: { indexAxis: 'y', plugins: { legend: { display: false } }, scales: { x: { beginAtZero: true, ticks: { precision: 0 } }, y: { grid: { display: false } } } } });
-    new Chart(document.getElementById('estadosChart'), { type: 'doughnut', data: { labels: estados.map(x => x.Etiqueta), datasets: [{ data: estados.map(x => x.Cantidad), backgroundColor: palette, borderWidth: 3, borderColor: '#fffaf4' }] }, options: { plugins: { legend: { position: 'bottom' } }, cutout: '62%' } });
-</script>
+    <script src="~/lib/chart.js/chart.umd.js" asp-append-version="true"></script>
+    <script>
+        const productos = @Html.Raw(JsonSerializer.Serialize(Model.ProductosMasPedidos));
+        const estados = @Html.Raw(JsonSerializer.Serialize(Model.PedidosPorEstado));
+        const palette = ['#bd7b45','#d7a15b','#6f4e37','#456345','#9d6650','#cdb590'];
+        Chart.defaults.font.family = 'system-ui, -apple-system, Segoe UI, sans-serif';
+
+        if (productos.length) {
+            new Chart(document.getElementById('productosChart'), {
+                type: 'bar',
+                data: {
+                    labels: productos.map(x => x.Etiqueta),
+                    datasets: [{
+                        label: '@SharedLocalizer["UnidadesPedidas"]',
+                        data: productos.map(x => x.Cantidad),
+                        backgroundColor: palette.slice(0, productos.length),
+                        borderRadius: 7
+                    }]
+                },
+                options: {
+                    indexAxis: 'y',
+                    plugins: { legend: { display: false } },
+                    scales: {
+                        x: { beginAtZero: true, ticks: { precision: 0 } },
+                        y: { grid: { display: false } }
+                    }
+                }
+            });
+        }
+
+        new Chart(document.getElementById('estadosChart'), {
+            type: 'doughnut',
+            data: {
+                labels: estados.map(x => x.Etiqueta),
+                datasets: [{
+                    data: estados.map(x => x.Cantidad),
+                    backgroundColor: palette,
+                    borderWidth: 3,
+                    borderColor: '#fffaf4'
+                }]
+            },
+            options: {
+                plugins: { legend: { position: 'bottom' } },
+                cutout: '62%'
+            }
+        });
+    </script>
 }

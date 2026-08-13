@@ -1824,4 +1824,34 @@
 	<data name="ReplaceImageHint" xml:space="preserve">
   <value>Select a new image to replace the current one.</value>
 </data>
+	<data name="TitleDashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+	<data name="ReportesDelDia" xml:space="preserve">
+    <value>DAILY REPORTS</value>
+  </data>
+	<data name="DashboardDe" xml:space="preserve">
+    <value>Dashboard of</value>
+  </data>
+	<data name="Pedidos" xml:space="preserve">
+    <value>orders</value>
+  </data>
+	<data name="ProductosMasPedidos" xml:space="preserve">
+    <value>Most ordered products</value>
+  </data>
+	<data name="Top3DeHoy" xml:space="preserve">
+    <value>Today's top 3</value>
+  </data>
+	<data name="SinProductosHoy" xml:space="preserve">
+    <value>No products ordered today yet.</value>
+  </data>
+	<data name="PedidosPorEstado" xml:space="preserve">
+    <value>Orders by status</value>
+  </data>
+	<data name="EstadoActual" xml:space="preserve">
+    <value>Current status</value>
+  </data>
+	<data name="UnidadesPedidas" xml:space="preserve">
+    <value>Units ordered</value>
+  </data>
 </root>

@@ -1,5 +1,6 @@
 <!DOCTYPE html>
 <html lang="en">
+@using System.Globalization
 @using Microsoft.AspNetCore.Builder
 @using Microsoft.AspNetCore.Localization
 @using Microsoft.Extensions.Options
@@ -96,6 +97,81 @@
                         aria-label="Toggle navigation">
                     <span class="navbar-toggler-icon"></span>
                 </button>
+
+                <!-- SELECTOR DE IDIOMA -->
+                <ul class="navbar-nav">
+
+                    <li class="nav-item dropdown">
+
+                        <a class="nav-link dropdown-toggle brew-nav-link"
+                           href="#"
+                           id="languageDropdown"
+                           role="button"
+                           data-bs-toggle="dropdown"
+                           aria-expanded="false">
+
+                            <i class="bi bi-translate"></i>
+
+                            @(CultureInfo.CurrentUICulture.TwoLetterISOLanguageName == "es"
+                                ? "ES"
+                                : "EN")
+
+                        </a>
+
+                        <ul class="dropdown-menu"
+                            aria-labelledby="languageDropdown">
+
+                            <li>
+                                <form asp-controller="Language"
+                                      asp-action="SetLanguage"
+                                      method="post">
+
+                                    <input type="hidden"
+                                           name="culture"
+                                           value="es-ES" />
+
+                                    <input type="hidden"
+                                           name="returnUrl"
+                                           value="@Context.Request.Path@Context.Request.QueryString" />
+
+                                    <button type="submit"
+                                            class="dropdown-item">
+
+                                        🇪🇸 Español
+
+                                    </button>
+
+                                </form>
+                            </li>
+
+                            <li>
+                                <form asp-controller="Language"
+                                      asp-action="SetLanguage"
+                                      method="post">
+
+                                    <input type="hidden"
+                                           name="culture"
+                                           value="en-US" />
+
+                                    <input type="hidden"
+                                           name="returnUrl"
+                                           value="@Context.Request.Path@Context.Request.QueryString" />
+
+                                    <button type="submit"
+                                            class="dropdown-item">
+
+                                        🇺🇸 English
+
+                                    </button>
+
+                                </form>
+                            </li>
+
+                        </ul>
+
+                    </li>
+
+                </ul>
 
                 <!-- Links -->
                 <div class="navbar-collapse collapse d-sm-inline-flex justify-content-between">
