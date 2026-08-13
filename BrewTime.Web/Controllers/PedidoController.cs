@@ -191,7 +191,7 @@ namespace BrewTime.Web.Controllers
             try
             {
                 int pedidoId = await _servicePedido.RegistrarDesdeCarritoAsync(dto, UsuarioActual, RolActual);
-                TempData["Success"] = "El pedido se registr� correctamente. Ahora puedes continuar con el pago";
+                TempData["Success"] = "El pedido se registró correctamente. Ahora puedes continuar con el pago";
                 return RedirectToAction(nameof(Detail),new { id = pedidoId });
             }
             catch (InvalidOperationException ex)
@@ -274,7 +274,7 @@ namespace BrewTime.Web.Controllers
             {
                 await _servicePedido.ProcesarPagoAsync(dto, UsuarioActual, RolActual);
 
-                TempData["Success"] = "El pago se proces� correctamente";
+                TempData["Success"] = "El pago se procesó correctamente";
 
                 return RedirectToAction(nameof(Detail), new { id = dto.PedidoId });
             }
