@@ -1576,7 +1576,7 @@
     <value>Delivery Address</value>
   </data>
   <data name="Reg_AddressPlaceholder" xml:space="preserve">
-    <value>Province, canton, district and other details</value>
+    <value>Province, canton, district and other details, Example: Alajuela, Alajuela, Villabonita...</value>
   </data>
   <data name="Reg_OrderDetailTitle" xml:space="preserve">
     <value>Order Details</value>
@@ -1644,9 +1644,6 @@
   <data name="Chat_SendBtn" xml:space="preserve">
     <value>SEND</value>
   </data>
-  <data name="Pedidos" xml:space="preserve">
-    <value>Orders</value>
-  </data>
   <data name="HistorialMenus" xml:space="preserve">
     <value>Menu History</value>
   </data>
@@ -1665,20 +1662,8 @@
   <data name="IniciarSesion" xml:space="preserve">
     <value>Log In</value>
   </data>
-  <data name="SweetAlert_Success" xml:space="preserve">
-    <value>Success</value>
-  </data>
-  <data name="SweetAlert_Error" xml:space="preserve">
-    <value>Error</value>
-  </data>
-  <data name="SweetAlert_Warning" xml:space="preserve">
-    <value>Warning</value>
-  </data>
   <data name="Footer_Tagline" xml:space="preserve">
     <value>Specialty coffee and bubble tea, prepared with love every day.</value>
-  </data>
-  <data name="Ubicacion" xml:space="preserve">
-    <value>San Jose, Costa Rica</value>
   </data>
   <data name="Horario_Semana" xml:space="preserve">
     <value>Mon – Fri: 7:00am – 8:00pm</value>
@@ -1793,5 +1778,47 @@
   </data>
   <data name="OrderDetail_ReceivedOrder" xml:space="preserve">
     <value>I already received my order!</value>
+  </data>
+  <data name="Pedidos" xml:space="preserve">
+    <value>Orders</value>
+  </data>
+  <data name="SweetAlert_Success" xml:space="preserve">
+    <value>Success</value>
+  </data>
+  <data name="SweetAlert_Error" xml:space="preserve">
+    <value>Error</value>
+  </data>
+  <data name="SweetAlert_Warning" xml:space="preserve">
+    <value>Warning</value>
+  </data>
+  <data name="Ubicacion" xml:space="preserve">
+    <value>San Jose, Costa Rica</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="CostoBaseEnvioLabel" xml:space="preserve">
+    <value>Base delivery cost</value>
+  </data>
+  <data name="CostoPorDistanciaLabel" xml:space="preserve">
+    <value>Distance cost</value>
+  </data>
+  <data name="CostoTotalEnvioLabel" xml:space="preserve">
+    <value>Total delivery cost</value>
+  </data>
+  <data name="Reg_BuscarDireccionPlaceholder" xml:space="preserve">
+    <value>Search for a place, province, canton, or district...</value>
+  </data>
+  <data name="Reg_CalcularEntregaBtn" xml:space="preserve">
+    <value>Calculate delivery</value>
+  </data>
+  <data name="Reg_DireccionEncontradaLabel" xml:space="preserve">
+    <value> Address found:</value>
+  </data>
+  <data name="Reg_DistanciaLabel" xml:space="preserve">
+    <value>Distance</value>
+  </data>
+  <data name="Reg_TiempoEstimadoLabel" xml:space="preserve">
+    <value>Estimated time</value>
   </data>
 </root>

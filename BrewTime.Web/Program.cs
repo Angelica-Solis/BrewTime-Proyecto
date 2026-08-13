@@ -106,6 +106,12 @@ builder.Services.AddTransient<IServiceCarrito, ServiceCarrito>();
 builder.Services.AddTransient<IServicePedido, ServicePedido>();
 builder.Services.AddTransient<IServiceCocina, ServiceCocina>();
 
+
+//OPEN ROUTE SERVICE
+builder.Services.Configure<OpenRouteServiceSettings>(
+builder.Configuration.GetSection("OpenRouteService"));
+builder.Services.AddHttpClient<IServiceRutaEntrega, ServiceRutaEntrega>();
+
 // CHATBOT 
 builder.Services.Configure<OpenRouterSettings>(builder.Configuration.GetSection("OpenRouter"));
 builder.Services.Configure<ChatbotFaqSettings>(builder.Configuration.GetSection("ChatbotFaq"));

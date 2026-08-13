@@ -16,14 +16,17 @@ namespace BrewTime.Application.Services.Implementations
         private readonly IRepositoryPedido _repository;
         private readonly IRepositoryCarrito _repositoryCarrito;
         private readonly IRepositoryUsuario _repositoryUsuario;
+        private readonly IServiceRutaEntrega _serviceRutaEntrega;
+
         private readonly IMapper _mapper;
 
-        public ServicePedido(IRepositoryPedido repository, IRepositoryCarrito repositoryCarrito, IRepositoryUsuario repositoryUsuario, IMapper mapper)
+        public ServicePedido(IRepositoryPedido repository, IRepositoryCarrito repositoryCarrito, IRepositoryUsuario repositoryUsuario, IMapper mapper, IServiceRutaEntrega serviceRutaEntrega)
         {
             _repository = repository;
             _repositoryCarrito = repositoryCarrito;
             _repositoryUsuario = repositoryUsuario;
             _mapper = mapper;
+            _serviceRutaEntrega = serviceRutaEntrega;
         }
 
         public async Task<ICollection<PedidoListDTO>> GetHistorialClienteAsync(int clienteId)
@@ -55,6 +58,8 @@ namespace BrewTime.Application.Services.Implementations
             if (pedido == null)
                 return null;
 
+            decimal costoBase = pedido.MetodoEntrega?.Costo ?? 0m;
+            decimal costoEnvio = pedido.CostoEnvio;
             var detalle = new PedidoDetalleDTO
             {
                 PedidoId = pedido.PedidoId,
@@ -73,12 +78,18 @@ namespace BrewTime.Application.Services.Implementations
                 Subtotal = pedido.Subtotal,
                 Impuesto = pedido.Impuesto,
 
+                CostoBaseEnvio = costoBase,
 
-                CostoEnvio = pedido.MetodoEntrega.Costo,
+                CostoPorDistancia =
+                Math.Max(0m, costoEnvio - costoBase),
 
-                Total = pedido.Subtotal
-                  + pedido.Impuesto
-                  + pedido.MetodoEntrega.Costo,
+                CostoEnvio = costoEnvio,
+                Total = pedido.Total,
+
+                MontoPagado = pedido.MontoPagado,
+                Vuelto = pedido.Vuelto,
+                UltimosDigitosTarjeta = pedido.UltimosDigitosTarjeta,
+
 
                 Detalles = new List<PedidoDetalleLineaDTO>()
             };
@@ -372,9 +383,25 @@ namespace BrewTime.Application.Services.Implementations
                 impuestoPedido += impuestoLinea;
             }
 
-            decimal costoEnvio = metodoEntrega.Costo;
+            //costo base que viene de la tabla MetodoEntrega
+            decimal costoBaseEnvio = metodoEntrega.Costo;
 
-            decimal totalPedido = subtotalPedido + impuestoPedido + costoEnvio;
+            //costo adicional calculado según la distancia
+            decimal costoPorDistancia = 0m;
+
+            if (esEntregaDomicilio)
+            {
+                var ruta = await _serviceRutaEntrega
+                    .CalcularRutaAsync(dto.DireccionEntrega!.Trim());
+
+                costoPorDistancia = ruta.CostoPorDistancia;
+            }
+
+            //costo final = costo base + costo por distancia
+            decimal costoEnvio = costoBaseEnvio + costoPorDistancia;
+
+            decimal totalPedido =
+                subtotalPedido + impuestoPedido + costoEnvio;
 
             DateTime ahora = DateTime.Now;
 

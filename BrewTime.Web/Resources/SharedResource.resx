@@ -1782,4 +1782,34 @@
   <data name="OrderDetail_ReceivedOrder" xml:space="preserve">
     <value>OrderDetail_ReceivedOrder</value>
   </data>
+  <data name="Pedidos" xml:space="preserve">
+    <value>Pedidos</value>
+  </data>
+  <data name="Subtotal" xml:space="preserve">
+    <value>Subtotal</value>
+  </data>
+  <data name="CostoBaseEnvioLabel" xml:space="preserve">
+    <value>CostoBaseEnvioLabel</value>
+  </data>
+  <data name="CostoPorDistanciaLabel" xml:space="preserve">
+    <value>CostoPorDistanciaLabel</value>
+  </data>
+  <data name="CostoTotalEnvioLabel" xml:space="preserve">
+    <value>CostoTotalEnvioLabel</value>
+  </data>
+  <data name="Reg_BuscarDireccionPlaceholder" xml:space="preserve">
+    <value>Reg_BuscarDireccionPlaceholder</value>
+  </data>
+  <data name="Reg_CalcularEntregaBtn" xml:space="preserve">
+    <value>Reg_CalcularEntregaBtn</value>
+  </data>
+  <data name="Reg_DireccionEncontradaLabel" xml:space="preserve">
+    <value>Reg_DireccionEncontradaLabel</value>
+  </data>
+  <data name="Reg_DistanciaLabel" xml:space="preserve">
+    <value>Reg_DistanciaLabel</value>
+  </data>
+  <data name="Reg_TiempoEstimadoLabel" xml:space="preserve">
+    <value>Reg_TiempoEstimadoLabel</value>
+  </data>
 </root>

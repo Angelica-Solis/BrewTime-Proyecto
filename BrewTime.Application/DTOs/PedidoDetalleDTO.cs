@@ -32,6 +32,10 @@ namespace BrewTime.Application.DTOs
 
         public decimal Impuesto { get; set; }
 
+        public decimal CostoBaseEnvio { get; set; }
+
+        public decimal CostoPorDistancia { get; set; }
+
         public decimal CostoEnvio { get; set; }
 
         public decimal Total { get; set; }

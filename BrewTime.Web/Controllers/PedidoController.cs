@@ -1,10 +1,11 @@
-﻿using System;
-using System.Security.Claims;
-using System.Threading.Tasks;
+﻿using BrewTime.Application.DTOs;
+using BrewTime.Application.Services.Implementations;
 using BrewTime.Application.Services.Interfaces;
 using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
-using BrewTime.Application.DTOs;
+using System;
+using System.Security.Claims;
+using System.Threading.Tasks;
 
 namespace BrewTime.Web.Controllers
 {
@@ -12,10 +13,12 @@ namespace BrewTime.Web.Controllers
     public class PedidoController : Controller
     {
         private readonly IServicePedido _servicePedido;
+        private readonly IServiceRutaEntrega _serviceRutaEntrega;
 
-        public PedidoController(IServicePedido servicePedido)
+        public PedidoController(IServicePedido servicePedido, IServiceRutaEntrega serviceRutaEntrega)
         {
             _servicePedido = servicePedido;
+            _serviceRutaEntrega = serviceRutaEntrega;
         }
 
         public async Task<IActionResult> Index(DateTime? fecha, int? estadoId)
@@ -182,7 +185,7 @@ namespace BrewTime.Web.Controllers
                 }
                 catch (Exception)
                 {
-                    TempData["Error"] = "No fue posible volver a cargar " + "la informaci�n del pedido";
+                    TempData["Error"] = "No fue posible volver a cargar " + "la información del pedido";
 
                     return RedirectToAction("Index", "Carrito");
                 }
@@ -191,7 +194,7 @@ namespace BrewTime.Web.Controllers
             try
             {
                 int pedidoId = await _servicePedido.RegistrarDesdeCarritoAsync(dto, UsuarioActual, RolActual);
-                TempData["Success"] = "El pedido se registr� correctamente. Ahora puedes continuar con el pago";
+                TempData["Success"] = "El pedido se registró correctamente. Ahora puedes continuar con el pago";
                 return RedirectToAction(nameof(Detail),new { id = pedidoId });
             }
             catch (InvalidOperationException ex)
@@ -209,7 +212,7 @@ namespace BrewTime.Web.Controllers
             catch (Exception)
             {
                 ModelState.AddModelError(
-                    string.Empty, "Ocurri� un error al registrar el pedido");
+                    string.Empty, "Ocurrió un error al registrar el pedido");
 
                 await RecargarRegistroAsync(dto);
 
@@ -260,7 +263,7 @@ namespace BrewTime.Web.Controllers
 
             if (dto == null || dto.PedidoId <= 0)
             {
-                TempData["Error"] = "El pedido indicado no es v�lido";
+                TempData["Error"] = "El pedido indicado no es válido";
 
                 return RedirectToAction(nameof(Index));
             }
@@ -296,7 +299,7 @@ namespace BrewTime.Web.Controllers
             }
             catch (Exception)
             {
-                ModelState.AddModelError(string.Empty, "Ocurri� un error al procesar el pago");
+                ModelState.AddModelError(string.Empty, "Ocurrió un error al procesar el pago");
 
                 return await RecargarPagoAsync(dto);
             }
@@ -413,5 +416,61 @@ namespace BrewTime.Web.Controllers
                 return RedirectToAction(nameof(Detail), new { id = dto.PedidoId });
             }
         }
+
+        #region OpenRouteService
+        //metodo para calcular la ruta de entrega que utiliza el open route service
+        [HttpPost]
+        [ValidateAntiForgeryToken]
+        public async Task<IActionResult> CalcularRutaEntrega(string direccion)
+        {
+            if (string.IsNullOrWhiteSpace(direccion))
+            {
+                return Json(new
+                {
+                    ok = false, mmensaje = "Debe ingresar una dirección."
+                });
+            }
+
+            try
+            {
+                var resultado = await _serviceRutaEntrega.CalcularRutaAsync(direccion);
+
+                return Json(new
+                {
+                    ok = true,
+                    direccionEncontrada = resultado.DireccionEncontrada,
+                    distanciaKilometro = resultado.DistanciaKilometro,
+                    tiempoEstimado = resultado.TiempoEstimado,
+                    costoPorDistancia = resultado.CostoPorDistancia
+                });
+            }
+            catch (InvalidOperationException ex)
+            {
+                return Json(new
+                {
+                    ok = false, mensaje = ex.Message
+                });
+            }
+            catch (Exception)
+            {
+                return Json(new
+                {
+                    ok = false, mensaje = "Ocurrió un error al calcular la ruta."
+                });
+            }
+        }
+
+        [HttpGet]
+        public async Task<IActionResult> BuscarDirecciones(string texto)
+        {
+            if (string.IsNullOrWhiteSpace(texto) || texto.Length < 3)
+                return Json(Array.Empty<object>());
+
+            var direcciones =
+                await _serviceRutaEntrega.BuscarDireccionesAsync(texto);
+
+            return Json(direcciones);
+        }
+        #endregion
     }
 }

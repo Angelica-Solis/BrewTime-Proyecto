@@ -234,6 +234,113 @@
     font-size: 0.76rem;
 }
 
+/* Resultado de ruta */
+#resultadoRuta {
+    margin-top: 1rem;
+    padding: 1rem 1.1rem;
+    border: 1px solid #dfc9a6 !important;
+    border-radius: 12px;
+    background: #fff8ec !important;
+    color: #2e2e2e;
+    box-shadow: 0 4px 12px rgba(78, 54, 32, 0.06);
+}
+
+    #resultadoRuta .mb-2 {
+        margin-bottom: 0.9rem !important;
+        padding-bottom: 0.7rem;
+        border-bottom: 1px solid #ead9bd;
+    }
+
+        #resultadoRuta .mb-2 strong {
+            color: #6f4e37;
+            font-weight: 700;
+        }
+
+#direccionEncontrada {
+    color: #3d3d3d;
+    font-weight: 500;
+}
+
+#resultadoRuta small {
+    color: #7b6755 !important;
+    font-size: 0.82rem;
+    font-weight: 600;
+}
+
+#distanciaRuta,
+#tiempoRuta,
+#costoDistanciaRuta {
+    display: block;
+    margin-top: 0.15rem;
+    color: #17391f;
+    font-size: 1.05rem;
+    font-weight: 700;
+}
+
+/* Botón calcular */
+#btnCalcularRuta {
+    margin-top: 0.8rem;
+    padding: 0.55rem 1rem;
+    border: 1px solid #1f4a2e;
+    border-radius: 9px;
+    background: transparent;
+    color: #1f4a2e;
+    font-weight: 600;
+    transition: 0.2s ease;
+}
+
+    #btnCalcularRuta:hover {
+        background: #1f4a2e;
+        color: #f8ead2;
+    }
+
+    #btnCalcularRuta:disabled {
+        opacity: 0.65;
+        cursor: not-allowed;
+    }
+
+/* Autocomplete */
+.ruta-sugerencias {
+    position: relative;
+    z-index: 20;
+    max-height: 220px;
+    overflow-y: auto;
+    margin-top: 0.3rem;
+    border: 1px solid #dfc9a6;
+    border-radius: 9px;
+    background: #fffaf1;
+}
+
+    .ruta-sugerencias .list-group-item {
+        padding: 0.65rem 0.8rem;
+        border: 0;
+        border-bottom: 1px solid #ead9bd;
+        background: #fffaf1;
+        color: #4d4035;
+        font-size: 0.9rem;
+        text-align: left;
+    }
+
+        .ruta-sugerencias .list-group-item:last-child {
+            border-bottom: 0;
+        }
+
+        .ruta-sugerencias .list-group-item:hover {
+            background: #f3e5cf;
+            color: #17391f;
+        }
+
+/* Responsive */
+@media (max-width: 768px) {
+    #resultadoRuta {
+        padding: 0.9rem;
+    }
+
+        #resultadoRuta .col-md-4 {
+            margin-bottom: 0.5rem;
+        }
+}
+
 @media (max-width: 768px) {
     .brew-content {
         width: min(100% - 1rem, 1050px);
