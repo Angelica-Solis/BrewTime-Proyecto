@@ -1,5 +1,6 @@
 @model BrewTime.Application.DTOs.PedidoDetalleDTO
 @using Microsoft.AspNetCore.Mvc.Localization
+@using System.Globalization
 @inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
 @section Styles {
     <link rel="stylesheet" href="~/css/site.css" asp-append-version="true" />
@@ -127,7 +128,7 @@
                 <div class="brew-meta-grid">
                     <div class="brew-meta-item">
                         <div class="brew-meta-label">@SharedLocalizer["OrderDetail_PurchaseDate"]</div>
-                        <div class="brew-meta-value">@Model.Fecha.ToString("dd/MM/yyyy hh:mm tt")</div>
+                        <div class="brew-meta-value">@Model.Fecha.ToString("g", CultureInfo.CurrentCulture)</div>
                     </div>
                     <div class="brew-meta-item">
                         <div class="brew-meta-label">@SharedLocalizer["ClienteLabel"]</div>
@@ -217,7 +218,17 @@
                     </div>
 
                     <div class="summary-row">
-                        <span>@SharedLocalizer["CostoEnvioLabel"]</span>
+                        <span>@SharedLocalizer["CostoBaseEnvioLabel"]</span>
+                        <span>₡@Model.CostoBaseEnvio.ToString("N2")</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>@SharedLocalizer["CostoPorDistanciaLabel"]</span>
+                        <span>₡@Model.CostoPorDistancia.ToString("N2")</span>
+                    </div>
+
+                    <div class="summary-row">
+                        <span>@SharedLocalizer["CostoTotalEnvioLabel"]</span>
                         <span>₡@Model.CostoEnvio.ToString("N2")</span>
                     </div>
 

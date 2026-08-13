@@ -8,14 +8,14 @@
 
         $.extend($.validator.messages, {
             required: "Este campo es obligatorio",
-            email: "Ingrese un correo electrónico válido",
+            email: "Ingrese un correo electrónico v\u00F1lido",
             number: "Ingrese un número válido",
             digits: "Ingrese solamente números",
             minlength: $.validator.format(
                 "Debe ingresar al menos {0} caracteres"
             ),
             maxlength: $.validator.format(
-                "No puede ingresar más de {0} caracteres"
+                "No puede ingresar m\u00F1s de {0} caracteres"
             ),
             range: $.validator.format(
                 "Ingrese un valor entre {0} y {1}"
@@ -27,14 +27,14 @@
                 "Ingrese un valor menor o igual a {0}"
             ),
             step: $.validator.format(
-                "Ingrese un múltiplo de {0}"
+                "Ingrese un m\u00FAltiplo de {0}"
             )
         });
 
         const validator = $(formulario).validate();
 
         validator.settings.messages["Pago.MetodoPagoId"] = {
-            required: "Debe seleccionar un método de pago"
+            required: "Debe seleccionar un m\u00E9todo de pago"
         };
 
         validator.settings.messages["Pago.NombreTitular"] = {
@@ -43,9 +43,9 @@
         };
 
         validator.settings.messages["Pago.NumeroTarjeta"] = {
-            required: "Debe ingresar el número de tarjeta",
-            digits: "El número de tarjeta debe contener solamente números",
-            regex: "El número de tarjeta debe tener entre 13 y 19 dígitos"
+            required: "Debe ingresar el n\u00FAmero de tarjeta",
+            digits: "El n\u00FAmero de tarjeta debe contener solamente números",
+            regex: "El n\u00FAmero de tarjeta debe tener entre 13 y 19 dígitos"
         };
 
         validator.settings.messages["Pago.FechaVencimiento"] = {
@@ -54,14 +54,14 @@
         };
 
         validator.settings.messages["Pago.CodigoSeguridad"] = {
-            required: "Debe ingresar el código de seguridad",
-            digits: "El código de seguridad debe contener solamente números",
-            regex: "El código de seguridad debe tener 3 o 4 dígitos"
+            required: "Debe ingresar el c\u00F3digo de seguridad",
+            digits: "El c\u00F3digo de seguridad debe contener solamente n\u00FAmeros",
+            regex: "El c\u00F3digo de seguridad debe tener 3 o 4 d\u00EDgitos"
         };
 
         validator.settings.messages["Pago.MontoPagado"] = {
             required: "Debe ingresar el monto recibido",
-            number: "Ingrese un monto válido",
+            number: "Ingrese un monto v\u00F1lido",
             min: "El monto recibido debe ser mayor a cero",
             range: "El monto recibido debe ser mayor a cero"
         };
@@ -168,7 +168,7 @@
 
         mensajeMonto.textContent = diferencia === 0
             ? "Monto exacto."
-            : "Vuelto calculado automáticamente.";
+            : "Vuelto calculado autom\u00F1ticamente.";
 
         mensajeMonto.classList.remove("monto-error");
     }
