@@ -180,9 +180,9 @@
   <data name="BienvenidoA" xml:space="preserve">
     <value>Bienvenido a</value>
   </data>
-  <data name="BrewTimeAdmin" xml:space="preserve">
-    <value>Brew Time · Administration</value>
-  </data>
+	<data name="BrewTimeAdmin" xml:space="preserve">
+  <value>Brew Time · Administración</value>
+</data>
   <data name="BrewTimeCafeteria" xml:space="preserve">
     <value>Brew Time · Cafetería</value>
   </data>
@@ -286,7 +286,7 @@
     <value>Modifique las estaciones, orden y tiempos del proceso actual del producto.</value>
   </data>
   <data name="DescEditarProducto" xml:space="preserve">
-    <value>Modificá los datos del producto seleccionado.</value>
+    <value>Modifique los datos del producto seleccionado.</value>
   </data>
   <data name="DescListadoMenus" xml:space="preserve">
     <value>Consulta general de los menús registrados.</value>
@@ -1811,4 +1811,16 @@
 	<data name="Done" xml:space="preserve">
     <value>Listo</value>
   </data>
+	<data name="LabelComboImage" xml:space="preserve">
+  <value>Imagen del combo</value>
+</data>
+	<data name="BtnDeleteCurrentImage" xml:space="preserve">
+  <value>Eliminar imagen actual</value>
+</data>
+	<data name="UploadImageTitle" xml:space="preserve">
+  <value>Subir imagen</value>
+</data>
+	<data name="ReplaceImageHint" xml:space="preserve">
+  <value>Seleccioná una nueva imagen para reemplazar la actual.</value>
+</data>
 </root>

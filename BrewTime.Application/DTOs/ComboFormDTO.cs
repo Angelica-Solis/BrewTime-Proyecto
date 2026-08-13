@@ -1,4 +1,5 @@
-﻿using System.ComponentModel.DataAnnotations;
+using System.ComponentModel.DataAnnotations;
+using Microsoft.AspNetCore.Http;
 
 namespace BrewTime.Application.DTOs
 {
@@ -21,6 +22,10 @@ namespace BrewTime.Application.DTOs
         public int CategoriaID { get; set; }
 
         public bool Activo { get; set; } = true;
+
+        public string? RutaImagenActual { get; set; }
+        public IFormFile? Imagen { get; set; }
+        public bool EliminarImagen { get; set; }
 
         // IDs de productos seleccionados con sus cantidades
         public List<ComboProductoFormDTO> ProductosSeleccionados { get; set; } = new();

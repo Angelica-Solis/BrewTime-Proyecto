@@ -58,7 +58,7 @@
                 {
                     <div class="brew-card">
                         <div class="brew-card-stripe"></div>
-                        <div class="brew-card-body">
+                        @if (!string.IsNullOrWhiteSpace(item.RutaImagen)) { <img src="@item.RutaImagen" class="brew-combo-image" alt="@item.Nombre" /> }<div class="brew-card-body">
 
                             @* Chip de categoría *@
                             <span class="brew-card-chip">@item.CategoriaNombre</span>
