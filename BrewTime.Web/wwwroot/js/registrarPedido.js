@@ -12,6 +12,7 @@
 
     const subtotal = Number(form.dataset.subtotal || 0);
     const impuesto = Number(form.dataset.impuesto || 0);
+    const minutosLabel = form.dataset.minutos || "minutos";
 
     const metodoEntrega = document.getElementById("metodoEntrega");
     const direccionContainer = document.getElementById("direccionContainer");
@@ -234,10 +235,11 @@
         }
         catch {
             rutaCalculada = false;
+            console.error("Error al calcular la ruta:", error);
 
             Swal.fire(
                 "Error",
-                "No fue posible comunicarse con el servicio de rutas.",
+                "No fue posible calcular la ruta.",
                 "error"
             );
         }
