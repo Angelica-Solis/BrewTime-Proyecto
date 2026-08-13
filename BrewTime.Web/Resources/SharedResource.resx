@@ -1812,4 +1812,7 @@
   <data name="Reg_TiempoEstimadoLabel" xml:space="preserve">
     <value>Reg_TiempoEstimadoLabel</value>
   </data>
+  <data name="Reg_MinutosLabel" xml:space="preserve">
+    <value>Reg_MinutosLabel</value>
+  </data>
 </root>

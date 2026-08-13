@@ -29,6 +29,7 @@
               data-impuesto="@Model.Impuesto.ToString(CultureInfo.InvariantCulture)"
               data-url-ruta="@Url.Action("CalcularRutaEntrega", "Pedido")"
               data-url-direcciones="@Url.Action("BuscarDirecciones", "Pedido")">
+              data-minutos="@SharedLocalizer["Reg_MinutosLabel"].Value">
 
             @Html.AntiForgeryToken()
             <div asp-validation-summary="ModelOnly" class="alert alert-danger"></div>

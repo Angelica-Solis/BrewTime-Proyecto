@@ -208,7 +208,7 @@
                 `${response.distanciaKilometro} km`;
 
             tiempoRuta.textContent =
-                `${response.tiempoEstimado} minutos`;
+                `${response.tiempoEstimado} ${minutosLabel}`;
 
             costoDistanciaRuta.textContent =
                 moneda.format(adicional);

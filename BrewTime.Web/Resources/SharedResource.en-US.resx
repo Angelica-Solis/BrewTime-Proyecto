@@ -1806,4 +1806,7 @@
   <data name="Reg_TiempoEstimadoLabel" xml:space="preserve">
     <value>Estimated time</value>
   </data>
+  <data name="Reg_MinutosLabel" xml:space="preserve">
+    <value>minutes</value>
+  </data>
 </root>

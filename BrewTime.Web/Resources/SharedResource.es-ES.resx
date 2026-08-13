@@ -1825,4 +1825,7 @@
   <data name="Total" xml:space="preserve">
     <value>Total</value>
   </data>
+  <data name="Reg_MinutosLabel" xml:space="preserve">
+    <value>minutes</value>
+  </data>
 </root>
