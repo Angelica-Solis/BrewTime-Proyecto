@@ -1862,4 +1862,13 @@
     <data name="UnidadesPedidas" xml:space="preserve">
         <value>Unidades pedidas</value>
     </data>
+	<data name="LabelComboImage">
+		<value>Imagen del combo</value>
+	</data>
+	<data name="UploadImageTitle">
+		<value>Subir una imagen</value>
+	</data>
+	<data name="PlaceholderImageHint">
+		<value>PNG o JPG · Máximo 5 MB</value>
+	</data>
 </root>

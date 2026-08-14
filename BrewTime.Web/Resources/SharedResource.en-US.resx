@@ -1830,4 +1830,13 @@
 	<data name="UnidadesPedidas" xml:space="preserve">
     <value>Units Ordered</value>
 </data>
+	<data name="LabelComboImage">
+		<value>Combo image</value>
+	</data>
+	<data name="UploadImageTitle">
+		<value>Upload an image</value>
+	</data>
+	<data name="PlaceholderImageHint">
+		<value>PNG or JPG · Max. 5 MB</value>
+	</data>
 </root>
