@@ -7,4 +7,5 @@ namespace BrewTime.Application.DTOs
         public string? Descripcion { get; set; }
         public bool Activo { get; set; }
     }
+    //COMMIT REALIZADO POR EL PROFESOR
 }
