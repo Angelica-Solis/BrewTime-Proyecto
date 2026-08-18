@@ -5,6 +5,7 @@ using Microsoft.AspNetCore.Authorization;
 using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Security.Claims;
+using Microsoft.AspNetCore.Hosting;
 using System.Threading.Tasks;
 
 namespace BrewTime.Web.Controllers
@@ -14,11 +15,18 @@ namespace BrewTime.Web.Controllers
     {
         private readonly IServicePedido _servicePedido;
         private readonly IServiceRutaEntrega _serviceRutaEntrega;
+        private readonly IServiceFacturaPDF _serviceFacturaPDF;
+        private readonly IServiceCorreo _serviceCorreo;
+        private readonly IWebHostEnvironment _environment;
 
-        public PedidoController(IServicePedido servicePedido, IServiceRutaEntrega serviceRutaEntrega)
+        public PedidoController(IServicePedido servicePedido, IServiceRutaEntrega serviceRutaEntrega,
+        IServiceFacturaPDF serviceFacturaPDF, IServiceCorreo serviceCorreo, IWebHostEnvironment environment)
         {
             _servicePedido = servicePedido;
             _serviceRutaEntrega = serviceRutaEntrega;
+            _serviceFacturaPDF = serviceFacturaPDF;
+            _serviceCorreo = serviceCorreo;
+            _environment = environment;
         }
 
         public async Task<IActionResult> Index(DateTime? fecha, int? estadoId)
@@ -277,8 +285,37 @@ namespace BrewTime.Web.Controllers
             {
                 await _servicePedido.ProcesarPagoAsync(dto, UsuarioActual, RolActual);
 
-                TempData["Success"] = "El pago se procesó correctamente";
+                try
+                {
+                    var pedido = await _servicePedido.GetDetallePedidoAsync(dto.PedidoId);
 
+                    var rutaLogo = Path.Combine(_environment.WebRootPath, "images", "logo.png");
+                    var logo = System.IO.File.ReadAllBytes(rutaLogo);
+
+                    var pdf = _serviceFacturaPDF.GenerarFactura(pedido, logo);
+                    var correo = User.FindFirst(ClaimTypes.Email)?.Value;
+
+                    if (!string.IsNullOrWhiteSpace(correo))
+                    {
+                        var asunto = $"Factura BrewTime - Pedido #{pedido.PedidoId}";
+                        var cuerpo = $@"
+                        <h2>Gracias por tu compra en BrewTime</h2>
+                            <p>Tu pedido <strong>#{pedido.PedidoId}</strong> fue pagado correctamente</p>
+                            <p>Adjuntamos la factura correspondiente a tu pedido</p>
+                            <p>Gracias por elegir BrewTime</p>";
+
+                        await _serviceCorreo.EnviarFacturaPdfAsync(
+                            correo, asunto, cuerpo, pdf,
+                            $"Factura_BrewTime_{pedido.PedidoId}.pdf");
+                    }
+                }
+                catch (Exception)
+                {
+                    //el pago ya fue realizado
+                    //si falla el correo, no se cancela el proceso del pedido.
+                }
+
+                TempData["Success"] = "El pago se procesó correctamente.";
                 return RedirectToAction(nameof(Detail), new { id = dto.PedidoId });
             }
             catch (UnauthorizedAccessException)
