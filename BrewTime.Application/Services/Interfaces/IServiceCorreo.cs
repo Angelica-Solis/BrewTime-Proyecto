@@ -9,6 +9,7 @@ namespace BrewTime.Application.Services.Interfaces
     public interface IServiceCorreo
     {
         Task EnviarAsync(string destino, string asunto, string cuerpoHtml);
+        Task EnviarFacturaPdfAsync(string destino, string asunto, string cuerpoHtml, byte[] archivo, string nombreArchivo);
 
     }
 }

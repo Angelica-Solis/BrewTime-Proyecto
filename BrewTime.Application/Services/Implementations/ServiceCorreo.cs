@@ -38,5 +38,29 @@ namespace BrewTime.Infraestructure.Services
 
             await cliente.SendMailAsync(mensaje);
         }
+
+        public async Task EnviarFacturaPdfAsync(string destino, string asunto, string cuerpoHtml, byte[] archivo, string nombreArchivo)
+        {
+            var host = _configuration["Smtp:Host"];
+            var port = int.Parse(_configuration["Smtp:Port"]!);
+            var user = _configuration["Smtp:User"];
+            var password = _configuration["Smtp:Password"];
+
+            using var mensaje = new MailMessage();
+            mensaje.From = new MailAddress(user!, "BrewTime");
+            mensaje.To.Add(destino);
+            mensaje.Subject = asunto;
+            mensaje.Body = cuerpoHtml;
+            mensaje.IsBodyHtml = true;
+
+            using var stream = new MemoryStream(archivo);
+            mensaje.Attachments.Add(new Attachment(stream, nombreArchivo, "application/pdf"));
+
+            using var smtp = new SmtpClient(host!, port);
+            smtp.Credentials = new NetworkCredential(user, password);
+            smtp.EnableSsl = true;
+
+            await smtp.SendMailAsync(mensaje);
+        }
     }
 }

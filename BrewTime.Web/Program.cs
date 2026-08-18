@@ -19,7 +19,10 @@ using Microsoft.AspNetCore.Authentication;
 using BrewTime.Web;
 using BrewTime.Infraestructure.Services;
 using BrewTime.Web.Jobs;
+using QuestPDF.Infrastructure;
 
+//licencia del questpdf
+QuestPDF.Settings.License = LicenseType.Community;
 
 var builder = WebApplication.CreateBuilder(args);
 
@@ -105,6 +108,7 @@ builder.Services.AddTransient<IServiceAutenticacion, ServiceAutenticacion>();
 builder.Services.AddTransient<IServiceCarrito, ServiceCarrito>();
 builder.Services.AddTransient<IServicePedido, ServicePedido>();
 builder.Services.AddTransient<IServiceCocina, ServiceCocina>();
+builder.Services.AddTransient<IServiceFacturaPDF, ServiceFacturaPDF>();
 
 
 //OPEN ROUTE SERVICE
