@@ -6,9 +6,11 @@ using System.Security.Claims;
 using System.Threading.Tasks;
 using System.Linq;
 using System.Collections.Generic;
+using Microsoft.AspNetCore.Authorization;
 
 namespace BrewTime.Web.Controllers
 {
+    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;

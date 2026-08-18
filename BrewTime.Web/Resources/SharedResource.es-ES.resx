@@ -1771,6 +1771,9 @@
   <data name="Tracking_FollowOrder" xml:space="preserve">
     <value>Seguir pedido</value>
   </data>
+  <data name="Tracking_OrderDetails" xml:space="preserve">
+    <value>Detalle de la orden</value>
+  </data>
   <data name="Tracking_OrderTracker" xml:space="preserve">
     <value>Seguimiento del Pedido</value>
   </data>
@@ -1790,25 +1793,55 @@
     <value>Costo base de envío</value>
   </data>
   <data name="CostoPorDistanciaLabel" xml:space="preserve">
-    <value>Costo por distancia</value>
+    <value>Costo por Distancia</value>
   </data>
   <data name="CostoTotalEnvioLabel" xml:space="preserve">
-    <value>Costo total de envío</value>
+    <value>Costo Total</value>
   </data>
   <data name="Reg_BuscarDireccionPlaceholder" xml:space="preserve">
     <value>Ingrese o busque la dirección de entrega</value>
   </data>
   <data name="Reg_CalcularEntregaBtn" xml:space="preserve">
-    <value>Calcular costo de entrega</value>
+    <value>Calcular Ruta</value>
   </data>
   <data name="Reg_DireccionEncontradaLabel" xml:space="preserve">
-    <value>Dirección encontrada</value>
+    <value>Direección Encontrada:</value>
   </data>
   <data name="Reg_DistanciaLabel" xml:space="preserve">
     <value>Distancia</value>
   </data>
   <data name="Reg_TiempoEstimadoLabel" xml:space="preserve">
-    <value>Tiempo estimado</value>
+    <value>Tiempo Estimado</value>
+  </data>
+  <data name="Reg_MinutosLabel" xml:space="preserve">
+    <value>minutes</value>
+  </data>
+  <data name="TitleDashboard" xml:space="preserve">
+    <value>Dashboard</value>
+  </data>
+  <data name="ReportesDelDia" xml:space="preserve">
+    <value>Reportes del día</value>
+  </data>
+  <data name="DashboardDe" xml:space="preserve">
+    <value>Dashboard de</value>
+  </data>
+  <data name="ProductosMasPedidos" xml:space="preserve">
+    <value>Productos más pedidos</value>
+  </data>
+  <data name="Top3DeHoy" xml:space="preserve">
+    <value>Top 3 de hoy</value>
+  </data>
+  <data name="SinProductosHoy" xml:space="preserve">
+    <value>No hay productos pedidos hoy.</value>
+  </data>
+  <data name="PedidosPorEstado" xml:space="preserve">
+    <value>Pedidos por estado</value>
+  </data>
+  <data name="EstadoActual" xml:space="preserve">
+    <value>Estado actual</value>
+  </data>
+  <data name="UnidadesPedidas" xml:space="preserve">
+    <value>Unidades pedidas</value>
   </data>
   <data name="SweetAlert_Success" xml:space="preserve">
     <value>Éxito</value>
@@ -1825,58 +1858,4 @@
   <data name="Total" xml:space="preserve">
     <value>Total</value>
   </data>
-  <data name="Reg_MinutosLabel" xml:space="preserve">
-    <value>minutes</value>
-  </data>
-	<data name="Reg_CalcularEntregaBtn" xml:space="preserve">
-    <value>Calcular Ruta</value>
-  </data>
-    <data name="Reg_DireccionEncontradaLabel" xml:space="preserve">
-    <value>Direección Encontrada:</value>
-  </data>
-    <data name="Reg_DistanciaLabel" xml:space="preserve">
-    <value>Distancia</value>
-  </data>
-    <data name="Reg_TiempoEstimadoLabel" xml:space="preserve">
-    <value>Tiempo Estimado</value>
-  </data>
-    <data name="CostoPorDistanciaLabel" xml:space="preserve">
-    <value>Costo por Distancia</value>
-  </data>
-    <data name="CostoBaseEnvioLabel" xml:space="preserve">
-    <value>Costo base de envío</value>
-  </data>
-    <data name="CostoTotalEnvioLabel" xml:space="preserve">
-    <value>Costo Total</value>
-  </data>
-   <data name="TitleDashboard" xml:space="preserve">
-    <value>Dashboard</value>
-    </data>
-    <data name="ReportesDelDia" xml:space="preserve">
-        <value>Reportes del día</value>
-    </data>
-    <data name="DashboardDe" xml:space="preserve">
-        <value>Dashboard de</value>
-    </data>
-    <data name="Pedidos" xml:space="preserve">
-        <value>Pedidos</value>
-    </data>
-    <data name="ProductosMasPedidos" xml:space="preserve">
-        <value>Productos más pedidos</value>
-    </data>
-    <data name="Top3DeHoy" xml:space="preserve">
-        <value>Top 3 de hoy</value>
-    </data>
-    <data name="SinProductosHoy" xml:space="preserve">
-        <value>No hay productos pedidos hoy.</value>
-    </data>
-    <data name="PedidosPorEstado" xml:space="preserve">
-        <value>Pedidos por estado</value>
-    </data>
-    <data name="EstadoActual" xml:space="preserve">
-        <value>Estado actual</value>
-    </data>
-    <data name="UnidadesPedidas" xml:space="preserve">
-        <value>Unidades pedidas</value>
-    </data>
 </root>

@@ -1684,7 +1684,7 @@
     <value>lblCantidad</value>
   </data>
   <data name="Title" xml:space="preserve">
-    <value />
+    <value>Title</value>
   </data>
   <data name="OrdersIn" xml:space="preserve">
     <value>OrdersIn</value>
@@ -1814,5 +1814,47 @@
   </data>
   <data name="Reg_MinutosLabel" xml:space="preserve">
     <value>Reg_MinutosLabel</value>
+  </data>
+  <data name="TitleDashboard" xml:space="preserve">
+    <value>TitleDashboard</value>
+  </data>
+  <data name="ReportesDelDia" xml:space="preserve">
+    <value>ReportesDelDia</value>
+  </data>
+  <data name="DashboardDe" xml:space="preserve">
+    <value>DashboardDe</value>
+  </data>
+  <data name="ProductosMasPedidos" xml:space="preserve">
+    <value>ProductosMasPedidos</value>
+  </data>
+  <data name="Top3DeHoy" xml:space="preserve">
+    <value>Top3DeHoy</value>
+  </data>
+  <data name="SinProductosHoy" xml:space="preserve">
+    <value>SinProductosHoy</value>
+  </data>
+  <data name="PedidosPorEstado" xml:space="preserve">
+    <value>PedidosPorEstado</value>
+  </data>
+  <data name="EstadoActual" xml:space="preserve">
+    <value>EstadoActual</value>
+  </data>
+  <data name="UnidadesPedidas" xml:space="preserve">
+    <value>UnidadesPedidas</value>
+  </data>
+  <data name="SweetAlert_Success" xml:space="preserve">
+    <value>SweetAlert_Success</value>
+  </data>
+  <data name="SweetAlert_Error" xml:space="preserve">
+    <value>SweetAlert_Error</value>
+  </data>
+  <data name="SweetAlert_Warning" xml:space="preserve">
+    <value>SweetAlert_Warning</value>
+  </data>
+  <data name="Ubicacion" xml:space="preserve">
+    <value>Ubicacion</value>
+  </data>
+  <data name="Total" xml:space="preserve">
+    <value>Total</value>
   </data>
 </root>
