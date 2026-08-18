@@ -272,50 +272,63 @@ namespace BrewTime.Web.Controllers
             if (dto == null || dto.PedidoId <= 0)
             {
                 TempData["Error"] = "El pedido indicado no es válido";
-
                 return RedirectToAction(nameof(Index));
             }
 
             if (!ModelState.IsValid)
-            {
                 return await RecargarPagoAsync(dto);
-            }
 
             try
             {
                 await _servicePedido.ProcesarPagoAsync(dto, UsuarioActual, RolActual);
 
+                bool facturaEnviada = false;
+                string? correoFactura = null;
+
                 try
                 {
                     var pedido = await _servicePedido.GetDetallePedidoAsync(dto.PedidoId);
 
+                    if (pedido == null)
+                        throw new Exception("No se encontró el pedido.");
+
+                    correoFactura = pedido.ClienteCorreo?.Trim();
+
+
+                    if (string.IsNullOrWhiteSpace(correoFactura))
+                        throw new Exception("El cliente seleccionado no tiene correo registrado.");
+
                     var rutaLogo = Path.Combine(_environment.WebRootPath, "images", "logo.png");
+
+                    if (!System.IO.File.Exists(rutaLogo))
+                        throw new Exception("No se encontró el logo.");
+
                     var logo = System.IO.File.ReadAllBytes(rutaLogo);
-
                     var pdf = _serviceFacturaPDF.GenerarFactura(pedido, logo);
-                    var correo = User.FindFirst(ClaimTypes.Email)?.Value;
 
-                    if (!string.IsNullOrWhiteSpace(correo))
-                    {
-                        var asunto = $"Factura BrewTime - Pedido #{pedido.PedidoId}";
-                        var cuerpo = $@"
+                    var asunto = $"Factura BrewTime - Pedido #{pedido.PedidoId}";
+                    var cuerpo = $@"
                         <h2>Gracias por tu compra en BrewTime</h2>
-                            <p>Tu pedido <strong>#{pedido.PedidoId}</strong> fue pagado correctamente</p>
-                            <p>Adjuntamos la factura correspondiente a tu pedido</p>
-                            <p>Gracias por elegir BrewTime</p>";
+                        <p>Tu pedido <strong>#{pedido.PedidoId}</strong> fue pagado correctamente.</p>
+                        <p>Adjuntamos la factura correspondiente a tu pedido.</p>
+                        <p>Gracias por elegir BrewTime.</p>";
 
-                        await _serviceCorreo.EnviarFacturaPdfAsync(
-                            correo, asunto, cuerpo, pdf,
-                            $"Factura_BrewTime_{pedido.PedidoId}.pdf");
-                    }
+                    await _serviceCorreo.EnviarFacturaPdfAsync(
+                        correoFactura, asunto, cuerpo, pdf,
+                        $"Factura_BrewTime_{pedido.PedidoId}.pdf");
+
+                    facturaEnviada = true;
                 }
-                catch (Exception)
+                catch (Exception ex)
                 {
-                    //el pago ya fue realizado
-                    //si falla el correo, no se cancela el proceso del pedido.
+                    TempData["Error"] =
+                        $"Pago realizado, pero falló el envío a {correoFactura ?? "SIN CORREO"}: {ex.Message}";
                 }
 
-                TempData["Success"] = "El pago se procesó correctamente.";
+                TempData["Success"] = facturaEnviada
+                    ? "El pago se procesó correctamente y la factura fue enviada por correo."
+                    : "El pago se procesó correctamente.";
+
                 return RedirectToAction(nameof(Detail), new { id = dto.PedidoId });
             }
             catch (UnauthorizedAccessException)
@@ -325,23 +338,19 @@ namespace BrewTime.Web.Controllers
             catch (KeyNotFoundException ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
-
                 return await RecargarPagoAsync(dto);
             }
             catch (InvalidOperationException ex)
             {
                 ModelState.AddModelError(string.Empty, ex.Message);
-
                 return await RecargarPagoAsync(dto);
             }
             catch (Exception)
             {
                 ModelState.AddModelError(string.Empty, "Ocurrió un error al procesar el pago");
-
                 return await RecargarPagoAsync(dto);
             }
         }
-
 
         //metodos helpers
         private async Task RecargarRegistroAsync(PedidoCreateDTO dto)

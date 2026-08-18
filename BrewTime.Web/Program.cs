@@ -23,6 +23,7 @@ using QuestPDF.Infrastructure;
 
 //licencia del questpdf
 QuestPDF.Settings.License = LicenseType.Community;
+QuestPDF.Settings.EnableDebugging = true;
 
 var builder = WebApplication.CreateBuilder(args);
 
