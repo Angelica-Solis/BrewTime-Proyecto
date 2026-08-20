@@ -1,0 +1,274 @@
+﻿@model BrewTime.Application.DTOs.ProductoDetalleDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/producto.css" asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = Model.Nombre;
+}
+
+<div class="brew-page">
+    @* Chatbot  *@
+    <partial name="_Chatbot" />
+    @* Hero banner *@
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">@SharedLocalizer["BrewTimeCafeteria"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["DetalleDel"] <em>@SharedLocalizer["ProductoEm"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["DescDetalleProducto"]</p>
+            <div class="brew-hero-line">
+                <span></span>
+                <i>@SharedLocalizer["IngredientesPrecio"]</i>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    @* Contenido *@
+    <div class="brew-content">
+
+        <a asp-action="Maintenance" class="brew-btn-volver">← @SharedLocalizer["VolverListadoBtn"]</a>
+
+        <div class="brew-detail-card">
+
+            @* Imagen *@
+            <div class="brew-detail-img-wrap">
+                @if (Model.Imagenes.Any())
+                {
+                    <div id="carouselProducto"
+                         class="carousel slide carousel-fade brew-detail-carousel"
+                         data-bs-ride="carousel">
+
+                        @if (Model.Imagenes.Count > 1)
+                        {
+                            <div class="carousel-indicators">
+                                @for (int i = 0; i < Model.Imagenes.Count; i++)
+                                {
+                                    <button type="button"
+                                            data-bs-target="#carouselProducto"
+                                            data-bs-slide-to="@i"
+                                            class="@(i == 0 ? "active" : "")"
+                                            aria-current="@(i == 0 ? "true" : "false")"
+                                            aria-label="Slide @(i + 1)"></button>
+                                }
+                            </div>
+                        }
+
+                        <div class="carousel-inner">
+
+                            @for (int i = 0; i < Model.Imagenes.Count; i++)
+                            {
+                                <div class="carousel-item @(i == 0 ? "active" : "")">
+
+                                    <img src="@Model.Imagenes[i]"
+                                         class="d-block w-100 brew-detail-img"
+                                         alt="@Model.Nombre" />
+
+                                </div>
+                            }
+
+                        </div>
+
+                        @if (Model.Imagenes.Count > 1)
+                        {
+                            <button class="carousel-control-prev"
+                                    type="button"
+                                    data-bs-target="#carouselProducto"
+                                    data-bs-slide="prev">
+
+                                <span class="carousel-control-prev-icon"></span>
+
+                            </button>
+
+                            <button class="carousel-control-next"
+                                    type="button"
+                                    data-bs-target="#carouselProducto"
+                                    data-bs-slide="next">
+
+                                <span class="carousel-control-next-icon"></span>
+
+                            </button>
+                        }
+
+                    </div>
+                }
+                else
+                {
+                    <div class="brew-detail-img-placeholder">
+                        <span>☕</span>
+                        <p>@SharedLocalizer["SinImagenDisponible"]</p>
+                    </div>
+                }
+            </div>
+
+            @* Info *@
+            <div class="brew-detail-info">
+
+                <h2 class="brew-detail-nombre">@Model.Nombre</h2>
+
+                @* Categoría *@
+                <span class="brew-card-chip mb-3">@Model.CategoriaNombre</span>
+
+                @* Descripción *@
+                <p class="brew-detail-desc">@Model.Descripcion</p>
+
+                @* Datos en fila *@
+                <div class="brew-detail-meta">
+
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">@SharedLocalizer["PrecioLabel"]</span>
+                        <span class="brew-badge-tiempo">
+                            @Model.Precio.ToString("C", new System.Globalization.CultureInfo("es-CR"))
+                        </span>
+                    </div>
+
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">@SharedLocalizer["EstadoLabel"]</span>
+                        @if (Model.Activo)
+                        {
+                            <span class="brew-badge-activo">@SharedLocalizer["ActivoBadge"]</span>
+                        }
+                        else
+                        {
+                            <span class="brew-badge-inactivo">@SharedLocalizer["InactivoBadge"]</span>
+                        }
+                    </div>
+
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">@SharedLocalizer["FechaCreacionLabel"]</span>
+                        <span class="brew-meta-valor">@Model.FechaCreacion.ToString("dd/MM/yyyy")</span>
+                    </div>
+
+                </div>
+
+                @* Ingredientes *@
+                <div class="brew-detail-ingredientes">
+                    <p class="brew-meta-label">@SharedLocalizer["IngredientesLabel"]</p>
+                    @if (Model.Ingredientes.Any())
+                    {
+                        <ul class="brew-ingredientes-list">
+                            @foreach (var ingrediente in Model.Ingredientes)
+                            {
+                                <li class="brew-ingrediente-item">
+                                    <span class="brew-ingrediente-dot">•</span>
+                                    @ingrediente
+                                </li>
+                            }
+                        </ul>
+                    }
+                    else
+                    {
+                        <p class="brew-detail-empty">@SharedLocalizer["NoHayIngredientesMsj"]</p>
+                    }
+                </div>
+
+                <hr class="my-4" />
+
+                <form asp-controller="Carrito"
+                      asp-action="AgregarProducto"
+                      method="post">
+
+                    @Html.AntiForgeryToken()
+
+                    <input type="hidden"
+                           name="productoId"
+                           value="@Model.ProductoID" />
+
+                    <div class="brew-carrito-box">
+
+                        <label class="brew-carrito-label">
+                            @SharedLocalizer["lblCantidad"]
+                        </label>
+
+                        <input type="number"
+                               id="cantidadProducto"
+                               name="cantidad"
+                               value="1"
+                               min="1"
+                               class="brew-carrito-input" />
+
+                        <button type="button"
+                                id="btnAgregarProducto"
+                                class="brew-btn-carrito"
+                                data-id="@Model.ProductoID">
+                            <i class="bi bi-cart-plus"></i>
+                            @SharedLocalizer["AgregarCarritoBtn"]
+                        </button>
+
+                    </div>
+
+                </form>
+
+            </div>
+        </div>
+    </div>
+    @section Scripts {
+
+        <script>
+
+                                $(function(){
+
+                $("#btnAgregarProducto").click(function(e){
+
+                    e.preventDefault();
+
+                    $.ajax({
+
+                        url:"/Carrito/AgregarProducto",
+
+                        type:"POST",
+
+                        headers:{
+                            RequestVerificationToken:$('input[name="__RequestVerificationToken"]').val()
+                        },
+
+                        data:{
+
+                            productoId:$(this).data("id"),
+
+                            cantidad:$("#cantidadProducto").val()
+
+                        },
+
+                        success:function(r){
+
+                            if(r.ok){
+
+                                let badge=$("#cantidadCarrito");
+
+                                badge.text(r.cantidad);
+
+                                if(r.cantidad>0)
+                                    badge.show();
+                                else
+                                    badge.hide();
+
+                                Swal.fire({
+
+                                    icon:"success",
+
+                                    title:r.mensaje,
+
+                                    timer:1200,
+
+                                    showConfirmButton:false
+
+                                });
+
+                            }
+
+                        }
+
+                    });
+
+                });
+
+            });
+
+        </script>
+
+    }
+</div>

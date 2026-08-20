@@ -26,7 +26,7 @@ namespace BrewTime.Web.Controllers
             _webHostEnvironment = webHostEnvironment;
         }
 
-        // ── Público ──────────────────────────────────────────
+        //  Público 
         [Authorize(Roles = "Administrador,Cliente,Encargado")]
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -41,8 +41,15 @@ namespace BrewTime.Web.Controllers
             var combo = await _serviceCombo.FindByIdAsync(id);
             return View(combo);
         }
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
+        public async Task<IActionResult> DetailAdmin(int id)
+        {
+            var combo = await _serviceCombo.FindByIdAsync(id);
+            return View(combo);
+        }
 
-        // ── Mantenimiento ─────────────────────────────────────
+        //  Mantenimiento
         [Authorize(Roles = "Administrador")]
         [HttpGet]
         public async Task<IActionResult> Maintenance()
@@ -105,7 +112,7 @@ namespace BrewTime.Web.Controllers
             return RedirectToAction(nameof(Maintenance));
         }
 
-        // ── Helper ───────────────────────────────────────────
+        //  Helper
 
         private async Task CargarDatosFormulario(ComboFormDTO? dto)
         {

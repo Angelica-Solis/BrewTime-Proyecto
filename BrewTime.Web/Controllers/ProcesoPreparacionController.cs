@@ -38,7 +38,15 @@ namespace BrewTime.Web.Controllers
 
             return View(detalle);
         }
+        public async Task<IActionResult> DetailAdmin(int id)
+        {
+            var detalle = await _serviceProcesoPreparacion.DetailByProductoAsync(id);
 
+            if (detalle == null)
+                return NotFound();
+
+            return View(detalle);
+        }
         // mantenimientos
 
         [HttpGet]

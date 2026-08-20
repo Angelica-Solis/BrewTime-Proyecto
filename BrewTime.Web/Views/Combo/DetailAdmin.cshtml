@@ -1,0 +1,198 @@
+﻿@model BrewTime.Application.DTOs.ComboDetalleDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+@section Styles {
+    <link rel="stylesheet" href="~/css/combo.css" asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = Model.Nombre;
+}
+
+<div class="brew-page">
+    @* Chatbot  *@
+    <partial name="_Chatbot" />
+    @* Hero banner *@
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">@SharedLocalizer["BrewTimeCafeteria"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["ComboDetailTitleBefore"] <em>@SharedLocalizer["ComboDetailTitleItalic"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["HeroSubtitleDetail"]</p>
+            <div class="brew-hero-line">
+                <span></span>
+                <i>@SharedLocalizer["ProductsAndSpecialPrice"]</i>
+                <span></span>
+            </div>
+        </div>
+    </div>
+
+    @* Contenido *@
+    <div class="brew-content">
+
+        <a asp-action="Maintenance" class="brew-btn-volver">← @SharedLocalizer["BackToList"]</a>
+
+        <div class="brew-detail-card">
+
+            @* Panel izquierdo: info principal *@
+            <div class="brew-detail-info">
+                @if (!string.IsNullOrWhiteSpace(Model.RutaImagen))
+                {
+                    <img src="@Model.RutaImagen" class="brew-combo-detail-image" alt="@Model.Nombre" />
+                }
+
+                <h2 class="brew-detail-nombre">@Model.Nombre</h2>
+
+                <span class="brew-card-chip">@Model.CategoriaNombre</span>
+
+                <p class="brew-detail-desc">@Model.Descripcion</p>
+
+                @* Meta: precio, estado, fecha *@
+                <div class="brew-detail-meta">
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">@SharedLocalizer["SpecialPrice"]</span>
+                        <span class="brew-badge-tiempo">
+                            @Model.PrecioEspecial.ToString("C", new System.Globalization.CultureInfo("es-CR"))
+                        </span>
+                    </div>
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">@SharedLocalizer["Status"]</span>
+                        @if (Model.Activo)
+                        {
+                            <span class="brew-badge-activo">@SharedLocalizer["BadgeActive"]</span>
+                        }
+                        else
+                        {
+                            <span class="brew-badge-inactivo">@SharedLocalizer["BadgeInactive"]</span>
+                        }
+                    </div>
+                    <div class="brew-meta-item">
+                        <span class="brew-meta-label">@SharedLocalizer["CreationDate"]</span>
+                        <span class="brew-meta-valor">@Model.FechaCreacion.ToString("dd/MM/yyyy")</span>
+                    </div>
+                </div>
+
+            </div>
+
+            @* Panel derecho: productos del combo *@
+            <div class="brew-detail-productos">
+
+                <p class="brew-productos-titulo">@SharedLocalizer["IncludedProducts"]</p>
+
+                @if (Model.Productos.Any())
+                {
+                    <div class="brew-productos-list">
+                        @foreach (var p in Model.Productos)
+                        {
+                            <div class="brew-producto-item">
+                                <span class="brew-producto-nombre">@p.NombreProducto</span>
+                                <span class="brew-producto-cantidad">x@(p.Cantidad)</span>
+                            </div>
+                        }
+                    </div>
+                }
+                else
+                {
+                    <p class="brew-detail-empty">@SharedLocalizer["NoProductsAssigned"]</p>
+                }
+
+            </div>
+
+
+
+            <form asp-controller="Carrito"
+                  asp-action="AgregarCombo"
+                  method="post"
+                  class="brew-carrito-form">
+
+                @Html.AntiForgeryToken()
+
+                <input type="hidden"
+                       name="comboId"
+                       value="@Model.ComboID" />
+
+                <div class="brew-carrito-box">
+
+                    <label class="brew-carrito-label">
+                        @SharedLocalizer["lblCantidad"]
+                    </label>
+
+                    <input type="number"
+                           id="cantidadCombo"
+                           name="cantidad"
+                           value="1"
+                           min="1"
+                           class="brew-carrito-input" />
+
+                    <button type="button"
+                            id="btnAgregarCombo"
+                            class="brew-btn-carrito"
+                            data-id="@Model.ComboID">
+                        <i class="bi bi-cart-plus"></i>
+                        @SharedLocalizer["AgregarCarritoBtn"]
+                    </button>
+
+                </div>
+
+            </form>
+
+        </div>
+
+    </div>
+</div>
+
+@section Scripts {
+
+    <script>
+
+                       $(document).ready(function(){
+
+            $("#btnAgregarCombo").click(function(e){
+
+                e.preventDefault();
+
+                $.ajax({
+
+                    url: "/Carrito/AgregarCombo",
+                    type: "POST",
+
+                    headers: {
+                        RequestVerificationToken:
+                        $('input[name="__RequestVerificationToken"]').val()
+                    },
+
+                    data: {
+
+                        comboId: $(this).data("id"),
+                       cantidad: $("#cantidadCombo").val()
+
+                    },
+
+                    success: function(r){
+
+                        if(r.ok){
+
+                            $("#cantidadCarrito").text(r.cantidad);
+
+                            if(r.cantidad>0)
+                                $("#cantidadCarrito").show();
+
+                            Swal.fire({
+                                icon:"success",
+                                title:r.mensaje,
+                                timer:1200,
+                                showConfirmButton:false
+                            });
+
+                        }
+
+                    }
+
+                });
+
+            });
+
+        });
+
+    </script>
+
+}

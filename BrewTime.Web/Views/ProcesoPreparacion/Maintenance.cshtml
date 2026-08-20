@@ -27,7 +27,7 @@
     <div class="brew-content">
 
         <div class="brew-mant-header">
-            <a asp-action="Index" asp-controller="Home" class="brew-btn-volver-mant">
+            <a asp-action="Index"  class="brew-btn-volver-mant">
                 ← @SharedLocalizer["VolverBtn"]
             </a>
             <a asp-action="Create" class="brew-btn-nuevo">
@@ -65,7 +65,7 @@
                                 </td>
                                 <td>
                                     <div class="brew-actions-cell">
-                                        <a asp-action="Detail"
+                                        <a asp-action="DetailAdmin"
                                            asp-route-id="@item.ProductoId"
                                            class="brew-btn-detalle-table">
                                             <i class="bi bi-eye"></i> @SharedLocalizer["DetalleBtn"]

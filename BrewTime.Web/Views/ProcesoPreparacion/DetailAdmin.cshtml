@@ -1,0 +1,81 @@
+﻿@model ProcesoPreparacionDetalleDTO
+@using Microsoft.AspNetCore.Mvc.Localization
+@inject IHtmlLocalizer<BrewTime.Web.SharedResource> SharedLocalizer
+
+@section Styles {
+    <link rel="stylesheet" href="~/css/procesoPreparacion.css" asp-append-version="true" />
+}
+
+@{
+    ViewData["Title"] = SharedLocalizer["TituloDetalleProceso"].Value;
+}
+
+<div class="brew-page">
+    @* Chatbot  *@
+    <partial name="_Chatbot" />
+
+    @* Hero banner *@
+    <div class="brew-hero">
+        <div class="brew-hero-inner">
+            <p class="brew-hero-eyebrow">@SharedLocalizer["CafeteriaEyebrow"]</p>
+            <h1 class="brew-titulo">@SharedLocalizer["DetalleDel"] <em>@SharedLocalizer["ProcesoEm"]</em></h1>
+            <p class="brew-subtitulo">@SharedLocalizer["InfoCompletaPreparacion"]</p>
+            <div class="brew-hero-line">
+            </div>
+        </div>
+    </div>
+
+
+    @* Contenido *@
+    <div class="brew-content">
+        <a asp-action="Maintenance" class="brew-btn-volver">
+            &larr; @SharedLocalizer["VolverAlListado"]
+        </a>
+        <div class="brew-detalle-wrapper">
+
+            <div class="brew-card">
+                <div class="brew-card-stripe"></div>
+                <div class="brew-card-body">
+
+                    <h2 class="brew-detalle-producto">
+                        @Model.NombreProducto
+                    </h2>
+
+                    @foreach (var item in Model.Procesos)
+                    {
+                        <div class="brew-paso-card">
+
+                            <div class="brew-paso-numero">
+                                @item.Orden.ToString("00")
+                            </div>
+
+                            <div>
+                                <span class="brew-paso-label">
+                                    @SharedLocalizer["EstacionLabel"]
+                                </span>
+
+                                <div class="brew-paso-estacion">
+                                    @item.Estacion.Nombre
+                                </div>
+                            </div>
+
+                            <div>
+                                <span class="brew-paso-label">
+                                    @SharedLocalizer["TiempoEstimadoLabel"]
+                                </span>
+
+                                <span class="brew-detalle-tiempo">
+                                    @item.TiempoEstimadoMin @SharedLocalizer["MinutosAbv"]
+                                </span>
+                            </div>
+
+                        </div>
+                    }
+
+                </div>
+            </div>
+
+        </div>
+    </div>
+
+</div>
