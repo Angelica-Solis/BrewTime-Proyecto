@@ -56,6 +56,8 @@ namespace BrewTime.Web.Controllers
             var producto = await _serviceProducto.FindByIdAsync(id);
             return View(producto);
         }
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
         public async Task<IActionResult> DetailAdmin(int id)
         {
             var producto = await _serviceProducto.FindByIdAsync(id);

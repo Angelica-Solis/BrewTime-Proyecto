@@ -23,7 +23,7 @@ namespace BrewTime.Web.Controllers
             _serviceCombo = serviceCombo;
         }
 
-        // ── Público ──────────────────────────────────────────
+        //  Público 
         [Authorize(Roles = "Administrador,Encargado")]
         [HttpGet]
         public async Task<IActionResult> Index()
@@ -44,7 +44,7 @@ namespace BrewTime.Web.Controllers
             return View(menu);
         }
 
-        [Authorize(Roles = "Cliente,Encargado,Cocina,Administrador")]
+        [Authorize(Roles = "Cliente,Encargado,Administrador")]
         [HttpGet]
         public async Task<IActionResult> Disponible()
         {
@@ -66,7 +66,7 @@ namespace BrewTime.Web.Controllers
             return View(menu);
         }
 
-        // ── Mantenimiento ────────────────────────────────────
+        //  Mantenimiento 
 
         [HttpGet]
         public async Task<IActionResult> Maintenance()
@@ -265,7 +265,7 @@ namespace BrewTime.Web.Controllers
             return RedirectToAction(nameof(Maintenance));
         }
 
-        // ── Helper ───────────────────────────────────────────
+        //  Helper 
 
         private async Task CargarDatosFormularioAsync()
         {

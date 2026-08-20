@@ -38,6 +38,8 @@ namespace BrewTime.Web.Controllers
 
             return View(detalle);
         }
+        [Authorize(Roles = "Administrador")]
+        [HttpGet]
         public async Task<IActionResult> DetailAdmin(int id)
         {
             var detalle = await _serviceProcesoPreparacion.DetailByProductoAsync(id);
