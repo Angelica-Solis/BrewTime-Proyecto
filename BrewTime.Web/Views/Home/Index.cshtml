@@ -6,7 +6,7 @@
 }
 
 @section Styles {
-    <link rel="stylesheet" href="~/css/home.css" asp-append-version="true" />
+    <link rel="stylesheet" href="~/css/Home.css" asp-append-version="true" />
     <link rel="stylesheet" href="~/css/tracking.css" asp-append-version="true" />
 }
 
@@ -126,204 +126,103 @@
     </div>
     <div class="section-divider" style="margin-top:2.5rem;"><hr /></div>
 
-    @* Carrusel *@
-    <div class="home-carrusel">
-        <div class="home-carrusel-header">
-            <div>
-                <p class="home-menu-eyebrow">@SharedLocalizer["LoMasPedido"]</p>
-                <h2 class="home-menu-titulo" style="margin-bottom:0;">@SharedLocalizer["EstrellasTemporada"]</h2>
+    @* productos activos y reales *@
+    @{
+        var productosActivos = (ViewBag.ProductosActivos as IEnumerable<BrewTime.Application.DTOs.ProductoDTO>)?.ToList()
+        ?? new List<BrewTime.Application.DTOs.ProductoDTO>();
+
+        string ImgSrc(string? ruta) =>
+        string.IsNullOrWhiteSpace(ruta) ? Url.Content("~/images/no-image.png") : ruta;
+    }
+
+    @if (!productosActivos.Any())
+    {
+        <div class="home-section">
+            <div class="home-section-header">
+                <h2 class="home-section-titulo">@SharedLocalizer["NuestroMenu"]</h2>
             </div>
-            <div class="home-carrusel-nav">
-                <button class="home-carrusel-btn" id="brew-prev" aria-label="@SharedLocalizer["BtnAnterior"]">&#8592;</button>
-                <button class="home-carrusel-btn" id="brew-next" aria-label="@SharedLocalizer["BtnSiguiente"]">&#8594;</button>
-            </div>
+            <p class="home-menu-desc">@SharedLocalizer["SinProductosDisponibles"]</p>
         </div>
-        <div class="home-carrusel-viewport">
-            <div class="home-carrusel-track" id="brew-track">
-
-                @* Items del Carrusel *@
-                <div class="home-carrusel-item">
-                    <div class="home-card">
-                        <div class="home-card-stripe"></div>
-                        <div class="home-card-img-wrap">
-                            <img src="~/images/productos/Bubble Tea Original_BubbleTea.png" alt="Bubble Tea Original" />
-                        </div>
-                        <div class="home-card-body">
-                            <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
-                            <p class="home-card-nombre">Original Bubble Tea</p>
-                            <p class="home-card-precio">₡2,500</p>
-                        </div>
-                    </div>
+    }
+    else
+    {
+        @* Carrusel - destacados *@
+        <div class="home-carrusel">
+            <div class="home-carrusel-header">
+                <div>
+                    <p class="home-menu-eyebrow">@SharedLocalizer["LoMasPedido"]</p>
+                    <h2 class="home-menu-titulo" style="margin-bottom:0;">@SharedLocalizer["EstrellasTemporada"]</h2>
                 </div>
-                <div class="home-carrusel-item">
-                    <div class="home-card">
-                        <div class="home-card-stripe"></div>
-                        <div class="home-card-img-wrap">
-                            <img src="~/images/productos/CoffeeBoba _Bubble tea.png" alt="Coffee Boba" />
-                        </div>
-                        <div class="home-card-body">
-                            <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
-                            <p class="home-card-nombre">Coffee Boba</p>
-                            <p class="home-card-precio">₡3,000</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="home-carrusel-item">
-                    <div class="home-card">
-                        <div class="home-card-stripe"></div>
-                        <div class="home-card-img-wrap">
-                            <img src="~/images/productos/IcedMocha_Café.png" alt="Iced Mocha" />
-                        </div>
-                        <div class="home-card-body">
-                            <span class="home-card-cat">@SharedLocalizer["CatCafe"]</span>
-                            <p class="home-card-nombre">Iced Mocha</p>
-                            <p class="home-card-precio">₡2,700</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="home-carrusel-item">
-                    <div class="home-card">
-                        <div class="home-card-stripe"></div>
-                        <div class="home-card-img-wrap">
-                            <img src="~/images/productos/Bubble Tea Matcha_BubbleTea.png" alt="Matcha Bubble Tea" />
-                        </div>
-                        <div class="home-card-body">
-                            <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
-                            <p class="home-card-nombre">Matcha Bubble Tea</p>
-                            <p class="home-card-precio">₡2,800</p>
-                        </div>
-                    </div>
-                </div>
-                <div class="home-carrusel-item">
-                    <div class="home-card">
-                        <div class="home-card-stripe"></div>
-                        <div class="home-card-img-wrap">
-                            <img src="~/images/productos/OreoBoba_Bubble tea.png" alt="Oreo Boba" />
-                        </div>
-                        <div class="home-card-body">
-                            <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
-                            <p class="home-card-nombre">Oreo Boba</p>
-                            <p class="home-card-precio">₡3,000</p>
-                        </div>
-                    </div>
+                <div class="home-carrusel-nav">
+                    <button class="home-carrusel-btn" id="brew-prev" aria-label="@SharedLocalizer["BtnAnterior"]">&#8592;</button>
+                    <button class="home-carrusel-btn" id="brew-next" aria-label="@SharedLocalizer["BtnSiguiente"]">&#8594;</button>
                 </div>
             </div>
-        </div>
-        <div class="home-carrusel-dots" id="brew-dots"></div>
-    </div>
-
-    <div class="home-divider" style="margin-top:2.5rem;"><hr /></div>
-
-    @* Sección Bubble Tea *@
-    <div class="section-divider"></div>
-
-    <div class="home-divider">
-        <div class="home-section-header">
-            <h2 class="home-section-titulo">Bubble Tea</h2>
-            <span class="home-section-tag">@SharedLocalizer["NuestrasEstrellas"]</span>
+            <div class="home-carrusel-viewport">
+                <div class="home-carrusel-track" id="brew-track">
+                    @foreach (var item in productosActivos.Take(8))
+                    {
+                        <div class="home-carrusel-item">
+                            <div class="home-card">
+                                <div class="home-card-stripe"></div>
+                                <div class="home-card-img-wrap">
+                                    <img src="@ImgSrc(item.RutaImagenPrincipal)" alt="@item.Nombre" />
+                                </div>
+                                <div class="home-card-body">
+                                    <span class="home-card-cat">@item.CategoriaNombre</span>
+                                    <p class="home-card-nombre">@item.Nombre</p>
+                                    <div class="home-card-footer">
+                                        <p class="home-card-precio">₡@item.Precio.ToString("N0")</p>
+                                        <a href="@Url.Action("Detail", "Producto", new { id = item.ProductoID })" class="home-card-btn">
+                                            @SharedLocalizer["BtnVerDetalle"]
+                                        </a>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    }
+                </div>
+            </div>
+            <div class="home-carrusel-dots" id="brew-dots"></div>
         </div>
 
-        <div class="home-grid">
+        <div class="home-divider" style="margin-top:2.5rem;"><hr /></div>
 
-            <div class="home-card">
-                <div class="home-card-stripe"></div>
-                <div class="home-card-img-wrap">
-                    <img src="~/images/productos/Bubble Tea Original_BubbleTea.png" alt="Bubble Tea Original" />
+        @* Una sección por cada categoría que tenga productos activos *@
+        @foreach (var grupo in productosActivos.GroupBy(p => p.CategoriaNombre))
+        {
+            <div class="section-divider"></div>
+            <div class="home-divider">
+                <div class="home-section-header">
+                    <h2 class="home-section-titulo">@grupo.Key</h2>
+                    <span class="home-section-tag">@SharedLocalizer["NuestrasEstrellas"]</span>
                 </div>
-                <div class="home-card-body">
-                    <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
-                    <p class="home-card-nombre">Original Bubble Tea</p>
-                    <p class="home-card-precio">₡2,500</p>
+
+                <div class="home-grid">
+                    @foreach (var item in grupo)
+                    {
+                        <div class="home-card">
+                            <div class="home-card-stripe"></div>
+                            <div class="home-card-img-wrap">
+                                <img src="@ImgSrc(item.RutaImagenPrincipal)" alt="@item.Nombre" />
+                            </div>
+                            <div class="home-card-body">
+                                <span class="home-card-cat">@item.CategoriaNombre</span>
+                                <p class="home-card-nombre">@item.Nombre</p>
+                                <div class="home-card-footer">
+                                    <p class="home-card-precio">₡@item.Precio.ToString("N0")</p>
+                                    <a href="@Url.Action("Detail", "Producto", new { id = item.ProductoID })" class="home-card-btn">
+                                        @SharedLocalizer["BtnVerDetalle"]
+                                    </a>
+                                </div>
+                            </div>
+                        </div>
+                    }
                 </div>
             </div>
-
-            <div class="home-card">
-                <div class="home-card-stripe"></div>
-                <div class="home-card-img-wrap">
-                    <img src="~/images/productos/Bubble Tea Matcha_BubbleTea.png" alt="Matcha Bubble Tea" />
-                </div>
-                <div class="home-card-body">
-                    <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
-                    <p class="home-card-nombre">Matcha Bubble Tea</p>
-                    <p class="home-card-precio">₡2,800</p>
-                </div>
-            </div>
-
-            <div class="home-card">
-                <div class="home-card-stripe"></div>
-                <div class="home-card-img-wrap">
-                    <img src="~/images/productos/Bubble Tea Taro_BubbleTea.png" alt="Taro Bubble Tea" />
-                </div>
-                <div class="home-card-body">
-                    <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
-                    <p class="home-card-nombre">Taro Bubble Tea</p>
-                    <p class="home-card-precio">₡2,800</p>
-                </div>
-            </div>
-
-            <div class="home-card">
-                <div class="home-card-stripe"></div>
-                <div class="home-card-img-wrap">
-                    <img src="~/images/productos/OreoBoba_Bubble tea.png" alt="Oreo Boba" />
-                </div>
-                <div class="home-card-body">
-                    <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
-                    <p class="home-card-nombre">Oreo Boba</p>
-                    <p class="home-card-precio">₡3,000</p>
-                </div>
-            </div>
-
-            <div class="home-card">
-                <div class="home-card-stripe"></div>
-                <div class="home-card-img-wrap">
-                    <img src="~/images/productos/CoffeeBoba _Bubble tea.png" alt="Coffee Boba" />
-                </div>
-                <div class="home-card-body">
-                    <span class="home-card-cat">@SharedLocalizer["CatBubbleTea"]</span>
-                    <p class="home-card-nombre">Coffee Boba</p>
-                    <p class="home-card-precio">₡3,000</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
-
-    <div class="section-divider"><hr /></div>
-
-    @* Sección Café *@
-    <div class="home-section cafes">
-        <div class="home-section-header">
-            <h2 class="home-section-titulo">@SharedLocalizer["TituloCafes"]</h2>
-            <span class="home-section-tag">@SharedLocalizer["TagEspecialidad"]</span>
-        </div>
-
-        <div class="home-grid">
-            <div class="home-card">
-                <div class="home-card-stripe"></div>
-                <div class="home-card-img-wrap">
-                    <img src="~/images/productos/IcedLatte_Café.png" alt="Iced Latte" />
-                </div>
-                <div class="home-card-body">
-                    <span class="home-card-cat">@SharedLocalizer["CatCafe"]</span>
-                    <p class="home-card-nombre">Iced Latte</p>
-                    <p class="home-card-precio">₡2,500</p>
-                </div>
-            </div>
-
-            <div class="home-card">
-                <div class="home-card-stripe"></div>
-                <div class="home-card-img-wrap">
-                    <img src="~/images/productos/IcedMocha_Café.png" alt="Iced Mocha" />
-                </div>
-                <div class="home-card-body">
-                    <span class="home-card-cat">@SharedLocalizer["CatCafe"]</span>
-                    <p class="home-card-nombre">Iced Mocha</p>
-                    <p class="home-card-precio">₡2,700</p>
-                </div>
-            </div>
-
-        </div>
-    </div>
+            <div class="section-divider"><hr /></div>
+        }
+    }
 
 </div>
 

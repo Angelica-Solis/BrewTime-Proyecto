@@ -10,16 +10,20 @@ using Microsoft.AspNetCore.Authorization;
 
 namespace BrewTime.Web.Controllers
 {
-    
     public class HomeController : Controller
     {
         private readonly ILogger<HomeController> _logger;
         private readonly IServicePedido _servicePedido;
+        private readonly IServiceProducto _serviceProducto;   
 
-        public HomeController(ILogger<HomeController> logger, IServicePedido servicePedido)
+        public HomeController(
+            ILogger<HomeController> logger,
+            IServicePedido servicePedido,
+            IServiceProducto serviceProducto)                 
         {
             _logger = logger;
             _servicePedido = servicePedido;
+            _serviceProducto = serviceProducto;                
         }
 
         public async Task<IActionResult> Index()
@@ -31,8 +35,7 @@ namespace BrewTime.Web.Controllers
                 {
                     int userId = int.Parse(userIdClaim);
                     var historial = await _servicePedido.GetHistorialClienteAsync(userId);
-                    
-                    // Filtrar pedidos activos: Aceptada, En preparación, En camino
+
                     var pedidosActivos = historial
                         .Where(p => p.EstadoNombre.Equals("Aceptada", StringComparison.OrdinalIgnoreCase) ||
                                     p.EstadoNombre.Contains("preparaci", StringComparison.OrdinalIgnoreCase) ||
@@ -44,13 +47,13 @@ namespace BrewTime.Web.Controllers
                 }
             }
 
+            // productos reales y activos para mostrar en el home
+            ViewBag.ProductosActivos = await _serviceProducto.ListAsync();
+
             return View();
         }
 
-        public IActionResult Privacy()
-        {
-            return View();
-        }
+        public IActionResult Privacy() => View();
 
         [ResponseCache(Duration = 0, Location = ResponseCacheLocation.None, NoStore = true)]
         public IActionResult Error()
