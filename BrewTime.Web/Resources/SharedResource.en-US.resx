@@ -1857,4 +1857,7 @@
   <data name="Total" xml:space="preserve">
     <value>Total</value>
   </data>
+	<data name="Mantenimientos" xml:space="preserve">
+    <value>Maintenance</value>
+  </data>
 </root>
