@@ -597,6 +597,9 @@
   <data name="Lunes" xml:space="preserve">
     <value>Lunes</value>
   </data>
+	<data name="Mantenimientos" xml:space="preserve">
+    <value>Mantenimientos</value>
+  </data>
   <data name="MantenimientoDe" xml:space="preserve">
     <value>MantenimientoDe</value>
   </data>

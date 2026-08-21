@@ -298,23 +298,94 @@
                                 </ul>
                             </li>
 
-                            @if (User.IsInRole("Administrador") || User.IsInRole("Encargado")) { <li class="nav-item"><a class="brew-nav-link nav-link" asp-controller="Dashboard" asp-action="Index"><i class="bi bi-bar-chart-line"></i> Dashboard</a></li> }
-                            @if (User.IsInRole("Administrador"))
-                            // usuarios
-                            @if (esAdministrador)
+                            // Mantenimientos
+                            @if (esAdministrador || esEncargado)
                             {
-                                <li class="nav-item">
+                                <li class="nav-item dropdown">
 
-                                    <a class="brew-nav-link nav-link"
-                                       asp-controller="Usuario"
-                                       asp-action="Index">
+                                    <a class="brew-nav-link nav-link dropdown-toggle"
+                                       href="#"
+                                       id="navbarDropdownMantenimientos"
+                                       role="button"
+                                       data-bs-toggle="dropdown"
+                                       aria-expanded="false">
 
-                                        @SharedLocalizer["Usuarios"]
+                                        @SharedLocalizer["Mantenimientos"]
 
                                     </a>
 
+                                    <ul class="dropdown-menu dropdown-menu-dark"
+                                        aria-labelledby="navbarDropdownMantenimientos"
+                                        style="background-color:#1a2712;
+                   border-color:rgba(201,149,106,0.3);">
+
+                                        @if (esAdministrador)
+                                        {
+                                        <li>
+                                            <a class="dropdown-item brew-nav-link"
+                                               asp-controller="Producto"
+                                               asp-action="Maintenance">
+                                                @SharedLocalizer["AdministrarProductos"]
+                                            </a>
+                                        </li>
+                                        }
+
+
+                                        @if (esAdministrador)
+                                        {
+                                        <li>
+                                            <a class="dropdown-item brew-nav-link"
+                                               asp-controller="Combo"
+                                               asp-action="Maintenance">
+                                                @SharedLocalizer["ManageCombos"]
+                                            </a>
+                                        </li>
+                                        }
+
+                                        <li>
+                                            <a class="dropdown-item brew-nav-link"
+                                               asp-controller="Menu"
+                                               asp-action="Maintenance">
+                                                @SharedLocalizer["AdministrarMenusBtn"]
+                                            </a>
+                                        </li>
+
+
+                                        @if (esAdministrador)
+                                        {
+                                        <li>
+                                            <a class="dropdown-item brew-nav-link"
+                                               asp-controller="ProcesoPreparacion"
+                                               asp-action="Maintenance">
+                                                @SharedLocalizer["BtnAdministrar"]
+                                            </a>
+                                        </li>
+                                        }
+
+                                    </ul>
                                 </li>
                             }
+
+                            @if (User.IsInRole("Administrador") || User.IsInRole("Encargado"))
+                            {
+                                <li class="nav-item"><a class="brew-nav-link nav-link" asp-controller="Dashboard" asp-action="Index"><i class="bi bi-bar-chart-line"></i> Dashboard</a></li>
+                            }
+                            @if (User.IsInRole("Administrador"))
+                                // usuarios
+                                @if (esAdministrador)
+                                {
+                                    <li class="nav-item">
+
+                                        <a class="brew-nav-link nav-link"
+                                           asp-controller="Usuario"
+                                           asp-action="Index">
+
+                                            @SharedLocalizer["Usuarios"]
+
+                                        </a>
+
+                                    </li>
+                                }
 
                             // cocina
                             @if (esCocina)
@@ -357,7 +428,7 @@
                                 </li>
                             }
 
-                            // usuario actual 
+                            // usuario actual
                             <li class="nav-item d-flex align-items-center">
 
                                 <span class="brew-nav-link"
