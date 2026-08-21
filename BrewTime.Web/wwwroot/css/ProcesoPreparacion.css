@@ -56,11 +56,19 @@
 .brew-hero-inner {
     position: relative;
     z-index: 1;
+    max-width: 1200px;
+    margin: 0 auto;
 }
 
 .brew-hero-eyebrow {
-    color: #d1af85;
-    opacity: 1;
+    font-family: var(--font-body);
+    font-size: 0.72rem;
+    font-weight: 600;
+    letter-spacing: 0.16em;
+    text-transform: uppercase;
+    color: var(--cafe-light);
+    opacity: 0.75;
+    margin: 0 0 0.6rem;
 }
 
 .brew-titulo {
