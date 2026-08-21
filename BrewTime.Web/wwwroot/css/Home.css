@@ -820,6 +820,57 @@
     border: 1px solid rgba(255,255,255,.1);
 }
 
+/* Footer de la card: precio + botón ver detalle */
+.home-card-footer {
+    display: flex;
+    align-items: center;
+    justify-content: space-between;
+    gap: 0.5rem;
+    margin-top: auto;
+    padding-top: 0.55rem;
+}
+
+    .home-card-footer .home-card-precio {
+        margin-top: 0;
+        padding-top: 0;
+    }
+
+.home-card-btn {
+    display: inline-flex;
+    align-items: center;
+    gap: 0.3rem;
+    font-size: 0.66rem;
+    font-weight: 600;
+    letter-spacing: 0.06em;
+    text-transform: uppercase;
+    color: var(--musgo);
+    text-decoration: none;
+    white-space: nowrap;
+    flex-shrink: 0;
+    padding: 0.32rem 0.7rem;
+    border-radius: 20px;
+    background: transparent;
+    transition: background 0.18s ease, color 0.18s ease;
+}
+
+    .home-card-btn::after {
+        content: '→';
+        font-size: 0.78rem;
+        display: inline-block;
+        transition: transform 0.18s ease;
+    }
+
+    .home-card-btn:hover {
+        background: var(--musgo-mid);
+        color: #f5ede0;
+    }
+
+        .home-card-btn:hover::after {
+            transform: translateX(3px);
+        }
+
+
+
 @media(max-width:768px) {
 
     .home-about {
